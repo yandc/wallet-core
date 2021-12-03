@@ -8,6 +8,7 @@
 
 #include "Address.h"
 #include "Signer.h"
+#include "Hash.h"
 
 using namespace TW::Ethereum;
 using namespace TW;
@@ -30,7 +31,7 @@ void Entry::sign(TWCoinType coin, const TW::Data& dataIn, TW::Data& dataOut) con
     signTemplate<Signer, Proto::SigningInput>(dataIn, dataOut);
 }
 
-string Entry::signJSON(TWCoinType coin, const std::string& json, const Data& key) const { 
+string Entry::signJSON(TWCoinType coin, const std::string& json, const Data& key) const {
     return Signer::signJSON(json, key);
 }
 
@@ -80,4 +81,10 @@ Data Entry::buildTransactionInput(TWCoinType coinType, const std::string& from, 
 
     const auto txInputData = data(input.SerializeAsString());
     return txInputData;
+}
+TW::Data Entry::hashMessage(TWCoinType coin, const string& msg) const {
+    string m = "\x19""Ethereum Signed Message:\n";
+    m += std::to_string(msg.size());
+    m += msg;
+    return TW::Hash::keccak256((const byte*)m.c_str(), m.size());
 }

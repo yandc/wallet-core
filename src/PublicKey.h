@@ -47,6 +47,11 @@ class PublicKey {
     /// @throws std::invalid_argument if the data is not a valid public key.
     explicit PublicKey(const Data& data, enum TWPublicKeyType type);
 
+    /// Initializes a public key with x and y.
+    ///
+    /// @throws std::invalid_argument if the x,y is not a valid public key.
+    explicit PublicKey(const char* x, size_t xlen, const char* y, size_t ylen, enum TWPublicKeyType type);
+
     /// Determines if this is a compressed public key.
     bool isCompressed() const {
         return type != TWPublicKeyTypeSECP256k1Extended && type != TWPublicKeyTypeNIST256p1Extended;

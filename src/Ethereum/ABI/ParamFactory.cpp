@@ -15,6 +15,8 @@ using namespace std;
 using namespace boost::algorithm;
 using json = nlohmann::json;
 
+typedef unsigned int uint;
+
 namespace TW::Ethereum::ABI {
 
 static int parseBitSize(const std::string& type) {

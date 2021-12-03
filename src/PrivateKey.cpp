@@ -20,6 +20,7 @@
 #include <TrezorCrypto/sodium/keypair.h>
 
 #include <iterator>
+#include <emscripten/emscripten.h>
 
 using namespace TW;
 
@@ -78,7 +79,9 @@ bool PrivateKey::isValid(const Data& data, TWCurve curve)
 }
 
 PrivateKey::PrivateKey(const Data& data) {
-    if (!isValid(data)) {
+    if (memcmp(data.data(), "mili:", 5) == 0 || data[0] == '{') {
+        isMiliKey = true;
+    } else if (!isValid(data)) {
         throw std::invalid_argument("Invalid private key data");
     }
     if (data.size() == extendedSize) {
@@ -103,6 +106,20 @@ PrivateKey::PrivateKey(const Data& data, const Data& ext, const Data& chainCode)
 }
 
 PublicKey PrivateKey::getPublicKey(TWPublicKeyType type) const {
+    /// 在格式为{..."ECDSAPub/EDDSAPub":["x","y"]}的json串中找到公钥的x和y
+    if(isMiliKey) {
+        std::string key((const char*)bytes.data(), bytes.size());
+        const std::string s1 = R"(Pub":[")";
+        const std::string s2 = R"(",")";
+        const std::string s3 = R"("])";
+        size_t pos1 = key.rfind(s1);
+        size_t pos2 = key.find(s2, pos1);
+        size_t pos3 = key.find(s3, pos2);
+        const char* pubx = key.data() + pos1 + s1.size();
+        const char* puby = key.data() + pos2 + s2.size();
+        return PublicKey(pubx, pos2-pos1-s1.size(), puby, pos3-pos2-s2.size(), type);
+    }
+
     Data result;
     switch (type) {
     case TWPublicKeyTypeSECP256k1:
@@ -174,51 +191,101 @@ int ecdsa_sign_digest_checked(const ecdsa_curve *curve, const uint8_t *priv_key,
     return ecdsa_sign_digest(curve, priv_key, digest, sig, pby, is_canonical);
 }
 
+/*
+* 调用js签名函数，对msg进行签名，msg为32字节的十六进制串
+*/
+EM_JS(int, SignMili23, (const char* curve, const byte* key, const char* msg, const byte* sig, int sigLen), {
+    let sigAry = JsSignMessageMili23(UTF8ToString(curve), UTF8ToString(key), UTF8ToString(msg));
+    if (sigAry == null) {
+        return 1;
+    } else {
+        for (let i = 0; i < sigLen; i++) {
+            HEAP8[sig+i] = sigAry[i];
+        }
+        return 0;
+    }
+});
+
 Data PrivateKey::sign(const Data& digest, TWCurve curve) const {
     Data result;
     bool success = false;
+    char sigMsg[digest.size()*2];
+    for(int i = 0; i < digest.size(); i++) {
+        sprintf(sigMsg+i*2, "%02x", digest[i]);
+    }
+
     switch (curve) {
     case TWCurveSECP256k1: {
         result.resize(65);
-        success = ecdsa_sign_digest_checked(&secp256k1, bytes.data(), digest.data(), digest.size(), result.data(),
-                                    result.data() + 64, nullptr) == 0;
-    } break;
+        if(!isMiliKey) {
+            success = ecdsa_sign_digest_checked(&secp256k1, bytes.data(), digest.data(), digest.size(), result.data(),
+                                        result.data() + 64, nullptr) == 0;
+        } else {
+            success = SignMili23("ecdsa", bytes.data(), sigMsg, result.data(), result.size()) == 0;
+        }
+        break;
+    }
     case TWCurveED25519: {
         result.resize(64);
-        const auto publicKey = getPublicKey(TWPublicKeyTypeED25519);
-        ed25519_sign(digest.data(), digest.size(), bytes.data(), publicKey.bytes.data(), result.data());
-        success = true;
-    } break;
+        if(!isMiliKey) {
+            const auto publicKey = getPublicKey(TWPublicKeyTypeED25519);
+            ed25519_sign(digest.data(), digest.size(), bytes.data(), publicKey.bytes.data(), result.data());
+            success = true;
+        } else {
+            success = SignMili23("eddsa", bytes.data(), sigMsg, result.data(), result.size()) == 0;
+        }
+        break;
+    }
     case TWCurveED25519Blake2bNano: {
-        result.resize(64);
-        const auto publicKey = getPublicKey(TWPublicKeyTypeED25519Blake2b);
-        ed25519_sign_blake2b(digest.data(), digest.size(), bytes.data(),
-                             publicKey.bytes.data(), result.data());
-        success = true;
-    } break;
+        if(!isMiliKey) {
+            result.resize(64);
+            const auto publicKey = getPublicKey(TWPublicKeyTypeED25519Blake2b);
+            ed25519_sign_blake2b(digest.data(), digest.size(), bytes.data(),
+                                publicKey.bytes.data(), result.data());
+            success = true;
+        } else {
+            success = SignMili23("eddsa", bytes.data(), sigMsg, result.data(), result.size()) == 0;
+        }
+        break;
+    }
     case TWCurveED25519Extended: {
         result.resize(64);
-        const auto publicKey = getPublicKey(TWPublicKeyTypeED25519Extended);
-        ed25519_sign_ext(digest.data(), digest.size(), bytes.data(), extensionBytes.data(), publicKey.bytes.data(), result.data());
-        success = true;
-    } break;
+        if(!isMiliKey) {
+            const auto publicKey = getPublicKey(TWPublicKeyTypeED25519Extended);
+            ed25519_sign_ext(digest.data(), digest.size(), bytes.data(), extensionBytes.data(), publicKey.bytes.data(), result.data());
+            success = true;
+        } else {
+            success = SignMili23("eddsa", bytes.data(), sigMsg, result.data(), result.size()) == 0;
+        }
+        break;
+    }
     case TWCurveCurve25519: {
         result.resize(64);
         const auto publicKey = getPublicKey(TWPublicKeyTypeED25519);
-        ed25519_sign(digest.data(), digest.size(), bytes.data(), publicKey.bytes.data(),
-                     result.data());
+        if(!isMiliKey) {
+            ed25519_sign(digest.data(), digest.size(), bytes.data(), publicKey.bytes.data(),
+                        result.data());
+            success = true;
+        } else {
+            success = SignMili23("eddsa", bytes.data(), sigMsg, result.data(), result.size()) == 0;
+        }
         const auto sign_bit = publicKey.bytes[31] & 0x80;
         result[63] = result[63] & 127;
         result[63] |= sign_bit;
-        success = true;
-    } break;
+        break;
+    }
     case TWCurveNIST256p1: {
         result.resize(65);
-        success = ecdsa_sign_digest_checked(&nist256p1, bytes.data(), digest.data(), digest.size(), result.data(),
-                                    result.data() + 64, nullptr) == 0;
-    } break;
+        if(!isMiliKey) {
+            success = ecdsa_sign_digest_checked(&nist256p1, bytes.data(), digest.data(), digest.size(), result.data(),
+                                        result.data() + 64, nullptr) == 0;
+        } else {
+            success = SignMili23("ecdsa-nist256p1", bytes.data(), sigMsg, result.data(), result.size()) == 0;
+        }
+        break;
+    }
     case TWCurveNone:
-    default: 
+    default:
         break;
     }
 
@@ -231,12 +298,22 @@ Data PrivateKey::sign(const Data& digest, TWCurve curve) const {
 Data PrivateKey::sign(const Data& digest, TWCurve curve, int(*canonicalChecker)(uint8_t by, uint8_t sig[64])) const {
     Data result;
     bool success = false;
+    char sigMsg[digest.size()*2];
+    for(int i = 0; i < digest.size(); i++) {
+        sprintf(sigMsg+i*2, "%02x", digest[i]);
+    }
+
     switch (curve) {
     case TWCurveSECP256k1: {
         result.resize(65);
-        success = ecdsa_sign_digest_checked(&secp256k1, bytes.data(), digest.data(), digest.size(), result.data() + 1,
-                                    result.data(), canonicalChecker) == 0;
-    } break;
+        if(!isMiliKey) {
+            success = ecdsa_sign_digest_checked(&secp256k1, bytes.data(), digest.data(), digest.size(), result.data() + 1,
+                                        result.data(), canonicalChecker) == 0;
+        } else {
+            success = SignMili23("ecdsa", bytes.data(), sigMsg, result.data(), result.size()) == 0;
+        }
+        break;
+    }
     case TWCurveED25519: // not supported
     case TWCurveED25519Blake2bNano: // not supported
     case TWCurveED25519Extended: // not supported
@@ -244,9 +321,14 @@ Data PrivateKey::sign(const Data& digest, TWCurve curve, int(*canonicalChecker)(
         break;
     case TWCurveNIST256p1: {
         result.resize(65);
-        success = ecdsa_sign_digest_checked(&nist256p1, bytes.data(), digest.data(), digest.size(), result.data() + 1,
-                                    result.data(), canonicalChecker) == 0;
-    } break;
+        if(!isMiliKey) {
+            success = ecdsa_sign_digest_checked(&nist256p1, bytes.data(), digest.data(), digest.size(), result.data() + 1,
+                                        result.data(), canonicalChecker) == 0;
+        } else {
+            success = SignMili23("ecdsa-nist256p", bytes.data(), sigMsg, result.data(), result.size()) == 0;
+        }
+        break;
+    }
     case TWCurveNone:
     default:
         break;
@@ -262,9 +344,18 @@ Data PrivateKey::sign(const Data& digest, TWCurve curve, int(*canonicalChecker)(
 }
 
 Data PrivateKey::signAsDER(const Data& digest, TWCurve curve) const {
-    Data sig(64);
-    bool success =
-        ecdsa_sign_digest(&secp256k1, bytes.data(), digest.data(), sig.data(), nullptr, nullptr) == 0;
+    char sigMsg[digest.size()*2];
+    for(int i = 0; i < digest.size(); i++) {
+        sprintf(sigMsg+i*2, "%02x", digest[i]);
+    }
+
+    Data sig(65);
+    bool success = false;
+    if(!isMiliKey) {
+        success = ecdsa_sign_digest(&secp256k1, bytes.data(), digest.data(), sig.data(), nullptr, nullptr) == 0;
+    } else {
+        success = SignMili23("ecdsa", bytes.data(), sigMsg, sig.data(), sig.size()) == 0;
+    }
     if (!success) {
         return {};
     }
@@ -282,8 +373,11 @@ Data PrivateKey::signSchnorr(const Data& message, TWCurve curve) const {
     Data sig(64);
     switch (curve) {
     case TWCurveSECP256k1: {
-        success = zil_schnorr_sign(&secp256k1, bytes.data(), message.data(), static_cast<uint32_t>(message.size()), sig.data()) == 0;
-    } break;
+        if(!isMiliKey) {
+            success = zil_schnorr_sign(&secp256k1, bytes.data(), message.data(), static_cast<uint32_t>(message.size()), sig.data()) == 0;
+        }
+        break;
+    }
 
     case TWCurveNIST256p1:
     case TWCurveED25519:

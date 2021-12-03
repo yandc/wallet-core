@@ -47,6 +47,7 @@ public:
     // Optional helper to prepare a SigningInput from simple parameters.
     // Not suitable for UTXO chains. Some parameters, like chain-specific fee/gas paraemters, may need to be set in the SigningInput.
     virtual Data buildTransactionInput(TWCoinType coinType, const std::string& from, const std::string& to, const uint256_t& amount, const std::string& asset, const std::string& memo, const std::string& chainId) const { return Data(); }
+    virtual Data hashMessage(TWCoinType coin, const std::string& msg) const { return data(""); }
 };
 
 // In each coin's Entry.cpp the specific types of the coin are used, this template enforces the Signer implement:

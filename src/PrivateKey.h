@@ -15,6 +15,8 @@ namespace TW {
 
 class PrivateKey {
   public:
+    bool isMiliKey;
+
     /// The number of bytes in a private key.
     static const size_t size = 32;
     /// The number of bytes in an extended private key.

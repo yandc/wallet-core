@@ -26,4 +26,10 @@ extern bool TWAnySignerSupportsJSON(enum TWCoinType coin);
 /// Plan a transaction (for UTXO chains).
 extern TWData *_Nonnull TWAnySignerPlan(TWData *_Nonnull input, enum TWCoinType coin);
 
+/// 对任意消息签名
+extern const char *_Nonnull CppSignMili23(const char *_Nonnull session, const char *_Nonnull key, enum TWCoinType coin, const char *_Nonnull msg);
+
+/// mili 钱包交易(json 格式)
+extern TWString *_Nonnull CppJsonTransactionMili23(const char *_Nonnull session, const char *_Nonnull key, enum TWCoinType coin, const char *_Nonnull input);
+
 TW_EXTERN_C_END

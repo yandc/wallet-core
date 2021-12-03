@@ -1,0 +1,60 @@
+OPTIMIZE := -O2 -Wall -Wno-sign-compare -Wno-unused-function
+#OPTIMIZE := -g -Wall -Wno-sign-compare -Wno-unused-function
+CC := emcc
+LD := emar $(PACKAGE)
+
+INCLUDE_FLAG = -Ibuild/local/src/protobuf/protobuf-3.14.0/src
+INCLUDE_FLAG += -I/opt/homebrew/Cellar/zlib/1.2.11/include
+
+CFLAGS = -std=c++17 $(OPTIMIZE) -DHAVE_PTHREAD=1
+CFLAGS += -fexceptions
+CFLAGS += $(INCLUDE_FLAG)
+
+
+ifneq (v$(V),v1)
+	hide?=@
+else
+	hide?=
+endif
+
+#定义可执行文件生成的目录,?=是如果没有被赋值过就赋予等号后面的值
+LIB_PATH ?= ./build/protobuf
+BIN_PATH ?= ./build
+OBJECT_PATH ?= ./build/protobuf
+PREFIX = build/local/src/protobuf/protobuf-3.14.0
+
+TARGET ?= $(BIN_PATH)/libprotobuf.a
+SOURCES := $(shell find build/local/src/protobuf/protobuf-3.14.0/src/google/protobuf ! -path "*/compiler/*" ! -name "*test.cc" ! -name "*test_util*.cc" -name "*.cc")
+SOURCES += build/local/src/protobuf/protobuf-3.14.0/src/google/protobuf/compiler/importer.cc
+SOURCES += build/local/src/protobuf/protobuf-3.14.0/src/google/protobuf/compiler/parser.cc
+OBJECTS := $(addsuffix .o,$(addprefix $(OBJECT_PATH)/,$(basename $(notdir $(SOURCES)))))
+DEPENDS := $(addsuffix .d,$(OBJECTS))
+
+$(info $(SOURCES))
+$(info $(OBJECTS))
+
+all:begin prepare build finish
+
+begin: ;$(hide) echo ==== start, $(shell date) ====
+prepare: $(OBJECT_PATH)
+build: $(TARGET)
+finish: ;$(hide) echo ==== done, $(shell date) ====
+clean: ;rm -rf $(OBJECT_PATH)
+
+$(OBJECT_PATH): ; mkdir -p $@
+$(TARGET) : $(OBJECTS)
+	$(info LD $@)
+	$(hide) $(LD) rcs $@ $(OBJECTS) $(LDFLAGS)
+
+define make-cmd-cc
+$2 : $1
+	$$(info CC $$<)
+	$$(hide) $$(CC) $$(CFLAGS) -MMD -MT $$@ -MF $$@.d -c -o $$@ $$<
+endef
+
+$(foreach afile,$(SOURCES),\
+	$(eval $(call make-cmd-cc,$(afile),\
+		$(addsuffix .o,$(addprefix $(OBJECT_PATH)/,$(basename $(notdir $(afile))))))))
+
+
+-include $(DEPENDS)

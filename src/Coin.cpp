@@ -5,6 +5,7 @@
 // file LICENSE at the root of the source code distribution tree.
 
 #include "Coin.h"
+#include "HexCoding.h"
 
 #include "CoinEntry.h"
 #include <TrustWalletCore/TWCoinTypeConfiguration.h>
@@ -239,6 +240,20 @@ std::string TW::anySignJSON(TWCoinType coinType, const std::string& json, const 
     auto* dispatcher = coinDispatcher(coinType);
     assert(dispatcher != nullptr);
     return dispatcher->signJSON(coinType, json, key);
+}
+
+const char* TW::anySignMessage(TWCoinType coinType, const std::string& msg, const Data& key) {
+    static char sig[512];
+    auto dispatcher = coinDispatcher(coinType);
+    assert(dispatcher != nullptr);
+    Data digest = dispatcher->hashMessage(coinType, msg);
+    PrivateKey privKey(key);
+
+    const Data& sign = privKey.sign(digest, curve(coinType));
+    for(int i = 0; i < sign.size(); i++) {
+        sprintf(sig+i*2, "%02x", sign[i]);
+    }
+    return sig;
 }
 
 bool TW::supportsJSONSigning(TWCoinType coinType) {

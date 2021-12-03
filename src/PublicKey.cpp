@@ -3,7 +3,6 @@
 // This file is part of Trust. The full Trust copyright notice, including
 // terms governing use, modification, and redistribution, is contained in the
 // file LICENSE at the root of the source code distribution tree.
-
 #include "PublicKey.h"
 #include "Data.h"
 
@@ -13,6 +12,7 @@
 #include <TrezorCrypto/secp256k1.h>
 #include <TrezorCrypto/sodium/keypair.h>
 #include <TrezorCrypto/ed25519-donna/ed25519-donna.h>
+#include <TrezorCrypto/memzero.h>
 
 #include <iterator>
 
@@ -77,6 +77,68 @@ PublicKey::PublicKey(const Data& data, enum TWPublicKeyType type) : type(type) {
     case TWPublicKeyTypeED25519Extended:
         bytes.reserve(ed25519ExtendedSize);
         std::copy(std::begin(data), std::end(data), std::back_inserter(bytes));
+    }
+}
+
+uint8_t HexChar2Int(char c) {
+    if(c <= '9') {
+        return c - '0';
+    } else if( c <= 'F') {
+        return c - 'A' + 10;
+    } else {
+        return c - 'a' + 10;
+    }
+}
+
+void LoadHexNumber(const char* hex, size_t len, uint8_t* bytes, size_t size) {
+    memzero(bytes, size);
+
+    for(int i = 0; i < len; i++) {
+        if(i & 1) {
+            bytes[size-i/2-1] += (HexChar2Int(hex[len-i-1]) << 4);
+        } else {
+            bytes[size-i/2-1] = HexChar2Int(hex[len-i-1]);
+        }
+    }
+}
+
+PublicKey::PublicKey(const char* x, size_t xlen, const char* y, size_t ylen, enum TWPublicKeyType type) : type(type) {
+    uint8_t pubx[32]; //big endian
+    uint8_t puby[32]; //big endian
+    LoadHexNumber(x, xlen, pubx, 32);
+    LoadHexNumber(y, ylen, puby, 32);
+
+    switch (type) {
+    case TWPublicKeyTypeSECP256k1:
+    case TWPublicKeyTypeNIST256p1:
+        bytes.reserve(33); //big endian
+        append(bytes, 0x02 | (puby[31] & 0x01));
+        append(bytes, data(pubx, sizeof(pubx)));
+        break;
+
+    case TWPublicKeyTypeSECP256k1Extended:
+    case TWPublicKeyTypeNIST256p1Extended:
+        bytes.reserve(65); //big endian
+        append(bytes, 0x04);
+        append(bytes, data(pubx, sizeof(pubx)));
+        append(bytes, data(puby, sizeof(puby)));
+        break;
+
+    case TWPublicKeyTypeED25519:
+    case TWPublicKeyTypeED25519Blake2b:
+    case TWPublicKeyTypeED25519Extended:
+        bytes.resize(32); //little endian
+        for(int i = 0; i < 32; i++) {
+            bytes[i] = puby[31-i];
+        }
+        bytes[31] ^= ((pubx[31] & 1) << 7);
+        break;
+
+    case TWPublicKeyTypeCURVE25519:
+        bytes.resize(ed25519Size); //little endian
+        PublicKey ed25519PublicKey = PublicKey(x, xlen, y, ylen, TWPublicKeyTypeED25519);
+        ed25519_pk_to_curve25519(bytes.data(), ed25519PublicKey.bytes.data());
+        break;
     }
 }
 

@@ -11,6 +11,8 @@
 
 #include "../AnyAddress.h"
 #include "../Coin.h"
+#include "../HexCoding.h"
+#include "../PublicKey.h"
 
 using namespace TW;
 
@@ -40,6 +42,16 @@ struct TWAnyAddress* _Nonnull TWAnyAddressCreateWithPublicKey(
     struct TWPublicKey* _Nonnull publicKey, enum TWCoinType coin) {
     auto address = TW::deriveAddress(coin, publicKey->impl);
     return new TWAnyAddress{TWStringCreateWithUTF8Bytes(address.c_str()), coin};
+}
+
+const char*_Nonnull CppAddressCreateWithMiliKey(const char *_Nonnull key, enum TWCoinType coin) {
+    static char addr[512];
+    TWPrivateKey miliKey{TW::PrivateKey(key)};
+
+    const std::string& a = TW::deriveAddress(coin, miliKey.impl);
+    memcpy(addr, a.c_str(), a.size());
+    addr[a.size()] = 0;
+    return addr;
 }
 
 void TWAnyAddressDelete(struct TWAnyAddress* _Nonnull address) {
