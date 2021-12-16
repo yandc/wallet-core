@@ -12,7 +12,7 @@ CFLAGS = -std=c++17 $(OPTIMIZE)
 CFLAGS += -fexceptions
 CFLAGS += $(INCLUDE_FLAG)
 
-LDFLAGS = -fexceptions -s EXPORTED_FUNCTIONS='["_CppAddressCreateWithMiliKey", "_CppSignMili23", "_CppJsonTransactionMili23"]' -s EXPORTED_RUNTIME_METHODS='["ccall","cwrap"]'
+LDFLAGS = -fexceptions -s EXPORTED_FUNCTIONS='["_CppAddressCreateWithMiliKey", "_CppSignMili23", "_CppJsonTransactionMili23", "_TWStringSize", "_TWStringUTF8Bytes", "_TWStringDelete"]' -s EXPORTED_RUNTIME_METHODS='["ccall","cwrap"]'
 
 ifneq (v$(V),v1)
 	hide?=@
