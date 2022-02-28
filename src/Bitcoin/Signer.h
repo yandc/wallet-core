@@ -12,6 +12,7 @@
 #include <vector>
 #include <optional>
 #include <utility>
+#include <TrustWalletCore/TWCoinType.h>
 
 namespace TW::Bitcoin {
 
@@ -29,6 +30,9 @@ class Signer {
 
     /// Collect pre-image hashes to be signed
     static HashPubkeyList preImageHashes(const Proto::SigningInput& input) noexcept;
+
+    /// Signs a json Proto::SigningInput with private key
+    static std::string signJSON(TWCoinType coin, const std::string& json, const Data& key);
 };
 
 } // namespace TW::Bitcoin

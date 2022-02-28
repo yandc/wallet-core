@@ -71,7 +71,7 @@ Result<void, Common::Proto::SigningError> SignatureBuilder<Transaction>::sign(Sc
     uint32_t signatureVersion = [this]() {
         if ((input.hashType & TWBitcoinSigHashTypeFork) != 0) {
             return WITNESS_V0;
-        } 
+        }
         return BASE;
     }();
     auto result = signStep(script, index, utxo, signatureVersion);

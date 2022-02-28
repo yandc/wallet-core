@@ -40,6 +40,8 @@ public:
     virtual HashPubkeyList preImageHashes(TWCoinType coin, const Data& txInputData) const;
     virtual void compile(TWCoinType coin, const Data& txInputData, const std::vector<Data>& signatures, const std::vector<PublicKey>& publicKeys, Data& dataOut) const;
     // Note: buildTransactionInput is not implemented for Binance chain with UTXOs
+    virtual bool supportsJSONSigning() const { return true; }
+    virtual std::string signJSON(TWCoinType coin, const std::string& json, const Data& key) const;
 };
 
 } // namespace TW::Bitcoin

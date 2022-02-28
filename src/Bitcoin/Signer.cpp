@@ -10,6 +10,8 @@
 #include "Transaction.h"
 #include "TransactionBuilder.h"
 #include "TransactionSigner.h"
+#include <google/protobuf/util/json_util.h>
+#include "SigHashType.h"
 
 using namespace TW;
 using namespace TW::Bitcoin;
@@ -47,4 +49,13 @@ Proto::SigningOutput Signer::sign(const Proto::SigningInput &input, std::optiona
 
 HashPubkeyList Signer::preImageHashes(const Proto::SigningInput& input) noexcept {
     return TransactionSigner<Transaction, TransactionBuilder>::preImageHashes(input);
+}
+std::string Signer::signJSON(TWCoinType coin, const std::string& json, const Data& key) {
+    auto input = Proto::SigningInput();
+    google::protobuf::util::JsonStringToMessage(json, &input);
+    input.add_private_key(key.data(), key.size());
+    input.set_coin_type(coin);
+    input.set_hash_type(hashTypeForCoin(coin));
+    auto output = Signer::sign(input);
+    return hex(output.encoded());
 }

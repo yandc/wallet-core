@@ -65,6 +65,29 @@ const CoinInfo getCoinInfo(TWCoinType coin) {
                 "https://blockchair.com/bitcoin/address/",
                 0,
             };
+        case TWCoinTypeBitcoinTest:
+            return CoinInfo {
+                "bitcoin",
+                "Bitcoin",
+                TWBlockchainBitcoin,
+                TWPurposeBIP84,
+                TWCurveSECP256k1,
+                TWHDVersionZPUB,
+                TWHDVersionZPRV,
+                "m/84'/0'/0'/0/0",
+                TWPublicKeyTypeSECP256k1,
+                0,
+                111,
+                5,
+                TWHRPBitcoin,
+                Hash::sha256ripemd,
+                Hash::sha256d,
+                "BTC",
+                8,
+                "https://blockchair.com/bitcoin/transaction/",
+                "https://blockchair.com/bitcoin/address/",
+                0,
+            };
         case TWCoinTypeLitecoin:
             return CoinInfo {
                 "litecoin",

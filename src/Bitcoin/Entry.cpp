@@ -98,7 +98,11 @@ void Entry::sign(TWCoinType coin, const Data& dataIn, Data& dataOut) const {
     signTemplate<Signer, Proto::SigningInput>(dataIn, dataOut);
 }
 
-void Entry::plan(TWCoinType coin, const Data& dataIn, Data& dataOut) const {
+string Entry::signJSON(TWCoinType coin, const std::string& json, const Data& key) const {
+    return Signer::signJSON(coin, json, key);
+}
+
+void Entry::plan(TWCoinType coin, const TW::Data& dataIn, TW::Data& dataOut) const {
     planTemplate<Signer, Proto::SigningInput>(dataIn, dataOut);
 }
 
