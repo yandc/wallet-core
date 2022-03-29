@@ -39,6 +39,10 @@ struct TWAnyAddress* _Nonnull TWAnyAddressCreateWithPublicKey(struct TWPublicKey
 TW_EXPORT_STATIC_METHOD
 const char *_Nonnull CppAddressCreateWithMiliKey(const char *_Nonnull key, enum TWCoinType coin);
 
+/// Determines if the address is valid
+TW_EXPORT_STATIC_METHOD
+bool CppAddressIsValid(const char *_Nonnull address, enum TWCoinType coin);
+
 TW_EXPORT_METHOD
 void TWAnyAddressDelete(struct TWAnyAddress* _Nonnull address);
 

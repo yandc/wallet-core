@@ -54,6 +54,10 @@ const char*_Nonnull CppAddressCreateWithMiliKey(const char *_Nonnull key, enum T
     return addr;
 }
 
+bool CppAddressIsValid(const char *_Nonnull address, enum TWCoinType coin) {
+    return TW::validateAddress(coin, address);
+}
+
 void TWAnyAddressDelete(struct TWAnyAddress* _Nonnull address) {
     TWStringDelete(address->address);
     delete address;

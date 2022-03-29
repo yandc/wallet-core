@@ -10,9 +10,7 @@
 
 #include "TWData.h"
 
-typedef TWData *_Nonnull TW_Cosmos_Proto_Amount;
-typedef TWData *_Nonnull TW_Cosmos_Proto_Fee;
-typedef TWData *_Nonnull TW_Cosmos_Proto_Height;
-typedef TWData *_Nonnull TW_Cosmos_Proto_Message;
-typedef TWData *_Nonnull TW_Cosmos_Proto_SigningInput;
-typedef TWData *_Nonnull TW_Cosmos_Proto_SigningOutput;
+typedef TWData *_Nonnull TW_THORChainSwap_Proto_Error;
+typedef TWData *_Nonnull TW_THORChainSwap_Proto_Asset;
+typedef TWData *_Nonnull TW_THORChainSwap_Proto_SwapInput;
+typedef TWData *_Nonnull TW_THORChainSwap_Proto_SwapOutput;

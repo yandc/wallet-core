@@ -37,6 +37,8 @@ const char* stringForHRP(enum TWHRP hrp) {
         return HRP_ZILLIQA;
     case TWHRPTerra:
         return HRP_TERRA;
+    case TWHRPCryptoOrg:
+        return HRP_CRYPTOORG;
     case TWHRPKava:
         return HRP_KAVA;
     case TWHRPOasis:
@@ -49,6 +51,8 @@ const char* stringForHRP(enum TWHRP hrp) {
         return HRP_ELROND;
     case TWHRPBinance:
         return HRP_BINANCE;
+    case TWHRPECash:
+        return HRP_ECASH;
     case TWHRPTHORChain:
         return HRP_THORCHAIN;
     case TWHRPHarmony:
@@ -57,6 +61,8 @@ const char* stringForHRP(enum TWHRP hrp) {
         return HRP_CARDANO;
     case TWHRPQtum:
         return HRP_QTUM;
+    case TWHRPOsmosis:
+        return HRP_OSMOSIS;
     default: return nullptr;
     }
 }
@@ -86,6 +92,8 @@ enum TWHRP hrpForString(const char *_Nonnull string) {
         return TWHRPZilliqa;
     } else if (std::strcmp(string, HRP_TERRA) == 0) {
         return TWHRPTerra;
+    } else if (std::strcmp(string, HRP_CRYPTOORG) == 0) {
+        return TWHRPCryptoOrg;
     } else if (std::strcmp(string, HRP_KAVA) == 0) {
         return TWHRPKava;
     } else if (std::strcmp(string, HRP_OASIS) == 0) {
@@ -98,6 +106,8 @@ enum TWHRP hrpForString(const char *_Nonnull string) {
         return TWHRPElrond;
     } else if (std::strcmp(string, HRP_BINANCE) == 0) {
         return TWHRPBinance;
+    } else if (std::strcmp(string, HRP_ECASH) == 0) {
+        return TWHRPECash;
     } else if (std::strcmp(string, HRP_THORCHAIN) == 0) {
         return TWHRPTHORChain;
     } else if (std::strcmp(string, HRP_HARMONY) == 0) {
@@ -106,6 +116,8 @@ enum TWHRP hrpForString(const char *_Nonnull string) {
         return TWHRPCardano;
     } else if (std::strcmp(string, HRP_QTUM) == 0) {
         return TWHRPQtum;
+    } else if (std::strcmp(string, HRP_OSMOSIS) == 0) {
+        return TWHRPOsmosis;
     } else {
         return TWHRPUnknown;
     }

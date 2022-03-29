@@ -11,9 +11,12 @@
 #include "TWData.h"
 
 typedef TWData *_Nonnull TW_Solana_Proto_Transfer;
-typedef TWData *_Nonnull TW_Solana_Proto_Stake;
+typedef TWData *_Nonnull TW_Solana_Proto_DelegateStake;
 typedef TWData *_Nonnull TW_Solana_Proto_DeactivateStake;
+typedef TWData *_Nonnull TW_Solana_Proto_DeactivateAllStake;
 typedef TWData *_Nonnull TW_Solana_Proto_WithdrawStake;
+typedef TWData *_Nonnull TW_Solana_Proto_StakeAccountValue;
+typedef TWData *_Nonnull TW_Solana_Proto_WithdrawAllStake;
 typedef TWData *_Nonnull TW_Solana_Proto_CreateTokenAccount;
 typedef TWData *_Nonnull TW_Solana_Proto_TokenTransfer;
 typedef TWData *_Nonnull TW_Solana_Proto_CreateAndTransferToken;

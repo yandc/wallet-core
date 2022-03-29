@@ -21,7 +21,7 @@ Proto::SigningOutput Signer::sign(const Proto::SigningInput& input) noexcept {
     switch (input.signing_mode()) {
         case Proto::JSON:
             return signJsonSerialized(input);
-        
+
         case Proto::Protobuf:
         default:
             return signProtobuf(input);
@@ -69,6 +69,7 @@ std::string Signer::signJSON(const std::string& json, const Data& key) {
     auto input = Proto::SigningInput();
     google::protobuf::util::JsonStringToMessage(json, &input);
     input.set_private_key(key.data(), key.size());
+    input.set_signing_mode(Proto::Protobuf);
     auto output = Signer::sign(input);
-    return output.json();
+    return output.serialized();
 }

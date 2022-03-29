@@ -344,7 +344,7 @@ const CoinInfo getCoinInfo(TWCoinType coin) {
         case TWCoinTypeCosmos:
             return CoinInfo {
                 "cosmos",
-                "Cosmos",
+                "Cosmos Hub",
                 TWBlockchainCosmos,
                 TWPurposeBIP44,
                 TWCurveSECP256k1,
@@ -360,8 +360,8 @@ const CoinInfo getCoinInfo(TWCoinType coin) {
                 Hash::sha256d,
                 "ATOM",
                 6,
-                "https://www.mintscan.io/txs/",
-                "https://www.mintscan.io/account/",
+                "https://mintscan.io/cosmos/txs/",
+                "https://mintscan.io/cosmos/account/",
                 118,
             };
         case TWCoinTypeZcash:
@@ -387,9 +387,9 @@ const CoinInfo getCoinInfo(TWCoinType coin) {
                 "https://blockchair.com/zcash/address/",
                 133,
             };
-        case TWCoinTypeZcoin:
+        case TWCoinTypeFiro:
             return CoinInfo {
-                "zcoin",
+                "firo",
                 "Firo",
                 TWBlockchainBitcoin,
                 TWPurposeBIP44,
@@ -519,7 +519,7 @@ const CoinInfo getCoinInfo(TWCoinType coin) {
                 TWHRPUnknown,
                 Hash::sha256ripemd,
                 Hash::sha256d,
-                "NANO",
+                "XNO",
                 30,
                 "https://nanocrawler.cc/explorer/block/",
                 "https://nanocrawler.cc/explorer/account/",
@@ -751,8 +751,8 @@ const CoinInfo getCoinInfo(TWCoinType coin) {
                 Hash::sha256d,
                 "LUNA",
                 6,
-                "https://terra.stake.id/#/tx/",
-                "https://terra.stake.id/#/address/",
+                "https://finder.terra.money/tx/tx/",
+                "https://finder.terra.money/tx/address/",
                 330,
             };
         case TWCoinTypePolkadot:
@@ -777,6 +777,29 @@ const CoinInfo getCoinInfo(TWCoinType coin) {
                 "https://polkadot.subscan.io/extrinsic/",
                 "https://polkadot.subscan.io/account/",
                 354,
+            };
+        case TWCoinTypeCryptoOrg:
+            return CoinInfo {
+                "cryptoorg",
+                "Crypto.org",
+                TWBlockchainCosmos,
+                TWPurposeBIP44,
+                TWCurveSECP256k1,
+                TWHDVersionNone,
+                TWHDVersionNone,
+                "m/44'/394'/0'/0/0",
+                TWPublicKeyTypeSECP256k1,
+                0,
+                0,
+                0,
+                TWHRPCryptoOrg,
+                Hash::sha256ripemd,
+                Hash::sha256d,
+                "CRO",
+                8,
+                "https://crypto.org/explorer/tx/",
+                "https://crypto.org/explorer/account/",
+                394,
             };
         case TWCoinTypeNEAR:
             return CoinInfo {
@@ -889,8 +912,8 @@ const CoinInfo getCoinInfo(TWCoinType coin) {
                 Hash::sha256d,
                 "KAVA",
                 6,
-                "https://kava.mintscan.io/txs/",
-                "https://kava.mintscan.io/account/",
+                "https://mintscan.io/kava/txs/",
+                "https://mintscan.io/kava/account/",
                 459,
             };
         case TWCoinTypeFilecoin:
@@ -1165,9 +1188,32 @@ const CoinInfo getCoinInfo(TWCoinType coin) {
                 Hash::sha256d,
                 "TOMO",
                 18,
-                "https://scan.tomochain.com/txs/",
-                "https://scan.tomochain.com/address/",
+                "https://tomoscan.io/tx/",
+                "https://tomoscan.io/address/",
                 889,
+            };
+        case TWCoinTypeECash:
+            return CoinInfo {
+                "ecash",
+                "ECash",
+                TWBlockchainBitcoin,
+                TWPurposeBIP44,
+                TWCurveSECP256k1,
+                TWHDVersionXPUB,
+                TWHDVersionXPRV,
+                "m/44'/899'/0'/0/0",
+                TWPublicKeyTypeSECP256k1,
+                0,
+                0,
+                5,
+                TWHRPECash,
+                Hash::sha256ripemd,
+                Hash::sha256d,
+                "XEC",
+                2,
+                "https://explorer.bitcoinabc.org/tx/",
+                "https://explorer.bitcoinabc.org/address/",
+                899,
             };
         case TWCoinTypeTHORChain:
             return CoinInfo {
@@ -1468,6 +1514,29 @@ const CoinInfo getCoinInfo(TWCoinType coin) {
                 "https://explorer.runonflux.io/address/",
                 19167,
             };
+        case TWCoinTypeCelo:
+            return CoinInfo {
+                "celo",
+                "Celo",
+                TWBlockchainEthereum,
+                TWPurposeBIP44,
+                TWCurveSECP256k1,
+                TWHDVersionNone,
+                TWHDVersionNone,
+                "m/44'/60'/0'/0/0",
+                TWPublicKeyTypeSECP256k1Extended,
+                0,
+                0,
+                0,
+                TWHRPUnknown,
+                Hash::sha256ripemd,
+                Hash::sha256d,
+                "CELO",
+                18,
+                "https://explorer.celo.org/tx/",
+                "https://explorer.celo.org/address/",
+                52752,
+            };
         case TWCoinTypeWanchain:
             return CoinInfo {
                 "wanchain",
@@ -1514,6 +1583,29 @@ const CoinInfo getCoinInfo(TWCoinType coin) {
                 "https://wavesexplorer.com/address/",
                 5741564,
             };
+        case TWCoinTypeCronosChain:
+            return CoinInfo {
+                "cronos",
+                "Cronos Chain",
+                TWBlockchainEthereum,
+                TWPurposeBIP44,
+                TWCurveSECP256k1,
+                TWHDVersionNone,
+                TWHDVersionNone,
+                "m/44'/60'/0'/0/0",
+                TWPublicKeyTypeSECP256k1Extended,
+                0,
+                0,
+                0,
+                TWHRPUnknown,
+                Hash::sha256ripemd,
+                Hash::sha256d,
+                "CRO",
+                18,
+                "https://cronoscan.com/tx/",
+                "https://cronoscan.com/address/",
+                10000025,
+            };
         case TWCoinTypeOptimism:
             return CoinInfo {
                 "optimism",
@@ -1540,7 +1632,7 @@ const CoinInfo getCoinInfo(TWCoinType coin) {
         case TWCoinTypeXDai:
             return CoinInfo {
                 "xdai",
-                "xDai",
+                "Gnosis Chain",
                 TWBlockchainEthereum,
                 TWPurposeBIP44,
                 TWCurveSECP256k1,
@@ -1559,6 +1651,52 @@ const CoinInfo getCoinInfo(TWCoinType coin) {
                 "https://blockscout.com/xdai/mainnet/tx/",
                 "https://blockscout.com/xdai/mainnet/address/",
                 10000100,
+            };
+        case TWCoinTypeOsmosis:
+            return CoinInfo {
+                "osmosis",
+                "Osmosis",
+                TWBlockchainCosmos,
+                TWPurposeBIP44,
+                TWCurveSECP256k1,
+                TWHDVersionNone,
+                TWHDVersionNone,
+                "m/44'/118'/0'/0/0",
+                TWPublicKeyTypeSECP256k1,
+                0,
+                0,
+                0,
+                TWHRPOsmosis,
+                Hash::sha256ripemd,
+                Hash::sha256d,
+                "OSMO",
+                6,
+                "https://mintscan.io/osmosis/txs/",
+                "https://mintscan.io/osmosis/account/",
+                10000118,
+            };
+        case TWCoinTypeSmartBitcoinCash:
+            return CoinInfo {
+                "smartbch",
+                "Smart Bitcoin Cash",
+                TWBlockchainEthereum,
+                TWPurposeBIP44,
+                TWCurveSECP256k1,
+                TWHDVersionNone,
+                TWHDVersionNone,
+                "m/44'/60'/0'/0/0",
+                TWPublicKeyTypeSECP256k1Extended,
+                0,
+                0,
+                0,
+                TWHRPUnknown,
+                Hash::sha256ripemd,
+                Hash::sha256d,
+                "BCH",
+                18,
+                "https://www.smartscan.cash/tx/",
+                "https://www.smartscan.cash/address/",
+                10000145,
             };
         case TWCoinTypeFantom:
             return CoinInfo {
@@ -1628,6 +1766,29 @@ const CoinInfo getCoinInfo(TWCoinType coin) {
                 "https://bscscan.com/tx/",
                 "https://bscscan.com/address/",
                 714,
+            };
+        case TWCoinTypeRonin:
+            return CoinInfo {
+                "ronin",
+                "Ronin",
+                TWBlockchainEthereum,
+                TWPurposeBIP44,
+                TWCurveSECP256k1,
+                TWHDVersionNone,
+                TWHDVersionNone,
+                "m/44'/60'/0'/0/0",
+                TWPublicKeyTypeSECP256k1Extended,
+                0,
+                0,
+                0,
+                TWHRPUnknown,
+                Hash::sha256ripemd,
+                Hash::sha256d,
+                "RON",
+                18,
+                "https://explorer.roninchain.com/tx/",
+                "https://explorer.roninchain.com/address/",
+                60,
             };
         case TWCoinTypeAvalancheCChain:
             return CoinInfo {
@@ -1719,7 +1880,7 @@ std::vector<TWCoinType> TW::getCoinTypes() {
             TWCoinTypeICON,
             TWCoinTypeCosmos,
             TWCoinTypeZcash,
-            TWCoinTypeZcoin,
+            TWCoinTypeFiro,
             TWCoinTypeXRP,
             TWCoinTypeBitcoinCash,
             TWCoinTypeStellar,
@@ -1736,6 +1897,7 @@ std::vector<TWCoinType> TW::getCoinTypes() {
             TWCoinTypeZilliqa,
             TWCoinTypeTerra,
             TWCoinTypePolkadot,
+            TWCoinTypeCryptoOrg,
             TWCoinTypeNEAR,
             TWCoinTypeAion,
             TWCoinTypeKusama,
@@ -1753,6 +1915,7 @@ std::vector<TWCoinType> TW::getCoinTypes() {
             TWCoinTypeCallisto,
             TWCoinTypeNEO,
             TWCoinTypeTomoChain,
+            TWCoinTypeECash,
             TWCoinTypeTHORChain,
             TWCoinTypePolygon,
             TWCoinTypeThunderToken,
@@ -1766,13 +1929,18 @@ std::vector<TWCoinType> TW::getCoinTypes() {
             TWCoinTypeGoChain,
             TWCoinTypeNULS,
             TWCoinTypeZelcash,
+            TWCoinTypeCelo,
             TWCoinTypeWanchain,
             TWCoinTypeWaves,
+            TWCoinTypeCronosChain,
             TWCoinTypeOptimism,
             TWCoinTypeXDai,
+            TWCoinTypeOsmosis,
+            TWCoinTypeSmartBitcoinCash,
             TWCoinTypeFantom,
             TWCoinTypeECOChain,
             TWCoinTypeSmartChainLegacy,
+            TWCoinTypeRonin,
             TWCoinTypeAvalancheCChain,
             TWCoinTypeArbitrum,
             TWCoinTypeSmartChain,

@@ -226,7 +226,7 @@ static string broadcastMode(Proto::BroadcastMode mode) {
 }
 
 std::string buildProtoTxJson(const Proto::SigningInput& input, const std::string& serializedTx) {
-    const string serializedBase64 = Base64::encode(TW::data(serializedTx)); 
+    const string serializedBase64 = Base64::encode(TW::data(serializedTx));
     const json jsonSerialized = {
         {"tx_bytes", serializedBase64},
         {"mode", broadcastMode(input.mode())}
