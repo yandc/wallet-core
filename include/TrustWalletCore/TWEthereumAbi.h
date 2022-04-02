@@ -69,4 +69,6 @@ TWString* _Nullable TWEthereumAbiDecodeCall(TWData* _Nonnull data, TWString* _No
 TW_EXPORT_STATIC_METHOD
 TWData* _Nonnull TWEthereumAbiEncodeTyped(TWString* _Nonnull messageJson);
 
+TWString *_Nonnull CppDecodeEvmCall(const char *_Nonnull callData, const char *_Nonnull standard);
+
 TW_EXTERN_C_END

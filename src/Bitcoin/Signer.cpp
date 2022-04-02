@@ -57,5 +57,8 @@ std::string Signer::signJSON(TWCoinType coin, const std::string& json, const Dat
     input.set_coin_type(coin);
     input.set_hash_type(hashTypeForCoin(coin));
     auto output = Signer::sign(input);
+    if(output.error() != Common::Proto::OK) {
+        std::cout << "sign transaction error: " << output.error() << std::endl;
+    }
     return hex(output.encoded());
 }

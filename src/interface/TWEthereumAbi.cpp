@@ -45,7 +45,7 @@ bool TWEthereumAbiDecodeOutput(struct TWEthereumAbiFunction* _Nonnull func_in,
 TWString* _Nullable TWEthereumAbiDecodeCall(TWData* _Nonnull callData, TWString* _Nonnull abiString) {
     const Data& call = *(reinterpret_cast<const Data*>(callData));
     const auto& jsonString = *reinterpret_cast<const std::string*>(abiString);
-    try {     
+    try {
         auto abi = nlohmann::json::parse(jsonString);
         auto string = decodeCall(call, abi);
         if (!string.has_value()) {
@@ -64,4 +64,17 @@ TWData* _Nonnull TWEthereumAbiEncodeTyped(TWString* _Nonnull messageJson) {
         data = ParamStruct::hashStructJson(TWStringUTF8Bytes(messageJson));
     } catch (...) {} // return empty
     return TWDataCreateWithBytes(data.data(), data.size());
+}
+
+TWString *_Nonnull CppDecodeEvmCall(const char *_Nonnull callData, const char *_Nonnull standard) {
+    const std::string erc20Abi = R"({
+            "a9059cbb": {"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transfer","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},
+            "095ea7b3": {"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"}],"name":"approve","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},
+            "23b872dd": {"constant":false,"inputs":[{"name":"_from","type":"address"},{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transferFrom","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"}
+        })";
+    if(strcmp(standard, "erc20") == 0) {
+        Data data = parse_hex(callData);
+        return TWEthereumAbiDecodeCall(&data, &erc20Abi);
+    }
+    return "";
 }
