@@ -66,15 +66,15 @@ TWData* _Nonnull TWEthereumAbiEncodeTyped(TWString* _Nonnull messageJson) {
     return TWDataCreateWithBytes(data.data(), data.size());
 }
 
-TWString *_Nonnull CppDecodeEvmCall(const char *_Nonnull callData, const char *_Nonnull standard) {
-    const std::string erc20Abi = R"({
+TWString *_Nonnull CppDecodeEvmCall(const char *_Nonnull callData) {
+    const std::string abi = R"({
             "a9059cbb": {"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transfer","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},
             "095ea7b3": {"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"}],"name":"approve","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},
-            "23b872dd": {"constant":false,"inputs":[{"name":"_from","type":"address"},{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transferFrom","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"}
+            "23b872dd": {"constant":false,"inputs":[{"name":"_from","type":"address"},{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transferFrom","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},
+            "a22cb465": {"constant":false,"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"bool","name":"approved","type":"bool"}],"name":"setApprovalForAll","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},
+            "42842e0e": {"constant":false,"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"safeTransferFrom","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},
+            "b88d4fde": {"constant":false,"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"},{"internalType":"bytes","name":"_data","type":"bytes"}],"name":"safeTransferFrom","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"}
         })";
-    if(strcmp(standard, "erc20") == 0) {
-        Data data = parse_hex(callData);
-        return TWEthereumAbiDecodeCall(&data, &erc20Abi);
-    }
-    return "";
+    Data data = parse_hex(callData);
+    return TWEthereumAbiDecodeCall(&data, &abi);
 }
