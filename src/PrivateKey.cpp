@@ -95,7 +95,6 @@ PrivateKey::PrivateKey(const Data& data) {
         bytes = data;
         if(isMiliKey) {//确保mili碎片json串以0结尾
             bytes.push_back(0);
-            bytes.pop_back();
         }
     }
 }
