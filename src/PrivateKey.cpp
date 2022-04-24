@@ -20,7 +20,10 @@
 #include <TrezorCrypto/sodium/keypair.h>
 
 #include <iterator>
+
+#ifdef PLATFORM_WEB
 #include <emscripten/emscripten.h>
+#endif
 
 using namespace TW;
 
@@ -194,20 +197,42 @@ int ecdsa_sign_digest_checked(const ecdsa_curve *curve, const uint8_t *priv_key,
     return ecdsa_sign_digest(curve, priv_key, digest, sig, pby, is_canonical);
 }
 
+#ifdef PLATFORM_WEB
 /*
-* 调用js签名函数，对msg进行签名，msg为32字节的十六进制串
+* 调用js签名函数，对msg进行签名，msg为十六进制串
 */
 EM_JS(int, SignMili23, (const char* curve, const byte* key, const char* msg, const byte* sig, int sigLen), {
-    let sigAry = JsSignMessageMili23(UTF8ToString(curve), UTF8ToString(key), UTF8ToString(msg));
-    if (sigAry == null) {
+    let sigHex = JsSignMessageMili23(UTF8ToString(curve), UTF8ToString(key), UTF8ToString(msg));
+    if (!sigHex) {
         return 1;
-    } else {
-        for (let i = 0; i < sigLen; i++) {
-            HEAP8[sig+i] = sigAry[i];
-        }
-        return 0;
     }
+    for (let i = 0; i < sigLen; i++) {
+        HEAP8[sig+i] = parseInt(sigHex.substr(i*2, 2), 16)
+    }
+    return 0;
 });
+
+#else
+
+extern "C" {
+    extern const char* GoSignMili23(const char* curve, const char* key, const char* msg);
+}
+
+/*
+* 调用tsslib导出签名函数，对msg签名，msg为十六进制串
+*/
+int SignMili23(const char* curve, const byte* key, const char* msg, byte* sig, int sigLen) {
+    const char* sigAry = GoSignMili23(curve, (const char*)key, msg);
+    if(sigAry == NULL) {
+        return 1;
+    }
+    for(int i = 0; i < sigLen; i++) {
+        sig[i] = sigAry[i];
+    }
+    return 0;
+}
+
+#endif
 
 Data PrivateKey::sign(const Data& digest, TWCurve curve) const {
     Data result;
