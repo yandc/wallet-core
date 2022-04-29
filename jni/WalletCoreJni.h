@@ -71,6 +71,38 @@ JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_SignMili23
 JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_SignMessageMili23
   (JNIEnv *, jobject, jstring, jstring, jstring);
 
+/*
+ * Class:     com_openblock_wallet_jni_WalletCore
+ * Method:    SetRequestEnv
+ * Signature: (Ljava/lang/String;)V
+ */
+JNIEXPORT void JNICALL Java_com_openblock_wallet_jni_WalletCore_SetRequestEnv
+  (JNIEnv *, jobject, jstring);
+
+/*
+ * Class:     com_openblock_wallet_jni_WalletCore
+ * Method:    GwRequest
+ * Signature: (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+ */
+JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_GwRequest
+  (JNIEnv *, jobject, jstring, jstring, jstring, jstring, jstring);
+
+/*
+ * Class:     com_openblock_wallet_jni_WalletCore
+ * Method:    BuildRequest
+ * Signature: (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+ */
+JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_BuildRequest
+  (JNIEnv *, jobject, jstring, jstring, jstring, jstring, jstring, jstring);
+
+/*
+ * Class:     com_openblock_wallet_jni_WalletCore
+ * Method:    LandResponse
+ * Signature: (Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+ */
+JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_LandResponse
+  (JNIEnv *, jobject, jstring, jstring);
+
 #ifdef __cplusplus
 }
 #endif

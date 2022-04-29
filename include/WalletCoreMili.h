@@ -34,6 +34,43 @@ extern const char* GoReshareMili23(const char* curve, const char* session, const
 extern const char* GoSignMili23(const char* curve, const char* key, const char* msg);
 
 /*
+* 设置请求环境变量(json)
+* @params: {"server":"", "gw_server":"", "token":"", "secret":"", "public_key":"", "cert_sn":""}
+*/
+extern void GoSetRequestEnv(const char* jsonEnv);
+
+/*
+* 发送网关请求
+* @method: POST/GET
+* @header: 请求header，json字典
+* @path: 请求路径
+* @params: json结构[{"k":"参数名", "v":"参数值", "sign_it": true}], 如果一些参数不参与签名，sign_it为false
+* @payload: 请求body，如果params传空，则解析payload并在其中添加sign后做为body
+* 返回：请求结果
+*/
+extern const char* GoGwRequest(const char* method, const char* header, const char* path, const char* params, const char* payload);
+
+/*
+* 构建网关请求【将GwRequest拆分为构建、发送、解密三个步骤】
+* @aesKey: 加密密钥
+* @method: POST/GET
+* @header: 同上
+* @path: 同上
+* @params: 同上
+* @payload: 同上
+* 返回：待发送POST请求的body
+*/
+extern const char* GoBuildRequest(const char* aesKey, const char* method, const char* header, const char* path, const char* params, const char* payload);
+
+/*
+* 解密网关返回结果
+* @aesKey: 对应GoBuildRequest中的加密密钥
+* @enResp: 网关返回data
+* 返回：请求结果
+*/
+extern const char* GoLandResponse(const char* aesKey, const char* enResp);
+
+/*
 * 地址创建
 * @key: 本地私钥碎片
 * @coinId: 链配置中的coinId

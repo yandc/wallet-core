@@ -10,6 +10,10 @@ extern "C" {
   extern const char* GoCreateMili23(const char* curve, const char* session, const char* preParam);
   extern const char* GoSignMili23(const char* curve, const char* key, const char* msg);
   extern const char* GoReshareMili23(const char* curve, const char* session, const char* localkey, const char* preParam);
+  extern void GoSetRequestEnv(const char* jsonEnv);
+  extern const char* GoGwRequest(const char* method, const char* header, const char* path, const char* params, const char* payload);
+  extern const char* GoBuildRequest(const char* aesKey, const char* method, const char* header, const char* path, const char* params, const char* payload);
+  extern const char* GoLandResponse(const char* aesKey, const char* enResp);
 }
 
 JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_CreateMili23(JNIEnv *env, jobject jthis, jstring curveJstr, jstring sessionJstr, jstring preParamJstr)
@@ -103,6 +107,68 @@ JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_SignMessageMi
   env->ReleaseStringUTFChars(curveJstr, curve);
   env->ReleaseStringUTFChars(keyJstr, key);
   env->ReleaseStringUTFChars(msgJstr, msg);
+  jstring ret = env->NewStringUTF(goRet);
+  free((void*)goRet);
+  return ret;
+}
+
+JNIEXPORT void JNICALL Java_com_openblock_wallet_jni_WalletCore_SetRequestEnv
+  (JNIEnv *env, jobject jthis, jstring jsonEnvJstr)
+{
+  const char* jsonEnv = env->GetStringUTFChars(jsonEnvJstr, NULL);
+  GoSetRequestEnv(jsonEnv);
+  env->ReleaseStringUTFChars(jsonEnvJstr, jsonEnv);
+}
+
+JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_GwRequest
+  (JNIEnv *env, jobject jthis, jstring methodJstr, jstring headerJstr, jstring pathJstr, jstring paramsJstr, jstring payloadJstr)
+{
+  const char* method = env->GetStringUTFChars(methodJstr, NULL);
+  const char* header = env->GetStringUTFChars(headerJstr, NULL);
+  const char* path = env->GetStringUTFChars(pathJstr, NULL);
+  const char* params = env->GetStringUTFChars(paramsJstr, NULL);
+  const char* payload = env->GetStringUTFChars(payloadJstr, NULL);
+  const char* goRet = GoGwRequest(method, header, path, params, payload);
+  env->ReleaseStringUTFChars(methodJstr, method);
+  env->ReleaseStringUTFChars(headerJstr, header);
+  env->ReleaseStringUTFChars(pathJstr, path);
+  env->ReleaseStringUTFChars(paramsJstr, params);
+  env->ReleaseStringUTFChars(payloadJstr, payload);
+  jstring ret = env->NewStringUTF(goRet);
+  free((void*)goRet);
+  return ret;
+}
+
+JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_BuildRequest
+  (JNIEnv *env, jobject jthis, jstring aesKeyJstr, jstring methodJstr, jstring headerJstr, jstring pathJstr, jstring paramsJstr, jstring payloadJstr)
+{
+  const char* aesKey = env->GetStringUTFChars(aesKeyJstr, NULL);
+  const char* method = env->GetStringUTFChars(methodJstr, NULL);
+  const char* header = env->GetStringUTFChars(headerJstr, NULL);
+  const char* path = env->GetStringUTFChars(pathJstr, NULL);
+  const char* params = env->GetStringUTFChars(paramsJstr, NULL);
+  const char* payload = env->GetStringUTFChars(payloadJstr, NULL);
+  const char* goRet = GoBuildRequest(aesKey, method, header, path, params, payload);
+  env->ReleaseStringUTFChars(aesKeyJstr, aesKey);
+  env->ReleaseStringUTFChars(methodJstr, method);
+  env->ReleaseStringUTFChars(headerJstr, header);
+  env->ReleaseStringUTFChars(pathJstr, path);
+  env->ReleaseStringUTFChars(paramsJstr, params);
+  env->ReleaseStringUTFChars(payloadJstr, payload);
+  jstring ret = env->NewStringUTF(goRet);
+  free((void*)goRet);
+  return ret;
+}
+
+
+JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_LandResponse
+  (JNIEnv *env, jobject jthis, jstring aesKeyJstr, jstring enRespJstr)
+{
+  const char* aesKey = env->GetStringUTFChars(aesKeyJstr, NULL);
+  const char* enResp = env->GetStringUTFChars(enRespJstr, NULL);
+  const char* goRet = GoLandResponse(aesKey, enResp);
+  env->ReleaseStringUTFChars(aesKeyJstr, aesKey);
+  env->ReleaseStringUTFChars(enRespJstr, enResp);
   jstring ret = env->NewStringUTF(goRet);
   free((void*)goRet);
   return ret;
