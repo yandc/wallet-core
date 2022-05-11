@@ -65,7 +65,7 @@ else ifeq ($(OS),ios)
 else ifeq ($(OS),android)
 	CFLAGS += -fPIC -Ijni/ -I/Library/Java/JavaVirtualMachines/jdk-18.jdk/Contents/Home/include/ -I/Library/Java/JavaVirtualMachines/jdk-18.jdk/Contents/Home/include/darwin/
 	TARGET ?= $(BIN_PATH)/wallet_core.$(OS).$(ARCH).so
-	LDFLAGS = -fexceptions -L./build/lib/ -ltss_mili -lc++
+	LDFLAGS = -fexceptions -L./build/lib/ -lgo_mili -lc++
 endif
 
 all:begin prepare build finish
