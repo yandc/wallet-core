@@ -19,6 +19,8 @@ class Signer {
 
     /// Signs the given transaction.
     static Proto::SigningOutput sign(const Proto::SigningInput& input) noexcept;
+    /// Signs a json Proto::SigningInput with private key
+    static std::string signJSON(const std::string& json, const Data& key);
 };
 
 } // namespace TW::Tron

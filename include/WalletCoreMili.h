@@ -35,7 +35,7 @@ extern const char* GoSignMili23(const char* curve, const char* key, const char* 
 
 /*
 * 设置请求环境变量(json)
-* @params: {"server":"", "gw_server":"", "token":"", "secret":"", "public_key":"", "cert_sn":""}
+* @params: {"server":"", "gw_server":"", "token":"", "secret":"", "cert":"", "cert_sn":""}
 */
 extern void GoSetRequestEnv(const char* jsonEnv);
 

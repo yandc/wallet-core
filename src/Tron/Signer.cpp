@@ -7,6 +7,7 @@
 #include "Signer.h"
 
 #include "Protobuf/TronInternal.pb.h"
+#include <google/protobuf/util/json_util.h>
 
 #include "../Base58.h"
 #include "../BinaryCoding.h"
@@ -324,4 +325,12 @@ Proto::SigningOutput Signer::sign(const Proto::SigningInput& input) noexcept {
     output.set_json(json.data(), json.size());
 
     return output;
+}
+
+std::string Signer::signJSON(const std::string& json, const Data& key) {
+    auto input = Proto::SigningInput();
+    google::protobuf::util::JsonStringToMessage(json, &input);
+    input.set_private_key(key.data(), key.size());
+    auto output = Signer::sign(input);
+    return output.json();
 }

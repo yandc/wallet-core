@@ -56,7 +56,7 @@ ALL_OBJECTS += $(addsuffix .o,$(addprefix build/trezor-crypto/$(OS)/$(ARCH)/,$(b
 
 ifeq ($(OS),web)
 	TARGET ?= $(BIN_PATH)/MiliWalletCore.js
-	LDFLAGS = -fexceptions -s EXPORTED_FUNCTIONS='["_CppAddressCreateWithMiliKey", "_CppAddressIsValid", "_CppDecodeEvmCall", "_CppSignMili23", "_CppJsonTransactionMili23", "_TWStringSize", "_TWStringUTF8Bytes", "_TWStringDelete"]' -s EXPORTED_RUNTIME_METHODS='["ccall","cwrap"]'
+	LDFLAGS = -fexceptions -s EXPORTED_FUNCTIONS='["_CppAddressCreateWithMiliKey", "_CppAddressIsValid", "_CppDecodeEvmCall", "_CppSignMili23", "_CppJsonTransactionMili23", "_TWStringSize", "_TWStringUTF8Bytes", "_TWStringDelete", "_TWStringCreateWithUTF8Bytes", "_TWAnySignerSignJSON", "_TWDataCreateWithHexString"]' -s EXPORTED_RUNTIME_METHODS='["ccall","cwrap"]'
 
 else ifeq ($(OS),ios)
 	TARGET ?= $(BIN_PATH)/wallet_core.$(OS).$(ARCH).a

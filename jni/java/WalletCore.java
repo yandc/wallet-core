@@ -60,7 +60,7 @@ public class WalletCore
 
     /*
     * 设置请求环境变量(json)
-    * @jsonEnv: {"server":"", "gw_server":"", "token":"", "secret":"", "public_key":"", "cert_sn":""}
+    * @jsonEnv: {"server":"", "gw_server":"", "token":"", "secret":"", "cert":"", "cert_sn":""}
     */
     public native void SetRequestEnv(String jsonEnv);
 
