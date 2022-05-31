@@ -870,6 +870,29 @@ const CoinInfo getCoinInfo(TWCoinType coin) {
                 "https://kusama.subscan.io/account/",
                 434,
             };
+        case TWCoinTypeStarcoin:
+            return CoinInfo {
+                "starcoin",
+                "Starcoin",
+                TWBlockchainPolkadot,
+                TWPurposeBIP44,
+                TWCurveED25519,
+                TWHDVersionNone,
+                TWHDVersionNone,
+                "m/44'/434'/0'/0'/0'",
+                TWPublicKeyTypeED25519,
+                0,
+                0,
+                0,
+                TWHRPUnknown,
+                Hash::sha256ripemd,
+                Hash::sha256d,
+                "STC",
+                12,
+                "",
+                "",
+                101010,
+            };
         case TWCoinTypeAeternity:
             return CoinInfo {
                 "aeternity",

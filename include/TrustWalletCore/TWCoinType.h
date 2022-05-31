@@ -101,6 +101,7 @@ enum TWCoinType {
     TWCoinTypeECash = 899,
     TWCoinTypeCronosChain = 10000025,
     TWCoinTypeSmartBitcoinCash = 10000145,
+    TWCoinTypeStarcoin = 101010,
 };
 
 /// Returns the blockchain for a coin type.
