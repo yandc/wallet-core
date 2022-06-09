@@ -10,6 +10,8 @@ extern "C" {
   extern const char* GoCreateMili23(const char* curve, const char* session, const char* preParam);
   extern const char* GoSignMili23(const char* curve, const char* key, const char* msg);
   extern const char* GoReshareMili23(const char* curve, const char* session, const char* localkey, const char* preParam);
+  extern const char* GoDecryptShareKey(const char* userId, const char* accountId, const char* enKey);
+  extern const char* GoEncryptShareKey(const char* userId, const char* accountId, const char* deKey);
   extern void GoSetRequestEnv(const char* jsonEnv);
   extern const char* GoGwRequest(const char* method, const char* header, const char* path, const char* params, const char* payload);
   extern const char* GoBuildRequest(const char* aesKey, const char* method, const char* header, const char* path, const char* params, const char* payload);
@@ -122,6 +124,37 @@ JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_SignMessageMi
   free((void*)goRet);
   return ret;
 }
+
+JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_DecryptShareKey
+  (JNIEnv *env, jobject jthis, jstring arg1Jstr, jstring arg2Jstr, jstring arg3Jstr)
+{
+  const char* arg1 = env->GetStringUTFChars(arg1Jstr, NULL);
+  const char* arg2 = env->GetStringUTFChars(arg2Jstr, NULL);
+  const char* arg3 = env->GetStringUTFChars(arg3Jstr, NULL);
+  const char* goRet = GoDecryptShareKey(arg1, arg2, arg3);
+  env->ReleaseStringUTFChars(arg1Jstr, arg1);
+  env->ReleaseStringUTFChars(arg2Jstr, arg2);
+  env->ReleaseStringUTFChars(arg3Jstr, arg3);
+  jstring ret = env->NewStringUTF(goRet);
+  free((void*)goRet);
+  return ret;
+}
+
+JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_EncryptShareKey
+  (JNIEnv *env, jobject jthis, jstring arg1Jstr, jstring arg2Jstr, jstring arg3Jstr)
+{
+  const char* arg1 = env->GetStringUTFChars(arg1Jstr, NULL);
+  const char* arg2 = env->GetStringUTFChars(arg2Jstr, NULL);
+  const char* arg3 = env->GetStringUTFChars(arg3Jstr, NULL);
+  const char* goRet = GoEncryptShareKey(arg1, arg2, arg3);
+  env->ReleaseStringUTFChars(arg1Jstr, arg1);
+  env->ReleaseStringUTFChars(arg2Jstr, arg2);
+  env->ReleaseStringUTFChars(arg3Jstr, arg3);
+  jstring ret = env->NewStringUTF(goRet);
+  free((void*)goRet);
+  return ret;
+}
+
 
 JNIEXPORT void JNICALL Java_com_openblock_wallet_jni_WalletCore_SetRequestEnv
   (JNIEnv *env, jobject jthis, jstring jsonEnvJstr)

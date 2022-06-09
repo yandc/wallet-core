@@ -73,6 +73,22 @@ JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_SignMessageMi
 
 /*
  * Class:     com_openblock_wallet_jni_WalletCore
+ * Method:    DecryptShareKey
+ * Signature: (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+ */
+JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_DecryptShareKey
+  (JNIEnv *, jobject, jstring, jstring, jstring);
+
+/*
+ * Class:     com_openblock_wallet_jni_WalletCore
+ * Method:    EncryptShareKey
+ * Signature: (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+ */
+JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_EncryptShareKey
+  (JNIEnv *, jobject, jstring, jstring, jstring);
+
+/*
+ * Class:     com_openblock_wallet_jni_WalletCore
  * Method:    SetRequestEnv
  * Signature: (Ljava/lang/String;)V
  */

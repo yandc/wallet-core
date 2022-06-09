@@ -59,6 +59,24 @@ public class WalletCore
     public native String SignMessageMili23(String curve, String key, String msg);
 
     /*
+    * 私钥分片解密
+    * @userId: 用户Id
+    * @accountId: 私钥对应accountId
+    * @deKey: 密文
+    * 返回：解密结果
+    */
+    public native String DecryptShareKey(String userId, String accountId, String enKey);
+
+    /*
+    * 私钥分片加密
+    * @userId: 同上
+    * @accountId: 同上
+    * @deKey: 明文
+    * 返回：加密结果
+    */
+    public native String EncryptShareKey(String userId, String accountId, String deKey);
+
+    /*
     * 设置请求环境变量(json)
     * @jsonEnv: {"server":"", "gw_server":"", "token":"", "secret":"", "cert":"", "cert_sn":""}
     */

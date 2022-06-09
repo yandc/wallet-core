@@ -34,6 +34,24 @@ extern const char* GoReshareMili23(const char* curve, const char* session, const
 extern const char* GoSignMili23(const char* curve, const char* key, const char* msg);
 
 /*
+* 私钥分片解密
+* @userId: 用户Id
+* @accountId: 私钥对应accountId
+* @deKey: 密文
+* 返回：解密结果
+*/
+extern const char* GoDecryptShareKey(const char* userId, const char* accountId, const char* enKey);
+
+/*
+* 私钥分片加密
+* @userId: 同上
+* @accountId: 同上
+* @deKey: 明文
+* 返回：加密结果
+*/
+extern const char* GoEncryptShareKey(const char* userId, const char* accountId, const char* deKey);
+
+/*
 * 设置请求环境变量(json)
 * @params: {"server":"", "gw_server":"", "token":"", "secret":"", "cert":"", "cert_sn":""}
 */
