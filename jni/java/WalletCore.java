@@ -28,6 +28,14 @@ public class WalletCore
     public native String GetAddress(String key, int coinId);
 
     /*
+    * 获取公钥
+    * @key: 本地私钥碎片
+    * @coinId: 链配置中的coinId
+    * 返回：公钥hex串
+    */
+    public native String GetPublicKey(String key, int coinId);
+
+    /*
     * 地址校验
     */
     public native boolean VerifyAddress(String address, int coinId);
@@ -115,12 +123,11 @@ public class WalletCore
 
     /*===============以下是链上信息获取接口==================*/
     /*
-    chaindata_setClient设置rpc连接
-    handler：链名称
-    chainType：链的分类，是main还是type
-    nodeURL：rpc
+    chaindata_initChainConfig下发链配置，初始化SDK之后，需要先调用一下
+    chainConfig:是链配置数组的字符串
+    chainConfig例子：[{"chain_type":"EVM","chain":"ETH","proxy_key":"gasOracleETH","rpc_urls":["https://mainnet.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161","https://web3os.tokenpocket.pro"],"proxy_cache_time":15}]
     */
-    public native void chaindata_setClient(String handler, String chainType, String nodeURL);
+    public native void chaindata_initChainConfig(String chainConfig);
 
     /*
     chaindata_getEIP1559TokenParams获取eip1559 token交易参数
@@ -128,19 +135,21 @@ public class WalletCore
     fromAddress：发送地址
     toAddress：接受地址
     tokenAddress：token地址
+    tpe:approve或者transfer
     返回：交易参数，返回结果类型是map[string]interface{}的json字符串，value中可能也包含map结构
     */
-    public native String chaindata_getEIP1559TokenParams(String handler, String fromAddress, String toAddress, String tokenAddress);
+    public native String chaindata_getEIP1559TokenParams(String chain, String fromAddress, String toAddress, String tokenAddress, String tpe);
 
     /*
     chaindata_getTokenTxParams获取token交易参数
-    handler：链名称
+    chain：链名称
     fromAddress：发送地址
     toAddress：接受地址
     tokenAddress：token地址
+    tpe:approve或者transfer
     返回：交易参数，返回结果类型是map[string]interface{}的json字符串，value中可能也包含map结构
     */
-    public native String chaindata_getTokenTxParams(String handler, String fromAddress, String toAddress, String tokenAddress);
+    public native String chaindata_getTokenTxParams(String chain, String fromAddress, String toAddress, String tokenAddress, String tpe);
 
     /*
     chaindata_getTxParams获取交易参数
@@ -148,7 +157,7 @@ public class WalletCore
     fromAddress：发送地址
     返回：交易参数，返回结果类型是map[string]interface{}的json的字符串，value中可能也包含map结构
     */
-    public native String chaindata_getTxParams(String handler, String fromAddress);
+    public native String chaindata_getTxParams(String chain, String fromAddress);
 
     /*
     chaindata_getSTCTxParams获取stc交易参数
@@ -159,7 +168,7 @@ public class WalletCore
     typeArgs：代币地址
     返回：交易参数，返回结果类型是map[string]interface{}的json字符串，value中可能也包含map结构
     */
-    public native String chaindata_getSTCTxParams(String handler, String fromAddress, String toAddress, String publicKey, String typeArgs);
+    public native String chaindata_getSTCTxParams(String chain, String fromAddress, String toAddress, String publicKey, String typeArgs);
 
     /*
     chaindata_getEIP1559TxParams获取eip1559交易参数
@@ -167,7 +176,7 @@ public class WalletCore
     fromAddress：发送地址
     返回：交易参数，返回结果类型是map[string]interface{}的json字符串，value中可能也包含map结构
     */
-    public native String chaindata_getEIP1559TxParams(String handler, String fromAddress);
+    public native String chaindata_getEIP1559TxParams(String chain, String fromAddress);
 
     /*
     chaindata_getTokenType获取token信息
@@ -175,7 +184,7 @@ public class WalletCore
     tokenAddress：token地址的数组的json字符串
     返回：token信息，返回结果类型是map[tokenAddress]tokenInfo的json字符串;tokenInfo是map[string]string
     */
-    public native String chaindata_getTokenType(String handler, String tokenAddress);
+    public native String chaindata_getTokenType(String chain, String tokenAddress);
 
     /*
     chaindata_sendRawTransaction发送交易
@@ -183,7 +192,7 @@ public class WalletCore
     rawTx：交易数据
     返回：交易hash
     */
-    public native String chaindata_sendRawTransaction(String handler, String rawTx);
+    public native String chaindata_sendRawTransaction(String chain, String rawTx);
 
     /*
     chaindata_getTransaction获取交易信息
@@ -192,7 +201,7 @@ public class WalletCore
     txHashs: 交易hash的数组的json字符串
     返回：交易hash信息，返回结构是map[txhash]txInfo的json字符串;txInfo是map[string]string
     */
-    public native String chaindata_getTransaction(String handler, String address, String txHashs);
+    public native String chaindata_getTransaction(String chain, String address, String txHashs);
 
     /*
     chaindata_allBalance获取当前链的所有地址的所有币种的余额
@@ -200,7 +209,7 @@ public class WalletCore
     address：当前链的所有地址，结构是map[address]map[contract][decimals]的json字符串
     返回：返回结构是map[address:map[{address:balance, token1:balance}]]的json字符串
     */
-    public native String chaindata_allBalance(String handler, String address);
+    public native String chaindata_allBalance(String chain, String address);
 
     public static void main(String[] args) {
         System.loadLibrary("wallet_core.android.arm64.a"); //载入本地库

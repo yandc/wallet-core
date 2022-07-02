@@ -257,6 +257,7 @@ const char* TW::anySignMessage(TWCoinType coinType, const std::string& msg, cons
     for(int i = 0; i < sign.size(); i++) {
         sprintf(sig+i*2, "%02x", sign[i]);
     }
+    sig[sign.size()*2] = 0;
     return sig;
 }
 

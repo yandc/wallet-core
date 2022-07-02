@@ -33,6 +33,14 @@ JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_GetAddress
 
 /*
  * Class:     com_openblock_wallet_jni_WalletCore
+ * Method:    GetPublicKey
+ * Signature: (Ljava/lang/String;I)Ljava/lang/String;
+ */
+JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_GetPublicKey
+  (JNIEnv *, jobject, jstring, jint);
+
+/*
+ * Class:     com_openblock_wallet_jni_WalletCore
  * Method:    VerifyAddress
  * Signature: (Ljava/lang/String;I)Z
  */
@@ -121,27 +129,27 @@ JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_LandResponse
 
 /*
  * Class:     com_openblock_wallet_jni_WalletCore
- * Method:    chaindata_setClient
- * Signature: (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+ * Method:    chaindata_initChainConfig
+ * Signature: (Ljava/lang/String;)V
  */
-JNIEXPORT void JNICALL Java_com_openblock_wallet_jni_WalletCore_chaindata_1setClient
-  (JNIEnv *, jobject, jstring, jstring, jstring);
+JNIEXPORT void JNICALL Java_com_openblock_wallet_jni_WalletCore_chaindata_1initChainConfig
+  (JNIEnv *, jobject, jstring);
 
 /*
  * Class:     com_openblock_wallet_jni_WalletCore
  * Method:    chaindata_getEIP1559TokenParams
- * Signature: (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+ * Signature: (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
  */
 JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_chaindata_1getEIP1559TokenParams
-  (JNIEnv *, jobject, jstring, jstring, jstring, jstring);
+  (JNIEnv *, jobject, jstring, jstring, jstring, jstring, jstring);
 
 /*
  * Class:     com_openblock_wallet_jni_WalletCore
  * Method:    chaindata_getTokenTxParams
- * Signature: (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+ * Signature: (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
  */
 JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_chaindata_1getTokenTxParams
-  (JNIEnv *, jobject, jstring, jstring, jstring, jstring);
+  (JNIEnv *, jobject, jstring, jstring, jstring, jstring, jstring);
 
 /*
  * Class:     com_openblock_wallet_jni_WalletCore

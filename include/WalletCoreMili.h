@@ -97,6 +97,14 @@ extern const char* GoLandResponse(const char* aesKey, const char* enResp);
 extern const char* CppAddressCreateWithMiliKey(const char * key, int coinId);
 
 /*
+* 获取公钥
+* @key: 本地私钥碎片
+* @coinId: 链配置中的coinId
+* 返回：公钥hex串
+*/
+extern const char* CppPublicKeyWithMiliKey(const char * key, int coinId);
+
+/*
 * 地址校验
 */
 extern bool CppAddressIsValid(const char* address, int coinId);
@@ -129,12 +137,11 @@ void TWStringDelete(TWString* string);
 
 /*===============以下是链上信息获取接口==================*/
 /*
-chaindata_setClient设置rpc连接
-handler：链名称
-chainType：链的分类，是main还是type
-nodeURL：rpc
+chaindata_initChainConfig下发链配置，初始化SDK之后，需要先调用一下
+chainConfig:是链配置数组的字符串
+chainConfig例子：[{"chain_type":"EVM","chain":"ETH","proxy_key":"gasOracleETH","rpc_urls":["https://mainnet.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161","https://web3os.tokenpocket.pro"],"proxy_cache_time":15}]
 */
-extern void chaindata_setClient(const char* handler, const char* chainType, const char* nodeURL);
+extern void chaindata_initChainConfig(const char* chainConfig);
 
 /*
 chaindata_getEIP1559TokenParams获取eip1559 token交易参数
@@ -142,80 +149,81 @@ handler：链名称
 fromAddress：发送地址
 toAddress：接受地址
 tokenAddress：token地址
+tpe:approve或者transfer
 返回：交易参数，返回结果类型是map[string]interface{}的json字符串，value中可能也包含map结构
 */
-extern const char* chaindata_getEIP1559TokenParams(const char* handler, const char* fromAddress, const char* toAddress, const char* tokenAddress);
+extern const char* chaindata_getEIP1559TokenParams(const char* chain, const char* fromAddress, const char* toAddress, const char* tokenAddress, const char* tpe);
 
 /*
 chaindata_getTokenTxParams获取token交易参数
-handler：链名称
+chain：链名称
 fromAddress：发送地址
 toAddress：接受地址
 tokenAddress：token地址
+tpe:approve或者transfer
 返回：交易参数，返回结果类型是map[string]interface{}的json字符串，value中可能也包含map结构
 */
-extern const char* chaindata_getTokenTxParams(const char* handler, const char* fromAddress, const char* toAddress, const char* tokenAddress);
+extern const char* chaindata_getTokenTxParams(const char* chain, const char* fromAddress, const char* toAddress, const char* tokenAddress, const char* tpe);
 
 /*
 chaindata_getTxParams获取交易参数
-handler：链名称
+chain：链名称
 fromAddress：发送地址
 返回：交易参数，返回结果类型是map[string]interface{}的json的字符串，value中可能也包含map结构
 */
-extern const char* chaindata_getTxParams(const char* handler, const char* fromAddress);
+extern const char* chaindata_getTxParams(const char* chain, const char* fromAddress);
 
 /*
 chaindata_getSTCTxParams获取stc交易参数
-handler：链名称
+chain：链名称
 fromAddress：发送地址
 toAddress：接受地址
 publicKey: 用户的公钥
 typeArgs：代币地址
 返回：交易参数，返回结果类型是map[string]interface{}的json字符串，value中可能也包含map结构
 */
-extern const char* chaindata_getSTCTxParams(const char* handler, const char* fromAddress, const char* toAddress, const char* publicKey, const char* typeArgs);
+extern const char* chaindata_getSTCTxParams(const char* chain, const char* fromAddress, const char* toAddress, const char* publicKey, const char* typeArgs);
 
 /*
 chaindata_getEIP1559TxParams获取eip1559交易参数
-handler：链名称
+chain：链名称
 fromAddress：发送地址
 返回：交易参数，返回结果类型是map[string]interface{}的json字符串，value中可能也包含map结构
 */
-extern const char* chaindata_getEIP1559TxParams(const char* handler, const char* fromAddress);
+extern const char* chaindata_getEIP1559TxParams(const char* chain, const char* fromAddress);
 
 /*
 chaindata_getTokenType获取token信息
-handler：链名称
+chain：链名称
 tokenAddress：token地址的数组的json字符串
 返回：token信息，返回结果类型是map[tokenAddress]tokenInfo的json字符串;tokenInfo是map[string]string
 */
-extern const char* chaindata_getTokenType(const char* handler, const char* tokenAddress);
+extern const char* chaindata_getTokenType(const char* chain, const char* tokenAddress);
 
 /*
 chaindata_sendRawTransaction发送交易
-handler：链名称
+chain：链名称
 rawTx：交易数据
 返回：交易hash
 */
-extern const char* chaindata_sendRawTransaction(const char* handler, const char* rawTx);
+extern const char* chaindata_sendRawTransaction(const char* chain, const char* rawTx);
 
 /*
 chaindata_getTransaction获取交易信息
-handler：链名称
+chain：链名称
 address：当前用户的address
 txHashs: 交易hash的数组的json字符串
 返回：交易hash信息，返回结构是map[txhash]txInfo的json字符串;txInfo是map[string]string
 */
-extern const char* chaindata_getTransaction(const char* handler, const char* address, const char* txHashs);
+extern const char* chaindata_getTransaction(const char* chain, const char* address, const char* txHashs);
 
 /*
 chaindata_allBalance获取当前链的所有地址的所有币种的余额
-handler：链名称
+chain：链名称
 address：当前链的所有地址，结构是map[address]map[contract][decimals]的json字符串
 返回：返回结构是map[address:map[{address:balance, token1:balance}]]的json字符串
 */
-extern const char* chaindata_allBalance(const char* handler, const char* address);
-
+extern const char* chaindata_allBalance(const char* chain, const char* address);
 
 #ifdef __cplusplus
 }

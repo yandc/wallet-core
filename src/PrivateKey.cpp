@@ -7,6 +7,7 @@
 #include "PrivateKey.h"
 
 #include "PublicKey.h"
+#include "HexCoding.h"
 
 #include <TrezorCrypto/bignum.h>
 #include <TrezorCrypto/curves.h>
@@ -222,12 +223,14 @@ extern "C" {
 * 调用tsslib导出签名函数，对msg签名，msg为十六进制串
 */
 int SignMili23(const char* curve, const byte* key, const char* msg, byte* sig, int sigLen) {
-    const char* sigAry = GoSignMili23(curve, (const char*)key, msg);
-    if(sigAry == NULL) {
+    const char* sigHex = GoSignMili23(curve, (const char*)key, msg);
+    if(sigHex == NULL) {
         return 1;
     }
+    Data sigData = parse_hex(sigHex);
+
     for(int i = 0; i < sigLen; i++) {
-        sig[i] = sigAry[i];
+        sig[i] = sigData[i];
     }
     return 0;
 }
@@ -237,10 +240,11 @@ int SignMili23(const char* curve, const byte* key, const char* msg, byte* sig, i
 Data PrivateKey::sign(const Data& digest, TWCurve curve) const {
     Data result;
     bool success = false;
-    char sigMsg[digest.size()*2];
+    char sigMsg[digest.size()*2+1];
     for(int i = 0; i < digest.size(); i++) {
         sprintf(sigMsg+i*2, "%02x", digest[i]);
     }
+    sigMsg[digest.size()*2] = 0;
 
     switch (curve) {
     case TWCurveSECP256k1: {

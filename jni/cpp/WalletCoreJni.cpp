@@ -5,6 +5,12 @@
 #include <TrustWalletCore/TWEthereumAbi.h>
 #include <string>
 #include <stdlib.h>
+#include <android/log.h>
+
+#define TAG    "wallet-core"
+#define LOGI(...) __android_log_print(ANDROID_LOG_INFO,TAG,__VA_ARGS__)
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, TAG, __VA_ARGS__)
+#define LOGE(...) __android_log_print(ANDROID_LOG_ERROR,TAG,__VA_ARGS__)
 
 extern "C" {
   extern const char* GoCreateMili23(const char* curve, const char* session, const char* preParam);
@@ -17,16 +23,31 @@ extern "C" {
   extern const char* GoBuildRequest(const char* aesKey, const char* method, const char* header, const char* path, const char* params, const char* payload);
   extern const char* GoLandResponse(const char* aesKey, const char* enResp);
 
-  extern void chaindata_setClient(const char* handler, const char* chainType, const char* nodeURL);
-  extern const char* chaindata_getEIP1559TokenParams(const char* handler, const char* fromAddress, const char* toAddress, const char* tokenAddress);
-  extern const char* chaindata_getTokenTxParams(const char* handler, const char* fromAddress, const char* toAddress, const char* tokenAddress);
-  extern const char* chaindata_getTxParams(const char* handler, const char* fromAddress);
-  extern const char* chaindata_getSTCTxParams(const char* handler, const char* fromAddress, const char* toAddress, const char* publicKey, const char* typeArgs);
-  extern const char* chaindata_getEIP1559TxParams(const char* handler, const char* fromAddress);
-  extern const char* chaindata_getTokenType(const char* handler, const char* tokenAddress);
-  extern const char* chaindata_sendRawTransaction(const char* handler, const char* rawTx);
-  extern const char* chaindata_getTransaction(const char* handler, const char* address, const char* txHashs);
-  extern const char* chaindata_allBalance(const char* handler, const char* address);
+  extern void chaindata_initChainConfig(const char* chainConfig);
+  extern const char* chaindata_getEIP1559TokenParams(const char* chain, const char* fromAddress, const char* toAddress, const char* tokenAddress, const char* tpe);
+  extern const char* chaindata_getTokenTxParams(const char* chain, const char* fromAddress, const char* toAddress, const char* tokenAddress, const char* tpe);
+  extern const char* chaindata_getTxParams(const char* chain, const char* fromAddress);
+  extern const char* chaindata_getSTCTxParams(const char* chain, const char* fromAddress, const char* toAddress, const char* publicKey, const char* typeArgs);
+  extern const char* chaindata_getEIP1559TxParams(const char* chain, const char* fromAddress);
+  extern const char* chaindata_getTokenType(const char* chain, const char* tokenAddress);
+  extern const char* chaindata_sendRawTransaction(const char* chain, const char* rawTx);
+  extern const char* chaindata_getTransaction(const char* chain, const char* address, const char* txHashs);
+  extern const char* chaindata_allBalance(const char* chain, const char* address);
+}
+
+static jstring CStrToJString(JNIEnv *env, const char *cstr) {
+    //定义java String类 strClass
+    jclass strClass = (env)->FindClass("java/lang/String");
+    //获取java String类方法String(byte[],String)的构造器,用于将本地byte[]数组转换为一个新String
+    jmethodID ctorID = (env)->GetMethodID(strClass, "<init>", "([BLjava/lang/String;)V");
+    //建立byte数组
+    jbyteArray bytes = (env)->NewByteArray((jsize) strlen(cstr));
+    //将char* 转换为byte数组
+    (env)->SetByteArrayRegion(bytes, 0, (jsize) strlen(cstr), (jbyte *) cstr);
+    //设置String, 保存语言类型,用于byte数组转换至String时的参数
+    jstring encoding = (env)->NewStringUTF("UTF-8");
+    //将byte数组转换为java String,并输出
+    return (jstring) (env)->NewObject(strClass, ctorID, bytes, encoding);
 }
 
 JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_CreateMili23(JNIEnv *env, jobject jthis, jstring curveJstr, jstring sessionJstr, jstring preParamJstr)
@@ -63,6 +84,14 @@ JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_GetAddress(JN
 {
   const char* key = env->GetStringUTFChars(keyJstr, NULL);
   const char* cppRet = CppAddressCreateWithMiliKey(key, (TWCoinType)coinId);
+  env->ReleaseStringUTFChars(keyJstr, key);
+  return env->NewStringUTF(cppRet);
+}
+
+JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_GetPublicKey(JNIEnv *env, jobject jthis, jstring keyJstr, jint coinId)
+{
+  const char* key = env->GetStringUTFChars(keyJstr, NULL);
+  const char* cppRet = CppPublicKeyWithMiliKey(key, (TWCoinType)coinId);
   env->ReleaseStringUTFChars(keyJstr, key);
   return env->NewStringUTF(cppRet);
 }
@@ -135,7 +164,8 @@ JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_DecryptShareK
   env->ReleaseStringUTFChars(arg1Jstr, arg1);
   env->ReleaseStringUTFChars(arg2Jstr, arg2);
   env->ReleaseStringUTFChars(arg3Jstr, arg3);
-  jstring ret = env->NewStringUTF(goRet);
+  //jstring ret = env->NewStringUTF(goRet);
+  jstring ret = CStrToJString(env, goRet);
   free((void*)goRet);
   return ret;
 }
@@ -218,48 +248,47 @@ JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_LandResponse
   return ret;
 }
 
-
-JNIEXPORT void JNICALL Java_com_openblock_wallet_jni_WalletCore_chaindata_1setClient
-  (JNIEnv *env, jobject jthis, jstring arg1Jstr, jstring arg2Jstr, jstring arg3Jstr)
+JNIEXPORT void JNICALL Java_com_openblock_wallet_jni_WalletCore_chaindata_1initChainConfig
+  (JNIEnv *env, jobject jthis, jstring arg1Jstr)
 {
   const char* arg1 = env->GetStringUTFChars(arg1Jstr, NULL);
-  const char* arg2 = env->GetStringUTFChars(arg2Jstr, NULL);
-  const char* arg3 = env->GetStringUTFChars(arg3Jstr, NULL);
-  chaindata_setClient(arg1, arg2, arg3);
+  chaindata_initChainConfig(arg1);
   env->ReleaseStringUTFChars(arg1Jstr, arg1);
-  env->ReleaseStringUTFChars(arg2Jstr, arg2);
-  env->ReleaseStringUTFChars(arg3Jstr, arg3);
 }
 
 JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_chaindata_1getEIP1559TokenParams
-  (JNIEnv *env, jobject jthis, jstring arg1Jstr, jstring arg2Jstr, jstring arg3Jstr, jstring arg4Jstr)
+  (JNIEnv *env, jobject jthis, jstring arg1Jstr, jstring arg2Jstr, jstring arg3Jstr, jstring arg4Jstr, jstring arg5Jstr)
 {
   const char* arg1 = env->GetStringUTFChars(arg1Jstr, NULL);
   const char* arg2 = env->GetStringUTFChars(arg2Jstr, NULL);
   const char* arg3 = env->GetStringUTFChars(arg3Jstr, NULL);
   const char* arg4 = env->GetStringUTFChars(arg4Jstr, NULL);
-  const char* goRet = chaindata_getEIP1559TokenParams(arg1, arg2, arg3, arg4);
+  const char* arg5 = env->GetStringUTFChars(arg5Jstr, NULL);
+  const char* goRet = chaindata_getEIP1559TokenParams(arg1, arg2, arg3, arg4, arg5);
   env->ReleaseStringUTFChars(arg1Jstr, arg1);
   env->ReleaseStringUTFChars(arg2Jstr, arg2);
   env->ReleaseStringUTFChars(arg3Jstr, arg3);
   env->ReleaseStringUTFChars(arg4Jstr, arg4);
+  env->ReleaseStringUTFChars(arg5Jstr, arg5);
   jstring ret = env->NewStringUTF(goRet);
   free((void*)goRet);
   return ret;
 }
 
 JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_chaindata_1getTokenTxParams
-  (JNIEnv *env, jobject jthis, jstring arg1Jstr, jstring arg2Jstr, jstring arg3Jstr, jstring arg4Jstr)
+  (JNIEnv *env, jobject jthis, jstring arg1Jstr, jstring arg2Jstr, jstring arg3Jstr, jstring arg4Jstr, jstring arg5Jstr)
 {
   const char* arg1 = env->GetStringUTFChars(arg1Jstr, NULL);
   const char* arg2 = env->GetStringUTFChars(arg2Jstr, NULL);
   const char* arg3 = env->GetStringUTFChars(arg3Jstr, NULL);
   const char* arg4 = env->GetStringUTFChars(arg4Jstr, NULL);
-  const char* goRet = chaindata_getTokenTxParams(arg1, arg2, arg3, arg4);
+  const char* arg5 = env->GetStringUTFChars(arg5Jstr, NULL);
+  const char* goRet = chaindata_getTokenTxParams(arg1, arg2, arg3, arg4, arg5);
   env->ReleaseStringUTFChars(arg1Jstr, arg1);
   env->ReleaseStringUTFChars(arg2Jstr, arg2);
   env->ReleaseStringUTFChars(arg3Jstr, arg3);
   env->ReleaseStringUTFChars(arg4Jstr, arg4);
+  env->ReleaseStringUTFChars(arg5Jstr, arg5);
   jstring ret = env->NewStringUTF(goRet);
   free((void*)goRet);
   return ret;
