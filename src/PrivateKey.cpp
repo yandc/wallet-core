@@ -224,7 +224,7 @@ extern "C" {
 */
 int SignMili23(const char* curve, const byte* key, const char* msg, byte* sig, int sigLen) {
     const char* sigHex = GoSignMili23(curve, (const char*)key, msg);
-    if(sigHex == NULL) {
+    if(sigHex == NULL || strlen(sigHex) == 0) {
         return 1;
     }
     Data sigData = parse_hex(sigHex);

@@ -8,6 +8,10 @@
 
 #include "Address.h"
 
+#ifdef PLATFORM_WEB
+#include <emscripten/emscripten.h>
+#endif
+
 using namespace TW::Starcoin;
 using namespace std;
 
@@ -23,4 +27,36 @@ string Entry::deriveAddress(TWCoinType coin, const PublicKey& publicKey, TW::byt
 
 void Entry::sign(TWCoinType coin, const TW::Data& dataIn, TW::Data& dataOut) const {
     return;
+}
+
+#ifdef PLATFORM_WEB
+
+EM_JS(char*, StcJsonTransactionMili23, (const char* key, const char* jsonTxParam), {
+    let rawTx = GoStcJsonTransactionMili23(UTF8ToString(key), UTF8ToString(jsonTxParam));
+    if (!rawTx) {
+        return "";
+    }
+    var len = lengthBytesUTF8(rawTx)+1;
+    var stringOnWasmHeap = _malloc(len);
+    stringToUTF8(rawTx, stringOnWasmHeap, len);
+    return stringOnWasmHeap;
+});
+
+string GoStcJsonTransactionMili23(const char* key, const char* jsonTxParam) {
+    char* rawTx = StcJsonTransactionMili23(key, jsonTxParam);
+    string rawTxString(rawTx);
+    free(rawTx);
+    return rawTxString;
+}
+
+#else
+
+extern "C" {
+    extern const char* GoStcJsonTransactionMili23(const char* key, const char* jsonTxParam);
+}
+
+#endif
+
+string Entry::signJSON(TWCoinType coin, const std::string& json, const Data& key) const {
+    return GoStcJsonTransactionMili23((const char*)key.data(), json.c_str());
 }

@@ -38,7 +38,8 @@ const char *_Nonnull CppSignMili23(const char *_Nonnull session, const char *_No
     std::string miliKey = "mili:";
     miliKey += session;
     miliKey += key;
-    const Data keyData = TW::data(miliKey);
+    Data keyData = TW::data(miliKey);
+    keyData.push_back(0);//确保是cstr的0结尾
     return TW::anySignMessage(coin, msg, keyData);
 }
 
@@ -46,7 +47,8 @@ TWString *_Nonnull CppJsonTransactionMili23(const char *_Nonnull session, const 
     std::string miliKey = "mili:";
     miliKey += session;
     miliKey += key;
-    const Data keyData = TW::data(miliKey);
+    Data keyData = TW::data(miliKey);
+    keyData.push_back(0);//确保是cstr的0结尾
     const std::string jsonString(input);
     std::string result = TW::anySignJSON(coin, jsonString, keyData);
     return TWStringCreateWithRawBytes((const uint8_t*)result.c_str(), result.size());
