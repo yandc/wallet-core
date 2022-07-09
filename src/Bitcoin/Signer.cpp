@@ -56,6 +56,11 @@ std::string Signer::signJSON(TWCoinType coin, const std::string& json, const Dat
     input.add_private_key(key.data(), key.size());
     input.set_coin_type(coin);
     input.set_hash_type(hashTypeForCoin(coin));
+    auto lockingScript = Script::lockScriptForAddress(input.change_address(), coin);
+    for(int i = 0; i < input.utxo_size() && input.utxo(i).script().size() == 0; i++) {
+        auto utxo = input.mutable_utxo(i);
+        utxo->set_script(lockingScript.bytes.data(), lockingScript.bytes.size());
+    }
     auto output = Signer::sign(input);
     if(output.error() != Common::Proto::OK) {
         std::cout << "sign transaction error: " << output.error() << std::endl;
