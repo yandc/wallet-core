@@ -7,6 +7,8 @@
 #include "Entry.h"
 
 #include "Address.h"
+#include <TrustWalletCore/MiliException.h>
+#include <nlohmann/json.hpp>
 
 #ifdef PLATFORM_WEB
 #include <emscripten/emscripten.h>
@@ -14,6 +16,7 @@
 
 using namespace TW::Starcoin;
 using namespace std;
+using json = nlohmann::json;
 
 // Note: avoid business logic from here, rather just call into classes like Address, Signer, etc.
 
@@ -32,21 +35,29 @@ void Entry::sign(TWCoinType coin, const TW::Data& dataIn, TW::Data& dataOut) con
 #ifdef PLATFORM_WEB
 
 EM_JS(char*, StcJsonTransactionMili23, (const char* key, const char* jsonTxParam), {
-    let rawTx = GoStcJsonTransactionMili23(UTF8ToString(key), UTF8ToString(jsonTxParam));
-    if (!rawTx) {
-        return "";
+    let jsonTx = GoStcJsonTransactionMili23(UTF8ToString(key), UTF8ToString(jsonTxParam));
+    if (!jsonTx) {
+        return null;
     }
-    var len = lengthBytesUTF8(rawTx)+1;
+    var len = lengthBytesUTF8(jsonTx)+1;
     var stringOnWasmHeap = _malloc(len);
-    stringToUTF8(rawTx, stringOnWasmHeap, len);
+    stringToUTF8(jsonTx, stringOnWasmHeap, len);
     return stringOnWasmHeap;
 });
 
 string GoStcJsonTransactionMili23(const char* key, const char* jsonTxParam) {
-    char* rawTx = StcJsonTransactionMili23(key, jsonTxParam);
-    string rawTxString(rawTx);
-    free(rawTx);
-    return rawTxString;
+    char* jsonTx = StcJsonTransactionMili23(key, jsonTxParam);
+    if(jsonTx == NULL) {
+        throw ERROR_INFOS[2];
+    }
+    json signJson = json::parse(jsonTx);
+    free(jsonTx);
+
+    bool status = signJson["status"].get<bool>();
+    if(status == false) {
+        throw MiliException{signJson["error"].get<std::string>()};
+    }
+    return signJson["result"].get<std::string>();
 }
 
 #else

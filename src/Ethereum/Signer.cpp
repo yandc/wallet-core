@@ -13,7 +13,7 @@
 using namespace TW;
 using namespace TW::Ethereum;
 
-Proto::SigningOutput Signer::sign(const Proto::SigningInput& input) noexcept {
+Proto::SigningOutput Signer::sign(const Proto::SigningInput& input) {
     try {
         uint256_t chainID = load(input.chain_id());
         auto key = PrivateKey(Data(input.private_key().begin(), input.private_key().end()));
@@ -102,7 +102,7 @@ Signature Signer::signatureDataToStructWithEip155(const uint256_t& chainID, cons
     return rsv;
 }
 
-Signature Signer::sign(const PrivateKey& privateKey, const Data& hash, bool includeEip155, const uint256_t& chainID) noexcept {
+Signature Signer::sign(const PrivateKey& privateKey, const Data& hash, bool includeEip155, const uint256_t& chainID) {
     auto signature = privateKey.sign(hash, TWCurveSECP256k1);
     return signatureDataToStruct(signature, includeEip155, chainID);
 }
@@ -264,7 +264,7 @@ std::shared_ptr<TransactionBase> Signer::build(const Proto::SigningInput& input)
     }
 }
 
-Signature Signer::sign(const PrivateKey& privateKey, const uint256_t& chainID, std::shared_ptr<TransactionBase> transaction) noexcept {
+Signature Signer::sign(const PrivateKey& privateKey, const uint256_t& chainID, std::shared_ptr<TransactionBase> transaction) {
     auto preHash = transaction->preHash(chainID);
     return Signer::sign(privateKey, preHash, transaction->usesReplayProtection(), chainID);
 }

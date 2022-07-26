@@ -133,11 +133,13 @@ JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_SignMili23(JN
   const char* session = env->GetStringUTFChars(sessionJstr, NULL);
   const char* key = env->GetStringUTFChars(keyJstr, NULL);
   const char* msg = env->GetStringUTFChars(msgJstr, NULL);
-  const char* cppRet = CppSignMili23(session, key, (TWCoinType)coinId, msg);
+  auto cppRet = (const std::string*)CppSignMili23(session, key, (TWCoinType)coinId, msg);
   env->ReleaseStringUTFChars(sessionJstr, session);
   env->ReleaseStringUTFChars(keyJstr, key);
   env->ReleaseStringUTFChars(msgJstr, msg);
-  return env->NewStringUTF(cppRet);
+  jstring ret = env->NewStringUTF(cppRet->c_str());
+  delete cppRet;
+  return ret;
 }
 
 JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_SignMessageMili23(JNIEnv *env, jobject jthis, jstring curveJstr, jstring keyJstr, jstring msgJstr)

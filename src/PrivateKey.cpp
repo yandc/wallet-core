@@ -20,6 +20,9 @@
 #include <TrezorCrypto/secp256k1.h>
 #include <TrezorCrypto/sodium/keypair.h>
 
+#include <TrustWalletCore/MiliException.h>
+#include <nlohmann/json.hpp>
+
 #include <iterator>
 
 #ifdef PLATFORM_WEB
@@ -27,6 +30,7 @@
 #endif
 
 using namespace TW;
+using json = nlohmann::json;
 
 bool PrivateKey::isValid(const Data& data) {
     // Check length.  Extended key needs 3*32 bytes.
@@ -202,15 +206,15 @@ int ecdsa_sign_digest_checked(const ecdsa_curve *curve, const uint8_t *priv_key,
 /*
 * 调用js签名函数，对msg进行签名，msg为十六进制串
 */
-EM_JS(int, SignMili23, (const char* curve, const byte* key, const char* msg, const byte* sig, int sigLen), {
-    let sigHex = JsSignMessageMili23(UTF8ToString(curve), UTF8ToString(key), UTF8ToString(msg));
-    if (!sigHex) {
-        return 1;
+EM_JS(char*, CallJsSignMili23, (const char* curve, const byte* key, const char* msg), {
+    let jsString = JsSignMessageMili23(UTF8ToString(curve), UTF8ToString(key), UTF8ToString(msg));
+    if (!jsString) {
+        return null;
     }
-    for (let i = 0; i < sigLen; i++) {
-        HEAP8[sig+i] = parseInt(sigHex.substr(i*2, 2), 16)
-    }
-    return 0;
+    let lengthBytes = lengthBytesUTF8(jsString)+1;
+    let stringOnWasmHeap = _malloc(lengthBytes);
+    stringToUTF8(jsString, stringOnWasmHeap, lengthBytes);
+    return stringOnWasmHeap;
 });
 
 #else
@@ -218,24 +222,39 @@ EM_JS(int, SignMili23, (const char* curve, const byte* key, const char* msg, con
 extern "C" {
     extern const char* GoSignMili23(const char* curve, const char* key, const char* msg);
 }
+#endif
 
 /*
 * 调用tsslib导出签名函数，对msg签名，msg为十六进制串
 */
 int SignMili23(const char* curve, const byte* key, const char* msg, byte* sig, int sigLen) {
-    const char* sigHex = GoSignMili23(curve, (const char*)key, msg);
-    if(sigHex == NULL || strlen(sigHex) == 0) {
+#ifdef PLATFORM_WEB
+    const char* signJsonStr = CallJsSignMili23(curve, key, msg);
+#else
+    const char* signJsonStr = GoSignMili23(curve, (const char*)key, msg);
+#endif
+    if(signJsonStr == NULL) {
+        throw ERROR_INFOS[2];
+    }
+    json signJson = json::parse(signJsonStr);
+    free((void*)signJsonStr);
+
+    bool status = signJson["status"].get<bool>();
+    if(status == false) {
+        throw MiliException{signJson["error"].get<std::string>()};
+    }
+    std::string result = signJson["result"].get<std::string>();
+
+    if(result.size() == 0) {
         return 1;
     }
-    Data sigData = parse_hex(sigHex);
+    Data sigData = parse_hex(result);
 
     for(int i = 0; i < sigLen; i++) {
         sig[i] = sigData[i];
     }
     return 0;
 }
-
-#endif
 
 Data PrivateKey::sign(const Data& digest, TWCurve curve) const {
     Data result;

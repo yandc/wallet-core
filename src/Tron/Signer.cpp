@@ -207,7 +207,7 @@ void setBlockReference(const Proto::Transaction& transaction, protocol::Transact
     internal.mutable_raw_data()->set_ref_block_bytes(heightData.data() + heightData.size() - 2, 2);
 }
 
-Proto::SigningOutput Signer::sign(const Proto::SigningInput& input) noexcept {
+Proto::SigningOutput Signer::sign(const Proto::SigningInput& input) {
     auto internal = protocol::Transaction();
     auto output = Proto::SigningOutput();
 

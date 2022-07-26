@@ -14,7 +14,7 @@ typedef const void TWString;
 * @curve: ecdsa或者eddsa
 * @session: 用户系统返回
 * @preParam: 初始化时从后端拉取
-* 返回：私钥碎片json串，需要调用free释放
+* 返回：私钥碎片json串，需要调用free释放，结构：{"status":true/false, "result":"", "error":""}
 */
 extern const char* GoCreateMili23(const char* curve, const char* session, const char* preParam);
 
@@ -22,14 +22,14 @@ extern const char* GoCreateMili23(const char* curve, const char* session, const 
 * tss私钥重置
 * @curve: 同上
 * @session: 同上
-* @key: 本地私钥碎片，需要调用free释放
+* @key: 本地私钥碎片，需要调用free释放，结构：{"status":true/false, "result":"", "error":""}
 */
 extern const char* GoReshareMili23(const char* curve, const char* session, const char* key, const char* preParam);
 
 /*
 * 对消息签名【内部使用】
 * @msg: 签名消息，十六进制
-* 返回：十六进制签名结果
+* 返回：十六进制签名结果，结构：{"status":true/false, "result":"", "error":""}
 */
 extern const char* GoSignMili23(const char* curve, const char* key, const char* msg);
 
@@ -64,7 +64,7 @@ extern void GoSetRequestEnv(const char* jsonEnv);
 * @path: 请求路径
 * @params: json结构[{"k":"参数名", "v":"参数值", "sign_it": true}], 如果一些参数不参与签名，sign_it为false
 * @payload: 请求body，如果params传空，则解析payload并在其中添加sign后做为body
-* 返回：请求结果
+* 返回：请求结果，结构：{"status":true/false, "result":"", "error":""}
 */
 extern const char* GoGwRequest(const char* method, const char* header, const char* path, const char* params, const char* payload);
 
@@ -112,14 +112,14 @@ extern bool CppAddressIsValid(const char* address, int coinId);
 /*
 * 对任意消息签名
 * @msg: 签名消息
-* 返回：十六进制签名结果，无需释放
+* 返回：十六进制签名结果，结构：{"status":true/false, "result":"", "error":""}
 */
-extern const char* CppSignMili23(const char* session, const char* key, int coinId, const char* msg);
+extern TWString* CppSignMili23(const char* session, const char* key, int coinId, const char* msg);
 
 /*
 * 构建可上链交易
 * @input: 交易输入参数，json结构
-* 返回：十六进制交易
+* 返回：十六进制交易，结构：{"status":true/false, "result":"", "error":""}
 */
 extern TWString* CppJsonTransactionMili23(const char* session, const char* key, int coinId, const char* input);
 

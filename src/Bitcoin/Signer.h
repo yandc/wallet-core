@@ -26,7 +26,7 @@ class Signer {
     static Proto::TransactionPlan plan(const Proto::SigningInput& input) noexcept;
 
     /// Signs a Proto::SigningInput transaction
-    static Proto::SigningOutput sign(const Proto::SigningInput& input, std::optional<SignaturePubkeyList> optionalExternalSigs = {}) noexcept;
+    static Proto::SigningOutput sign(const Proto::SigningInput& input, std::optional<SignaturePubkeyList> optionalExternalSigs = {});
 
     /// Collect pre-image hashes to be signed
     static HashPubkeyList preImageHashes(const Proto::SigningInput& input) noexcept;

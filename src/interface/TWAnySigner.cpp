@@ -5,10 +5,13 @@
 // file LICENSE at the root of the source code distribution tree.
 
 #include <TrustWalletCore/TWAnySigner.h>
+#include <TrustWalletCore/MiliException.h>
+#include <nlohmann/json.hpp>
 
 #include "Coin.h"
 
 using namespace TW;
+using json = nlohmann::json;
 
 TWData* _Nonnull TWAnySignerSign(TWData* _Nonnull data, enum TWCoinType coin) {
     const Data& dataIn = *(reinterpret_cast<const Data*>(data));
@@ -34,13 +37,25 @@ TWData* _Nonnull TWAnySignerPlan(TWData* _Nonnull data, enum TWCoinType coin) {
     return TWDataCreateWithBytes(dataOut.data(), dataOut.size());
 }
 
-const char *_Nonnull CppSignMili23(const char *_Nonnull session, const char *_Nonnull key, enum TWCoinType coin, const char *_Nonnull msg) {
+TWString *_Nonnull CppSignMili23(const char *_Nonnull session, const char *_Nonnull key, enum TWCoinType coin, const char *_Nonnull msg) {
     std::string miliKey = "mili:";
     miliKey += session;
     miliKey += key;
     Data keyData = TW::data(miliKey);
     keyData.push_back(0);//确保是cstr的0结尾
-    return TW::anySignMessage(coin, msg, keyData);
+
+    json txJson;
+    try {
+        txJson["result"] = std::string(TW::anySignMessage(coin, msg, keyData));
+        txJson["status"] = true;
+        txJson["error"] = "";
+    } catch (MiliException& e) {
+        txJson["result"] = "";
+        txJson["status"] = false;
+        txJson["error"] = e.what();
+    }
+    std::string result = txJson.dump();
+    return TWStringCreateWithRawBytes((const uint8_t*)result.c_str(), result.size());
 }
 
 TWString *_Nonnull CppJsonTransactionMili23(const char *_Nonnull session, const char *_Nonnull key, enum TWCoinType coin, const char *_Nonnull input) {
@@ -50,6 +65,17 @@ TWString *_Nonnull CppJsonTransactionMili23(const char *_Nonnull session, const 
     Data keyData = TW::data(miliKey);
     keyData.push_back(0);//确保是cstr的0结尾
     const std::string jsonString(input);
-    std::string result = TW::anySignJSON(coin, jsonString, keyData);
+
+    json txJson;
+    try {
+        txJson["result"] = TW::anySignJSON(coin, jsonString, keyData);
+        txJson["status"] = true;
+        txJson["error"] = "";
+    } catch (MiliException& e) {
+        txJson["result"] = "";
+        txJson["status"] = false;
+        txJson["error"] = e.what();
+    }
+    std::string result = txJson.dump();
     return TWStringCreateWithRawBytes((const uint8_t*)result.c_str(), result.size());
 }

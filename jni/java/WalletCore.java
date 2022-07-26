@@ -7,7 +7,7 @@ public class WalletCore
     * @curve: ecdsa或者eddsa
     * @session: 用户系统返回
     * @preParam: 初始化时从后端拉取
-    * 返回：私钥碎片json串
+    * 返回：私钥碎片json串，结构：{"status":true/false, "result":"", "error":""}
     */
     public native String CreateMili23(String curve, String session, String preParam);
 
@@ -16,6 +16,7 @@ public class WalletCore
     * @curve: 同上
     * @session: 同上
     * @key: 本地私钥碎片
+    * 返回：私钥碎片，结构：{"status":true/false, "result":"", "error":""}
     */
     public native String ReshareMili23(String curve, String session, String key, String preParam);
 
@@ -62,7 +63,7 @@ public class WalletCore
     /*
     * 对消息签名【内部使用】
     * @msg: 签名消息，十六进制
-    * 返回：十六进制签名结果
+    * 返回：十六进制签名结果，结构：{"status":true/false, "result":"", "error":""}
     */
     public native String SignMessageMili23(String curve, String key, String msg);
 
@@ -97,7 +98,7 @@ public class WalletCore
     * @path: 请求路径
     * @params: json结构[{"k":"参数名", "v":"参数值", "sign_it": true}], 如果一些参数不参与签名，sign_it为false
     * @payload: 请求body，如果params传空，则解析payload并在其中添加sign后做为body
-    * 返回：请求结果
+    * 返回：请求结果，结构：{"status":true/false, "result":"", "error":""}
     */
     public native String GwRequest(String method, String header, String path, String params, String payload);
 

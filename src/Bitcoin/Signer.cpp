@@ -12,6 +12,7 @@
 #include "TransactionSigner.h"
 #include <google/protobuf/util/json_util.h>
 #include "SigHashType.h"
+#include <TrustWalletCore/MiliException.h>
 
 using namespace TW;
 using namespace TW::Bitcoin;
@@ -21,7 +22,7 @@ Proto::TransactionPlan Signer::plan(const Proto::SigningInput& input) noexcept {
     return plan.proto();
 }
 
-Proto::SigningOutput Signer::sign(const Proto::SigningInput &input, std::optional<SignaturePubkeyList> optionalExternalSigs) noexcept {
+Proto::SigningOutput Signer::sign(const Proto::SigningInput &input, std::optional<SignaturePubkeyList> optionalExternalSigs) {
     Proto::SigningOutput output;
     auto result = TransactionSigner<Transaction, TransactionBuilder>::sign(input, false, optionalExternalSigs);
     if (!result) {
@@ -63,7 +64,7 @@ std::string Signer::signJSON(TWCoinType coin, const std::string& json, const Dat
     }
     auto output = Signer::sign(input);
     if(output.error() != Common::Proto::OK) {
-        std::cout << "sign transaction error: " << output.error() << std::endl;
+        throw ERROR_INFOS[int(output.error())];
     }
     return hex(output.encoded());
 }

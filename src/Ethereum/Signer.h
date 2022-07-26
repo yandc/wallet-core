@@ -25,7 +25,7 @@ namespace TW::Ethereum {
 class Signer {
   public:
     /// Signs a Proto::SigningInput transaction
-    static Proto::SigningOutput sign(const Proto::SigningInput& input) noexcept;
+    static Proto::SigningOutput sign(const Proto::SigningInput& input);
     /// Signs a json Proto::SigningInput with private key
     static std::string signJSON(const std::string& json, const Data& key);
 
@@ -33,7 +33,7 @@ class Signer {
     Signer() = delete;
 
     /// Signs the given transaction.
-    static Signature sign(const PrivateKey& privateKey, const uint256_t& chainID, std::shared_ptr<TransactionBase> transaction) noexcept;
+    static Signature sign(const PrivateKey& privateKey, const uint256_t& chainID, std::shared_ptr<TransactionBase> transaction);
     /// Compiles a Proto::SigningInput transaction, with external signature
     static Proto::SigningOutput compile(const Proto::SigningInput& input, const Data& signature) noexcept;
 
@@ -44,7 +44,7 @@ class Signer {
     /// Signs a hash with the given private key for the given chain identifier.
     ///
     /// @returns the r, s, and v values of the transaction signature
-    static Signature sign(const PrivateKey& privateKey, const Data& hash, bool includeEip155, const uint256_t& chainID) noexcept;
+    static Signature sign(const PrivateKey& privateKey, const Data& hash, bool includeEip155, const uint256_t& chainID);
 
     /// Break up the signature into the R, S, and V values.
     /// @returns the r, s, and v values of the transaction signature
