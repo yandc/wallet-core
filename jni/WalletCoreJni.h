@@ -130,9 +130,9 @@ JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_LandResponse
 /*
  * Class:     com_openblock_wallet_jni_WalletCore
  * Method:    chaindata_initChainConfig
- * Signature: (Ljava/lang/String;)V
+ * Signature: (Ljava/lang/String;)Ljava/lang/String;
  */
-JNIEXPORT void JNICALL Java_com_openblock_wallet_jni_WalletCore_chaindata_1initChainConfig
+JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_chaindata_1initChainConfig
   (JNIEnv *, jobject, jstring);
 
 /*

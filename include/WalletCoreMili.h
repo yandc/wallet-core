@@ -53,7 +53,7 @@ extern const char* GoEncryptShareKey(const char* userId, const char* accountId, 
 
 /*
 * 设置请求环境变量(json)
-* @params: {"server":"", "gw_server":"", "token":"", "secret":"", "cert":"", "cert_sn":""}
+* @params: {"server":"", "gw_server":"", "token":"", "secret":"", "cert":"", "cert_sn":"", "log_path":""}
 */
 extern void GoSetRequestEnv(const char* jsonEnv);
 
@@ -140,8 +140,9 @@ void TWStringDelete(TWString* string);
 chaindata_initChainConfig下发链配置，初始化SDK之后，需要先调用一下
 chainConfig:是链配置数组的字符串
 chainConfig例子：[{"chain_type":"EVM","chain":"ETH","proxy_key":"gasOracleETH","rpc_urls":["https://mainnet.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161","https://web3os.tokenpocket.pro"],"proxy_cache_time":15}]
+返回结构：{"status":true/false, "result":"", "error":""}
 */
-extern void chaindata_initChainConfig(const char* chainConfig);
+extern const char* chaindata_initChainConfig(const char* chainConfig);
 
 /*
 chaindata_getEIP1559TokenParams获取eip1559 token交易参数

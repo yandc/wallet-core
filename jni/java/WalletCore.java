@@ -127,8 +127,9 @@ public class WalletCore
     chaindata_initChainConfig下发链配置，初始化SDK之后，需要先调用一下
     chainConfig:是链配置数组的字符串
     chainConfig例子：[{"chain_type":"EVM","chain":"ETH","proxy_key":"gasOracleETH","rpc_urls":["https://mainnet.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161","https://web3os.tokenpocket.pro"],"proxy_cache_time":15}]
+    返回结构：{"status":true/false, "result":"", "error":""}
     */
-    public native void chaindata_initChainConfig(String chainConfig);
+    public native String chaindata_initChainConfig(String chainConfig);
 
     /*
     chaindata_getEIP1559TokenParams获取eip1559 token交易参数
