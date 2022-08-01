@@ -45,21 +45,6 @@ EM_JS(char*, StcJsonTransactionMili23, (const char* key, const char* jsonTxParam
     return stringOnWasmHeap;
 });
 
-string GoStcJsonTransactionMili23(const char* key, const char* jsonTxParam) {
-    char* jsonTx = StcJsonTransactionMili23(key, jsonTxParam);
-    if(jsonTx == NULL) {
-        throw ERROR_INFOS[2];
-    }
-    json signJson = json::parse(jsonTx);
-    free(jsonTx);
-
-    bool status = signJson["status"].get<bool>();
-    if(status == false) {
-        throw MiliException{signJson["error"].get<std::string>()};
-    }
-    return signJson["result"].get<std::string>();
-}
-
 #else
 
 extern "C" {
@@ -68,6 +53,25 @@ extern "C" {
 
 #endif
 
+string DoStcJsonTransactionMili23(const char* key, const char* jsonTxParam) {
+#ifdef PLATFORM_WEB
+    const char* jsonTx = StcJsonTransactionMili23(key, jsonTxParam);
+#else
+    const char* jsonTx = GoStcJsonTransactionMili23(key, jsonTxParam);
+#endif
+    if(jsonTx == NULL) {
+        throw ERROR_INFOS[2];
+    }
+    json signJson = json::parse(jsonTx);
+    free((void*)jsonTx);
+
+    bool status = signJson["status"].get<bool>();
+    if(status == false) {
+        throw MiliException{signJson["error"].get<std::string>()};
+    }
+    return signJson["result"].get<std::string>();
+}
+
 string Entry::signJSON(TWCoinType coin, const std::string& json, const Data& key) const {
-    return GoStcJsonTransactionMili23((const char*)key.data(), json.c_str());
+    return DoStcJsonTransactionMili23((const char*)key.data(), json.c_str());
 }
