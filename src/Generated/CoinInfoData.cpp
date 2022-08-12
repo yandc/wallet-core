@@ -893,6 +893,29 @@ const CoinInfo getCoinInfo(TWCoinType coin) {
                 "",
                 101010,
             };
+        case TWCoinTypeAptos:
+            return CoinInfo {
+                "aptos",
+                "Aptos",
+                TWBlockchainPolkadot,
+                TWPurposeBIP44,
+                TWCurveED25519,
+                TWHDVersionNone,
+                TWHDVersionNone,
+                "m/44'/434'/0'/0'/0'",
+                TWPublicKeyTypeED25519,
+                0,
+                0,
+                0,
+                TWHRPUnknown,
+                Hash::sha256ripemd,
+                Hash::sha256d,
+                "Aptos",
+                12,
+                "",
+                "",
+                101011,
+            };
         case TWCoinTypeAeternity:
             return CoinInfo {
                 "aeternity",

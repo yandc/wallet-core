@@ -46,3 +46,6 @@ static const MiliException ERROR_INFOS [] = {
     MiliException{"script witness program"},
     MiliException{"invalid memo"},
 };
+
+const static char* E_PARAM = "param error";
+const static char* E_SIGN = "sign error";
