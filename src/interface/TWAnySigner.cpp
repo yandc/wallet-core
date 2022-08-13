@@ -37,9 +37,11 @@ TWData* _Nonnull TWAnySignerPlan(TWData* _Nonnull data, enum TWCoinType coin) {
     return TWDataCreateWithBytes(dataOut.data(), dataOut.size());
 }
 
-TWString *_Nonnull CppSignMili23(const char *_Nonnull session, const char *_Nonnull key, enum TWCoinType coin, const char *_Nonnull msg) {
+TWString *_Nonnull CppSignMili23(const char *_Nonnull session, const char *_Nonnull key, const char *_Nonnull preSign, enum TWCoinType coin, const char *_Nonnull msg) {
     std::string miliKey = "mili:";
     miliKey += session;
+    miliKey += ":";
+    miliKey += preSign;
     miliKey += key;
     Data keyData = TW::data(miliKey);
     keyData.push_back(0);//确保是cstr的0结尾
@@ -58,9 +60,11 @@ TWString *_Nonnull CppSignMili23(const char *_Nonnull session, const char *_Nonn
     return TWStringCreateWithRawBytes((const uint8_t*)result.c_str(), result.size());
 }
 
-TWString *_Nonnull CppJsonTransactionMili23(const char *_Nonnull session, const char *_Nonnull key, enum TWCoinType coin, const char *_Nonnull input) {
+TWString *_Nonnull CppJsonTransactionMili23(const char *_Nonnull session, const char *_Nonnull key, const char *_Nonnull preSign, enum TWCoinType coin, const char *_Nonnull input) {
     std::string miliKey = "mili:";
     miliKey += session;
+    miliKey += ":";
+    miliKey += preSign;
     miliKey += key;
     Data keyData = TW::data(miliKey);
     keyData.push_back(0);//确保是cstr的0结尾

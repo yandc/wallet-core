@@ -27,11 +27,10 @@ extern const char* GoCreateMili23(const char* curve, const char* session, const 
 extern const char* GoReshareMili23(const char* curve, const char* session, const char* key, const char* preParam);
 
 /*
-* 对消息签名【内部使用】
-* @msg: 签名消息，十六进制
-* 返回：十六进制签名结果，结构：{"status":true/false, "result":"", "error":""}
+* 预签名，目前只支持ECDSA
+* 返回：预签名结果，结构：{"status":true/false, "result":"preSign", "error":""}
 */
-extern const char* GoSignMili23(const char* curve, const char* key, const char* msg);
+extern const char* GoOfflineSignMili23(const char* curve, const char* session, const char* key);
 
 /*
 * 私钥分片解密
@@ -114,14 +113,14 @@ extern bool CppAddressIsValid(const char* address, int coinId);
 * @msg: 签名消息
 * 返回：十六进制签名结果，结构：{"status":true/false, "result":"", "error":""}
 */
-extern TWString* CppSignMili23(const char* session, const char* key, int coinId, const char* msg);
+extern TWString* CppSignMili23(const char* session, const char* key, const char* preSign, int coinId, const char* msg);
 
 /*
 * 构建可上链交易
 * @input: 交易输入参数，json结构
 * 返回：十六进制交易，结构：{"status":true/false, "result":"", "error":""}
 */
-extern TWString* CppJsonTransactionMili23(const char* session, const char* key, int coinId, const char* input);
+extern TWString* CppJsonTransactionMili23(const char* session, const char* key, const char* preSign, int coinId, const char* input);
 
 /*
 * 解析Evm合约数据

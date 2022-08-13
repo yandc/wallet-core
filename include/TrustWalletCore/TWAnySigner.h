@@ -27,9 +27,9 @@ extern bool TWAnySignerSupportsJSON(enum TWCoinType coin);
 extern TWData *_Nonnull TWAnySignerPlan(TWData *_Nonnull input, enum TWCoinType coin);
 
 /// 对任意消息签名
-extern TWString *_Nonnull CppSignMili23(const char *_Nonnull session, const char *_Nonnull key, enum TWCoinType coin, const char *_Nonnull msg);
+extern TWString *_Nonnull CppSignMili23(const char *_Nonnull session, const char *_Nonnull key, const char *_Nonnull preSign, enum TWCoinType coin, const char *_Nonnull msg);
 
 /// mili 钱包交易(json 格式)
-extern TWString *_Nonnull CppJsonTransactionMili23(const char *_Nonnull session, const char *_Nonnull key, enum TWCoinType coin, const char *_Nonnull input);
+extern TWString *_Nonnull CppJsonTransactionMili23(const char *_Nonnull session, const char *_Nonnull key, const char *_Nonnull preSign, enum TWCoinType coin, const char *_Nonnull input);
 
 TW_EXTERN_C_END

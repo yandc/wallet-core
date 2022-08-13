@@ -51,21 +51,20 @@ public class WalletCore
     * @input: 交易输入参数，json结构
     * 返回：十六进制交易
     */
-    public native String JsonTransactionMili23(String session, String key, int coinId, String input);
+    public native String JsonTransactionMili23(String session, String key, String preSign, int coinId, String input);
 
     /*
     * 对任意消息签名
     * @msg: 签名消息，任意字符串
     * 返回：十六进制签名结果
     */
-    public native String SignMili23(String session, String key, int coinId, String msg);
+    public native String SignMili23(String session, String key, String preSign, int coinId, String msg);
 
     /*
-    * 对消息签名【内部使用】
-    * @msg: 签名消息，十六进制
-    * 返回：十六进制签名结果，结构：{"status":true/false, "result":"", "error":""}
+    * 预签名，目前只支持ECDSA
+    * 返回：预签名结果，结构：{"status":true/false, "result":"preSign", "error":""}
     */
-    public native String SignMessageMili23(String curve, String key, String msg);
+    public native String OfflineSignMili23(String curve, String session, String key);
 
     /*
     * 私钥分片解密

@@ -58,25 +58,25 @@ JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_DecodeEvmCall
 /*
  * Class:     com_openblock_wallet_jni_WalletCore
  * Method:    JsonTransactionMili23
- * Signature: (Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;)Ljava/lang/String;
+ * Signature: (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;)Ljava/lang/String;
  */
 JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_JsonTransactionMili23
-  (JNIEnv *, jobject, jstring, jstring, jint, jstring);
+  (JNIEnv *, jobject, jstring, jstring, jstring, jint, jstring);
 
 /*
  * Class:     com_openblock_wallet_jni_WalletCore
  * Method:    SignMili23
- * Signature: (Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;)Ljava/lang/String;
+ * Signature: (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;)Ljava/lang/String;
  */
 JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_SignMili23
-  (JNIEnv *, jobject, jstring, jstring, jint, jstring);
+  (JNIEnv *, jobject, jstring, jstring, jstring, jint, jstring);
 
 /*
  * Class:     com_openblock_wallet_jni_WalletCore
- * Method:    SignMessageMili23
+ * Method:    OfflineSignMili23
  * Signature: (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
  */
-JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_SignMessageMili23
+JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_OfflineSignMili23
   (JNIEnv *, jobject, jstring, jstring, jstring);
 
 /*
