@@ -145,9 +145,9 @@ std::vector<uint8_t> BcsSerialize(const T obj) {
 }
 
 template <typename T>
-T BcsDeserialize(std::vector<uint8_t> bytes) {
+void BcsDeserialize(std::vector<uint8_t> bytes, T& obj) {
     serde::BcsDeserializer bcder(bytes);
-    return serde::Deserializable<T>::deserialize(bcder);
+    obj = serde::Deserializable<T>::deserialize(bcder);
 }
 
 } // end of namespace serde

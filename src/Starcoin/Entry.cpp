@@ -75,7 +75,7 @@ bool Json2RawTx(const string& jsonTx, starcoin_types::RawUserTransaction& rawTx)
 
     if(payloadHex.size() > 0) {
         TW::Data payloadData = TW::parse_hex(payloadHex);
-        rawTx.payload = serde::BcsDeserialize<starcoin_types::TransactionPayload>(payloadData);
+        serde::BcsDeserialize(payloadData, rawTx.payload);
 
     } else {
         starcoin_types::ScriptFunction scriptFunction;

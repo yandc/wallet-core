@@ -38,6 +38,17 @@ void Entry::sign(TWCoinType coin, const TW::Data& dataIn, TW::Data& dataOut) con
     return;
 }
 
+bool SplitToken(string token, string& addr, string& modu, string& coin) {
+    size_t pos1 = token.find("::");
+    size_t pos2 = token.find("::", pos1+2);
+    if (pos1 == string::npos || pos2 == string::npos) {
+        return false;
+    }
+    addr = token.substr(0, pos1);
+    modu = token.substr(pos1+2, pos2-pos1-2);
+    coin = token.substr(pos2+2, token.size());
+    return true;
+}
 bool Json2RawTx(json& jtx, aptos_types::RawTransaction& rawTx) {
     uint64_t timestamp = duration_cast<seconds>(system_clock::now().time_since_epoch()).count();
     const auto fromAddr = Address(jtx["fromAddress"].get<string>());
@@ -46,17 +57,14 @@ bool Json2RawTx(json& jtx, aptos_types::RawTransaction& rawTx) {
     string token = "0x1::aptos_coin::AptosCoin";
     if(jtx.contains("token")) {
         jtx["token"].get_to(token);
-    } else {
-        jtx["token"] = token;
     }
-    size_t pos1 = token.find("::");
-    size_t pos2 = token.find("::", pos1+2);
-    if (pos1 == string::npos || pos2 == string::npos) {
+    string addr, modu, coin;
+    if(!SplitToken(token, addr, modu, coin)) {
         return false;
-    }
-    const auto tokenAddr = Address(token.substr(0, pos1));
-    const string tokenModu = token.substr(pos1+2, pos2-pos1-2);
-    const string tokenCoin = token.substr(pos2+2, token.size());
+    };
+    const auto tokenAddr = Address(addr);
+    const string tokenModu = modu;
+    const string tokenCoin = coin;
 
     uint64_t amount = strtoull(jtx["amount"].get<string>().c_str(), NULL, 10);
     rawTx.chain_id.value = jtx["chainId"].get<uint8_t>();
@@ -73,7 +81,7 @@ bool Json2RawTx(json& jtx, aptos_types::RawTransaction& rawTx) {
 
     if(payloadHex.size() > 0) {
         TW::Data payloadData = TW::parse_hex(payloadHex);
-        rawTx.payload = serde::BcsDeserialize<aptos_types::TransactionPayload>(payloadData);
+        serde::BcsDeserialize(payloadData, rawTx.payload);
 
     } else {
         aptos_types::ScriptFunction scriptFunction;
@@ -85,12 +93,13 @@ bool Json2RawTx(json& jtx, aptos_types::RawTransaction& rawTx) {
             scriptFunction.function = aptos_types::Identifier{.value = "create_account"};
             scriptFunction.args.push_back(serde::BcsSerialize(aptos_types::AccountAddress{.value = toAddr.bytes}));
 
-        } else {
+        } else if(jtx.contains("registerCoin") && jtx["registerCoin"].get<bool>()) {
             scriptFunction.module = aptos_types::ModuleId {
                 .address = aptos_types::AccountAddress{.value = Address("0x1").bytes},
-                .name = aptos_types::Identifier{.value = "coin"},
+                .name = aptos_types::Identifier{.value = "coins"},
             };
-            scriptFunction.function = aptos_types::Identifier{.value = "transfer"};
+            scriptFunction.function = aptos_types::Identifier{.value = "register"};
+
             scriptFunction.ty_args.push_back(aptos_types::TypeTag{
                 .value = aptos_types::TypeTag::Struct{
                     .value = {
@@ -100,8 +109,24 @@ bool Json2RawTx(json& jtx, aptos_types::RawTransaction& rawTx) {
                     }
                 }
             });
+        } else {
+            scriptFunction.module = aptos_types::ModuleId {
+                .address = aptos_types::AccountAddress{.value = Address("0x1").bytes},
+                .name = aptos_types::Identifier{.value = "coin"},
+            };
+            scriptFunction.function = aptos_types::Identifier{.value = "transfer"};
             scriptFunction.args.push_back(serde::BcsSerialize(aptos_types::AccountAddress{.value = toAddr.bytes}));
             scriptFunction.args.push_back(serde::BcsSerialize(amount));
+
+            scriptFunction.ty_args.push_back(aptos_types::TypeTag{
+                .value = aptos_types::TypeTag::Struct{
+                    .value = {
+                        .address = aptos_types::AccountAddress{.value = tokenAddr.bytes},
+                        .module = aptos_types::Identifier{.value = tokenModu},
+                        .name = aptos_types::Identifier{.value = tokenCoin},
+                    }
+                }
+            });
         }
 
         rawTx.payload = aptos_types::TransactionPayload{
@@ -142,46 +167,5 @@ string Entry::signJSON(TWCoinType coin, const std::string& jsonTx, const Data& k
         .raw_txn = rawTx,
         .authenticator = auth
     };
-
-    if(jtx.contains("createAccount") && jtx["createAccount"].get<bool>()) {
-        json jtxSubmit = {
-            {"sender", jtx["fromAddress"].get<string>()},
-            {"sequence_number", jtx["nonce"].get<string>()},
-            {"max_gas_amount", jtx["gasLimit"].get<string>()},
-            {"gas_unit_price", jtx["gasPrice"].get<string>()},
-            {"expiration_timestamp_secs", to_string(rawTx.expiration_timestamp_secs)},
-            {"payload", {
-                {"type", "script_function_payload"},
-                {"function", "0x1::account::create_account"},
-                {"type_arguments", json::array()},
-                {"arguments", {jtx["toAddress"].get<string>()}}
-            }},
-            {"signature", {
-                {"type", "ed25519_signature"},
-                {"public_key", hexEncoded(pubKey.bytes)},
-                {"signature", hexEncoded(sign)},
-            }}
-        };
-        return jtxSubmit.dump();
-    } else {
-        json jtxSubmit = {
-            {"sender", jtx["fromAddress"].get<string>()},
-            {"sequence_number", jtx["nonce"].get<string>()},
-            {"max_gas_amount", jtx["gasLimit"].get<string>()},
-            {"gas_unit_price", jtx["gasPrice"].get<string>()},
-            {"expiration_timestamp_secs", to_string(rawTx.expiration_timestamp_secs)},
-            {"payload", {
-                {"type", "script_function_payload"},
-                {"function", "0x1::coin::transfer"},
-                {"type_arguments", {jtx["token"].get<string>()}},
-                {"arguments", {jtx["toAddress"].get<string>(), jtx["amount"].get<string>()}}
-            }},
-            {"signature", {
-                {"type", "ed25519_signature"},
-                {"public_key", hexEncoded(pubKey.bytes)},
-                {"signature", hexEncoded(sign)},
-            }}
-        };
-        return jtxSubmit.dump();
-    }
+    return TW::hex(serde::BcsSerialize(signedTx));
 }
