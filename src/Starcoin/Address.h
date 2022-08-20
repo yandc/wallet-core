@@ -24,11 +24,17 @@ class Address {
     static bool isValid(const Data& data) { return data.size() == size; }
 
     /// Determines whether a string makes a valid address.
-    static bool isValid(const std::string& string) {
-      if (string.size() != 34 || string[0] != '0' || string[1] != 'x') {
+    static bool isValid(const std::string& address) {
+      size_t pos1 = address.find("::");
+      if (pos1 != std::string::npos) {
+        size_t pos2 = address.find("::", pos1+2);
+        if(pos2 == std::string::npos) return false;
+        return Address::isValid(address.substr(0, pos1));
+      }
+      if (address.size() != 34 || address[0] != '0' || address[1] != 'x') {
           return false;
       }
-      const auto data = parse_hex(string, true);
+      const auto data = parse_hex(address, true);
       return Address::isValid(data);
     }
 
