@@ -52,21 +52,6 @@ bool SplitToken(string token, string& addr, string& modu, string& coin) {
 bool Json2RawTx(json& jtx, aptos_types::RawTransaction& rawTx) {
     uint64_t timestamp = duration_cast<seconds>(system_clock::now().time_since_epoch()).count();
     const auto fromAddr = Address(jtx["fromAddress"].get<string>());
-    const auto toAddr = Address(jtx["toAddress"].get<string>());
-
-    string token = "0x1::aptos_coin::AptosCoin";
-    if(jtx.contains("token")) {
-        jtx["token"].get_to(token);
-    }
-    string addr, modu, coin;
-    if(!SplitToken(token, addr, modu, coin)) {
-        return false;
-    };
-    const auto tokenAddr = Address(addr);
-    const string tokenModu = modu;
-    const string tokenCoin = coin;
-
-    uint64_t amount = strtoull(jtx["amount"].get<string>().c_str(), NULL, 10);
     rawTx.chain_id.value = jtx["chainId"].get<uint8_t>();
     rawTx.max_gas_amount = strtoull(jtx["gasLimit"].get<string>().c_str(), NULL, 10);
     rawTx.gas_unit_price = strtoull(jtx["gasPrice"].get<string>().c_str(), NULL, 10);
@@ -84,32 +69,124 @@ bool Json2RawTx(json& jtx, aptos_types::RawTransaction& rawTx) {
         serde::BcsDeserialize(payloadData, rawTx.payload);
 
     } else {
+        json action = jtx["action"].get<json>();
         aptos_types::ScriptFunction scriptFunction;
-        if(jtx.contains("createAccount") && jtx["createAccount"].get<bool>()) {
+        if(action.contains("createAccount")) {
+            json inner =  action["createAccount"].get<json>();
+            const auto addr = Address(inner["address"].get<string>());
             scriptFunction.module = aptos_types::ModuleId {
                 .address = aptos_types::AccountAddress{.value = Address("0x1").bytes},
                 .name = aptos_types::Identifier{.value = "account"},
             };
             scriptFunction.function = aptos_types::Identifier{.value = "create_account"};
-            scriptFunction.args.push_back(serde::BcsSerialize(aptos_types::AccountAddress{.value = toAddr.bytes}));
+            scriptFunction.args.push_back(serde::BcsSerialize(aptos_types::AccountAddress{.value = addr.bytes}));
 
-        } else if(jtx.contains("registerCoin") && jtx["registerCoin"].get<bool>()) {
+        } else if(action.contains("registerCoin")) {
+            json inner =  action["registerCoin"].get<json>();
+            string addr, modu, coin;
+            if(!SplitToken(inner["token"].get<string>(), addr, modu, coin)) {
+                return false;
+            };
+            const auto tokenAddr = Address(addr);
             scriptFunction.module = aptos_types::ModuleId {
                 .address = aptos_types::AccountAddress{.value = Address("0x1").bytes},
                 .name = aptos_types::Identifier{.value = "coins"},
             };
             scriptFunction.function = aptos_types::Identifier{.value = "register"};
+            scriptFunction.ty_args.push_back(aptos_types::TypeTag{
+                .value = aptos_types::TypeTag::Struct{
+                    .value = {
+                        .address = aptos_types::AccountAddress{.value = tokenAddr.bytes},
+                        .module = aptos_types::Identifier{.value = modu},
+                        .name = aptos_types::Identifier{.value = coin},
+                    }
+                }
+            });
+
+        } else if(action.contains("createModule")) {
+            json inner =  action["createModule"].get<json>();
+            string code = inner["code"].get<string>();
+            aptos_types::ModuleBundle moduleBundle;
+
+            moduleBundle.codes.push_back(aptos_types::Module{.code = TW::parse_hex(code)});
+            rawTx.payload = aptos_types::TransactionPayload {
+                .value = aptos_types::TransactionPayload::ModuleBundle{
+                    .value = moduleBundle
+                }
+            };
+            return true;
+
+        } else if(action.contains("initCoin")) {
+            json inner =  action["initCoin"].get<json>();
+            string addr, modu, coin;
+            if(!SplitToken(inner["token"].get<string>(), addr, modu, coin)) {
+                return false;
+            };
+            const auto tokenAddr = Address(addr);
+            string name = inner["name"].get<string>();
+            string symbol = inner["symbol"].get<string>();
+            uint8_t decimal = inner["decimal"].get<uint8_t>();
+
+            scriptFunction.module = aptos_types::ModuleId {
+                .address = aptos_types::AccountAddress{.value = Address("0x1").bytes},
+                .name = aptos_types::Identifier{.value = "managed_coin"},
+            };
+            scriptFunction.function = aptos_types::Identifier{.value = "initialize"};
+            scriptFunction.args.push_back(serde::BcsSerialize(name));
+            scriptFunction.args.push_back(serde::BcsSerialize(symbol));
+            scriptFunction.args.push_back(serde::BcsSerialize(decimal));
+            scriptFunction.args.push_back(serde::BcsSerialize(false));
 
             scriptFunction.ty_args.push_back(aptos_types::TypeTag{
                 .value = aptos_types::TypeTag::Struct{
                     .value = {
                         .address = aptos_types::AccountAddress{.value = tokenAddr.bytes},
-                        .module = aptos_types::Identifier{.value = tokenModu},
-                        .name = aptos_types::Identifier{.value = tokenCoin},
+                        .module = aptos_types::Identifier{.value = modu},
+                        .name = aptos_types::Identifier{.value = coin},
                     }
                 }
             });
-        } else {
+        } else if(action.contains("mintCoin")) {
+            json inner =  action["mintCoin"].get<json>();
+            string addr, modu, coin;
+            if(!SplitToken(inner["token"].get<string>(), addr, modu, coin)) {
+                return false;
+            };
+            const auto tokenAddr = Address(addr);
+            const auto toAddr = Address(inner["toAddress"].get<string>());
+            uint64_t amount = strtoull(inner["amount"].get<string>().c_str(), NULL, 10);
+
+            scriptFunction.module = aptos_types::ModuleId {
+                .address = aptos_types::AccountAddress{.value = Address("0x1").bytes},
+                .name = aptos_types::Identifier{.value = "managed_coin"},
+            };
+            scriptFunction.function = aptos_types::Identifier{.value = "mint"};
+            scriptFunction.args.push_back(serde::BcsSerialize(aptos_types::AccountAddress{.value = toAddr.bytes}));
+            scriptFunction.args.push_back(serde::BcsSerialize(amount));
+
+            scriptFunction.ty_args.push_back(aptos_types::TypeTag{
+                .value = aptos_types::TypeTag::Struct{
+                    .value = {
+                        .address = aptos_types::AccountAddress{.value = tokenAddr.bytes},
+                        .module = aptos_types::Identifier{.value = modu},
+                        .name = aptos_types::Identifier{.value = coin},
+                    }
+                }
+            });
+        } else if(action.contains("transfer")){
+            json inner =  action["transfer"].get<json>();
+            const auto toAddr = Address(inner["toAddress"].get<string>());
+            uint64_t amount = strtoull(inner["amount"].get<string>().c_str(), NULL, 10);
+            string token = "0x1::aptos_coin::AptosCoin";
+            if(inner.contains("token")) {
+                inner["token"].get_to(token);
+            }
+            string addr, modu, coin;
+            if(!SplitToken(token, addr, modu, coin)) {
+                return false;
+            };
+            const auto tokenAddr = Address(addr);
+
             scriptFunction.module = aptos_types::ModuleId {
                 .address = aptos_types::AccountAddress{.value = Address("0x1").bytes},
                 .name = aptos_types::Identifier{.value = "coin"},
@@ -122,11 +199,13 @@ bool Json2RawTx(json& jtx, aptos_types::RawTransaction& rawTx) {
                 .value = aptos_types::TypeTag::Struct{
                     .value = {
                         .address = aptos_types::AccountAddress{.value = tokenAddr.bytes},
-                        .module = aptos_types::Identifier{.value = tokenModu},
-                        .name = aptos_types::Identifier{.value = tokenCoin},
+                        .module = aptos_types::Identifier{.value = modu},
+                        .name = aptos_types::Identifier{.value = coin},
                     }
                 }
             });
+        } else {
+            return false;
         }
 
         rawTx.payload = aptos_types::TransactionPayload{

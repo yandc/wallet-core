@@ -85,7 +85,7 @@ namespace aptos_types {
     };
 
     struct HashValue {
-        std::vector<uint8_t> value;
+        std::array<uint8_t, 32> hash;
 
         friend bool operator==(const HashValue&, const HashValue&);
     };
@@ -94,8 +94,8 @@ namespace aptos_types {
         aptos_types::HashValue id;
         uint64_t epoch;
         uint64_t round;
-        std::vector<bool> previous_block_votes;
         aptos_types::AccountAddress proposer;
+        std::vector<uint8_t> previous_block_votes_bitvec;
         std::vector<uint32_t> failed_proposer_indices;
         uint64_t timestamp_usecs;
 
@@ -247,6 +247,50 @@ namespace aptos_types {
         friend bool operator==(const ScriptFunction&, const ScriptFunction&);
     };
 
+    struct TransactionPayload {
+
+        struct Script {
+            aptos_types::Script value;
+
+            friend bool operator==(const Script&, const Script&);
+        };
+
+        struct ModuleBundle {
+            aptos_types::ModuleBundle value;
+
+            friend bool operator==(const ModuleBundle&, const ModuleBundle&);
+        };
+
+        struct ScriptFunction {
+            aptos_types::ScriptFunction value;
+
+            friend bool operator==(const ScriptFunction&, const ScriptFunction&);
+        };
+
+        std::variant<Script, ModuleBundle, ScriptFunction> value;
+
+        friend bool operator==(const TransactionPayload&, const TransactionPayload&);
+    };
+
+    struct RawTransaction {
+        aptos_types::AccountAddress sender;
+        uint64_t sequence_number;
+        aptos_types::TransactionPayload payload;
+        uint64_t max_gas_amount;
+        uint64_t gas_unit_price;
+        uint64_t expiration_timestamp_secs;
+        aptos_types::ChainId chain_id;
+
+        friend bool operator==(const RawTransaction&, const RawTransaction&);
+    };
+
+    struct SignedTransaction {
+        aptos_types::RawTransaction raw_txn;
+        aptos_types::TransactionAuthenticator authenticator;
+
+        friend bool operator==(const SignedTransaction&, const SignedTransaction&);
+    };
+
     struct EventKey {
         uint64_t creation_number;
         aptos_types::AccountAddress account_address;
@@ -317,17 +361,23 @@ namespace aptos_types {
 
     struct WriteOp {
 
+        struct Creation {
+            std::vector<uint8_t> value;
+
+            friend bool operator==(const Creation&, const Creation&);
+        };
+
+        struct Modification {
+            std::vector<uint8_t> value;
+
+            friend bool operator==(const Modification&, const Modification&);
+        };
+
         struct Deletion {
             friend bool operator==(const Deletion&, const Deletion&);
         };
 
-        struct Value {
-            std::vector<uint8_t> value;
-
-            friend bool operator==(const Value&, const Value&);
-        };
-
-        std::variant<Deletion, Value> value;
+        std::variant<Creation, Modification, Deletion> value;
 
         friend bool operator==(const WriteOp&, const WriteOp&);
     };
@@ -338,8 +388,21 @@ namespace aptos_types {
         friend bool operator==(const WriteSetMut&, const WriteSetMut&);
     };
 
-    struct WriteSet {
+    struct WriteSetV0 {
         aptos_types::WriteSetMut value;
+
+        friend bool operator==(const WriteSetV0&, const WriteSetV0&);
+    };
+
+    struct WriteSet {
+
+        struct V0 {
+            aptos_types::WriteSetV0 value;
+
+            friend bool operator==(const V0&, const V0&);
+        };
+
+        std::variant<V0> value;
 
         friend bool operator==(const WriteSet&, const WriteSet&);
     };
@@ -369,56 +432,6 @@ namespace aptos_types {
         std::variant<Direct, Script> value;
 
         friend bool operator==(const WriteSetPayload&, const WriteSetPayload&);
-    };
-
-    struct TransactionPayload {
-
-        struct WriteSet {
-            aptos_types::WriteSetPayload value;
-
-            friend bool operator==(const WriteSet&, const WriteSet&);
-        };
-
-        struct Script {
-            aptos_types::Script value;
-
-            friend bool operator==(const Script&, const Script&);
-        };
-
-        struct ModuleBundle {
-            aptos_types::ModuleBundle value;
-
-            friend bool operator==(const ModuleBundle&, const ModuleBundle&);
-        };
-
-        struct ScriptFunction {
-            aptos_types::ScriptFunction value;
-
-            friend bool operator==(const ScriptFunction&, const ScriptFunction&);
-        };
-
-        std::variant<WriteSet, Script, ModuleBundle, ScriptFunction> value;
-
-        friend bool operator==(const TransactionPayload&, const TransactionPayload&);
-    };
-
-    struct RawTransaction {
-        aptos_types::AccountAddress sender;
-        uint64_t sequence_number;
-        aptos_types::TransactionPayload payload;
-        uint64_t max_gas_amount;
-        uint64_t gas_unit_price;
-        uint64_t expiration_timestamp_secs;
-        aptos_types::ChainId chain_id;
-
-        friend bool operator==(const RawTransaction&, const RawTransaction&);
-    };
-
-    struct SignedTransaction {
-        aptos_types::RawTransaction raw_txn;
-        aptos_types::TransactionAuthenticator authenticator;
-
-        friend bool operator==(const SignedTransaction&, const SignedTransaction&);
     };
 
     struct Transaction {
@@ -597,8 +610,8 @@ namespace aptos_types {
         if (!(lhs.id == rhs.id)) { return false; }
         if (!(lhs.epoch == rhs.epoch)) { return false; }
         if (!(lhs.round == rhs.round)) { return false; }
-        if (!(lhs.previous_block_votes == rhs.previous_block_votes)) { return false; }
         if (!(lhs.proposer == rhs.proposer)) { return false; }
+        if (!(lhs.previous_block_votes_bitvec == rhs.previous_block_votes_bitvec)) { return false; }
         if (!(lhs.failed_proposer_indices == rhs.failed_proposer_indices)) { return false; }
         if (!(lhs.timestamp_usecs == rhs.timestamp_usecs)) { return false; }
         return true;
@@ -613,8 +626,8 @@ void serde::Serializable<aptos_types::BlockMetadata>::serialize(const aptos_type
     serde::Serializable<decltype(obj.id)>::serialize(obj.id, serializer);
     serde::Serializable<decltype(obj.epoch)>::serialize(obj.epoch, serializer);
     serde::Serializable<decltype(obj.round)>::serialize(obj.round, serializer);
-    serde::Serializable<decltype(obj.previous_block_votes)>::serialize(obj.previous_block_votes, serializer);
     serde::Serializable<decltype(obj.proposer)>::serialize(obj.proposer, serializer);
+    serde::Serializable<decltype(obj.previous_block_votes_bitvec)>::serialize(obj.previous_block_votes_bitvec, serializer);
     serde::Serializable<decltype(obj.failed_proposer_indices)>::serialize(obj.failed_proposer_indices, serializer);
     serde::Serializable<decltype(obj.timestamp_usecs)>::serialize(obj.timestamp_usecs, serializer);
     serializer.decrease_container_depth();
@@ -628,8 +641,8 @@ aptos_types::BlockMetadata serde::Deserializable<aptos_types::BlockMetadata>::de
     obj.id = serde::Deserializable<decltype(obj.id)>::deserialize(deserializer);
     obj.epoch = serde::Deserializable<decltype(obj.epoch)>::deserialize(deserializer);
     obj.round = serde::Deserializable<decltype(obj.round)>::deserialize(deserializer);
-    obj.previous_block_votes = serde::Deserializable<decltype(obj.previous_block_votes)>::deserialize(deserializer);
     obj.proposer = serde::Deserializable<decltype(obj.proposer)>::deserialize(deserializer);
+    obj.previous_block_votes_bitvec = serde::Deserializable<decltype(obj.previous_block_votes_bitvec)>::deserialize(deserializer);
     obj.failed_proposer_indices = serde::Deserializable<decltype(obj.failed_proposer_indices)>::deserialize(deserializer);
     obj.timestamp_usecs = serde::Deserializable<decltype(obj.timestamp_usecs)>::deserialize(deserializer);
     deserializer.decrease_container_depth();
@@ -866,7 +879,7 @@ aptos_types::EventKey serde::Deserializable<aptos_types::EventKey>::deserialize(
 namespace aptos_types {
 
     inline bool operator==(const HashValue &lhs, const HashValue &rhs) {
-        if (!(lhs.value == rhs.value)) { return false; }
+        if (!(lhs.hash == rhs.hash)) { return false; }
         return true;
     }
 
@@ -876,7 +889,7 @@ template <>
 template <typename Serializer>
 void serde::Serializable<aptos_types::HashValue>::serialize(const aptos_types::HashValue &obj, Serializer &serializer) {
     serializer.increase_container_depth();
-    serde::Serializable<decltype(obj.value)>::serialize(obj.value, serializer);
+    serde::Serializable<decltype(obj.hash)>::serialize(obj.hash, serializer);
     serializer.decrease_container_depth();
 }
 
@@ -885,7 +898,7 @@ template <typename Deserializer>
 aptos_types::HashValue serde::Deserializable<aptos_types::HashValue>::deserialize(Deserializer &deserializer) {
     deserializer.increase_container_depth();
     aptos_types::HashValue obj;
-    obj.value = serde::Deserializable<decltype(obj.value)>::deserialize(deserializer);
+    obj.hash = serde::Deserializable<decltype(obj.hash)>::deserialize(deserializer);
     deserializer.decrease_container_depth();
     return obj;
 }
@@ -1782,29 +1795,6 @@ aptos_types::TransactionPayload serde::Deserializable<aptos_types::TransactionPa
 
 namespace aptos_types {
 
-    inline bool operator==(const TransactionPayload::WriteSet &lhs, const TransactionPayload::WriteSet &rhs) {
-        if (!(lhs.value == rhs.value)) { return false; }
-        return true;
-    }
-
-} // end of namespace aptos_types
-
-template <>
-template <typename Serializer>
-void serde::Serializable<aptos_types::TransactionPayload::WriteSet>::serialize(const aptos_types::TransactionPayload::WriteSet &obj, Serializer &serializer) {
-    serde::Serializable<decltype(obj.value)>::serialize(obj.value, serializer);
-}
-
-template <>
-template <typename Deserializer>
-aptos_types::TransactionPayload::WriteSet serde::Deserializable<aptos_types::TransactionPayload::WriteSet>::deserialize(Deserializer &deserializer) {
-    aptos_types::TransactionPayload::WriteSet obj;
-    obj.value = serde::Deserializable<decltype(obj.value)>::deserialize(deserializer);
-    return obj;
-}
-
-namespace aptos_types {
-
     inline bool operator==(const TransactionPayload::Script &lhs, const TransactionPayload::Script &rhs) {
         if (!(lhs.value == rhs.value)) { return false; }
         return true;
@@ -2094,6 +2084,52 @@ aptos_types::WriteOp serde::Deserializable<aptos_types::WriteOp>::deserialize(De
 
 namespace aptos_types {
 
+    inline bool operator==(const WriteOp::Creation &lhs, const WriteOp::Creation &rhs) {
+        if (!(lhs.value == rhs.value)) { return false; }
+        return true;
+    }
+
+} // end of namespace aptos_types
+
+template <>
+template <typename Serializer>
+void serde::Serializable<aptos_types::WriteOp::Creation>::serialize(const aptos_types::WriteOp::Creation &obj, Serializer &serializer) {
+    serde::Serializable<decltype(obj.value)>::serialize(obj.value, serializer);
+}
+
+template <>
+template <typename Deserializer>
+aptos_types::WriteOp::Creation serde::Deserializable<aptos_types::WriteOp::Creation>::deserialize(Deserializer &deserializer) {
+    aptos_types::WriteOp::Creation obj;
+    obj.value = serde::Deserializable<decltype(obj.value)>::deserialize(deserializer);
+    return obj;
+}
+
+namespace aptos_types {
+
+    inline bool operator==(const WriteOp::Modification &lhs, const WriteOp::Modification &rhs) {
+        if (!(lhs.value == rhs.value)) { return false; }
+        return true;
+    }
+
+} // end of namespace aptos_types
+
+template <>
+template <typename Serializer>
+void serde::Serializable<aptos_types::WriteOp::Modification>::serialize(const aptos_types::WriteOp::Modification &obj, Serializer &serializer) {
+    serde::Serializable<decltype(obj.value)>::serialize(obj.value, serializer);
+}
+
+template <>
+template <typename Deserializer>
+aptos_types::WriteOp::Modification serde::Deserializable<aptos_types::WriteOp::Modification>::deserialize(Deserializer &deserializer) {
+    aptos_types::WriteOp::Modification obj;
+    obj.value = serde::Deserializable<decltype(obj.value)>::deserialize(deserializer);
+    return obj;
+}
+
+namespace aptos_types {
+
     inline bool operator==(const WriteOp::Deletion &lhs, const WriteOp::Deletion &rhs) {
         return true;
     }
@@ -2109,29 +2145,6 @@ template <>
 template <typename Deserializer>
 aptos_types::WriteOp::Deletion serde::Deserializable<aptos_types::WriteOp::Deletion>::deserialize(Deserializer &deserializer) {
     aptos_types::WriteOp::Deletion obj;
-    return obj;
-}
-
-namespace aptos_types {
-
-    inline bool operator==(const WriteOp::Value &lhs, const WriteOp::Value &rhs) {
-        if (!(lhs.value == rhs.value)) { return false; }
-        return true;
-    }
-
-} // end of namespace aptos_types
-
-template <>
-template <typename Serializer>
-void serde::Serializable<aptos_types::WriteOp::Value>::serialize(const aptos_types::WriteOp::Value &obj, Serializer &serializer) {
-    serde::Serializable<decltype(obj.value)>::serialize(obj.value, serializer);
-}
-
-template <>
-template <typename Deserializer>
-aptos_types::WriteOp::Value serde::Deserializable<aptos_types::WriteOp::Value>::deserialize(Deserializer &deserializer) {
-    aptos_types::WriteOp::Value obj;
-    obj.value = serde::Deserializable<decltype(obj.value)>::deserialize(deserializer);
     return obj;
 }
 
@@ -2159,6 +2172,29 @@ aptos_types::WriteSet serde::Deserializable<aptos_types::WriteSet>::deserialize(
     aptos_types::WriteSet obj;
     obj.value = serde::Deserializable<decltype(obj.value)>::deserialize(deserializer);
     deserializer.decrease_container_depth();
+    return obj;
+}
+
+namespace aptos_types {
+
+    inline bool operator==(const WriteSet::V0 &lhs, const WriteSet::V0 &rhs) {
+        if (!(lhs.value == rhs.value)) { return false; }
+        return true;
+    }
+
+} // end of namespace aptos_types
+
+template <>
+template <typename Serializer>
+void serde::Serializable<aptos_types::WriteSet::V0>::serialize(const aptos_types::WriteSet::V0 &obj, Serializer &serializer) {
+    serde::Serializable<decltype(obj.value)>::serialize(obj.value, serializer);
+}
+
+template <>
+template <typename Deserializer>
+aptos_types::WriteSet::V0 serde::Deserializable<aptos_types::WriteSet::V0>::deserialize(Deserializer &deserializer) {
+    aptos_types::WriteSet::V0 obj;
+    obj.value = serde::Deserializable<decltype(obj.value)>::deserialize(deserializer);
     return obj;
 }
 
@@ -2262,5 +2298,32 @@ aptos_types::WriteSetPayload::Script serde::Deserializable<aptos_types::WriteSet
     aptos_types::WriteSetPayload::Script obj;
     obj.execute_as = serde::Deserializable<decltype(obj.execute_as)>::deserialize(deserializer);
     obj.script = serde::Deserializable<decltype(obj.script)>::deserialize(deserializer);
+    return obj;
+}
+
+namespace aptos_types {
+
+    inline bool operator==(const WriteSetV0 &lhs, const WriteSetV0 &rhs) {
+        if (!(lhs.value == rhs.value)) { return false; }
+        return true;
+    }
+
+} // end of namespace aptos_types
+
+template <>
+template <typename Serializer>
+void serde::Serializable<aptos_types::WriteSetV0>::serialize(const aptos_types::WriteSetV0 &obj, Serializer &serializer) {
+    serializer.increase_container_depth();
+    serde::Serializable<decltype(obj.value)>::serialize(obj.value, serializer);
+    serializer.decrease_container_depth();
+}
+
+template <>
+template <typename Deserializer>
+aptos_types::WriteSetV0 serde::Deserializable<aptos_types::WriteSetV0>::deserialize(Deserializer &deserializer) {
+    deserializer.increase_container_depth();
+    aptos_types::WriteSetV0 obj;
+    obj.value = serde::Deserializable<decltype(obj.value)>::deserialize(deserializer);
+    deserializer.decrease_container_depth();
     return obj;
 }

@@ -31,10 +31,9 @@ BlockMetadata:
         TYPENAME: HashValue
     - epoch: U64
     - round: U64
-    - previous_block_votes:
-        SEQ: BOOL
     - proposer:
         TYPENAME: AccountAddress
+    - previous_block_votes_bitvec: BYTES
     - failed_proposer_indices:
         SEQ: U32
     - timestamp_usecs: U64
@@ -71,7 +70,11 @@ EventKey:
     - account_address:
         TYPENAME: AccountAddress
 HashValue:
-  NEWTYPESTRUCT: BYTES
+  STRUCT:
+    - hash:
+        TUPLEARRAY:
+          CONTENT: U8
+          SIZE: 32
 Identifier:
   NEWTYPESTRUCT: STR
 Module:
@@ -227,18 +230,14 @@ TransactionAuthenticator:
 TransactionPayload:
   ENUM:
     0:
-      WriteSet:
-        NEWTYPE:
-          TYPENAME: WriteSetPayload
-    1:
       Script:
         NEWTYPE:
           TYPENAME: Script
-    2:
+    1:
       ModuleBundle:
         NEWTYPE:
           TYPENAME: ModuleBundle
-    3:
+    2:
       ScriptFunction:
         NEWTYPE:
           TYPENAME: ScriptFunction
@@ -267,13 +266,19 @@ TypeTag:
 WriteOp:
   ENUM:
     0:
-      Deletion: UNIT
-    1:
-      Value:
+      Creation:
         NEWTYPE: BYTES
+    1:
+      Modification:
+        NEWTYPE: BYTES
+    2:
+      Deletion: UNIT
 WriteSet:
-  NEWTYPESTRUCT:
-    TYPENAME: WriteSetMut
+  ENUM:
+    0:
+      V0:
+        NEWTYPE:
+          TYPENAME: WriteSetV0
 WriteSetMut:
   STRUCT:
     - write_set:
@@ -294,3 +299,6 @@ WriteSetPayload:
               TYPENAME: AccountAddress
           - script:
               TYPENAME: Script
+WriteSetV0:
+  NEWTYPESTRUCT:
+    TYPENAME: WriteSetMut
