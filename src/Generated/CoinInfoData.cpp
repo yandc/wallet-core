@@ -916,6 +916,29 @@ const CoinInfo getCoinInfo(TWCoinType coin) {
                 "",
                 101011,
             };
+        case TWCoinTypeSui:
+            return CoinInfo {
+                "sui",
+                "Sui",
+                TWBlockchainPolkadot,
+                TWPurposeBIP44,
+                TWCurveED25519,
+                TWHDVersionNone,
+                TWHDVersionNone,
+                "m/44'/434'/0'/0'/0'",
+                TWPublicKeyTypeED25519,
+                0,
+                0,
+                0,
+                TWHRPUnknown,
+                Hash::sha256ripemd,
+                Hash::sha256d,
+                "Sui",
+                12,
+                "",
+                "",
+                101012,
+            };
         case TWCoinTypeAeternity:
             return CoinInfo {
                 "aeternity",

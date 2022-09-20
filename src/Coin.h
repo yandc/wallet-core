@@ -90,6 +90,7 @@ const char* anySignMessage(TWCoinType coinType, const std::string& msg, const Da
 bool supportsJSONSigning(TWCoinType coinType);
 
 void anyCoinPlan(TWCoinType coinType, const Data& dataIn, Data& dataOut);
+std::string anyCoinPlanJson(TWCoinType coinType, const std::string& jsonInput);
 
 HashPubkeyList anyCoinPreImageHashes(TWCoinType coinType, const Data& txInputData);
 

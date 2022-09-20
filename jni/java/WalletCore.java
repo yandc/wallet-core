@@ -67,6 +67,12 @@ public class WalletCore
     public native String OfflineSignMili23(String curve, String session, String key);
 
     /*
+    * UTXO plan
+    * @input: 交易输入参数，json结构
+    * 返回：{"amount":1000, "fee":100, "utxo_size":2}
+    */
+    public native String UtxoPlan(int coinId, String input);
+    /*
     * 私钥分片解密
     * @userId: 用户Id
     * @accountId: 私钥对应accountId

@@ -123,6 +123,12 @@ extern TWString* CppSignMili23(const char* session, const char* key, const char*
 extern TWString* CppJsonTransactionMili23(const char* session, const char* key, const char* preSign, int coinId, const char* input);
 
 /*
+* UTXO plan
+* @input: 交易输入参数，json结构
+* 返回：{"amount":1000, "fee":100, "utxo_size":2}
+*/
+extern TWString* CppUtxoPlan(int coinId, const char* input);
+/*
 * 解析Evm合约数据
 */
 extern TWString* CppDecodeEvmCall(const char* callData);

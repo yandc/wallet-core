@@ -24,6 +24,7 @@ class Signer {
 
     /// Returns a transaction plan (utxo selection, fee estimation)
     static Proto::TransactionPlan plan(const Proto::SigningInput& input) noexcept;
+    static Proto::TransactionPlan planJson(TWCoinType coin, const std::string& json) noexcept;
 
     /// Signs a Proto::SigningInput transaction
     static Proto::SigningOutput sign(const Proto::SigningInput& input, std::optional<SignaturePubkeyList> optionalExternalSigs = {});

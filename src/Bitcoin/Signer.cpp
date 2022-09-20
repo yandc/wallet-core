@@ -22,6 +22,20 @@ Proto::TransactionPlan Signer::plan(const Proto::SigningInput& input) noexcept {
     return plan.proto();
 }
 
+Proto::TransactionPlan Signer::planJson(TWCoinType coin, const std::string& jsonInput) noexcept {
+    auto input = Proto::SigningInput();
+    google::protobuf::util::JsonStringToMessage(jsonInput, &input);
+    input.set_coin_type(coin);
+    input.set_hash_type(hashTypeForCoin(coin));
+    auto lockingScript = Script::lockScriptForAddress(input.change_address(), coin);
+    for(int i = 0; i < input.utxo_size() && input.utxo(i).script().size() == 0; i++) {
+        auto utxo = input.mutable_utxo(i);
+        utxo->set_script(lockingScript.bytes.data(), lockingScript.bytes.size());
+    }
+    auto plan = TransactionSigner<Transaction, TransactionBuilder>::plan(input);
+    return plan.proto();
+}
+
 Proto::SigningOutput Signer::sign(const Proto::SigningInput &input, std::optional<SignaturePubkeyList> optionalExternalSigs) {
     Proto::SigningOutput output;
     auto result = TransactionSigner<Transaction, TransactionBuilder>::sign(input, false, optionalExternalSigs);

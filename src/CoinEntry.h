@@ -39,6 +39,7 @@ public:
     // Planning, for UTXO chains, in preparation for signing
     // It is optional, only UTXO chains need it, default impl. leaves empty result.
     virtual void plan(TWCoinType coin, const Data& dataIn, Data& dataOut) const { return; }
+    virtual std::string planJson(TWCoinType coin, const std::string& jsonInput) const { return ""; }
 
     // Optional method for obtaining hash(es) for signing, needed for external signing. Hashes are linked to the associated pubkey/pubkeyhash.
     virtual HashPubkeyList preImageHashes(TWCoinType coin, const Data& txInputData) const { return HashPubkeyList(); }

@@ -81,6 +81,14 @@ JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_OfflineSignMi
 
 /*
  * Class:     com_openblock_wallet_jni_WalletCore
+ * Method:    UtxoPlan
+ * Signature: (ILjava/lang/String;)Ljava/lang/String;
+ */
+JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_UtxoPlan
+  (JNIEnv *, jobject, jint, jstring);
+
+/*
+ * Class:     com_openblock_wallet_jni_WalletCore
  * Method:    DecryptShareKey
  * Signature: (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
  */

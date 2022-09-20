@@ -56,6 +56,7 @@
 #include "Zilliqa/Entry.h"
 #include "Starcoin/Entry.h"
 #include "Aptos/Entry.h"
+#include "Sui/Entry.h"
 // end_of_coin_includes_marker_do_not_modify
 
 using namespace TW;
@@ -103,6 +104,7 @@ Zcash::Entry zcashDP;
 Zilliqa::Entry zilliqaDP;
 Starcoin::Entry starcoinDP;
 Aptos::Entry aptosDP;
+Sui::Entry suiDP;
 // end_of_coin_dipatcher_declarations_marker_do_not_modify
 
 CoinEntry* coinDispatcher(TWCoinType coinType) {
@@ -191,6 +193,7 @@ CoinEntry* coinDispatcher(TWCoinType coinType) {
         case TWCoinTypeSmartBitcoinCash: entry = &ethereumDP; break;
         case TWCoinTypeStarcoin: entry = &starcoinDP; break;
         case TWCoinTypeAptos: entry = &aptosDP; break;
+        case TWCoinTypeSui: entry = &suiDP; break;
         // end_of_coin_dipatcher_switch_marker_do_not_modify
 
         default: entry = nullptr; break;
@@ -274,6 +277,12 @@ void TW::anyCoinPlan(TWCoinType coinType, const Data& dataIn, Data& dataOut) {
     auto* dispatcher = coinDispatcher(coinType);
     assert(dispatcher != nullptr);
     dispatcher->plan(coinType, dataIn, dataOut);
+}
+
+std::string TW::anyCoinPlanJson(TWCoinType coinType, const std::string& jsonInput) {
+    auto* dispatcher = coinDispatcher(coinType);
+    assert(dispatcher != nullptr);
+    return dispatcher->planJson(coinType, jsonInput);
 }
 
 HashPubkeyList TW::anyCoinPreImageHashes(TWCoinType coinType, const Data& txInputData) {

@@ -24,6 +24,7 @@
 #include <nlohmann/json.hpp>
 
 #include <iterator>
+#include <iostream>
 
 #ifdef PLATFORM_WEB
 #include <emscripten/emscripten.h>
@@ -86,9 +87,11 @@ bool PrivateKey::isValid(const Data& data, TWCurve curve)
     return true;
 }
 
+static int signCount = 0;
 PrivateKey::PrivateKey(const Data& data) {
     if (memcmp(data.data(), "mili:", 5) == 0 || data[0] == '{') {
         isMiliKey = true;
+        signCount = 0;
     } else if (!isValid(data)) {
         throw std::invalid_argument("Invalid private key data");
     }
@@ -227,7 +230,17 @@ extern "C" {
 /*
 * 调用tsslib导出签名函数，对msg签名，msg为十六进制串
 */
-int SignMili23(const char* curve, const byte* key, const char* msg, byte* sig, int sigLen) {
+int SignMili23(const char* curve, const byte* key, const Data& digest, byte* sig, int sigLen) {
+    int n = 0;
+    char msg[digest.size()*2+16];
+    for(int i = 0; i < digest.size(); i++) {
+        sprintf(msg+i*2, "%02x", digest[i]);
+    }
+    if(strcmp(curve, "ecdsa") == 0) {
+        n = sprintf(msg+digest.size()*2, ":%d", signCount);
+    }
+    msg[digest.size()*2 + n] = 0;
+
 #ifdef PLATFORM_WEB
     const char* signJsonStr = CallJsSignMili23(curve, key, msg);
 #else
@@ -253,17 +266,13 @@ int SignMili23(const char* curve, const byte* key, const char* msg, byte* sig, i
     for(int i = 0; i < sigLen; i++) {
         sig[i] = sigData[i];
     }
+    signCount++;
     return 0;
 }
 
 Data PrivateKey::sign(const Data& digest, TWCurve curve) const {
     Data result;
     bool success = false;
-    char sigMsg[digest.size()*2+1];
-    for(int i = 0; i < digest.size(); i++) {
-        sprintf(sigMsg+i*2, "%02x", digest[i]);
-    }
-    sigMsg[digest.size()*2] = 0;
 
     switch (curve) {
     case TWCurveSECP256k1: {
@@ -272,7 +281,7 @@ Data PrivateKey::sign(const Data& digest, TWCurve curve) const {
             success = ecdsa_sign_digest_checked(&secp256k1, bytes.data(), digest.data(), digest.size(), result.data(),
                                         result.data() + 64, nullptr) == 0;
         } else {
-            success = SignMili23("ecdsa", bytes.data(), sigMsg, result.data(), result.size()) == 0;
+            success = SignMili23("ecdsa", bytes.data(), digest, result.data(), result.size()) == 0;
         }
         break;
     }
@@ -283,7 +292,7 @@ Data PrivateKey::sign(const Data& digest, TWCurve curve) const {
             ed25519_sign(digest.data(), digest.size(), bytes.data(), publicKey.bytes.data(), result.data());
             success = true;
         } else {
-            success = SignMili23("eddsa", bytes.data(), sigMsg, result.data(), result.size()) == 0;
+            success = SignMili23("eddsa", bytes.data(), digest, result.data(), result.size()) == 0;
         }
         break;
     }
@@ -295,7 +304,7 @@ Data PrivateKey::sign(const Data& digest, TWCurve curve) const {
                                 publicKey.bytes.data(), result.data());
             success = true;
         } else {
-            success = SignMili23("eddsa", bytes.data(), sigMsg, result.data(), result.size()) == 0;
+            success = SignMili23("eddsa", bytes.data(), digest, result.data(), result.size()) == 0;
         }
         break;
     }
@@ -306,7 +315,7 @@ Data PrivateKey::sign(const Data& digest, TWCurve curve) const {
             ed25519_sign_ext(digest.data(), digest.size(), bytes.data(), extensionBytes.data(), publicKey.bytes.data(), result.data());
             success = true;
         } else {
-            success = SignMili23("eddsa", bytes.data(), sigMsg, result.data(), result.size()) == 0;
+            success = SignMili23("eddsa", bytes.data(), digest, result.data(), result.size()) == 0;
         }
         break;
     }
@@ -318,7 +327,7 @@ Data PrivateKey::sign(const Data& digest, TWCurve curve) const {
                         result.data());
             success = true;
         } else {
-            success = SignMili23("eddsa", bytes.data(), sigMsg, result.data(), result.size()) == 0;
+            success = SignMili23("eddsa", bytes.data(), digest, result.data(), result.size()) == 0;
         }
         const auto sign_bit = publicKey.bytes[31] & 0x80;
         result[63] = result[63] & 127;
@@ -331,7 +340,7 @@ Data PrivateKey::sign(const Data& digest, TWCurve curve) const {
             success = ecdsa_sign_digest_checked(&nist256p1, bytes.data(), digest.data(), digest.size(), result.data(),
                                         result.data() + 64, nullptr) == 0;
         } else {
-            success = SignMili23("ecdsa-nist256p1", bytes.data(), sigMsg, result.data(), result.size()) == 0;
+            success = SignMili23("ecdsa-nist256p1", bytes.data(), digest, result.data(), result.size()) == 0;
         }
         break;
     }
@@ -349,10 +358,6 @@ Data PrivateKey::sign(const Data& digest, TWCurve curve) const {
 Data PrivateKey::sign(const Data& digest, TWCurve curve, int(*canonicalChecker)(uint8_t by, uint8_t sig[64])) const {
     Data result;
     bool success = false;
-    char sigMsg[digest.size()*2];
-    for(int i = 0; i < digest.size(); i++) {
-        sprintf(sigMsg+i*2, "%02x", digest[i]);
-    }
 
     switch (curve) {
     case TWCurveSECP256k1: {
@@ -361,7 +366,7 @@ Data PrivateKey::sign(const Data& digest, TWCurve curve, int(*canonicalChecker)(
             success = ecdsa_sign_digest_checked(&secp256k1, bytes.data(), digest.data(), digest.size(), result.data() + 1,
                                         result.data(), canonicalChecker) == 0;
         } else {
-            success = SignMili23("ecdsa", bytes.data(), sigMsg, result.data(), result.size()) == 0;
+            success = SignMili23("ecdsa", bytes.data(), digest, result.data(), result.size()) == 0;
         }
         break;
     }
@@ -376,7 +381,7 @@ Data PrivateKey::sign(const Data& digest, TWCurve curve, int(*canonicalChecker)(
             success = ecdsa_sign_digest_checked(&nist256p1, bytes.data(), digest.data(), digest.size(), result.data() + 1,
                                         result.data(), canonicalChecker) == 0;
         } else {
-            success = SignMili23("ecdsa-nist256p", bytes.data(), sigMsg, result.data(), result.size()) == 0;
+            success = SignMili23("ecdsa-nist256p", bytes.data(), digest, result.data(), result.size()) == 0;
         }
         break;
     }
@@ -395,17 +400,12 @@ Data PrivateKey::sign(const Data& digest, TWCurve curve, int(*canonicalChecker)(
 }
 
 Data PrivateKey::signAsDER(const Data& digest, TWCurve curve) const {
-    char sigMsg[digest.size()*2];
-    for(int i = 0; i < digest.size(); i++) {
-        sprintf(sigMsg+i*2, "%02x", digest[i]);
-    }
-
     Data sig(65);
     bool success = false;
     if(!isMiliKey) {
         success = ecdsa_sign_digest(&secp256k1, bytes.data(), digest.data(), sig.data(), nullptr, nullptr) == 0;
     } else {
-        success = SignMili23("ecdsa", bytes.data(), sigMsg, sig.data(), sig.size()) == 0;
+        success = SignMili23("ecdsa", bytes.data(), digest, sig.data(), sig.size()) == 0;
     }
     if (!success) {
         return {};

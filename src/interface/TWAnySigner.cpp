@@ -41,11 +41,12 @@ TWString *_Nonnull CppSignMili23(const char *_Nonnull session, const char *_Nonn
     std::string miliKey = "mili:";
     miliKey += session;
     miliKey += ":";
+    size_t len = miliKey.size();
     miliKey += preSign;
+    if(len == miliKey.size()) miliKey += "[]";
     miliKey += key;
     Data keyData = TW::data(miliKey);
     keyData.push_back(0);//确保是cstr的0结尾
-
     json txJson;
     try {
         txJson["result"] = std::string(TW::anySignMessage(coin, msg, keyData));
@@ -64,7 +65,9 @@ TWString *_Nonnull CppJsonTransactionMili23(const char *_Nonnull session, const 
     std::string miliKey = "mili:";
     miliKey += session;
     miliKey += ":";
+    size_t len = miliKey.size();
     miliKey += preSign;
+    if(len == miliKey.size()) miliKey += "[]";
     miliKey += key;
     Data keyData = TW::data(miliKey);
     keyData.push_back(0);//确保是cstr的0结尾
@@ -81,5 +84,10 @@ TWString *_Nonnull CppJsonTransactionMili23(const char *_Nonnull session, const 
         txJson["error"] = e.what();
     }
     std::string result = txJson.dump();
+    return TWStringCreateWithRawBytes((const uint8_t*)result.c_str(), result.size());
+}
+
+TWString *_Nonnull CppUtxoPlan(enum TWCoinType coin, const char *_Nonnull input) {
+    std::string result = TW::anyCoinPlanJson(coin, input);
     return TWStringCreateWithRawBytes((const uint8_t*)result.c_str(), result.size());
 }

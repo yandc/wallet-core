@@ -10,6 +10,7 @@
 #include "CashAddress.h"
 #include "SegwitAddress.h"
 #include "Signer.h"
+#include <nlohmann/json.hpp>
 
 using namespace TW::Bitcoin;
 using namespace TW;
@@ -104,6 +105,16 @@ string Entry::signJSON(TWCoinType coin, const std::string& json, const Data& key
 
 void Entry::plan(TWCoinType coin, const TW::Data& dataIn, TW::Data& dataOut) const {
     planTemplate<Signer, Proto::SigningInput>(dataIn, dataOut);
+}
+
+std::string Entry::planJson(TWCoinType coin, const std::string& jsonInput) const {
+    const Proto::TransactionPlan& plan = Signer::planJson(coin, jsonInput);
+    nlohmann::json  planJson = {
+        {"utxo_size", plan.utxos_size()},
+        {"amount", plan.amount()},
+        {"fee", plan.fee()}
+    };
+    return planJson.dump();
 }
 
 HashPubkeyList Entry::preImageHashes(TWCoinType coin, const Data& txInputData) const {

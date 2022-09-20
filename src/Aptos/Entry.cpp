@@ -76,7 +76,7 @@ bool Json2RawTx(json& jtx, aptos_types::RawTransaction& rawTx) {
             const auto addr = Address(inner["address"].get<string>());
             scriptFunction.module = aptos_types::ModuleId {
                 .address = aptos_types::AccountAddress{.value = Address("0x1").bytes},
-                .name = aptos_types::Identifier{.value = "account"},
+                .name = aptos_types::Identifier{.value = "aptos_account"},
             };
             scriptFunction.function = aptos_types::Identifier{.value = "create_account"};
             scriptFunction.args.push_back(serde::BcsSerialize(aptos_types::AccountAddress{.value = addr.bytes}));
@@ -90,7 +90,7 @@ bool Json2RawTx(json& jtx, aptos_types::RawTransaction& rawTx) {
             const auto tokenAddr = Address(addr);
             scriptFunction.module = aptos_types::ModuleId {
                 .address = aptos_types::AccountAddress{.value = Address("0x1").bytes},
-                .name = aptos_types::Identifier{.value = "coins"},
+                .name = aptos_types::Identifier{.value = "managed_coin"},
             };
             scriptFunction.function = aptos_types::Identifier{.value = "register"};
             scriptFunction.ty_args.push_back(aptos_types::TypeTag{

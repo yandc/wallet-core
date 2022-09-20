@@ -159,6 +159,16 @@ JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_SignMili23(JN
   return ret;
 }
 
+JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_UtxoPlan(JNIEnv *env, jobject jthis, jint coinId, jstring inputJstr)
+{
+  const char* input = env->GetStringUTFChars(inputJstr, NULL);
+  auto cppRet = (const std::string*)CppUtxoPlan((TWCoinType)coinId, input);
+  env->ReleaseStringUTFChars(inputJstr, input);
+  jstring ret = env->NewStringUTF(cppRet->c_str());
+  delete cppRet;
+  return ret;
+}
+
 JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_DecryptShareKey
   (JNIEnv *env, jobject jthis, jstring arg1Jstr, jstring arg2Jstr, jstring arg3Jstr)
 {

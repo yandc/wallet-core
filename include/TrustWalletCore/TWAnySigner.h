@@ -32,4 +32,6 @@ extern TWString *_Nonnull CppSignMili23(const char *_Nonnull session, const char
 /// mili 钱包交易(json 格式)
 extern TWString *_Nonnull CppJsonTransactionMili23(const char *_Nonnull session, const char *_Nonnull key, const char *_Nonnull preSign, enum TWCoinType coin, const char *_Nonnull input);
 
+/// Plan a transaction (for UTXO chains).
+extern TWString *_Nonnull CppUtxoPlan(enum TWCoinType coin, const char *_Nonnull input);
 TW_EXTERN_C_END
