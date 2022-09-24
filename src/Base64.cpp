@@ -10,6 +10,7 @@
 #include <boost/archive/iterators/base64_from_binary.hpp>
 #include <boost/archive/iterators/binary_from_base64.hpp>
 #include <boost/archive/iterators/transform_width.hpp>
+#include <boost/beast/core/detail/base64.hpp>
 
 namespace TW::Base64 {
 
@@ -17,10 +18,12 @@ using namespace TW;
 using namespace std;
 
 Data decode(const string& val) {
-    using namespace boost::archive::iterators;
-    using It = transform_width<binary_from_base64<string::const_iterator>, 8, 6>;
-    return boost::algorithm::trim_right_copy_if(Data(It(begin(val)), It(end(val))),
-                                                [](char c) { return c == '\0'; });
+    string output;
+    size_t len = val.size();
+    output.resize(boost::beast::detail::base64::decoded_size(len));
+    auto result = boost::beast::detail::base64::decode(output.data(), val.data(), len);
+    output.resize(result.first);
+    return TW::data(output);
 }
 
 string encode(const Data& val) {

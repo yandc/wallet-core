@@ -145,6 +145,14 @@ JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_chaindata_1in
 
 /*
  * Class:     com_openblock_wallet_jni_WalletCore
+ * Method:    chaindata_getTransactionParams
+ * Signature: (Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+ */
+JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_chaindata_1getTransactionParams
+  (JNIEnv *, jobject, jstring, jstring);
+
+/*
+ * Class:     com_openblock_wallet_jni_WalletCore
  * Method:    chaindata_getEIP1559TokenParams
  * Signature: (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
  */

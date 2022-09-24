@@ -137,6 +137,14 @@ public class WalletCore
     public native String chaindata_initChainConfig(String chainConfig);
 
     /*
+    chaindata_getTransactionParams统一获取交易参数的接口
+    chain：哪条链
+    params:不同的链，传不同对象的json字符串
+    传入不同链的参数文档：https://tk3en79uf0.larksuite.com/docx/doxustISaUMqqdBwFNx4h1oPbge
+    */
+    public native String chaindata_getTransactionParams(String chain, String params);
+
+    /*
     chaindata_getEIP1559TokenParams获取eip1559 token交易参数
     handler：链名称
     fromAddress：发送地址

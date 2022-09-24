@@ -141,7 +141,7 @@ bool Json2RawTx(json& jtx, sui_types::TransactionData& rawTx, uint64_t& realAmou
                         }
                     };
                     realAmount += amount;
-                    cout << "transfer sui: " << amount << endl;
+                    cout << "transfer sui: " << amount << "<" << payment["objectId"].get<string>() << ">" << endl;
                 }
             }
             if(batchTx.size() == 0) {
