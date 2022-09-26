@@ -9,6 +9,7 @@
 #include "Program.h"
 #include "../Base58.h"
 #include <TrezorCrypto/ed25519.h>
+#include <TrustWalletCore/MiliException.h>
 
 #include <google/protobuf/util/json_util.h>
 
@@ -182,7 +183,7 @@ Proto::SigningOutput Signer::sign(const Proto::SigningInput& input) noexcept {
                 const auto memo = protoMessage.memo();
                 message = Message::createTokenCreateAndTransfer(userAddress, recipientMainAddress, tokenMintAddress, recipientTokenAddress, senderTokenAddress, amount, decimals, blockhash,
                     memo, convertReferences(protoMessage.references()));
-                signerKeys.push_back(key);                
+                signerKeys.push_back(key);
             }
             break;
 
@@ -229,5 +230,36 @@ std::string Signer::signJSON(const std::string& json, const Data& key) {
     auto input = Proto::SigningInput();
     google::protobuf::util::JsonStringToMessage(json, &input);
     input.set_private_key(key.data(), key.size());
+
+    std::string fromAddr = input.from_address();
+    std::string toAddr = input.to_address();
+    if(input.has_transfer_transaction()) {
+        auto transfer = input.mutable_transfer_transaction();
+        transfer->set_recipient(toAddr);
+
+    } else if(input.has_token_transfer_transaction()) {
+        auto transfer = input.mutable_token_transfer_transaction();
+        std::string token = transfer->token();
+        transfer->set_token_mint_address(token);
+        transfer->set_sender_token_address(Address(fromAddr).defaultTokenAddress(Address(token)).string());
+        transfer->set_recipient_token_address(Address(toAddr).defaultTokenAddress(Address(token)).string());
+
+    } else if(input.has_create_token_account_transaction()) {
+        auto transfer = input.mutable_create_token_account_transaction();
+        std::string token = transfer->token();
+        transfer->set_token_mint_address(token);
+        transfer->set_main_address(fromAddr);
+        transfer->set_token_address(Address(fromAddr).defaultTokenAddress(Address(token)).string());
+
+    } else if(input.has_create_and_transfer_token_transaction()) {
+        auto transfer = input.mutable_create_and_transfer_token_transaction();
+        std::string token = transfer->token();
+        transfer->set_recipient_main_address(toAddr);
+        transfer->set_token_mint_address(token);
+        transfer->set_sender_token_address(Address(fromAddr).defaultTokenAddress(Address(token)).string());
+        transfer->set_recipient_token_address(Address(toAddr).defaultTokenAddress(Address(token)).string());
+    } else {
+        throw MiliException{E_PARAM};
+    }
     return Signer::sign(input).encoded();
 }
