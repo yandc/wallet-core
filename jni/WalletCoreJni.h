@@ -223,6 +223,14 @@ JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_chaindata_1ge
 JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_chaindata_1allBalance
   (JNIEnv *, jobject, jstring, jstring);
 
+/*
+ * Class:     com_openblock_wallet_jni_WalletCore
+ * Method:    chaindata_getGasEstimate
+ * Signature: (Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+ */
+JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_chaindata_1getGasEstimate
+  (JNIEnv *, jobject, jstring, jstring);
+
 #ifdef __cplusplus
 }
 #endif

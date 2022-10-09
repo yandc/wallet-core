@@ -239,6 +239,13 @@ address：当前链的所有地址，结构是map[address]map[contract][decimals
 */
 extern const char* chaindata_allBalance(const char* chain, const char* address);
 
+/*
+chaindata_getGasEstimate get gas estimated time
+chain:那条链，现在暂只支持ETH
+params:map[string]string{"gas_price":"8000000000"}格式的json字符串
+*/
+extern const char* chaindata_getGasEstimate(const char* chain, const char* params);
+
 #ifdef __cplusplus
 }
 #endif

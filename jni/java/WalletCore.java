@@ -226,6 +226,13 @@ public class WalletCore
     */
     public native String chaindata_allBalance(String chain, String address);
 
+    /*
+    chaindata_getGasEstimate get gas estimated time
+    chain:那条链，现在暂只支持ETH
+    params:map[string]string{"gas_price":"8000000000"}格式的json字符串
+    */
+    public native String chaindata_getGasEstimate(String chain, String params);
+
     public static void main(String[] args) {
         System.loadLibrary("wallet_core.android.arm64.a"); //载入本地库
         WalletCore wc = new WalletCore();

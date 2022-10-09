@@ -96,6 +96,11 @@ TransactionPlan TransactionBuilder::plan(const SigningInput& input) {
         plan.error = Common::Proto::Error_missing_input_utxos;
     } else {
         const auto& feeCalculator = getFeeCalculator(static_cast<TWCoinType>(input.coinType));
+        const int64_t dustThreshold = feeCalculator.calculateSingleInput(input.byteFee);
+        if(dustThreshold > input.amount) {
+            plan.amount = 0;
+            return plan;
+        }
         auto inputSelector = InputSelector<UTXO>(input.utxos, feeCalculator);
         auto inputSum = InputSelector<UTXO>::sum(input.utxos);
 
