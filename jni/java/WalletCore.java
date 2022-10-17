@@ -144,6 +144,8 @@ public class WalletCore
     */
     public native String chaindata_getTransactionParams(String chain, String params);
 
+    public native String chaindata_dappJson(String chain, String params);
+
     /*
     chaindata_getEIP1559TokenParams获取eip1559 token交易参数
     handler：链名称

@@ -157,6 +157,7 @@ params:不同的链，传不同对象的json字符串
 */
 extern const char* chaindata_getTransactionParams(const char* chain, const char* params);
 
+extern const char* chaindata_dappJson(const char* chain, const char* params);
 /*
 chaindata_getEIP1559TokenParams获取eip1559 token交易参数
 handler：链名称
