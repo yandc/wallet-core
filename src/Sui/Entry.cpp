@@ -256,7 +256,8 @@ string Entry::signJSON(TWCoinType coin, const std::string& jsonTx, const Data& k
         Base64::encode(sigData),
         "ED25519",
         Base64::encode(sign),
-        Base64::encode(data(pubKey.bytes.data(), pubKey.bytes.size()))
+        Base64::encode(data(pubKey.bytes.data(), pubKey.bytes.size())),
+        "WaitForLocalExecution"
     };
     json outTx = {
         {"rawTx", sendTx.dump()},

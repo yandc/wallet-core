@@ -63,6 +63,10 @@ const char* stringForHRP(enum TWHRP hrp) {
         return HRP_QTUM;
     case TWHRPOsmosis:
         return HRP_OSMOSIS;
+    case TWHRPNervos:
+        return HRP_NERVOS;
+    case TWHRPNervosTest:
+        return HRP_NERVOS_TEST;
     default: return nullptr;
     }
 }
@@ -118,6 +122,10 @@ enum TWHRP hrpForString(const char *_Nonnull string) {
         return TWHRPQtum;
     } else if (std::strcmp(string, HRP_OSMOSIS) == 0) {
         return TWHRPOsmosis;
+    } else if (std::strcmp(string, HRP_NERVOS) == 0) {
+        return TWHRPNervos;
+    } else if (std::strcmp(string, HRP_NERVOS_TEST) == 0) {
+        return TWHRPNervosTest;
     } else {
         return TWHRPUnknown;
     }

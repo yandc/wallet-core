@@ -1928,6 +1928,52 @@ const CoinInfo getCoinInfo(TWCoinType coin) {
                 "https://bscscan.com/address/",
                 714,
             };
+        case TWCoinTypeNervos:
+            return CoinInfo {
+                "nervos",
+                "Nervos",
+                TWBlockchainBitcoin,
+                TWPurposeBIP44,
+                TWCurveSECP256k1,
+                TWHDVersionNone,
+                TWHDVersionNone,
+                "m/44'/60'/0'/0/0",
+                TWPublicKeyTypeSECP256k1,
+                0,
+                0,
+                0,
+                TWHRPNervos,
+                Hash::sha256ripemd,
+                Hash::sha256d,
+                "CKB",
+                8,
+                "https://bscscan.com/tx/",
+                "https://bscscan.com/address/",
+                309,
+            };
+        case TWCoinTypeNervosTest:
+            return CoinInfo {
+                "nervos",
+                "Nervos",
+                TWBlockchainBitcoin,
+                TWPurposeBIP44,
+                TWCurveSECP256k1,
+                TWHDVersionNone,
+                TWHDVersionNone,
+                "m/44'/60'/0'/0/0",
+                TWPublicKeyTypeSECP256k1,
+                0,
+                0,
+                0,
+                TWHRPNervosTest,
+                Hash::sha256ripemd,
+                Hash::sha256d,
+                "CKB",
+                8,
+                "https://bscscan.com/tx/",
+                "https://bscscan.com/address/",
+                1000309,
+            };
         default:
             return defaultsForMissing;
     }
