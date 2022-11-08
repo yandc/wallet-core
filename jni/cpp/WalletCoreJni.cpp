@@ -36,6 +36,7 @@ extern "C" {
   extern const char* chaindata_getTransaction(const char* chain, const char* address, const char* txHashs);
   extern const char* chaindata_allBalance(const char* chain, const char* address);
   extern const char* chaindata_getGasEstimate(const char* chain, const char* params);
+  extern const char* chaindata_abiDecode(const char* chain, const char* contract, const char* data);
 }
 
 static jstring CStrToJString(JNIEnv *env, const char *cstr) {
@@ -445,6 +446,20 @@ JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_chaindata_1ge
   const char* goRet = chaindata_getGasEstimate(arg1, arg2);
   env->ReleaseStringUTFChars(arg1Jstr, arg1);
   env->ReleaseStringUTFChars(arg2Jstr, arg2);
+  jstring ret = env->NewStringUTF(goRet);
+  free((void*)goRet);
+  return ret;
+}
+
+JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_chaindata_1abiDecode(JNIEnv *env, jobject jthis, jstring arg1Jstr, jstring arg2Jstr, jstring arg3Jstr)
+{
+  const char* arg1 = env->GetStringUTFChars(arg1Jstr, NULL);
+  const char* arg2 = env->GetStringUTFChars(arg2Jstr, NULL);
+  const char* arg3 = env->GetStringUTFChars(arg3Jstr, NULL);
+  const char* goRet = chaindata_abiDecode(arg1, arg2, arg3);
+  env->ReleaseStringUTFChars(arg1Jstr, arg1);
+  env->ReleaseStringUTFChars(arg2Jstr, arg2);
+  env->ReleaseStringUTFChars(arg3Jstr, arg3);
   jstring ret = env->NewStringUTF(goRet);
   free((void*)goRet);
   return ret;

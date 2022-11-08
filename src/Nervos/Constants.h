@@ -39,6 +39,8 @@ static const CellDep gSecp256k1CellDepTestNet = CellDep(
 
 static const Data gSUDTCodeHash =
     parse_hex("5e7a36a77e68eecc013dfa2fe6a23f3b6c344b04005808694ae6dd45eea4cfd5");
+static const Data gSUDTCodeHashTestNet =
+    parse_hex("c5e5dcf215925f7ef4dfaf5f4b4f105bc321c02776d6e7d52a1db3fcd9d011a4");
 static const CellDep gSUDTCellDep = CellDep(
     OutPoint(parse_hex("c7813f6a415144643970c2e88e0bb6ca6a8edc5dd7c1022746f628284a9936d5"), 0),
     DepType::Code);

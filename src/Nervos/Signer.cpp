@@ -7,6 +7,7 @@
 #include "Signer.h"
 #include "Transaction.h"
 #include "TransactionPlan.h"
+#include <TrustWalletCore/MiliException.h>
 #include <google/protobuf/util/json_util.h>
 
 namespace TW::Nervos {
@@ -56,6 +57,9 @@ std::string Signer::signJSON(const std::string& json, const Data& key) {
     google::protobuf::util::JsonStringToMessage(json, &input);
     input.add_private_key(key.data(), key.size());
     auto output = Signer::sign(input);
+    if(output.error() != Common::Proto::OK) {
+        throw ERROR_INFOS[int(output.error())];
+    }
     return output.transaction_json();
 }
 

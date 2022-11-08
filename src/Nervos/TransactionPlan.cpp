@@ -95,7 +95,7 @@ void TransactionPlan::planSudtTransfer(const Proto::SigningInput& signingInput) 
 
     outputs.emplace_back(Constants::gMinCellCapacityForSUDT,
                          Script(Address(signingInput.sudt_transfer().to_address())),
-                         Script(Constants::gSUDTCodeHash, HashType::Type1,
+                         Script(Address::isTestNet ? Constants::gSUDTCodeHashTestNet : Constants::gSUDTCodeHash, HashType::Type1,
                                 data(signingInput.sudt_transfer().sudt_address())));
     outputsData.emplace_back();
 

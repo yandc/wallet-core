@@ -92,6 +92,7 @@ public:
         for (auto&& outputData : outputsData) {
             txPlan.add_outputs_data(outputData.data(), outputData.size());
         }
+        txPlan.set_error(error);
         return txPlan;
     }
 

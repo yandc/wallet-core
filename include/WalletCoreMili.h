@@ -247,6 +247,13 @@ params:map[string]string{"gas_price":"8000000000"}格式的json字符串
 */
 extern const char* chaindata_getGasEstimate(const char* chain, const char* params);
 
+/*
+chaindata_abiDecode 解析dapp交互data字段
+contract: 合约地址
+data: dapp rpc交互中data字段
+*/
+extern const char* chaindata_abiDecode(const char* chain, const char* contract, const char* data);
+
 #ifdef __cplusplus
 }
 #endif

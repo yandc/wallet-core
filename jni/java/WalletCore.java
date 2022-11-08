@@ -235,6 +235,13 @@ public class WalletCore
     */
     public native String chaindata_getGasEstimate(String chain, String params);
 
+    /*
+    chaindata_abiDecode 解析dapp交互data字段
+    contract: 合约地址
+    data: dapp rpc交互中data字段
+    */
+    public native String chaindata_abiDecode(String chain, String contract, String data);
+
     public static void main(String[] args) {
         System.loadLibrary("wallet_core.android.arm64.a"); //载入本地库
         WalletCore wc = new WalletCore();

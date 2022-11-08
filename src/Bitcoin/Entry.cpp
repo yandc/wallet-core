@@ -10,6 +10,7 @@
 #include "CashAddress.h"
 #include "SegwitAddress.h"
 #include "Signer.h"
+#include <TrustWalletCore/MiliException.h>
 #include <nlohmann/json.hpp>
 
 using namespace TW::Bitcoin;
@@ -109,12 +110,16 @@ void Entry::plan(TWCoinType coin, const TW::Data& dataIn, TW::Data& dataOut) con
 
 std::string Entry::planJson(TWCoinType coin, const std::string& jsonInput) const {
     const Proto::TransactionPlan& plan = Signer::planJson(coin, jsonInput);
-    nlohmann::json  planJson = {
+    if(plan.error() != Common::Proto::OK) {
+        nlohmann::json j = {{"utxo_size", 0}, {"amount", 0}, {"fee", 0},{"error", ERROR_INFOS[int(plan.error())].what()}};
+        return j.dump();
+    }
+    nlohmann::json j = {
         {"utxo_size", plan.utxos_size()},
         {"amount", plan.amount()},
         {"fee", plan.fee()}
     };
-    return planJson.dump();
+    return j.dump();
 }
 
 HashPubkeyList Entry::preImageHashes(TWCoinType coin, const Data& txInputData) const {
