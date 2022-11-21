@@ -53,7 +53,7 @@ class Address {
       Data hash_data = {0};
       append(hash_data, Data(publicKey.bytes.begin(), publicKey.bytes.end()));
       auto hash = Hash::sha3_256(hash_data);
-      std::copy(hash.begin(), hash.end(), bytes.begin());
+      std::copy(hash.begin(), hash.begin()+size, bytes.begin());
     }
 
     std::string string() const {

@@ -13,9 +13,9 @@
 #define LOGE(...) __android_log_print(ANDROID_LOG_ERROR,TAG,__VA_ARGS__)
 
 extern "C" {
-  extern const char* GoCreateMili23(const char* curve, const char* session, const char* preParam);
+  extern const char* GoCreateMili23(const char* curve, const char* session, const char* preParam, const char* mode);
   extern const char* GoOfflineSignMili23(const char* curve, const char* session, const char* key);
-  extern const char* GoReshareMili23(const char* curve, const char* session, const char* localkey, const char* preParam);
+  extern const char* GoReshareMili23(const char* curve, const char* session, const char* localkey, const char* preParam, const char* mode);
   extern const char* GoDecryptShareKey(const char* userId, const char* accountId, const char* enKey);
   extern const char* GoEncryptShareKey(const char* userId, const char* accountId, const char* deKey);
   extern void GoSetRequestEnv(const char* jsonEnv);
@@ -54,31 +54,35 @@ static jstring CStrToJString(JNIEnv *env, const char *cstr) {
     return (jstring) (env)->NewObject(strClass, ctorID, bytes, encoding);
 }
 
-JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_CreateMili23(JNIEnv *env, jobject jthis, jstring curveJstr, jstring sessionJstr, jstring preParamJstr)
+JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_CreateMili23(JNIEnv *env, jobject jthis, jstring curveJstr, jstring sessionJstr, jstring preParamJstr, jstring modeJstr)
 {
   const char* curve = env->GetStringUTFChars(curveJstr, NULL);
   const char* session = env->GetStringUTFChars(sessionJstr, NULL);
   const char* preParam = env->GetStringUTFChars(preParamJstr, NULL);
-  const char* goRet = GoCreateMili23(curve, session, preParam);
+  const char* mode = env->GetStringUTFChars(modeJstr, NULL);
+  const char* goRet = GoCreateMili23(curve, session, preParam, mode);
   env->ReleaseStringUTFChars(curveJstr, curve);
   env->ReleaseStringUTFChars(sessionJstr, session);
   env->ReleaseStringUTFChars(preParamJstr, preParam);
+  env->ReleaseStringUTFChars(modeJstr, mode);
   jstring ret = env->NewStringUTF(goRet);
   free((void*)goRet);
   return ret;
 }
 
-JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_ReshareMili23(JNIEnv *env, jobject jthis, jstring curveJstr, jstring sessionJstr, jstring keyJstr, jstring preParamJstr)
+JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_ReshareMili23(JNIEnv *env, jobject jthis, jstring curveJstr, jstring sessionJstr, jstring keyJstr, jstring preParamJstr, jstring modeJstr)
 {
   const char* curve = env->GetStringUTFChars(curveJstr, NULL);
   const char* session = env->GetStringUTFChars(sessionJstr, NULL);
   const char* key = env->GetStringUTFChars(keyJstr, NULL);
   const char* preParam = env->GetStringUTFChars(preParamJstr, NULL);
-  const char* goRet = GoReshareMili23(curve, session, key, preParam);
+  const char* mode = env->GetStringUTFChars(modeJstr, NULL);
+  const char* goRet = GoReshareMili23(curve, session, key, preParam, mode);
   env->ReleaseStringUTFChars(curveJstr, curve);
   env->ReleaseStringUTFChars(sessionJstr, session);
   env->ReleaseStringUTFChars(keyJstr, key);
   env->ReleaseStringUTFChars(preParamJstr, preParam);
+  env->ReleaseStringUTFChars(modeJstr, mode);
   jstring ret = env->NewStringUTF(goRet);
   free((void*)goRet);
   return ret;

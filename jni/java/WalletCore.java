@@ -7,18 +7,20 @@ public class WalletCore
     * @curve: ecdsa或者eddsa
     * @session: 用户系统返回
     * @preParam: 初始化时从后端拉取
+    * @mode: 枚举，托管trust, 社交恢复发起方origin, 社交恢复托管方backup, 升级为社交恢复upgrade
     * 返回：私钥碎片json串，结构：{"status":true/false, "result":"", "error":""}
     */
-    public native String CreateMili23(String curve, String session, String preParam);
+    public native String CreateMili23(String curve, String session, String preParam, String mode);
 
     /*
     * tss私钥重置
     * @curve: 同上
     * @session: 同上
     * @key: 本地私钥碎片
+    * @mode: 枚举，托管trust, 社交恢复发起方origin, 社交恢复托管方backup, 升级为社交恢复upgrade
     * 返回：私钥碎片，结构：{"status":true/false, "result":"", "error":""}
     */
-    public native String ReshareMili23(String curve, String session, String key, String preParam);
+    public native String ReshareMili23(String curve, String session, String key, String preParam, String mode);
 
     /*
     * 地址创建

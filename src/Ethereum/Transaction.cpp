@@ -36,6 +36,12 @@ std::shared_ptr<TransactionNonTyped> TransactionNonTyped::buildERC20Approve(cons
     return std::make_shared<TransactionNonTyped>(nonce, gasPrice, gasLimit, tokenContract, 0, buildERC20ApproveCall(spenderAddress, amount));
 }
 
+std::shared_ptr<TransactionNonTyped> TransactionNonTyped::buildERC721Approve(const uint256_t& nonce,
+    const uint256_t& gasPrice, const uint256_t& gasLimit,
+    const Data& tokenContract, const Data& spenderAddress, bool approved) {
+    return std::make_shared<TransactionNonTyped>(nonce, gasPrice, gasLimit, tokenContract, 0, buildERC721ApproveAllCall(spenderAddress, approved));
+}
+
 std::shared_ptr<TransactionNonTyped> TransactionNonTyped::buildERC721Transfer(const uint256_t& nonce,
     const uint256_t& gasPrice, const uint256_t& gasLimit,
     const Data& tokenContract, const Data& from, const Data& to, const uint256_t& tokenId) {
@@ -90,6 +96,16 @@ Data TransactionNonTyped::buildERC20ApproveCall(const Data& spender, const uint2
     auto func = Function("approve", std::vector<std::shared_ptr<ParamBase>>{
         std::make_shared<ParamAddress>(spender),
         std::make_shared<ParamUInt256>(amount)
+    });
+    Data payload;
+    func.encode(payload);
+    return payload;
+}
+
+Data TransactionNonTyped::buildERC721ApproveAllCall(const Data& spender, bool approved) {
+    auto func = Function("setApprovalForAll", std::vector<std::shared_ptr<ParamBase>>{
+        std::make_shared<ParamAddress>(spender),
+        std::make_shared<ParamBool>(approved)
     });
     Data payload;
     func.encode(payload);
@@ -175,6 +191,12 @@ std::shared_ptr<TransactionEip1559> TransactionEip1559::buildERC20Approve(const 
     const uint256_t& maxInclusionFeePerGas, const uint256_t& maxFeePerGas, const uint256_t& gasPrice,
     const Data& tokenContract, const Data& spenderAddress, const uint256_t& amount) {
     return std::make_shared<TransactionEip1559>(nonce, maxInclusionFeePerGas, maxFeePerGas, gasPrice, tokenContract, 0, TransactionNonTyped::buildERC20ApproveCall(spenderAddress, amount));
+}
+
+std::shared_ptr<TransactionEip1559> TransactionEip1559::buildERC721Approve(const uint256_t& nonce,
+    const uint256_t& maxInclusionFeePerGas, const uint256_t& maxFeePerGas, const uint256_t& gasPrice,
+    const Data& tokenContract, const Data& spenderAddress, bool approved) {
+    return std::make_shared<TransactionEip1559>(nonce, maxInclusionFeePerGas, maxFeePerGas, gasPrice, tokenContract, 0, TransactionNonTyped::buildERC721ApproveAllCall(spenderAddress, approved));
 }
 
 std::shared_ptr<TransactionEip1559> TransactionEip1559::buildERC721Transfer(const uint256_t& nonce,

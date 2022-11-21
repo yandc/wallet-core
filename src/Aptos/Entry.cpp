@@ -204,6 +204,150 @@ bool Json2RawTx(json& jtx, aptos_types::RawTransaction& rawTx) {
                     }
                 }
             });
+        } else if(action.contains("offerToken")) {
+            json inner =  action["offerToken"].get<json>();
+            const auto toAddr = Address(inner["toAddress"].get<string>());
+            const auto creator = Address(inner["creator"].get<string>());
+            uint64_t tokenPropertyVersion = 0;
+            uint64_t amount = 1;
+            if(inner.contains("tokenPropertyVersion")) {
+                tokenPropertyVersion = inner["tokenPropertyVersion"].get<uint64_t>();
+            }
+            if(inner.contains("amount")) {
+                amount = inner["amount"].get<uint64_t>();
+            }
+
+            scriptFunction.module = aptos_types::ModuleId {
+                .address = aptos_types::AccountAddress{.value = Address("0x3").bytes},
+                .name = aptos_types::Identifier{.value = "token_transfers"},
+            };
+            scriptFunction.function = aptos_types::Identifier{.value = "offer_script"};
+
+            scriptFunction.args.push_back(serde::BcsSerialize(aptos_types::AccountAddress{.value = toAddr.bytes}));
+            scriptFunction.args.push_back(serde::BcsSerialize(aptos_types::AccountAddress{.value = creator.bytes}));
+            scriptFunction.args.push_back(serde::BcsSerialize(inner["collectionName"].get<string>()));
+            scriptFunction.args.push_back(serde::BcsSerialize(inner["tokenName"].get<string>()));
+            scriptFunction.args.push_back(serde::BcsSerialize(tokenPropertyVersion));
+            scriptFunction.args.push_back(serde::BcsSerialize(amount));
+
+        } else if(action.contains("claimToken")) {
+            json inner =  action["claimToken"].get<json>();
+            const auto fromAddr = Address(inner["fromAddress"].get<string>());
+            const auto creator = Address(inner["creator"].get<string>());
+            uint64_t tokenPropertyVersion = 0;
+            if(inner.contains("tokenPropertyVersion")) {
+                tokenPropertyVersion = inner["tokenPropertyVersion"].get<uint64_t>();
+            }
+
+            scriptFunction.module = aptos_types::ModuleId {
+                .address = aptos_types::AccountAddress{.value = Address("0x3").bytes},
+                .name = aptos_types::Identifier{.value = "token_transfers"},
+            };
+            scriptFunction.function = aptos_types::Identifier{.value = "claim_script"};
+
+            scriptFunction.args.push_back(serde::BcsSerialize(aptos_types::AccountAddress{.value = fromAddr.bytes}));
+            scriptFunction.args.push_back(serde::BcsSerialize(aptos_types::AccountAddress{.value = creator.bytes}));
+            scriptFunction.args.push_back(serde::BcsSerialize(inner["collectionName"].get<string>()));
+            scriptFunction.args.push_back(serde::BcsSerialize(inner["tokenName"].get<string>()));
+            scriptFunction.args.push_back(serde::BcsSerialize(tokenPropertyVersion));
+
+        } else if(action.contains("createCollection")) {
+            json inner =  action["createCollection"].get<json>();
+            scriptFunction.module = aptos_types::ModuleId {
+                .address = aptos_types::AccountAddress{.value = Address("0x3").bytes},
+                .name = aptos_types::Identifier{.value = "token"},
+            };
+            scriptFunction.function = aptos_types::Identifier{.value = "create_collection_script"};
+
+            scriptFunction.args.push_back(serde::BcsSerialize(inner["name"].get<string>()));
+            scriptFunction.args.push_back(serde::BcsSerialize(inner["desc"].get<string>()));
+            scriptFunction.args.push_back(serde::BcsSerialize(inner["uri"].get<string>()));
+            scriptFunction.args.push_back(serde::BcsSerialize(uint64_t(99999)));
+            scriptFunction.args.push_back(serde::BcsSerialize(vector<bool>{false, false, false}));
+
+        } else if(action.contains("cancelOffer")) {
+            json inner =  action["cancelOffer"].get<json>();
+            const auto toAddr = Address(inner["toAddress"].get<string>());
+            const auto creator = Address(inner["creator"].get<string>());
+            uint64_t tokenPropertyVersion = 0;
+            if(inner.contains("tokenPropertyVersion")) {
+                tokenPropertyVersion = inner["tokenPropertyVersion"].get<uint64_t>();
+            }
+
+            scriptFunction.module = aptos_types::ModuleId {
+                .address = aptos_types::AccountAddress{.value = Address("0x3").bytes},
+                .name = aptos_types::Identifier{.value = "token_transfers"},
+            };
+            scriptFunction.function = aptos_types::Identifier{.value = "cancel_offer_script"};
+
+            scriptFunction.args.push_back(serde::BcsSerialize(aptos_types::AccountAddress{.value = toAddr.bytes}));
+            scriptFunction.args.push_back(serde::BcsSerialize(aptos_types::AccountAddress{.value = creator.bytes}));
+            scriptFunction.args.push_back(serde::BcsSerialize(inner["collectionName"].get<string>()));
+            scriptFunction.args.push_back(serde::BcsSerialize(inner["tokenName"].get<string>()));
+            scriptFunction.args.push_back(serde::BcsSerialize(tokenPropertyVersion));
+
+        } else if(action.contains("createToken")) {
+            json inner =  action["createToken"].get<json>();
+            const auto toAddr = Address(inner["toAddress"].get<string>());
+
+            scriptFunction.module = aptos_types::ModuleId {
+                .address = aptos_types::AccountAddress{.value = Address("0x3").bytes},
+                .name = aptos_types::Identifier{.value = "token"},
+            };
+            scriptFunction.function = aptos_types::Identifier{.value = "create_token_script"};
+
+            scriptFunction.args.push_back(serde::BcsSerialize(inner["collectionName"].get<string>()));
+            scriptFunction.args.push_back(serde::BcsSerialize(inner["name"].get<string>()));
+            scriptFunction.args.push_back(serde::BcsSerialize(inner["desc"].get<string>()));
+            scriptFunction.args.push_back(serde::BcsSerialize(uint64_t(100)));
+            scriptFunction.args.push_back(serde::BcsSerialize(uint64_t(100)));
+            scriptFunction.args.push_back(serde::BcsSerialize(inner["uri"].get<string>()));
+
+            scriptFunction.args.push_back(serde::BcsSerialize(aptos_types::AccountAddress{.value = toAddr.bytes}));
+            scriptFunction.args.push_back(serde::BcsSerialize(uint64_t(1000000)));
+            scriptFunction.args.push_back(serde::BcsSerialize(uint64_t(1000)));
+            scriptFunction.args.push_back(serde::BcsSerialize(vector<bool>{false, false, false, false, false}));
+            scriptFunction.args.push_back(serde::BcsSerialize(vector<string>{}));
+            scriptFunction.args.push_back(serde::BcsSerialize(vector<vector<uint8_t>>{}));
+            scriptFunction.args.push_back(serde::BcsSerialize(vector<string>{}));
+
+        } else if(action.contains("defaultInNFT")) {
+            json inner =  action["defaultInNFT"].get<json>();
+            bool opt = inner["opt"].get<bool>();
+
+            scriptFunction.module = aptos_types::ModuleId {
+                .address = aptos_types::AccountAddress{.value = Address("0x3").bytes},
+                .name = aptos_types::Identifier{.value = "token"},
+            };
+            scriptFunction.function = aptos_types::Identifier{.value = "opt_in_direct_transfer"};
+            scriptFunction.args.push_back(serde::BcsSerialize(opt));
+
+        } else if(action.contains("transferByDefaultIn")) {
+            json inner =  action["transferByDefaultIn"].get<json>();
+            const auto toAddr = Address(inner["toAddress"].get<string>());
+            const auto creator = Address(inner["creator"].get<string>());
+            uint64_t tokenPropertyVersion = 0;
+            uint64_t amount = 1;
+            if(inner.contains("tokenPropertyVersion")) {
+                tokenPropertyVersion = inner["tokenPropertyVersion"].get<uint64_t>();
+            }
+            if(inner.contains("amount")) {
+                amount = inner["amount"].get<uint64_t>();
+            }
+
+            scriptFunction.module = aptos_types::ModuleId {
+                .address = aptos_types::AccountAddress{.value = Address("0x424abce72523e9c02898d3c8eaf9a632f22b7c92ccce2568c4ea47a5c43dfce7").bytes},
+                .name = aptos_types::Identifier{.value = "token"},
+            };
+            scriptFunction.function = aptos_types::Identifier{.value = "transfer_with_opt_in"};
+
+            scriptFunction.args.push_back(serde::BcsSerialize(aptos_types::AccountAddress{.value = creator.bytes}));
+            scriptFunction.args.push_back(serde::BcsSerialize(inner["collectionName"].get<string>()));
+            scriptFunction.args.push_back(serde::BcsSerialize(inner["tokenName"].get<string>()));
+            scriptFunction.args.push_back(serde::BcsSerialize(tokenPropertyVersion));
+            scriptFunction.args.push_back(serde::BcsSerialize(aptos_types::AccountAddress{.value = toAddr.bytes}));
+            scriptFunction.args.push_back(serde::BcsSerialize(amount));
+
         } else {
             return false;
         }

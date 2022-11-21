@@ -189,6 +189,27 @@ std::shared_ptr<TransactionBase> Signer::build(const Proto::SigningInput& input)
                 }
             }
 
+        case Proto::Transaction::kErc721Approve:
+        {
+            Data spenderAddress = addressStringToData(input.transaction().erc721_approve().spender());
+            switch (input.tx_mode()) {
+                case Proto::TransactionMode::Legacy:
+                default:
+                    return TransactionNonTyped::buildERC721Approve(
+                        nonce, gasPrice, gasLimit,
+                        /* tokenContract: */ toAddress,
+                        /* toAddress */ spenderAddress,
+                        /* approved: */ input.transaction().erc721_approve().approved());
+
+                case Proto::TransactionMode::Enveloped: // Eip1559
+                    return TransactionEip1559::buildERC721Approve(
+                        nonce, maxInclusionFeePerGas, maxFeePerGas, gasLimit,
+                        /* tokenContract: */ toAddress,
+                        /* toAddress */ spenderAddress,
+                        /* approved: */ input.transaction().erc721_approve().approved());
+            }
+        }
+
         case Proto::Transaction::kErc721Transfer:
             {
                 Data tokenToAddress = addressStringToData(input.transaction().erc721_transfer().to());
