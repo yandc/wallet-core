@@ -15,6 +15,7 @@
 extern "C" {
   extern const char* GoCreateMili23(const char* curve, const char* session, const char* preParam, const char* mode);
   extern const char* GoOfflineSignMili23(const char* curve, const char* session, const char* key);
+  extern const char* GoSignMili23(const char* curve, const char* key, const char* msg);
   extern const char* GoReshareMili23(const char* curve, const char* session, const char* localkey, const char* preParam, const char* mode);
   extern const char* GoDecryptShareKey(const char* userId, const char* accountId, const char* enKey);
   extern const char* GoEncryptShareKey(const char* userId, const char* accountId, const char* deKey);
@@ -146,6 +147,7 @@ JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_JsonTransacti
   auto cppRet = (const std::string*)CppJsonTransactionMili23(session, key, preSign, (TWCoinType)coinId, input);
   env->ReleaseStringUTFChars(sessionJstr, session);
   env->ReleaseStringUTFChars(keyJstr, key);
+  env->ReleaseStringUTFChars(preSignJstr, preSign);
   env->ReleaseStringUTFChars(inputJstr, input);
   jstring ret = env->NewStringUTF(cppRet->c_str());
   delete cppRet;
@@ -161,9 +163,33 @@ JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_SignMili23(JN
   auto cppRet = (const std::string*)CppSignMili23(session, key, preSign, (TWCoinType)coinId, msg);
   env->ReleaseStringUTFChars(sessionJstr, session);
   env->ReleaseStringUTFChars(keyJstr, key);
+  env->ReleaseStringUTFChars(preSignJstr, preSign);
   env->ReleaseStringUTFChars(msgJstr, msg);
   jstring ret = env->NewStringUTF(cppRet->c_str());
   delete cppRet;
+  return ret;
+}
+
+JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_RawSignMili23(JNIEnv *env, jobject jthis, jstring curveJstr, jstring sessionJstr, jstring keyJstr, jstring preSignJstr, jstring hexMsgJstr)
+{
+  const char* curve = env->GetStringUTFChars(curveJstr, NULL);
+  const char* session = env->GetStringUTFChars(sessionJstr, NULL);
+  const char* key = env->GetStringUTFChars(keyJstr, NULL);
+  const char* preSign = env->GetStringUTFChars(preSignJstr, NULL);
+  const char* msg = env->GetStringUTFChars(hexMsgJstr, NULL);
+  std::string keyParts = "mili:";
+  keyParts += session;
+  keyParts += ":";
+  keyParts += preSign;
+  keyParts += key;
+  const char* goRet = GoSignMili23(curve, keyParts.c_str(), msg);
+  env->ReleaseStringUTFChars(curveJstr, curve);
+  env->ReleaseStringUTFChars(sessionJstr, session);
+  env->ReleaseStringUTFChars(keyJstr, key);
+  env->ReleaseStringUTFChars(preSignJstr, preSign);
+  env->ReleaseStringUTFChars(hexMsgJstr, msg);
+  jstring ret = env->NewStringUTF(goRet);
+  free((void*)goRet);
   return ret;
 }
 

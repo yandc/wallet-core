@@ -63,6 +63,12 @@ public class WalletCore
     public native String SignMili23(String session, String key, String preSign, int coinId, String msg);
 
     /*
+     * 对十六进制数据签名，如果dapp传入数据未经转换就直接传入，可能直接转移资产
+     * @hexMsg: 十六进制消息
+    */
+    public native String RawSignMili23(String curve, String session, String key, String preSign, String hexMsg);
+
+    /*
     * 预签名，目前只支持ECDSA
     * 返回：预签名结果，结构：{"status":true/false, "result":"preSign", "error":""}
     */
