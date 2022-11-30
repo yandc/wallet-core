@@ -34,6 +34,15 @@ extern const char* GoReshareMili23(const char* curve, const char* session, const
 */
 extern const char* GoOfflineSignMili23(const char* curve, const char* session, const char* key);
 
+/**
+ * 对十六进制数据签名，如果dapp传入数据未经转换就直接传入，可能直接转移资产
+ * @curve: 同上
+ * @key: 拼接字段，格式："mili:{}:{}{}".format(session, preSign, key)
+ * @msg: 十六进制消息
+ *
+ */
+extern const char* GoSignMili23(const char* curve, const char* key, const char* msg);
+
 /*
 * 私钥分片解密
 * @userId: 用户Id
