@@ -9,6 +9,7 @@
 #include "Address.h"
 #include "Signer.h"
 #include "Hash.h"
+#include "../HexCoding.h"
 
 using namespace TW::Ethereum;
 using namespace TW;
@@ -84,7 +85,11 @@ Data Entry::buildTransactionInput(TWCoinType coinType, const std::string& from, 
 }
 TW::Data Entry::hashMessage(TWCoinType coin, const string& msg) const {
     string m = "\x19""Ethereum Signed Message:\n";
-    m += std::to_string(msg.size());
-    m += msg;
+    Data msgData = data(msg);
+    if(msg.substr(0, 2) == "0x") {
+        msgData = parse_hex(msg, true);
+    }
+    m += std::to_string(msgData.size());
+    m.append(msgData.begin(), msgData.end());
     return TW::Hash::keccak256((const byte*)m.c_str(), m.size());
 }

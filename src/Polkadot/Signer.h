@@ -20,6 +20,8 @@ public:
 
     /// Signs a Proto::SigningInput transaction
     static Proto::SigningOutput sign(const Proto::SigningInput& input) noexcept;
+
+    static std::string signJSON(const std::string& json, const Data& key);
 };
 
 } // namespace TW::Polkadot

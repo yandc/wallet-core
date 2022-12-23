@@ -8,6 +8,8 @@
 #include "Extrinsic.h"
 #include "../Hash.h"
 #include "../PrivateKey.h"
+#include "HexCoding.h"
+#include <google/protobuf/util/json_util.h>
 
 using namespace TW;
 using namespace TW::Polkadot;
@@ -29,4 +31,17 @@ Proto::SigningOutput Signer::sign(const Proto::SigningInput &input) noexcept {
     auto protoOutput = Proto::SigningOutput();
     protoOutput.set_encoded(encoded.data(), encoded.size());
     return protoOutput;
+}
+
+std::string Signer::signJSON(const std::string& json, const Data& key) {
+    auto input = Proto::SigningInput();
+    google::protobuf::util::JsonStringToMessage(json, &input);
+    input.set_private_key(key.data(), key.size());
+    //input.set_nonce(0);
+    input.set_network(input.chain_id());
+    auto era = input.mutable_era();
+    era->set_period(512);
+    era->set_block_number(input.block_number());
+    auto output = Signer::sign(input);
+    return hex(output.encoded());
 }

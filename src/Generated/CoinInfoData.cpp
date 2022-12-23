@@ -1974,6 +1974,29 @@ const CoinInfo getCoinInfo(TWCoinType coin) {
                 "https://bscscan.com/address/",
                 1000309,
             };
+        case TWCoinTypeCasper:
+            return CoinInfo {
+                "casper",
+                "Casper",
+                TWBlockchainEthereum,
+                TWPurposeBIP44,
+                TWCurveED25519,
+                TWHDVersionNone,
+                TWHDVersionNone,
+                "m/44'/60'/0'/0/0",
+                TWPublicKeyTypeED25519,
+                0,
+                0,
+                0,
+                TWHRPUnknown,
+                Hash::sha256ripemd,
+                Hash::sha256d,
+                "CSPR",
+                9,
+                "https://bscscan.com/tx/",
+                "https://bscscan.com/address/",
+                101013,
+            };
         default:
             return defaultsForMissing;
     }

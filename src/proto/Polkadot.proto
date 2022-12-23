@@ -99,6 +99,8 @@ message SigningInput {
         Balance balance_call = 10;
         Staking staking_call = 11;
     }
+    Network chain_id = 12;
+    uint64 block_number = 13;
 }
 
 // Transaction signing output.

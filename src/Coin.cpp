@@ -58,6 +58,7 @@
 #include "Aptos/Entry.h"
 #include "Sui/Entry.h"
 #include "Nervos/Entry.h"
+#include "Casper/Entry.h"
 // end_of_coin_includes_marker_do_not_modify
 
 using namespace TW;
@@ -107,6 +108,7 @@ Starcoin::Entry starcoinDP;
 Aptos::Entry aptosDP;
 Sui::Entry suiDP;
 Nervos::Entry NervosDP;
+Casper::Entry CasperDP;
 // end_of_coin_dipatcher_declarations_marker_do_not_modify
 
 CoinEntry* coinDispatcher(TWCoinType coinType) {
@@ -198,6 +200,7 @@ CoinEntry* coinDispatcher(TWCoinType coinType) {
         case TWCoinTypeSui: entry = &suiDP; break;
         case TWCoinTypeNervos: entry = &NervosDP; break;
         case TWCoinTypeNervosTest: entry = &NervosDP; break;
+        case TWCoinTypeCasper: entry = &CasperDP; break;
         // end_of_coin_dipatcher_switch_marker_do_not_modify
 
         default: entry = nullptr; break;
