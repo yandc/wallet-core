@@ -14,6 +14,8 @@ ifeq ($(OS),ios)
 	CFLAGS += -fno-aligned-allocation
 else ifeq ($(OS), android)
 	CFLAGS += -fPIC
+else
+	CFLAGS += -fPIC
 endif
 
 ifneq (v$(V),v1)

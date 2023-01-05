@@ -107,42 +107,33 @@ bool Json2RawTx(json& jtx, sui_types::TransactionData& rawTx, uint64_t& realAmou
                     cout << "largest sui object balance insufficient" << endl;
                     return false;
                 }
-
-                for(int i = 1; i < sortObjs.size() && sortObjs[0].second < amount + gasAmount; i++) {//最大object余额不够用，用较小的补足
+                sui_types::PaySui paySui;
+                for(int i = 0; i < sortObjs.size() && realAmount < amount + gasAmount; i++) {
                     uint64_t thisPay = sortObjs[i].second;
-                    if(thisPay > amount) continue;//防止多转
+
                     json obj = suiObjs[sortObjs[i].first];
                     const auto objAddr = Address(obj["objectId"].get<string>());
                     uint64_t seqNo = strtoull(obj["seqNo"].get<string>().c_str(), NULL, 10);
                     TW::Data digest = TW::Base64::decode(obj["digest"].get<string>());
-                    trans.value = sui_types::SingleTransactionKind::TransferObject{
-                        .value = sui_types::TransferObject{
-                            .recipient = sui_types::SuiAddress{.value = toAddr.bytes},
-                            .object_ref = {
-                                sui_types::ObjectID{.value = sui_types::AccountAddress{.value = objAddr.bytes}},
-                                sui_types::SequenceNumber{.value = seqNo},
-                                sui_types::ObjectDigest{.value = digest}
-                            }
-                        }
-                    };
-                    batchTx.push_back(trans);
-                    amount -= thisPay;
+
+                    paySui.coins.push_back({
+                        sui_types::ObjectID{.value = sui_types::AccountAddress{.value = objAddr.bytes}},
+                        sui_types::SequenceNumber{.value = seqNo},
+                        sui_types::ObjectDigest{.value = digest}
+                    });
                     realAmount += thisPay;
-                    cout << "transfer sui object: " << obj["objectId"].get<string>() << endl;
+                    cout << "pay sui object: " << obj["objectId"].get<string>() << endl;
                 }
-                if(sortObjs[0].second < amount + gasAmount) {//余额不足
+
+                if(realAmount < amount + gasAmount) {//余额不足
                     cout << "insufficient balance" << endl;
                     return false;
-                } else if(amount > 0 && batchTx.size() == 0) {
-                    trans.value = sui_types::SingleTransactionKind::TransferSui{
-                        .value = sui_types::TransferSui{
-                            .recipient = sui_types::SuiAddress{.value = toAddr.bytes},
-                            .amount = amount
-                        }
-                    };
-                    realAmount += amount;
-                    cout << "transfer sui: " << amount << "<" << payment["objectId"].get<string>() << ">" << endl;
                 }
+                paySui.amounts.push_back(amount);
+                paySui.recipients.push_back(sui_types::SuiAddress{.value = toAddr.bytes});
+                trans.value = sui_types::SingleTransactionKind::PaySui{
+                    .value = paySui
+                };
             }
             if(batchTx.size() == 0) {
                 rawTx.kind = sui_types::TransactionKind {
@@ -157,7 +148,6 @@ bool Json2RawTx(json& jtx, sui_types::TransactionData& rawTx, uint64_t& realAmou
                     }
                 };
             }
-            return true;
 
         } else if(action.contains("merge")) {
             sui_types::MoveCall merge;
@@ -227,10 +217,9 @@ bool Json2RawTx(json& jtx, sui_types::TransactionData& rawTx, uint64_t& realAmou
                     .value = batchTx
                 }
             };
-            return true;
         }
     }
-    return false;
+    return true;
 }
 
 string Entry::signJSON(TWCoinType coin, const std::string& jsonTx, const Data& key) const {
@@ -241,8 +230,9 @@ string Entry::signJSON(TWCoinType coin, const std::string& jsonTx, const Data& k
         throw MiliException{E_PARAM};
     }
 
-    Data sigData = data("TransactionData::");
-    append(sigData, (Data)serde::BcsSerialize(rawTx));
+    Data sigData = {0, 0, 0};
+    Data rawData = serde::BcsSerialize(rawTx);
+    append(sigData, rawData);
 
     PrivateKey privKey(key);
     Data sign = privKey.sign(sigData, TWCurveED25519);
@@ -253,7 +243,7 @@ string Entry::signJSON(TWCoinType coin, const std::string& jsonTx, const Data& k
     PublicKey pubKey = privKey.getPublicKey(TWPublicKeyTypeED25519);
 
     json sendTx = {
-        Base64::encode(sigData),
+        Base64::encode(rawData),
         "ED25519",
         Base64::encode(sign),
         Base64::encode(data(pubKey.bytes.data(), pubKey.bytes.size())),

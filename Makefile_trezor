@@ -12,6 +12,8 @@ ifeq ($(OS),web)
 	CFLAGS += -Wno-bitwise-instead-of-logical
 else ifeq ($(OS), android)
 	CFLAGS += -fPIC
+else
+	CFLAGS += -fPIC
 endif
 CFLAGS += $(INCLUDE_FLAG)
 

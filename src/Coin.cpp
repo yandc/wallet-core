@@ -209,12 +209,22 @@ CoinEntry* coinDispatcher(TWCoinType coinType) {
     return entry;
 }
 
+std::vector<std::pair<std::string, TWCoinType>> addressPrefixCoin = {
+    {"ronin:", TWCoinTypeRonin},
+};
+
 bool TW::validateAddress(TWCoinType coin, const std::string& string) {
     auto p2pkh = TW::p2pkhPrefix(coin);
     auto p2sh = TW::p2shPrefix(coin);
     const auto* hrp = stringForHRP(TW::hrp(coin));
 
     // dispatch
+    for(auto& item: addressPrefixCoin) {
+        if(string.compare(0, item.first.size(), item.first) == 0) {
+            coin =  item.second;
+            break;
+        }
+    }
     auto* dispatcher = coinDispatcher(coin);
     assert(dispatcher != nullptr);
     return dispatcher->validateAddress(coin, string, p2pkh, p2sh, hrp);

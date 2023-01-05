@@ -79,17 +79,34 @@ namespace sui_types {
         friend bool operator==(const EntryArgumentError&, const EntryArgumentError&);
     };
 
-    struct InvalidSharedByValue {
-        sui_types::ObjectID object;
+    struct EntryTypeArgumentErrorKind {
 
-        friend bool operator==(const InvalidSharedByValue&, const InvalidSharedByValue&);
+        struct ModuleNotFound {
+            friend bool operator==(const ModuleNotFound&, const ModuleNotFound&);
+        };
+
+        struct TypeNotFound {
+            friend bool operator==(const TypeNotFound&, const TypeNotFound&);
+        };
+
+        struct ArityMismatch {
+            friend bool operator==(const ArityMismatch&, const ArityMismatch&);
+        };
+
+        struct ConstraintNotSatisfied {
+            friend bool operator==(const ConstraintNotSatisfied&, const ConstraintNotSatisfied&);
+        };
+
+        std::variant<ModuleNotFound, TypeNotFound, ArityMismatch, ConstraintNotSatisfied> value;
+
+        friend bool operator==(const EntryTypeArgumentErrorKind&, const EntryTypeArgumentErrorKind&);
     };
 
-    struct InvalidSharedChildUse {
-        sui_types::ObjectID child;
-        sui_types::ObjectID ancestor;
+    struct EntryTypeArgumentError {
+        uint16_t argument_idx;
+        sui_types::EntryTypeArgumentErrorKind kind;
 
-        friend bool operator==(const InvalidSharedChildUse&, const InvalidSharedChildUse&);
+        friend bool operator==(const EntryTypeArgumentError&, const EntryTypeArgumentError&);
     };
 
     struct SuiAddress {
@@ -98,11 +115,17 @@ namespace sui_types {
         friend bool operator==(const SuiAddress&, const SuiAddress&);
     };
 
-    struct MissingObjectOwner {
+    struct InvalidChildObjectArgument {
         sui_types::ObjectID child;
         sui_types::SuiAddress parent;
 
-        friend bool operator==(const MissingObjectOwner&, const MissingObjectOwner&);
+        friend bool operator==(const InvalidChildObjectArgument&, const InvalidChildObjectArgument&);
+    };
+
+    struct InvalidSharedByValue {
+        sui_types::ObjectID object;
+
+        friend bool operator==(const InvalidSharedByValue&, const InvalidSharedByValue&);
     };
 
     struct Identifier {
@@ -116,6 +139,14 @@ namespace sui_types {
         sui_types::Identifier name;
 
         friend bool operator==(const ModuleId&, const ModuleId&);
+    };
+
+    struct MoveLocation {
+        sui_types::ModuleId module;
+        uint16_t function;
+        uint16_t instruction;
+
+        friend bool operator==(const MoveLocation&, const MoveLocation&);
     };
 
     struct ExecutionFailureStatus {
@@ -144,6 +175,20 @@ namespace sui_types {
             friend bool operator==(const InvariantViolation&, const InvariantViolation&);
         };
 
+        struct MoveObjectTooBig {
+            uint64_t object_size;
+            uint64_t max_object_size;
+
+            friend bool operator==(const MoveObjectTooBig&, const MoveObjectTooBig&);
+        };
+
+        struct MovePackageTooBig {
+            uint64_t object_size;
+            uint64_t max_object_size;
+
+            friend bool operator==(const MovePackageTooBig&, const MovePackageTooBig&);
+        };
+
         struct InvalidTransferObject {
             friend bool operator==(const InvalidTransferObject&, const InvalidTransferObject&);
         };
@@ -154,6 +199,30 @@ namespace sui_types {
 
         struct InvalidTransferSuiInsufficientBalance {
             friend bool operator==(const InvalidTransferSuiInsufficientBalance&, const InvalidTransferSuiInsufficientBalance&);
+        };
+
+        struct InvalidCoinObject {
+            friend bool operator==(const InvalidCoinObject&, const InvalidCoinObject&);
+        };
+
+        struct EmptyInputCoins {
+            friend bool operator==(const EmptyInputCoins&, const EmptyInputCoins&);
+        };
+
+        struct EmptyRecipients {
+            friend bool operator==(const EmptyRecipients&, const EmptyRecipients&);
+        };
+
+        struct RecipientsAmountsArityMismatch {
+            friend bool operator==(const RecipientsAmountsArityMismatch&, const RecipientsAmountsArityMismatch&);
+        };
+
+        struct InsufficientBalance {
+            friend bool operator==(const InsufficientBalance&, const InsufficientBalance&);
+        };
+
+        struct CoinTypeMismatch {
+            friend bool operator==(const CoinTypeMismatch&, const CoinTypeMismatch&);
         };
 
         struct NonEntryFunctionInvoked {
@@ -170,22 +239,22 @@ namespace sui_types {
             friend bool operator==(const EntryArgumentError&, const EntryArgumentError&);
         };
 
+        struct EntryTypeArgumentError {
+            sui_types::EntryTypeArgumentError value;
+
+            friend bool operator==(const EntryTypeArgumentError&, const EntryTypeArgumentError&);
+        };
+
         struct CircularObjectOwnership {
             sui_types::CircularObjectOwnership value;
 
             friend bool operator==(const CircularObjectOwnership&, const CircularObjectOwnership&);
         };
 
-        struct MissingObjectOwner {
-            sui_types::MissingObjectOwner value;
+        struct InvalidChildObjectArgument {
+            sui_types::InvalidChildObjectArgument value;
 
-            friend bool operator==(const MissingObjectOwner&, const MissingObjectOwner&);
-        };
-
-        struct InvalidSharedChildUse {
-            sui_types::InvalidSharedChildUse value;
-
-            friend bool operator==(const InvalidSharedChildUse&, const InvalidSharedChildUse&);
+            friend bool operator==(const InvalidChildObjectArgument&, const InvalidChildObjectArgument&);
         };
 
         struct InvalidSharedByValue {
@@ -230,11 +299,13 @@ namespace sui_types {
         };
 
         struct MovePrimitiveRuntimeError {
+            std::optional<sui_types::MoveLocation> value;
+
             friend bool operator==(const MovePrimitiveRuntimeError&, const MovePrimitiveRuntimeError&);
         };
 
         struct MoveAbort {
-            std::tuple<sui_types::ModuleId, uint64_t> value;
+            std::tuple<sui_types::MoveLocation, uint64_t> value;
 
             friend bool operator==(const MoveAbort&, const MoveAbort&);
         };
@@ -247,9 +318,18 @@ namespace sui_types {
             friend bool operator==(const VMInvariantViolation&, const VMInvariantViolation&);
         };
 
-        std::variant<InsufficientGas, InvalidGasObject, InvalidTransactionUpdate, ModuleNotFound, FunctionNotFound, InvariantViolation, InvalidTransferObject, InvalidTransferSui, InvalidTransferSuiInsufficientBalance, NonEntryFunctionInvoked, EntryTypeArityMismatch, EntryArgumentError, CircularObjectOwnership, MissingObjectOwner, InvalidSharedChildUse, InvalidSharedByValue, TooManyChildObjects, InvalidParentDeletion, InvalidParentFreezing, PublishErrorEmptyPackage, PublishErrorNonZeroAddress, PublishErrorDuplicateModule, SuiMoveVerificationError, MovePrimitiveRuntimeError, MoveAbort, VMVerificationOrDeserializationError, VMInvariantViolation> value;
+        std::variant<InsufficientGas, InvalidGasObject, InvalidTransactionUpdate, ModuleNotFound, FunctionNotFound, InvariantViolation, MoveObjectTooBig, MovePackageTooBig, InvalidTransferObject, InvalidTransferSui, InvalidTransferSuiInsufficientBalance, InvalidCoinObject, EmptyInputCoins, EmptyRecipients, RecipientsAmountsArityMismatch, InsufficientBalance, CoinTypeMismatch, NonEntryFunctionInvoked, EntryTypeArityMismatch, EntryArgumentError, EntryTypeArgumentError, CircularObjectOwnership, InvalidChildObjectArgument, InvalidSharedByValue, TooManyChildObjects, InvalidParentDeletion, InvalidParentFreezing, PublishErrorEmptyPackage, PublishErrorNonZeroAddress, PublishErrorDuplicateModule, SuiMoveVerificationError, MovePrimitiveRuntimeError, MoveAbort, VMVerificationOrDeserializationError, VMInvariantViolation> value;
 
         friend bool operator==(const ExecutionFailureStatus&, const ExecutionFailureStatus&);
+    };
+
+    struct ChangeEpoch {
+        uint64_t epoch;
+        uint64_t storage_charge;
+        uint64_t computation_charge;
+        uint64_t storage_rebate;
+
+        friend bool operator==(const ChangeEpoch&, const ChangeEpoch&);
     };
 
     struct ObjectDigest {
@@ -273,7 +353,8 @@ namespace sui_types {
         };
 
         struct SharedObject {
-            sui_types::ObjectID value;
+            sui_types::ObjectID id;
+            sui_types::SequenceNumber initial_shared_version;
 
             friend bool operator==(const SharedObject&, const SharedObject&);
         };
@@ -297,7 +378,13 @@ namespace sui_types {
             friend bool operator==(const Object&, const Object&);
         };
 
-        std::variant<Pure, Object> value;
+        struct ObjVec {
+            std::vector<sui_types::ObjectArg> value;
+
+            friend bool operator==(const ObjVec&, const ObjVec&);
+        };
+
+        std::variant<Pure, Object, ObjVec> value;
 
         friend bool operator==(const CallArg&, const CallArg&);
     };
@@ -351,7 +438,19 @@ namespace sui_types {
             friend bool operator==(const Struct&, const Struct&);
         };
 
-        std::variant<Bool, U8, U64, U128, address, signer, Vector, Struct> value;
+        struct U16 {
+            friend bool operator==(const U16&, const U16&);
+        };
+
+        struct U32 {
+            friend bool operator==(const U32&, const U32&);
+        };
+
+        struct U256 {
+            friend bool operator==(const U256&, const U256&);
+        };
+
+        std::variant<Bool, U8, U64, U128, address, signer, Vector, Struct, U16, U32, U256> value;
 
         friend bool operator==(const TypeTag&, const TypeTag&);
     };
@@ -366,18 +465,33 @@ namespace sui_types {
         friend bool operator==(const MoveCall&, const MoveCall&);
     };
 
-    struct ChangeEpoch {
-        uint64_t epoch;
-        uint64_t storage_charge;
-        uint64_t computation_charge;
-
-        friend bool operator==(const ChangeEpoch&, const ChangeEpoch&);
-    };
-
     struct MoveModulePublish {
         std::vector<std::vector<uint8_t>> modules;
 
         friend bool operator==(const MoveModulePublish&, const MoveModulePublish&);
+    };
+
+    struct Pay {
+        std::vector<std::tuple<sui_types::ObjectID, sui_types::SequenceNumber, sui_types::ObjectDigest>> coins;
+        std::vector<sui_types::SuiAddress> recipients;
+        std::vector<uint64_t> amounts;
+
+        friend bool operator==(const Pay&, const Pay&);
+    };
+
+    struct PayAllSui {
+        std::vector<std::tuple<sui_types::ObjectID, sui_types::SequenceNumber, sui_types::ObjectDigest>> coins;
+        sui_types::SuiAddress recipient;
+
+        friend bool operator==(const PayAllSui&, const PayAllSui&);
+    };
+
+    struct PaySui {
+        std::vector<std::tuple<sui_types::ObjectID, sui_types::SequenceNumber, sui_types::ObjectDigest>> coins;
+        std::vector<sui_types::SuiAddress> recipients;
+        std::vector<uint64_t> amounts;
+
+        friend bool operator==(const PaySui&, const PaySui&);
     };
 
     struct TransferObject {
@@ -420,13 +534,31 @@ namespace sui_types {
             friend bool operator==(const TransferSui&, const TransferSui&);
         };
 
+        struct Pay {
+            sui_types::Pay value;
+
+            friend bool operator==(const Pay&, const Pay&);
+        };
+
+        struct PaySui {
+            sui_types::PaySui value;
+
+            friend bool operator==(const PaySui&, const PaySui&);
+        };
+
+        struct PayAllSui {
+            sui_types::PayAllSui value;
+
+            friend bool operator==(const PayAllSui&, const PayAllSui&);
+        };
+
         struct ChangeEpoch {
             sui_types::ChangeEpoch value;
 
             friend bool operator==(const ChangeEpoch&, const ChangeEpoch&);
         };
 
-        std::variant<TransferObject, Publish, Call, TransferSui, ChangeEpoch> value;
+        std::variant<TransferObject, Publish, Call, TransferSui, Pay, PaySui, PayAllSui, ChangeEpoch> value;
 
         friend bool operator==(const SingleTransactionKind&, const SingleTransactionKind&);
     };
@@ -502,7 +634,19 @@ namespace sui_types {
             friend bool operator==(const signer&, const signer&);
         };
 
-        std::variant<Bool, U8, U64, U128, address, Vector, Struct, signer> value;
+        struct U16 {
+            friend bool operator==(const U16&, const U16&);
+        };
+
+        struct U32 {
+            friend bool operator==(const U32&, const U32&);
+        };
+
+        struct U256 {
+            friend bool operator==(const U256&, const U256&);
+        };
+
+        std::variant<Bool, U8, U64, U128, address, Vector, Struct, signer, U16, U32, U256> value;
 
         friend bool operator==(const MoveTypeLayout&, const MoveTypeLayout&);
     };
@@ -540,56 +684,10 @@ namespace sui_types {
         friend bool operator==(const MoveStructLayout&, const MoveStructLayout&);
     };
 
-    struct AuthorityPublicKeyBytes {
-        std::vector<uint8_t> value;
-
-        friend bool operator==(const AuthorityPublicKeyBytes&, const AuthorityPublicKeyBytes&);
-    };
-
-    struct Ed25519Signature {
-        std::vector<uint8_t> raw;
-
-        friend bool operator==(const Ed25519Signature&, const Ed25519Signature&);
-    };
-
-    struct AuthoritySignInfo {
-        uint64_t epoch;
-        sui_types::AuthorityPublicKeyBytes authority;
-        sui_types::Ed25519Signature signature;
-
-        friend bool operator==(const AuthoritySignInfo&, const AuthoritySignInfo&);
-    };
-
-    struct Balance {
-        uint64_t value;
-
-        friend bool operator==(const Balance&, const Balance&);
-    };
-
-    struct Id {
-        sui_types::ObjectID value;
-
-        friend bool operator==(const Id&, const Id&);
-    };
-
-    struct UID {
-        sui_types::Id value;
-
-        friend bool operator==(const UID&, const UID&);
-    };
-
-    struct Coin {
-        sui_types::UID id;
-        sui_types::Balance balance;
-
-        friend bool operator==(const Coin&, const Coin&);
-    };
-
     struct MoveObject {
         sui_types::StructTag type_;
         bool has_public_transfer;
         sui_types::SequenceNumber version;
-        std::optional<uint32_t> child_count;
         std::vector<uint8_t> contents;
 
         friend bool operator==(const MoveObject&, const MoveObject&);
@@ -621,42 +719,6 @@ namespace sui_types {
         friend bool operator==(const Data&, const Data&);
     };
 
-    struct AuthorityBatch {
-        uint64_t next_sequence_number;
-        uint64_t initial_sequence_number;
-        uint64_t size;
-        std::optional<std::array<uint8_t, 32>> previous_digest;
-        std::array<uint8_t, 32> transactions_digest;
-
-        friend bool operator==(const AuthorityBatch&, const AuthorityBatch&);
-    };
-
-    struct Envelope {
-        sui_types::AuthorityBatch data;
-        sui_types::AuthoritySignInfo auth_signature;
-
-        friend bool operator==(const Envelope&, const Envelope&);
-    };
-
-    struct TransactionDigest {
-        std::vector<uint8_t> value;
-
-        friend bool operator==(const TransactionDigest&, const TransactionDigest&);
-    };
-
-    struct TransactionEffectsDigest {
-        std::vector<uint8_t> value;
-
-        friend bool operator==(const TransactionEffectsDigest&, const TransactionEffectsDigest&);
-    };
-
-    struct ExecutionDigests {
-        sui_types::TransactionDigest transaction;
-        sui_types::TransactionEffectsDigest effects;
-
-        friend bool operator==(const ExecutionDigests&, const ExecutionDigests&);
-    };
-
     struct ObjectFormatOptions {
         bool include_types;
 
@@ -677,9 +739,44 @@ namespace sui_types {
             friend bool operator==(const PastObjectInfo&, const PastObjectInfo&);
         };
 
-        std::variant<LatestObjectInfo, PastObjectInfo> value;
+        struct PastObjectInfoDebug {
+            std::tuple<sui_types::SequenceNumber, std::optional<sui_types::ObjectFormatOptions>> value;
+
+            friend bool operator==(const PastObjectInfoDebug&, const PastObjectInfoDebug&);
+        };
+
+        std::variant<LatestObjectInfo, PastObjectInfo, PastObjectInfoDebug> value;
 
         friend bool operator==(const ObjectInfoRequestKind&, const ObjectInfoRequestKind&);
+    };
+
+    struct Owner {
+
+        struct AddressOwner {
+            sui_types::SuiAddress value;
+
+            friend bool operator==(const AddressOwner&, const AddressOwner&);
+        };
+
+        struct ObjectOwner {
+            sui_types::SuiAddress value;
+
+            friend bool operator==(const ObjectOwner&, const ObjectOwner&);
+        };
+
+        struct Shared {
+            sui_types::SequenceNumber initial_shared_version;
+
+            friend bool operator==(const Shared&, const Shared&);
+        };
+
+        struct Immutable {
+            friend bool operator==(const Immutable&, const Immutable&);
+        };
+
+        std::variant<AddressOwner, ObjectOwner, Shared, Immutable> value;
+
+        friend bool operator==(const Owner&, const Owner&);
     };
 
     struct Ed25519SuiSignature {
@@ -720,25 +817,6 @@ namespace sui_types {
         friend bool operator==(const SenderSignedData&, const SenderSignedData&);
     };
 
-    struct UpdateItem {
-
-        struct Transaction {
-            std::tuple<uint64_t, sui_types::ExecutionDigests> value;
-
-            friend bool operator==(const Transaction&, const Transaction&);
-        };
-
-        struct Batch {
-            sui_types::Envelope value;
-
-            friend bool operator==(const Batch&, const Batch&);
-        };
-
-        std::variant<Transaction, Batch> value;
-
-        friend bool operator==(const UpdateItem&, const UpdateItem&);
-    };
-
     struct AbortLocation {
 
         struct Module {
@@ -754,20 +832,6 @@ namespace sui_types {
         std::variant<Module, Script> value;
 
         friend bool operator==(const AbortLocation&, const AbortLocation&);
-    };
-
-    struct Ed25519PublicKey {
-        std::string value;
-
-        friend bool operator==(const Ed25519PublicKey&, const Ed25519PublicKey&);
-    };
-
-    struct Ed25519KeyPair {
-        std::string type;
-        sui_types::Ed25519PublicKey name;
-        sui_types::Ed25519PublicKey secret;
-
-        friend bool operator==(const Ed25519KeyPair&, const Ed25519KeyPair&);
     };
 
     struct ExecutionStatus {
@@ -787,31 +851,42 @@ namespace sui_types {
         friend bool operator==(const ExecutionStatus&, const ExecutionStatus&);
     };
 
-    struct Owner {
+    struct AuthorityPublicKeyBytes {
+        std::vector<uint8_t> value;
 
-        struct AddressOwner {
-            sui_types::SuiAddress value;
+        friend bool operator==(const AuthorityPublicKeyBytes&, const AuthorityPublicKeyBytes&);
+    };
 
-            friend bool operator==(const AddressOwner&, const AddressOwner&);
-        };
+    struct BLS12381KeyPair {
+        std::string name;
+        std::string secret;
 
-        struct ObjectOwner {
-            sui_types::SuiAddress value;
+        friend bool operator==(const BLS12381KeyPair&, const BLS12381KeyPair&);
+    };
 
-            friend bool operator==(const ObjectOwner&, const ObjectOwner&);
-        };
+    struct BLS12381Signature {
+        std::vector<uint8_t> sig;
 
-        struct Shared {
-            friend bool operator==(const Shared&, const Shared&);
-        };
+        friend bool operator==(const BLS12381Signature&, const BLS12381Signature&);
+    };
 
-        struct Immutable {
-            friend bool operator==(const Immutable&, const Immutable&);
-        };
+    struct Ed25519KeyPair {
+        std::string name;
+        std::string secret;
 
-        std::variant<AddressOwner, ObjectOwner, Shared, Immutable> value;
+        friend bool operator==(const Ed25519KeyPair&, const Ed25519KeyPair&);
+    };
 
-        friend bool operator==(const Owner&, const Owner&);
+    struct TransactionDigest {
+        std::vector<uint8_t> value;
+
+        friend bool operator==(const TransactionDigest&, const TransactionDigest&);
+    };
+
+    struct TransactionEffectsDigest {
+        std::vector<uint8_t> value;
+
+        friend bool operator==(const TransactionEffectsDigest&, const TransactionEffectsDigest&);
     };
 
     struct TypedStoreError {
@@ -838,7 +913,11 @@ namespace sui_types {
             friend bool operator==(const CrossDBBatch&, const CrossDBBatch&);
         };
 
-        std::variant<RocksDBError, SerializationError, UnregisteredColumn, CrossDBBatch> value;
+        struct MetricsReporting {
+            friend bool operator==(const MetricsReporting&, const MetricsReporting&);
+        };
+
+        std::variant<RocksDBError, SerializationError, UnregisteredColumn, CrossDBBatch, MetricsReporting> value;
 
         friend bool operator==(const TypedStoreError&, const TypedStoreError&);
     };
@@ -945,45 +1024,6 @@ sui_types::AccountAddress serde::Deserializable<sui_types::AccountAddress>::dese
 
 namespace sui_types {
 
-    inline bool operator==(const AuthorityBatch &lhs, const AuthorityBatch &rhs) {
-        if (!(lhs.next_sequence_number == rhs.next_sequence_number)) { return false; }
-        if (!(lhs.initial_sequence_number == rhs.initial_sequence_number)) { return false; }
-        if (!(lhs.size == rhs.size)) { return false; }
-        if (!(lhs.previous_digest == rhs.previous_digest)) { return false; }
-        if (!(lhs.transactions_digest == rhs.transactions_digest)) { return false; }
-        return true;
-    }
-
-} // end of namespace sui_types
-
-template <>
-template <typename Serializer>
-void serde::Serializable<sui_types::AuthorityBatch>::serialize(const sui_types::AuthorityBatch &obj, Serializer &serializer) {
-    serializer.increase_container_depth();
-    serde::Serializable<decltype(obj.next_sequence_number)>::serialize(obj.next_sequence_number, serializer);
-    serde::Serializable<decltype(obj.initial_sequence_number)>::serialize(obj.initial_sequence_number, serializer);
-    serde::Serializable<decltype(obj.size)>::serialize(obj.size, serializer);
-    serde::Serializable<decltype(obj.previous_digest)>::serialize(obj.previous_digest, serializer);
-    serde::Serializable<decltype(obj.transactions_digest)>::serialize(obj.transactions_digest, serializer);
-    serializer.decrease_container_depth();
-}
-
-template <>
-template <typename Deserializer>
-sui_types::AuthorityBatch serde::Deserializable<sui_types::AuthorityBatch>::deserialize(Deserializer &deserializer) {
-    deserializer.increase_container_depth();
-    sui_types::AuthorityBatch obj;
-    obj.next_sequence_number = serde::Deserializable<decltype(obj.next_sequence_number)>::deserialize(deserializer);
-    obj.initial_sequence_number = serde::Deserializable<decltype(obj.initial_sequence_number)>::deserialize(deserializer);
-    obj.size = serde::Deserializable<decltype(obj.size)>::deserialize(deserializer);
-    obj.previous_digest = serde::Deserializable<decltype(obj.previous_digest)>::deserialize(deserializer);
-    obj.transactions_digest = serde::Deserializable<decltype(obj.transactions_digest)>::deserialize(deserializer);
-    deserializer.decrease_container_depth();
-    return obj;
-}
-
-namespace sui_types {
-
     inline bool operator==(const AuthorityPublicKeyBytes &lhs, const AuthorityPublicKeyBytes &rhs) {
         if (!(lhs.value == rhs.value)) { return false; }
         return true;
@@ -1011,10 +1051,9 @@ sui_types::AuthorityPublicKeyBytes serde::Deserializable<sui_types::AuthorityPub
 
 namespace sui_types {
 
-    inline bool operator==(const AuthoritySignInfo &lhs, const AuthoritySignInfo &rhs) {
-        if (!(lhs.epoch == rhs.epoch)) { return false; }
-        if (!(lhs.authority == rhs.authority)) { return false; }
-        if (!(lhs.signature == rhs.signature)) { return false; }
+    inline bool operator==(const BLS12381KeyPair &lhs, const BLS12381KeyPair &rhs) {
+        if (!(lhs.name == rhs.name)) { return false; }
+        if (!(lhs.secret == rhs.secret)) { return false; }
         return true;
     }
 
@@ -1022,30 +1061,28 @@ namespace sui_types {
 
 template <>
 template <typename Serializer>
-void serde::Serializable<sui_types::AuthoritySignInfo>::serialize(const sui_types::AuthoritySignInfo &obj, Serializer &serializer) {
+void serde::Serializable<sui_types::BLS12381KeyPair>::serialize(const sui_types::BLS12381KeyPair &obj, Serializer &serializer) {
     serializer.increase_container_depth();
-    serde::Serializable<decltype(obj.epoch)>::serialize(obj.epoch, serializer);
-    serde::Serializable<decltype(obj.authority)>::serialize(obj.authority, serializer);
-    serde::Serializable<decltype(obj.signature)>::serialize(obj.signature, serializer);
+    serde::Serializable<decltype(obj.name)>::serialize(obj.name, serializer);
+    serde::Serializable<decltype(obj.secret)>::serialize(obj.secret, serializer);
     serializer.decrease_container_depth();
 }
 
 template <>
 template <typename Deserializer>
-sui_types::AuthoritySignInfo serde::Deserializable<sui_types::AuthoritySignInfo>::deserialize(Deserializer &deserializer) {
+sui_types::BLS12381KeyPair serde::Deserializable<sui_types::BLS12381KeyPair>::deserialize(Deserializer &deserializer) {
     deserializer.increase_container_depth();
-    sui_types::AuthoritySignInfo obj;
-    obj.epoch = serde::Deserializable<decltype(obj.epoch)>::deserialize(deserializer);
-    obj.authority = serde::Deserializable<decltype(obj.authority)>::deserialize(deserializer);
-    obj.signature = serde::Deserializable<decltype(obj.signature)>::deserialize(deserializer);
+    sui_types::BLS12381KeyPair obj;
+    obj.name = serde::Deserializable<decltype(obj.name)>::deserialize(deserializer);
+    obj.secret = serde::Deserializable<decltype(obj.secret)>::deserialize(deserializer);
     deserializer.decrease_container_depth();
     return obj;
 }
 
 namespace sui_types {
 
-    inline bool operator==(const Balance &lhs, const Balance &rhs) {
-        if (!(lhs.value == rhs.value)) { return false; }
+    inline bool operator==(const BLS12381Signature &lhs, const BLS12381Signature &rhs) {
+        if (!(lhs.sig == rhs.sig)) { return false; }
         return true;
     }
 
@@ -1053,18 +1090,18 @@ namespace sui_types {
 
 template <>
 template <typename Serializer>
-void serde::Serializable<sui_types::Balance>::serialize(const sui_types::Balance &obj, Serializer &serializer) {
+void serde::Serializable<sui_types::BLS12381Signature>::serialize(const sui_types::BLS12381Signature &obj, Serializer &serializer) {
     serializer.increase_container_depth();
-    serde::Serializable<decltype(obj.value)>::serialize(obj.value, serializer);
+    serde::Serializable<decltype(obj.sig)>::serialize(obj.sig, serializer);
     serializer.decrease_container_depth();
 }
 
 template <>
 template <typename Deserializer>
-sui_types::Balance serde::Deserializable<sui_types::Balance>::deserialize(Deserializer &deserializer) {
+sui_types::BLS12381Signature serde::Deserializable<sui_types::BLS12381Signature>::deserialize(Deserializer &deserializer) {
     deserializer.increase_container_depth();
-    sui_types::Balance obj;
-    obj.value = serde::Deserializable<decltype(obj.value)>::deserialize(deserializer);
+    sui_types::BLS12381Signature obj;
+    obj.sig = serde::Deserializable<decltype(obj.sig)>::deserialize(deserializer);
     deserializer.decrease_container_depth();
     return obj;
 }
@@ -1144,10 +1181,34 @@ sui_types::CallArg::Object serde::Deserializable<sui_types::CallArg::Object>::de
 
 namespace sui_types {
 
+    inline bool operator==(const CallArg::ObjVec &lhs, const CallArg::ObjVec &rhs) {
+        if (!(lhs.value == rhs.value)) { return false; }
+        return true;
+    }
+
+} // end of namespace sui_types
+
+template <>
+template <typename Serializer>
+void serde::Serializable<sui_types::CallArg::ObjVec>::serialize(const sui_types::CallArg::ObjVec &obj, Serializer &serializer) {
+    serde::Serializable<decltype(obj.value)>::serialize(obj.value, serializer);
+}
+
+template <>
+template <typename Deserializer>
+sui_types::CallArg::ObjVec serde::Deserializable<sui_types::CallArg::ObjVec>::deserialize(Deserializer &deserializer) {
+    sui_types::CallArg::ObjVec obj;
+    obj.value = serde::Deserializable<decltype(obj.value)>::deserialize(deserializer);
+    return obj;
+}
+
+namespace sui_types {
+
     inline bool operator==(const ChangeEpoch &lhs, const ChangeEpoch &rhs) {
         if (!(lhs.epoch == rhs.epoch)) { return false; }
         if (!(lhs.storage_charge == rhs.storage_charge)) { return false; }
         if (!(lhs.computation_charge == rhs.computation_charge)) { return false; }
+        if (!(lhs.storage_rebate == rhs.storage_rebate)) { return false; }
         return true;
     }
 
@@ -1160,6 +1221,7 @@ void serde::Serializable<sui_types::ChangeEpoch>::serialize(const sui_types::Cha
     serde::Serializable<decltype(obj.epoch)>::serialize(obj.epoch, serializer);
     serde::Serializable<decltype(obj.storage_charge)>::serialize(obj.storage_charge, serializer);
     serde::Serializable<decltype(obj.computation_charge)>::serialize(obj.computation_charge, serializer);
+    serde::Serializable<decltype(obj.storage_rebate)>::serialize(obj.storage_rebate, serializer);
     serializer.decrease_container_depth();
 }
 
@@ -1171,6 +1233,7 @@ sui_types::ChangeEpoch serde::Deserializable<sui_types::ChangeEpoch>::deserializ
     obj.epoch = serde::Deserializable<decltype(obj.epoch)>::deserialize(deserializer);
     obj.storage_charge = serde::Deserializable<decltype(obj.storage_charge)>::deserialize(deserializer);
     obj.computation_charge = serde::Deserializable<decltype(obj.computation_charge)>::deserialize(deserializer);
+    obj.storage_rebate = serde::Deserializable<decltype(obj.storage_rebate)>::deserialize(deserializer);
     deserializer.decrease_container_depth();
     return obj;
 }
@@ -1198,36 +1261,6 @@ sui_types::CircularObjectOwnership serde::Deserializable<sui_types::CircularObje
     deserializer.increase_container_depth();
     sui_types::CircularObjectOwnership obj;
     obj.object = serde::Deserializable<decltype(obj.object)>::deserialize(deserializer);
-    deserializer.decrease_container_depth();
-    return obj;
-}
-
-namespace sui_types {
-
-    inline bool operator==(const Coin &lhs, const Coin &rhs) {
-        if (!(lhs.id == rhs.id)) { return false; }
-        if (!(lhs.balance == rhs.balance)) { return false; }
-        return true;
-    }
-
-} // end of namespace sui_types
-
-template <>
-template <typename Serializer>
-void serde::Serializable<sui_types::Coin>::serialize(const sui_types::Coin &obj, Serializer &serializer) {
-    serializer.increase_container_depth();
-    serde::Serializable<decltype(obj.id)>::serialize(obj.id, serializer);
-    serde::Serializable<decltype(obj.balance)>::serialize(obj.balance, serializer);
-    serializer.decrease_container_depth();
-}
-
-template <>
-template <typename Deserializer>
-sui_types::Coin serde::Deserializable<sui_types::Coin>::deserialize(Deserializer &deserializer) {
-    deserializer.increase_container_depth();
-    sui_types::Coin obj;
-    obj.id = serde::Deserializable<decltype(obj.id)>::deserialize(deserializer);
-    obj.balance = serde::Deserializable<decltype(obj.balance)>::deserialize(deserializer);
     deserializer.decrease_container_depth();
     return obj;
 }
@@ -1395,7 +1428,6 @@ sui_types::DeleteKind::Wrap serde::Deserializable<sui_types::DeleteKind::Wrap>::
 namespace sui_types {
 
     inline bool operator==(const Ed25519KeyPair &lhs, const Ed25519KeyPair &rhs) {
-        if (!(lhs.type == rhs.type)) { return false; }
         if (!(lhs.name == rhs.name)) { return false; }
         if (!(lhs.secret == rhs.secret)) { return false; }
         return true;
@@ -1407,7 +1439,6 @@ template <>
 template <typename Serializer>
 void serde::Serializable<sui_types::Ed25519KeyPair>::serialize(const sui_types::Ed25519KeyPair &obj, Serializer &serializer) {
     serializer.increase_container_depth();
-    serde::Serializable<decltype(obj.type)>::serialize(obj.type, serializer);
     serde::Serializable<decltype(obj.name)>::serialize(obj.name, serializer);
     serde::Serializable<decltype(obj.secret)>::serialize(obj.secret, serializer);
     serializer.decrease_container_depth();
@@ -1418,63 +1449,8 @@ template <typename Deserializer>
 sui_types::Ed25519KeyPair serde::Deserializable<sui_types::Ed25519KeyPair>::deserialize(Deserializer &deserializer) {
     deserializer.increase_container_depth();
     sui_types::Ed25519KeyPair obj;
-    obj.type = serde::Deserializable<decltype(obj.type)>::deserialize(deserializer);
     obj.name = serde::Deserializable<decltype(obj.name)>::deserialize(deserializer);
     obj.secret = serde::Deserializable<decltype(obj.secret)>::deserialize(deserializer);
-    deserializer.decrease_container_depth();
-    return obj;
-}
-
-namespace sui_types {
-
-    inline bool operator==(const Ed25519PublicKey &lhs, const Ed25519PublicKey &rhs) {
-        if (!(lhs.value == rhs.value)) { return false; }
-        return true;
-    }
-
-} // end of namespace sui_types
-
-template <>
-template <typename Serializer>
-void serde::Serializable<sui_types::Ed25519PublicKey>::serialize(const sui_types::Ed25519PublicKey &obj, Serializer &serializer) {
-    serializer.increase_container_depth();
-    serde::Serializable<decltype(obj.value)>::serialize(obj.value, serializer);
-    serializer.decrease_container_depth();
-}
-
-template <>
-template <typename Deserializer>
-sui_types::Ed25519PublicKey serde::Deserializable<sui_types::Ed25519PublicKey>::deserialize(Deserializer &deserializer) {
-    deserializer.increase_container_depth();
-    sui_types::Ed25519PublicKey obj;
-    obj.value = serde::Deserializable<decltype(obj.value)>::deserialize(deserializer);
-    deserializer.decrease_container_depth();
-    return obj;
-}
-
-namespace sui_types {
-
-    inline bool operator==(const Ed25519Signature &lhs, const Ed25519Signature &rhs) {
-        if (!(lhs.raw == rhs.raw)) { return false; }
-        return true;
-    }
-
-} // end of namespace sui_types
-
-template <>
-template <typename Serializer>
-void serde::Serializable<sui_types::Ed25519Signature>::serialize(const sui_types::Ed25519Signature &obj, Serializer &serializer) {
-    serializer.increase_container_depth();
-    serde::Serializable<decltype(obj.raw)>::serialize(obj.raw, serializer);
-    serializer.decrease_container_depth();
-}
-
-template <>
-template <typename Deserializer>
-sui_types::Ed25519Signature serde::Deserializable<sui_types::Ed25519Signature>::deserialize(Deserializer &deserializer) {
-    deserializer.increase_container_depth();
-    sui_types::Ed25519Signature obj;
-    obj.raw = serde::Deserializable<decltype(obj.raw)>::deserialize(deserializer);
     deserializer.decrease_container_depth();
     return obj;
 }
@@ -1685,9 +1661,9 @@ sui_types::EntryArgumentErrorKind::ArityMismatch serde::Deserializable<sui_types
 
 namespace sui_types {
 
-    inline bool operator==(const Envelope &lhs, const Envelope &rhs) {
-        if (!(lhs.data == rhs.data)) { return false; }
-        if (!(lhs.auth_signature == rhs.auth_signature)) { return false; }
+    inline bool operator==(const EntryTypeArgumentError &lhs, const EntryTypeArgumentError &rhs) {
+        if (!(lhs.argument_idx == rhs.argument_idx)) { return false; }
+        if (!(lhs.kind == rhs.kind)) { return false; }
         return true;
     }
 
@@ -1695,29 +1671,28 @@ namespace sui_types {
 
 template <>
 template <typename Serializer>
-void serde::Serializable<sui_types::Envelope>::serialize(const sui_types::Envelope &obj, Serializer &serializer) {
+void serde::Serializable<sui_types::EntryTypeArgumentError>::serialize(const sui_types::EntryTypeArgumentError &obj, Serializer &serializer) {
     serializer.increase_container_depth();
-    serde::Serializable<decltype(obj.data)>::serialize(obj.data, serializer);
-    serde::Serializable<decltype(obj.auth_signature)>::serialize(obj.auth_signature, serializer);
+    serde::Serializable<decltype(obj.argument_idx)>::serialize(obj.argument_idx, serializer);
+    serde::Serializable<decltype(obj.kind)>::serialize(obj.kind, serializer);
     serializer.decrease_container_depth();
 }
 
 template <>
 template <typename Deserializer>
-sui_types::Envelope serde::Deserializable<sui_types::Envelope>::deserialize(Deserializer &deserializer) {
+sui_types::EntryTypeArgumentError serde::Deserializable<sui_types::EntryTypeArgumentError>::deserialize(Deserializer &deserializer) {
     deserializer.increase_container_depth();
-    sui_types::Envelope obj;
-    obj.data = serde::Deserializable<decltype(obj.data)>::deserialize(deserializer);
-    obj.auth_signature = serde::Deserializable<decltype(obj.auth_signature)>::deserialize(deserializer);
+    sui_types::EntryTypeArgumentError obj;
+    obj.argument_idx = serde::Deserializable<decltype(obj.argument_idx)>::deserialize(deserializer);
+    obj.kind = serde::Deserializable<decltype(obj.kind)>::deserialize(deserializer);
     deserializer.decrease_container_depth();
     return obj;
 }
 
 namespace sui_types {
 
-    inline bool operator==(const ExecutionDigests &lhs, const ExecutionDigests &rhs) {
-        if (!(lhs.transaction == rhs.transaction)) { return false; }
-        if (!(lhs.effects == rhs.effects)) { return false; }
+    inline bool operator==(const EntryTypeArgumentErrorKind &lhs, const EntryTypeArgumentErrorKind &rhs) {
+        if (!(lhs.value == rhs.value)) { return false; }
         return true;
     }
 
@@ -1725,21 +1700,99 @@ namespace sui_types {
 
 template <>
 template <typename Serializer>
-void serde::Serializable<sui_types::ExecutionDigests>::serialize(const sui_types::ExecutionDigests &obj, Serializer &serializer) {
+void serde::Serializable<sui_types::EntryTypeArgumentErrorKind>::serialize(const sui_types::EntryTypeArgumentErrorKind &obj, Serializer &serializer) {
     serializer.increase_container_depth();
-    serde::Serializable<decltype(obj.transaction)>::serialize(obj.transaction, serializer);
-    serde::Serializable<decltype(obj.effects)>::serialize(obj.effects, serializer);
+    serde::Serializable<decltype(obj.value)>::serialize(obj.value, serializer);
     serializer.decrease_container_depth();
 }
 
 template <>
 template <typename Deserializer>
-sui_types::ExecutionDigests serde::Deserializable<sui_types::ExecutionDigests>::deserialize(Deserializer &deserializer) {
+sui_types::EntryTypeArgumentErrorKind serde::Deserializable<sui_types::EntryTypeArgumentErrorKind>::deserialize(Deserializer &deserializer) {
     deserializer.increase_container_depth();
-    sui_types::ExecutionDigests obj;
-    obj.transaction = serde::Deserializable<decltype(obj.transaction)>::deserialize(deserializer);
-    obj.effects = serde::Deserializable<decltype(obj.effects)>::deserialize(deserializer);
+    sui_types::EntryTypeArgumentErrorKind obj;
+    obj.value = serde::Deserializable<decltype(obj.value)>::deserialize(deserializer);
     deserializer.decrease_container_depth();
+    return obj;
+}
+
+namespace sui_types {
+
+    inline bool operator==(const EntryTypeArgumentErrorKind::ModuleNotFound &lhs, const EntryTypeArgumentErrorKind::ModuleNotFound &rhs) {
+        return true;
+    }
+
+} // end of namespace sui_types
+
+template <>
+template <typename Serializer>
+void serde::Serializable<sui_types::EntryTypeArgumentErrorKind::ModuleNotFound>::serialize(const sui_types::EntryTypeArgumentErrorKind::ModuleNotFound &obj, Serializer &serializer) {
+}
+
+template <>
+template <typename Deserializer>
+sui_types::EntryTypeArgumentErrorKind::ModuleNotFound serde::Deserializable<sui_types::EntryTypeArgumentErrorKind::ModuleNotFound>::deserialize(Deserializer &deserializer) {
+    sui_types::EntryTypeArgumentErrorKind::ModuleNotFound obj;
+    return obj;
+}
+
+namespace sui_types {
+
+    inline bool operator==(const EntryTypeArgumentErrorKind::TypeNotFound &lhs, const EntryTypeArgumentErrorKind::TypeNotFound &rhs) {
+        return true;
+    }
+
+} // end of namespace sui_types
+
+template <>
+template <typename Serializer>
+void serde::Serializable<sui_types::EntryTypeArgumentErrorKind::TypeNotFound>::serialize(const sui_types::EntryTypeArgumentErrorKind::TypeNotFound &obj, Serializer &serializer) {
+}
+
+template <>
+template <typename Deserializer>
+sui_types::EntryTypeArgumentErrorKind::TypeNotFound serde::Deserializable<sui_types::EntryTypeArgumentErrorKind::TypeNotFound>::deserialize(Deserializer &deserializer) {
+    sui_types::EntryTypeArgumentErrorKind::TypeNotFound obj;
+    return obj;
+}
+
+namespace sui_types {
+
+    inline bool operator==(const EntryTypeArgumentErrorKind::ArityMismatch &lhs, const EntryTypeArgumentErrorKind::ArityMismatch &rhs) {
+        return true;
+    }
+
+} // end of namespace sui_types
+
+template <>
+template <typename Serializer>
+void serde::Serializable<sui_types::EntryTypeArgumentErrorKind::ArityMismatch>::serialize(const sui_types::EntryTypeArgumentErrorKind::ArityMismatch &obj, Serializer &serializer) {
+}
+
+template <>
+template <typename Deserializer>
+sui_types::EntryTypeArgumentErrorKind::ArityMismatch serde::Deserializable<sui_types::EntryTypeArgumentErrorKind::ArityMismatch>::deserialize(Deserializer &deserializer) {
+    sui_types::EntryTypeArgumentErrorKind::ArityMismatch obj;
+    return obj;
+}
+
+namespace sui_types {
+
+    inline bool operator==(const EntryTypeArgumentErrorKind::ConstraintNotSatisfied &lhs, const EntryTypeArgumentErrorKind::ConstraintNotSatisfied &rhs) {
+        return true;
+    }
+
+} // end of namespace sui_types
+
+template <>
+template <typename Serializer>
+void serde::Serializable<sui_types::EntryTypeArgumentErrorKind::ConstraintNotSatisfied>::serialize(const sui_types::EntryTypeArgumentErrorKind::ConstraintNotSatisfied &obj, Serializer &serializer) {
+}
+
+template <>
+template <typename Deserializer>
+sui_types::EntryTypeArgumentErrorKind::ConstraintNotSatisfied serde::Deserializable<sui_types::EntryTypeArgumentErrorKind::ConstraintNotSatisfied>::deserialize(Deserializer &deserializer) {
+    sui_types::EntryTypeArgumentErrorKind::ConstraintNotSatisfied obj;
     return obj;
 }
 
@@ -1892,6 +1945,58 @@ sui_types::ExecutionFailureStatus::InvariantViolation serde::Deserializable<sui_
 
 namespace sui_types {
 
+    inline bool operator==(const ExecutionFailureStatus::MoveObjectTooBig &lhs, const ExecutionFailureStatus::MoveObjectTooBig &rhs) {
+        if (!(lhs.object_size == rhs.object_size)) { return false; }
+        if (!(lhs.max_object_size == rhs.max_object_size)) { return false; }
+        return true;
+    }
+
+} // end of namespace sui_types
+
+template <>
+template <typename Serializer>
+void serde::Serializable<sui_types::ExecutionFailureStatus::MoveObjectTooBig>::serialize(const sui_types::ExecutionFailureStatus::MoveObjectTooBig &obj, Serializer &serializer) {
+    serde::Serializable<decltype(obj.object_size)>::serialize(obj.object_size, serializer);
+    serde::Serializable<decltype(obj.max_object_size)>::serialize(obj.max_object_size, serializer);
+}
+
+template <>
+template <typename Deserializer>
+sui_types::ExecutionFailureStatus::MoveObjectTooBig serde::Deserializable<sui_types::ExecutionFailureStatus::MoveObjectTooBig>::deserialize(Deserializer &deserializer) {
+    sui_types::ExecutionFailureStatus::MoveObjectTooBig obj;
+    obj.object_size = serde::Deserializable<decltype(obj.object_size)>::deserialize(deserializer);
+    obj.max_object_size = serde::Deserializable<decltype(obj.max_object_size)>::deserialize(deserializer);
+    return obj;
+}
+
+namespace sui_types {
+
+    inline bool operator==(const ExecutionFailureStatus::MovePackageTooBig &lhs, const ExecutionFailureStatus::MovePackageTooBig &rhs) {
+        if (!(lhs.object_size == rhs.object_size)) { return false; }
+        if (!(lhs.max_object_size == rhs.max_object_size)) { return false; }
+        return true;
+    }
+
+} // end of namespace sui_types
+
+template <>
+template <typename Serializer>
+void serde::Serializable<sui_types::ExecutionFailureStatus::MovePackageTooBig>::serialize(const sui_types::ExecutionFailureStatus::MovePackageTooBig &obj, Serializer &serializer) {
+    serde::Serializable<decltype(obj.object_size)>::serialize(obj.object_size, serializer);
+    serde::Serializable<decltype(obj.max_object_size)>::serialize(obj.max_object_size, serializer);
+}
+
+template <>
+template <typename Deserializer>
+sui_types::ExecutionFailureStatus::MovePackageTooBig serde::Deserializable<sui_types::ExecutionFailureStatus::MovePackageTooBig>::deserialize(Deserializer &deserializer) {
+    sui_types::ExecutionFailureStatus::MovePackageTooBig obj;
+    obj.object_size = serde::Deserializable<decltype(obj.object_size)>::deserialize(deserializer);
+    obj.max_object_size = serde::Deserializable<decltype(obj.max_object_size)>::deserialize(deserializer);
+    return obj;
+}
+
+namespace sui_types {
+
     inline bool operator==(const ExecutionFailureStatus::InvalidTransferObject &lhs, const ExecutionFailureStatus::InvalidTransferObject &rhs) {
         return true;
     }
@@ -1947,6 +2052,126 @@ template <>
 template <typename Deserializer>
 sui_types::ExecutionFailureStatus::InvalidTransferSuiInsufficientBalance serde::Deserializable<sui_types::ExecutionFailureStatus::InvalidTransferSuiInsufficientBalance>::deserialize(Deserializer &deserializer) {
     sui_types::ExecutionFailureStatus::InvalidTransferSuiInsufficientBalance obj;
+    return obj;
+}
+
+namespace sui_types {
+
+    inline bool operator==(const ExecutionFailureStatus::InvalidCoinObject &lhs, const ExecutionFailureStatus::InvalidCoinObject &rhs) {
+        return true;
+    }
+
+} // end of namespace sui_types
+
+template <>
+template <typename Serializer>
+void serde::Serializable<sui_types::ExecutionFailureStatus::InvalidCoinObject>::serialize(const sui_types::ExecutionFailureStatus::InvalidCoinObject &obj, Serializer &serializer) {
+}
+
+template <>
+template <typename Deserializer>
+sui_types::ExecutionFailureStatus::InvalidCoinObject serde::Deserializable<sui_types::ExecutionFailureStatus::InvalidCoinObject>::deserialize(Deserializer &deserializer) {
+    sui_types::ExecutionFailureStatus::InvalidCoinObject obj;
+    return obj;
+}
+
+namespace sui_types {
+
+    inline bool operator==(const ExecutionFailureStatus::EmptyInputCoins &lhs, const ExecutionFailureStatus::EmptyInputCoins &rhs) {
+        return true;
+    }
+
+} // end of namespace sui_types
+
+template <>
+template <typename Serializer>
+void serde::Serializable<sui_types::ExecutionFailureStatus::EmptyInputCoins>::serialize(const sui_types::ExecutionFailureStatus::EmptyInputCoins &obj, Serializer &serializer) {
+}
+
+template <>
+template <typename Deserializer>
+sui_types::ExecutionFailureStatus::EmptyInputCoins serde::Deserializable<sui_types::ExecutionFailureStatus::EmptyInputCoins>::deserialize(Deserializer &deserializer) {
+    sui_types::ExecutionFailureStatus::EmptyInputCoins obj;
+    return obj;
+}
+
+namespace sui_types {
+
+    inline bool operator==(const ExecutionFailureStatus::EmptyRecipients &lhs, const ExecutionFailureStatus::EmptyRecipients &rhs) {
+        return true;
+    }
+
+} // end of namespace sui_types
+
+template <>
+template <typename Serializer>
+void serde::Serializable<sui_types::ExecutionFailureStatus::EmptyRecipients>::serialize(const sui_types::ExecutionFailureStatus::EmptyRecipients &obj, Serializer &serializer) {
+}
+
+template <>
+template <typename Deserializer>
+sui_types::ExecutionFailureStatus::EmptyRecipients serde::Deserializable<sui_types::ExecutionFailureStatus::EmptyRecipients>::deserialize(Deserializer &deserializer) {
+    sui_types::ExecutionFailureStatus::EmptyRecipients obj;
+    return obj;
+}
+
+namespace sui_types {
+
+    inline bool operator==(const ExecutionFailureStatus::RecipientsAmountsArityMismatch &lhs, const ExecutionFailureStatus::RecipientsAmountsArityMismatch &rhs) {
+        return true;
+    }
+
+} // end of namespace sui_types
+
+template <>
+template <typename Serializer>
+void serde::Serializable<sui_types::ExecutionFailureStatus::RecipientsAmountsArityMismatch>::serialize(const sui_types::ExecutionFailureStatus::RecipientsAmountsArityMismatch &obj, Serializer &serializer) {
+}
+
+template <>
+template <typename Deserializer>
+sui_types::ExecutionFailureStatus::RecipientsAmountsArityMismatch serde::Deserializable<sui_types::ExecutionFailureStatus::RecipientsAmountsArityMismatch>::deserialize(Deserializer &deserializer) {
+    sui_types::ExecutionFailureStatus::RecipientsAmountsArityMismatch obj;
+    return obj;
+}
+
+namespace sui_types {
+
+    inline bool operator==(const ExecutionFailureStatus::InsufficientBalance &lhs, const ExecutionFailureStatus::InsufficientBalance &rhs) {
+        return true;
+    }
+
+} // end of namespace sui_types
+
+template <>
+template <typename Serializer>
+void serde::Serializable<sui_types::ExecutionFailureStatus::InsufficientBalance>::serialize(const sui_types::ExecutionFailureStatus::InsufficientBalance &obj, Serializer &serializer) {
+}
+
+template <>
+template <typename Deserializer>
+sui_types::ExecutionFailureStatus::InsufficientBalance serde::Deserializable<sui_types::ExecutionFailureStatus::InsufficientBalance>::deserialize(Deserializer &deserializer) {
+    sui_types::ExecutionFailureStatus::InsufficientBalance obj;
+    return obj;
+}
+
+namespace sui_types {
+
+    inline bool operator==(const ExecutionFailureStatus::CoinTypeMismatch &lhs, const ExecutionFailureStatus::CoinTypeMismatch &rhs) {
+        return true;
+    }
+
+} // end of namespace sui_types
+
+template <>
+template <typename Serializer>
+void serde::Serializable<sui_types::ExecutionFailureStatus::CoinTypeMismatch>::serialize(const sui_types::ExecutionFailureStatus::CoinTypeMismatch &obj, Serializer &serializer) {
+}
+
+template <>
+template <typename Deserializer>
+sui_types::ExecutionFailureStatus::CoinTypeMismatch serde::Deserializable<sui_types::ExecutionFailureStatus::CoinTypeMismatch>::deserialize(Deserializer &deserializer) {
+    sui_types::ExecutionFailureStatus::CoinTypeMismatch obj;
     return obj;
 }
 
@@ -2015,6 +2240,29 @@ sui_types::ExecutionFailureStatus::EntryArgumentError serde::Deserializable<sui_
 
 namespace sui_types {
 
+    inline bool operator==(const ExecutionFailureStatus::EntryTypeArgumentError &lhs, const ExecutionFailureStatus::EntryTypeArgumentError &rhs) {
+        if (!(lhs.value == rhs.value)) { return false; }
+        return true;
+    }
+
+} // end of namespace sui_types
+
+template <>
+template <typename Serializer>
+void serde::Serializable<sui_types::ExecutionFailureStatus::EntryTypeArgumentError>::serialize(const sui_types::ExecutionFailureStatus::EntryTypeArgumentError &obj, Serializer &serializer) {
+    serde::Serializable<decltype(obj.value)>::serialize(obj.value, serializer);
+}
+
+template <>
+template <typename Deserializer>
+sui_types::ExecutionFailureStatus::EntryTypeArgumentError serde::Deserializable<sui_types::ExecutionFailureStatus::EntryTypeArgumentError>::deserialize(Deserializer &deserializer) {
+    sui_types::ExecutionFailureStatus::EntryTypeArgumentError obj;
+    obj.value = serde::Deserializable<decltype(obj.value)>::deserialize(deserializer);
+    return obj;
+}
+
+namespace sui_types {
+
     inline bool operator==(const ExecutionFailureStatus::CircularObjectOwnership &lhs, const ExecutionFailureStatus::CircularObjectOwnership &rhs) {
         if (!(lhs.value == rhs.value)) { return false; }
         return true;
@@ -2038,7 +2286,7 @@ sui_types::ExecutionFailureStatus::CircularObjectOwnership serde::Deserializable
 
 namespace sui_types {
 
-    inline bool operator==(const ExecutionFailureStatus::MissingObjectOwner &lhs, const ExecutionFailureStatus::MissingObjectOwner &rhs) {
+    inline bool operator==(const ExecutionFailureStatus::InvalidChildObjectArgument &lhs, const ExecutionFailureStatus::InvalidChildObjectArgument &rhs) {
         if (!(lhs.value == rhs.value)) { return false; }
         return true;
     }
@@ -2047,37 +2295,14 @@ namespace sui_types {
 
 template <>
 template <typename Serializer>
-void serde::Serializable<sui_types::ExecutionFailureStatus::MissingObjectOwner>::serialize(const sui_types::ExecutionFailureStatus::MissingObjectOwner &obj, Serializer &serializer) {
+void serde::Serializable<sui_types::ExecutionFailureStatus::InvalidChildObjectArgument>::serialize(const sui_types::ExecutionFailureStatus::InvalidChildObjectArgument &obj, Serializer &serializer) {
     serde::Serializable<decltype(obj.value)>::serialize(obj.value, serializer);
 }
 
 template <>
 template <typename Deserializer>
-sui_types::ExecutionFailureStatus::MissingObjectOwner serde::Deserializable<sui_types::ExecutionFailureStatus::MissingObjectOwner>::deserialize(Deserializer &deserializer) {
-    sui_types::ExecutionFailureStatus::MissingObjectOwner obj;
-    obj.value = serde::Deserializable<decltype(obj.value)>::deserialize(deserializer);
-    return obj;
-}
-
-namespace sui_types {
-
-    inline bool operator==(const ExecutionFailureStatus::InvalidSharedChildUse &lhs, const ExecutionFailureStatus::InvalidSharedChildUse &rhs) {
-        if (!(lhs.value == rhs.value)) { return false; }
-        return true;
-    }
-
-} // end of namespace sui_types
-
-template <>
-template <typename Serializer>
-void serde::Serializable<sui_types::ExecutionFailureStatus::InvalidSharedChildUse>::serialize(const sui_types::ExecutionFailureStatus::InvalidSharedChildUse &obj, Serializer &serializer) {
-    serde::Serializable<decltype(obj.value)>::serialize(obj.value, serializer);
-}
-
-template <>
-template <typename Deserializer>
-sui_types::ExecutionFailureStatus::InvalidSharedChildUse serde::Deserializable<sui_types::ExecutionFailureStatus::InvalidSharedChildUse>::deserialize(Deserializer &deserializer) {
-    sui_types::ExecutionFailureStatus::InvalidSharedChildUse obj;
+sui_types::ExecutionFailureStatus::InvalidChildObjectArgument serde::Deserializable<sui_types::ExecutionFailureStatus::InvalidChildObjectArgument>::deserialize(Deserializer &deserializer) {
+    sui_types::ExecutionFailureStatus::InvalidChildObjectArgument obj;
     obj.value = serde::Deserializable<decltype(obj.value)>::deserialize(deserializer);
     return obj;
 }
@@ -2260,6 +2485,7 @@ sui_types::ExecutionFailureStatus::SuiMoveVerificationError serde::Deserializabl
 namespace sui_types {
 
     inline bool operator==(const ExecutionFailureStatus::MovePrimitiveRuntimeError &lhs, const ExecutionFailureStatus::MovePrimitiveRuntimeError &rhs) {
+        if (!(lhs.value == rhs.value)) { return false; }
         return true;
     }
 
@@ -2268,12 +2494,14 @@ namespace sui_types {
 template <>
 template <typename Serializer>
 void serde::Serializable<sui_types::ExecutionFailureStatus::MovePrimitiveRuntimeError>::serialize(const sui_types::ExecutionFailureStatus::MovePrimitiveRuntimeError &obj, Serializer &serializer) {
+    serde::Serializable<decltype(obj.value)>::serialize(obj.value, serializer);
 }
 
 template <>
 template <typename Deserializer>
 sui_types::ExecutionFailureStatus::MovePrimitiveRuntimeError serde::Deserializable<sui_types::ExecutionFailureStatus::MovePrimitiveRuntimeError>::deserialize(Deserializer &deserializer) {
     sui_types::ExecutionFailureStatus::MovePrimitiveRuntimeError obj;
+    obj.value = serde::Deserializable<decltype(obj.value)>::deserialize(deserializer);
     return obj;
 }
 
@@ -2412,33 +2640,6 @@ sui_types::ExecutionStatus::Failure serde::Deserializable<sui_types::ExecutionSt
 
 namespace sui_types {
 
-    inline bool operator==(const Id &lhs, const Id &rhs) {
-        if (!(lhs.value == rhs.value)) { return false; }
-        return true;
-    }
-
-} // end of namespace sui_types
-
-template <>
-template <typename Serializer>
-void serde::Serializable<sui_types::Id>::serialize(const sui_types::Id &obj, Serializer &serializer) {
-    serializer.increase_container_depth();
-    serde::Serializable<decltype(obj.value)>::serialize(obj.value, serializer);
-    serializer.decrease_container_depth();
-}
-
-template <>
-template <typename Deserializer>
-sui_types::Id serde::Deserializable<sui_types::Id>::deserialize(Deserializer &deserializer) {
-    deserializer.increase_container_depth();
-    sui_types::Id obj;
-    obj.value = serde::Deserializable<decltype(obj.value)>::deserialize(deserializer);
-    deserializer.decrease_container_depth();
-    return obj;
-}
-
-namespace sui_types {
-
     inline bool operator==(const Identifier &lhs, const Identifier &rhs) {
         if (!(lhs.value == rhs.value)) { return false; }
         return true;
@@ -2466,6 +2667,36 @@ sui_types::Identifier serde::Deserializable<sui_types::Identifier>::deserialize(
 
 namespace sui_types {
 
+    inline bool operator==(const InvalidChildObjectArgument &lhs, const InvalidChildObjectArgument &rhs) {
+        if (!(lhs.child == rhs.child)) { return false; }
+        if (!(lhs.parent == rhs.parent)) { return false; }
+        return true;
+    }
+
+} // end of namespace sui_types
+
+template <>
+template <typename Serializer>
+void serde::Serializable<sui_types::InvalidChildObjectArgument>::serialize(const sui_types::InvalidChildObjectArgument &obj, Serializer &serializer) {
+    serializer.increase_container_depth();
+    serde::Serializable<decltype(obj.child)>::serialize(obj.child, serializer);
+    serde::Serializable<decltype(obj.parent)>::serialize(obj.parent, serializer);
+    serializer.decrease_container_depth();
+}
+
+template <>
+template <typename Deserializer>
+sui_types::InvalidChildObjectArgument serde::Deserializable<sui_types::InvalidChildObjectArgument>::deserialize(Deserializer &deserializer) {
+    deserializer.increase_container_depth();
+    sui_types::InvalidChildObjectArgument obj;
+    obj.child = serde::Deserializable<decltype(obj.child)>::deserialize(deserializer);
+    obj.parent = serde::Deserializable<decltype(obj.parent)>::deserialize(deserializer);
+    deserializer.decrease_container_depth();
+    return obj;
+}
+
+namespace sui_types {
+
     inline bool operator==(const InvalidSharedByValue &lhs, const InvalidSharedByValue &rhs) {
         if (!(lhs.object == rhs.object)) { return false; }
         return true;
@@ -2487,66 +2718,6 @@ sui_types::InvalidSharedByValue serde::Deserializable<sui_types::InvalidSharedBy
     deserializer.increase_container_depth();
     sui_types::InvalidSharedByValue obj;
     obj.object = serde::Deserializable<decltype(obj.object)>::deserialize(deserializer);
-    deserializer.decrease_container_depth();
-    return obj;
-}
-
-namespace sui_types {
-
-    inline bool operator==(const InvalidSharedChildUse &lhs, const InvalidSharedChildUse &rhs) {
-        if (!(lhs.child == rhs.child)) { return false; }
-        if (!(lhs.ancestor == rhs.ancestor)) { return false; }
-        return true;
-    }
-
-} // end of namespace sui_types
-
-template <>
-template <typename Serializer>
-void serde::Serializable<sui_types::InvalidSharedChildUse>::serialize(const sui_types::InvalidSharedChildUse &obj, Serializer &serializer) {
-    serializer.increase_container_depth();
-    serde::Serializable<decltype(obj.child)>::serialize(obj.child, serializer);
-    serde::Serializable<decltype(obj.ancestor)>::serialize(obj.ancestor, serializer);
-    serializer.decrease_container_depth();
-}
-
-template <>
-template <typename Deserializer>
-sui_types::InvalidSharedChildUse serde::Deserializable<sui_types::InvalidSharedChildUse>::deserialize(Deserializer &deserializer) {
-    deserializer.increase_container_depth();
-    sui_types::InvalidSharedChildUse obj;
-    obj.child = serde::Deserializable<decltype(obj.child)>::deserialize(deserializer);
-    obj.ancestor = serde::Deserializable<decltype(obj.ancestor)>::deserialize(deserializer);
-    deserializer.decrease_container_depth();
-    return obj;
-}
-
-namespace sui_types {
-
-    inline bool operator==(const MissingObjectOwner &lhs, const MissingObjectOwner &rhs) {
-        if (!(lhs.child == rhs.child)) { return false; }
-        if (!(lhs.parent == rhs.parent)) { return false; }
-        return true;
-    }
-
-} // end of namespace sui_types
-
-template <>
-template <typename Serializer>
-void serde::Serializable<sui_types::MissingObjectOwner>::serialize(const sui_types::MissingObjectOwner &obj, Serializer &serializer) {
-    serializer.increase_container_depth();
-    serde::Serializable<decltype(obj.child)>::serialize(obj.child, serializer);
-    serde::Serializable<decltype(obj.parent)>::serialize(obj.parent, serializer);
-    serializer.decrease_container_depth();
-}
-
-template <>
-template <typename Deserializer>
-sui_types::MissingObjectOwner serde::Deserializable<sui_types::MissingObjectOwner>::deserialize(Deserializer &deserializer) {
-    deserializer.increase_container_depth();
-    sui_types::MissingObjectOwner obj;
-    obj.child = serde::Deserializable<decltype(obj.child)>::deserialize(deserializer);
-    obj.parent = serde::Deserializable<decltype(obj.parent)>::deserialize(deserializer);
     deserializer.decrease_container_depth();
     return obj;
 }
@@ -2652,6 +2823,39 @@ sui_types::MoveFieldLayout serde::Deserializable<sui_types::MoveFieldLayout>::de
 
 namespace sui_types {
 
+    inline bool operator==(const MoveLocation &lhs, const MoveLocation &rhs) {
+        if (!(lhs.module == rhs.module)) { return false; }
+        if (!(lhs.function == rhs.function)) { return false; }
+        if (!(lhs.instruction == rhs.instruction)) { return false; }
+        return true;
+    }
+
+} // end of namespace sui_types
+
+template <>
+template <typename Serializer>
+void serde::Serializable<sui_types::MoveLocation>::serialize(const sui_types::MoveLocation &obj, Serializer &serializer) {
+    serializer.increase_container_depth();
+    serde::Serializable<decltype(obj.module)>::serialize(obj.module, serializer);
+    serde::Serializable<decltype(obj.function)>::serialize(obj.function, serializer);
+    serde::Serializable<decltype(obj.instruction)>::serialize(obj.instruction, serializer);
+    serializer.decrease_container_depth();
+}
+
+template <>
+template <typename Deserializer>
+sui_types::MoveLocation serde::Deserializable<sui_types::MoveLocation>::deserialize(Deserializer &deserializer) {
+    deserializer.increase_container_depth();
+    sui_types::MoveLocation obj;
+    obj.module = serde::Deserializable<decltype(obj.module)>::deserialize(deserializer);
+    obj.function = serde::Deserializable<decltype(obj.function)>::deserialize(deserializer);
+    obj.instruction = serde::Deserializable<decltype(obj.instruction)>::deserialize(deserializer);
+    deserializer.decrease_container_depth();
+    return obj;
+}
+
+namespace sui_types {
+
     inline bool operator==(const MoveModulePublish &lhs, const MoveModulePublish &rhs) {
         if (!(lhs.modules == rhs.modules)) { return false; }
         return true;
@@ -2683,7 +2887,6 @@ namespace sui_types {
         if (!(lhs.type_ == rhs.type_)) { return false; }
         if (!(lhs.has_public_transfer == rhs.has_public_transfer)) { return false; }
         if (!(lhs.version == rhs.version)) { return false; }
-        if (!(lhs.child_count == rhs.child_count)) { return false; }
         if (!(lhs.contents == rhs.contents)) { return false; }
         return true;
     }
@@ -2697,7 +2900,6 @@ void serde::Serializable<sui_types::MoveObject>::serialize(const sui_types::Move
     serde::Serializable<decltype(obj.type_)>::serialize(obj.type_, serializer);
     serde::Serializable<decltype(obj.has_public_transfer)>::serialize(obj.has_public_transfer, serializer);
     serde::Serializable<decltype(obj.version)>::serialize(obj.version, serializer);
-    serde::Serializable<decltype(obj.child_count)>::serialize(obj.child_count, serializer);
     serde::Serializable<decltype(obj.contents)>::serialize(obj.contents, serializer);
     serializer.decrease_container_depth();
 }
@@ -2710,7 +2912,6 @@ sui_types::MoveObject serde::Deserializable<sui_types::MoveObject>::deserialize(
     obj.type_ = serde::Deserializable<decltype(obj.type_)>::deserialize(deserializer);
     obj.has_public_transfer = serde::Deserializable<decltype(obj.has_public_transfer)>::deserialize(deserializer);
     obj.version = serde::Deserializable<decltype(obj.version)>::deserialize(deserializer);
-    obj.child_count = serde::Deserializable<decltype(obj.child_count)>::deserialize(deserializer);
     obj.contents = serde::Deserializable<decltype(obj.contents)>::deserialize(deserializer);
     deserializer.decrease_container_depth();
     return obj;
@@ -3040,6 +3241,66 @@ sui_types::MoveTypeLayout::signer serde::Deserializable<sui_types::MoveTypeLayou
 
 namespace sui_types {
 
+    inline bool operator==(const MoveTypeLayout::U16 &lhs, const MoveTypeLayout::U16 &rhs) {
+        return true;
+    }
+
+} // end of namespace sui_types
+
+template <>
+template <typename Serializer>
+void serde::Serializable<sui_types::MoveTypeLayout::U16>::serialize(const sui_types::MoveTypeLayout::U16 &obj, Serializer &serializer) {
+}
+
+template <>
+template <typename Deserializer>
+sui_types::MoveTypeLayout::U16 serde::Deserializable<sui_types::MoveTypeLayout::U16>::deserialize(Deserializer &deserializer) {
+    sui_types::MoveTypeLayout::U16 obj;
+    return obj;
+}
+
+namespace sui_types {
+
+    inline bool operator==(const MoveTypeLayout::U32 &lhs, const MoveTypeLayout::U32 &rhs) {
+        return true;
+    }
+
+} // end of namespace sui_types
+
+template <>
+template <typename Serializer>
+void serde::Serializable<sui_types::MoveTypeLayout::U32>::serialize(const sui_types::MoveTypeLayout::U32 &obj, Serializer &serializer) {
+}
+
+template <>
+template <typename Deserializer>
+sui_types::MoveTypeLayout::U32 serde::Deserializable<sui_types::MoveTypeLayout::U32>::deserialize(Deserializer &deserializer) {
+    sui_types::MoveTypeLayout::U32 obj;
+    return obj;
+}
+
+namespace sui_types {
+
+    inline bool operator==(const MoveTypeLayout::U256 &lhs, const MoveTypeLayout::U256 &rhs) {
+        return true;
+    }
+
+} // end of namespace sui_types
+
+template <>
+template <typename Serializer>
+void serde::Serializable<sui_types::MoveTypeLayout::U256>::serialize(const sui_types::MoveTypeLayout::U256 &obj, Serializer &serializer) {
+}
+
+template <>
+template <typename Deserializer>
+sui_types::MoveTypeLayout::U256 serde::Deserializable<sui_types::MoveTypeLayout::U256>::deserialize(Deserializer &deserializer) {
+    sui_types::MoveTypeLayout::U256 obj;
+    return obj;
+}
+
+namespace sui_types {
+
     inline bool operator==(const ObjectArg &lhs, const ObjectArg &rhs) {
         if (!(lhs.value == rhs.value)) { return false; }
         return true;
@@ -3091,7 +3352,8 @@ sui_types::ObjectArg::ImmOrOwnedObject serde::Deserializable<sui_types::ObjectAr
 namespace sui_types {
 
     inline bool operator==(const ObjectArg::SharedObject &lhs, const ObjectArg::SharedObject &rhs) {
-        if (!(lhs.value == rhs.value)) { return false; }
+        if (!(lhs.id == rhs.id)) { return false; }
+        if (!(lhs.initial_shared_version == rhs.initial_shared_version)) { return false; }
         return true;
     }
 
@@ -3100,14 +3362,16 @@ namespace sui_types {
 template <>
 template <typename Serializer>
 void serde::Serializable<sui_types::ObjectArg::SharedObject>::serialize(const sui_types::ObjectArg::SharedObject &obj, Serializer &serializer) {
-    serde::Serializable<decltype(obj.value)>::serialize(obj.value, serializer);
+    serde::Serializable<decltype(obj.id)>::serialize(obj.id, serializer);
+    serde::Serializable<decltype(obj.initial_shared_version)>::serialize(obj.initial_shared_version, serializer);
 }
 
 template <>
 template <typename Deserializer>
 sui_types::ObjectArg::SharedObject serde::Deserializable<sui_types::ObjectArg::SharedObject>::deserialize(Deserializer &deserializer) {
     sui_types::ObjectArg::SharedObject obj;
-    obj.value = serde::Deserializable<decltype(obj.value)>::deserialize(deserializer);
+    obj.id = serde::Deserializable<decltype(obj.id)>::deserialize(deserializer);
+    obj.initial_shared_version = serde::Deserializable<decltype(obj.initial_shared_version)>::deserialize(deserializer);
     return obj;
 }
 
@@ -3267,6 +3531,29 @@ sui_types::ObjectInfoRequestKind::PastObjectInfo serde::Deserializable<sui_types
 
 namespace sui_types {
 
+    inline bool operator==(const ObjectInfoRequestKind::PastObjectInfoDebug &lhs, const ObjectInfoRequestKind::PastObjectInfoDebug &rhs) {
+        if (!(lhs.value == rhs.value)) { return false; }
+        return true;
+    }
+
+} // end of namespace sui_types
+
+template <>
+template <typename Serializer>
+void serde::Serializable<sui_types::ObjectInfoRequestKind::PastObjectInfoDebug>::serialize(const sui_types::ObjectInfoRequestKind::PastObjectInfoDebug &obj, Serializer &serializer) {
+    serde::Serializable<decltype(obj.value)>::serialize(obj.value, serializer);
+}
+
+template <>
+template <typename Deserializer>
+sui_types::ObjectInfoRequestKind::PastObjectInfoDebug serde::Deserializable<sui_types::ObjectInfoRequestKind::PastObjectInfoDebug>::deserialize(Deserializer &deserializer) {
+    sui_types::ObjectInfoRequestKind::PastObjectInfoDebug obj;
+    obj.value = serde::Deserializable<decltype(obj.value)>::deserialize(deserializer);
+    return obj;
+}
+
+namespace sui_types {
+
     inline bool operator==(const Owner &lhs, const Owner &rhs) {
         if (!(lhs.value == rhs.value)) { return false; }
         return true;
@@ -3341,6 +3628,7 @@ sui_types::Owner::ObjectOwner serde::Deserializable<sui_types::Owner::ObjectOwne
 namespace sui_types {
 
     inline bool operator==(const Owner::Shared &lhs, const Owner::Shared &rhs) {
+        if (!(lhs.initial_shared_version == rhs.initial_shared_version)) { return false; }
         return true;
     }
 
@@ -3349,12 +3637,14 @@ namespace sui_types {
 template <>
 template <typename Serializer>
 void serde::Serializable<sui_types::Owner::Shared>::serialize(const sui_types::Owner::Shared &obj, Serializer &serializer) {
+    serde::Serializable<decltype(obj.initial_shared_version)>::serialize(obj.initial_shared_version, serializer);
 }
 
 template <>
 template <typename Deserializer>
 sui_types::Owner::Shared serde::Deserializable<sui_types::Owner::Shared>::deserialize(Deserializer &deserializer) {
     sui_types::Owner::Shared obj;
+    obj.initial_shared_version = serde::Deserializable<decltype(obj.initial_shared_version)>::deserialize(deserializer);
     return obj;
 }
 
@@ -3375,6 +3665,102 @@ template <>
 template <typename Deserializer>
 sui_types::Owner::Immutable serde::Deserializable<sui_types::Owner::Immutable>::deserialize(Deserializer &deserializer) {
     sui_types::Owner::Immutable obj;
+    return obj;
+}
+
+namespace sui_types {
+
+    inline bool operator==(const Pay &lhs, const Pay &rhs) {
+        if (!(lhs.coins == rhs.coins)) { return false; }
+        if (!(lhs.recipients == rhs.recipients)) { return false; }
+        if (!(lhs.amounts == rhs.amounts)) { return false; }
+        return true;
+    }
+
+} // end of namespace sui_types
+
+template <>
+template <typename Serializer>
+void serde::Serializable<sui_types::Pay>::serialize(const sui_types::Pay &obj, Serializer &serializer) {
+    serializer.increase_container_depth();
+    serde::Serializable<decltype(obj.coins)>::serialize(obj.coins, serializer);
+    serde::Serializable<decltype(obj.recipients)>::serialize(obj.recipients, serializer);
+    serde::Serializable<decltype(obj.amounts)>::serialize(obj.amounts, serializer);
+    serializer.decrease_container_depth();
+}
+
+template <>
+template <typename Deserializer>
+sui_types::Pay serde::Deserializable<sui_types::Pay>::deserialize(Deserializer &deserializer) {
+    deserializer.increase_container_depth();
+    sui_types::Pay obj;
+    obj.coins = serde::Deserializable<decltype(obj.coins)>::deserialize(deserializer);
+    obj.recipients = serde::Deserializable<decltype(obj.recipients)>::deserialize(deserializer);
+    obj.amounts = serde::Deserializable<decltype(obj.amounts)>::deserialize(deserializer);
+    deserializer.decrease_container_depth();
+    return obj;
+}
+
+namespace sui_types {
+
+    inline bool operator==(const PayAllSui &lhs, const PayAllSui &rhs) {
+        if (!(lhs.coins == rhs.coins)) { return false; }
+        if (!(lhs.recipient == rhs.recipient)) { return false; }
+        return true;
+    }
+
+} // end of namespace sui_types
+
+template <>
+template <typename Serializer>
+void serde::Serializable<sui_types::PayAllSui>::serialize(const sui_types::PayAllSui &obj, Serializer &serializer) {
+    serializer.increase_container_depth();
+    serde::Serializable<decltype(obj.coins)>::serialize(obj.coins, serializer);
+    serde::Serializable<decltype(obj.recipient)>::serialize(obj.recipient, serializer);
+    serializer.decrease_container_depth();
+}
+
+template <>
+template <typename Deserializer>
+sui_types::PayAllSui serde::Deserializable<sui_types::PayAllSui>::deserialize(Deserializer &deserializer) {
+    deserializer.increase_container_depth();
+    sui_types::PayAllSui obj;
+    obj.coins = serde::Deserializable<decltype(obj.coins)>::deserialize(deserializer);
+    obj.recipient = serde::Deserializable<decltype(obj.recipient)>::deserialize(deserializer);
+    deserializer.decrease_container_depth();
+    return obj;
+}
+
+namespace sui_types {
+
+    inline bool operator==(const PaySui &lhs, const PaySui &rhs) {
+        if (!(lhs.coins == rhs.coins)) { return false; }
+        if (!(lhs.recipients == rhs.recipients)) { return false; }
+        if (!(lhs.amounts == rhs.amounts)) { return false; }
+        return true;
+    }
+
+} // end of namespace sui_types
+
+template <>
+template <typename Serializer>
+void serde::Serializable<sui_types::PaySui>::serialize(const sui_types::PaySui &obj, Serializer &serializer) {
+    serializer.increase_container_depth();
+    serde::Serializable<decltype(obj.coins)>::serialize(obj.coins, serializer);
+    serde::Serializable<decltype(obj.recipients)>::serialize(obj.recipients, serializer);
+    serde::Serializable<decltype(obj.amounts)>::serialize(obj.amounts, serializer);
+    serializer.decrease_container_depth();
+}
+
+template <>
+template <typename Deserializer>
+sui_types::PaySui serde::Deserializable<sui_types::PaySui>::deserialize(Deserializer &deserializer) {
+    deserializer.increase_container_depth();
+    sui_types::PaySui obj;
+    obj.coins = serde::Deserializable<decltype(obj.coins)>::deserialize(deserializer);
+    obj.recipients = serde::Deserializable<decltype(obj.recipients)>::deserialize(deserializer);
+    obj.amounts = serde::Deserializable<decltype(obj.amounts)>::deserialize(deserializer);
+    deserializer.decrease_container_depth();
     return obj;
 }
 
@@ -3650,6 +4036,75 @@ template <>
 template <typename Deserializer>
 sui_types::SingleTransactionKind::TransferSui serde::Deserializable<sui_types::SingleTransactionKind::TransferSui>::deserialize(Deserializer &deserializer) {
     sui_types::SingleTransactionKind::TransferSui obj;
+    obj.value = serde::Deserializable<decltype(obj.value)>::deserialize(deserializer);
+    return obj;
+}
+
+namespace sui_types {
+
+    inline bool operator==(const SingleTransactionKind::Pay &lhs, const SingleTransactionKind::Pay &rhs) {
+        if (!(lhs.value == rhs.value)) { return false; }
+        return true;
+    }
+
+} // end of namespace sui_types
+
+template <>
+template <typename Serializer>
+void serde::Serializable<sui_types::SingleTransactionKind::Pay>::serialize(const sui_types::SingleTransactionKind::Pay &obj, Serializer &serializer) {
+    serde::Serializable<decltype(obj.value)>::serialize(obj.value, serializer);
+}
+
+template <>
+template <typename Deserializer>
+sui_types::SingleTransactionKind::Pay serde::Deserializable<sui_types::SingleTransactionKind::Pay>::deserialize(Deserializer &deserializer) {
+    sui_types::SingleTransactionKind::Pay obj;
+    obj.value = serde::Deserializable<decltype(obj.value)>::deserialize(deserializer);
+    return obj;
+}
+
+namespace sui_types {
+
+    inline bool operator==(const SingleTransactionKind::PaySui &lhs, const SingleTransactionKind::PaySui &rhs) {
+        if (!(lhs.value == rhs.value)) { return false; }
+        return true;
+    }
+
+} // end of namespace sui_types
+
+template <>
+template <typename Serializer>
+void serde::Serializable<sui_types::SingleTransactionKind::PaySui>::serialize(const sui_types::SingleTransactionKind::PaySui &obj, Serializer &serializer) {
+    serde::Serializable<decltype(obj.value)>::serialize(obj.value, serializer);
+}
+
+template <>
+template <typename Deserializer>
+sui_types::SingleTransactionKind::PaySui serde::Deserializable<sui_types::SingleTransactionKind::PaySui>::deserialize(Deserializer &deserializer) {
+    sui_types::SingleTransactionKind::PaySui obj;
+    obj.value = serde::Deserializable<decltype(obj.value)>::deserialize(deserializer);
+    return obj;
+}
+
+namespace sui_types {
+
+    inline bool operator==(const SingleTransactionKind::PayAllSui &lhs, const SingleTransactionKind::PayAllSui &rhs) {
+        if (!(lhs.value == rhs.value)) { return false; }
+        return true;
+    }
+
+} // end of namespace sui_types
+
+template <>
+template <typename Serializer>
+void serde::Serializable<sui_types::SingleTransactionKind::PayAllSui>::serialize(const sui_types::SingleTransactionKind::PayAllSui &obj, Serializer &serializer) {
+    serde::Serializable<decltype(obj.value)>::serialize(obj.value, serializer);
+}
+
+template <>
+template <typename Deserializer>
+sui_types::SingleTransactionKind::PayAllSui serde::Deserializable<sui_types::SingleTransactionKind::PayAllSui>::deserialize(Deserializer &deserializer) {
+    sui_types::SingleTransactionKind::PayAllSui obj;
     obj.value = serde::Deserializable<decltype(obj.value)>::deserialize(deserializer);
     return obj;
 }
@@ -4161,6 +4616,66 @@ sui_types::TypeTag::Struct serde::Deserializable<sui_types::TypeTag::Struct>::de
 
 namespace sui_types {
 
+    inline bool operator==(const TypeTag::U16 &lhs, const TypeTag::U16 &rhs) {
+        return true;
+    }
+
+} // end of namespace sui_types
+
+template <>
+template <typename Serializer>
+void serde::Serializable<sui_types::TypeTag::U16>::serialize(const sui_types::TypeTag::U16 &obj, Serializer &serializer) {
+}
+
+template <>
+template <typename Deserializer>
+sui_types::TypeTag::U16 serde::Deserializable<sui_types::TypeTag::U16>::deserialize(Deserializer &deserializer) {
+    sui_types::TypeTag::U16 obj;
+    return obj;
+}
+
+namespace sui_types {
+
+    inline bool operator==(const TypeTag::U32 &lhs, const TypeTag::U32 &rhs) {
+        return true;
+    }
+
+} // end of namespace sui_types
+
+template <>
+template <typename Serializer>
+void serde::Serializable<sui_types::TypeTag::U32>::serialize(const sui_types::TypeTag::U32 &obj, Serializer &serializer) {
+}
+
+template <>
+template <typename Deserializer>
+sui_types::TypeTag::U32 serde::Deserializable<sui_types::TypeTag::U32>::deserialize(Deserializer &deserializer) {
+    sui_types::TypeTag::U32 obj;
+    return obj;
+}
+
+namespace sui_types {
+
+    inline bool operator==(const TypeTag::U256 &lhs, const TypeTag::U256 &rhs) {
+        return true;
+    }
+
+} // end of namespace sui_types
+
+template <>
+template <typename Serializer>
+void serde::Serializable<sui_types::TypeTag::U256>::serialize(const sui_types::TypeTag::U256 &obj, Serializer &serializer) {
+}
+
+template <>
+template <typename Deserializer>
+sui_types::TypeTag::U256 serde::Deserializable<sui_types::TypeTag::U256>::deserialize(Deserializer &deserializer) {
+    sui_types::TypeTag::U256 obj;
+    return obj;
+}
+
+namespace sui_types {
+
     inline bool operator==(const TypedStoreError &lhs, const TypedStoreError &rhs) {
         if (!(lhs.value == rhs.value)) { return false; }
         return true;
@@ -4277,8 +4792,7 @@ sui_types::TypedStoreError::CrossDBBatch serde::Deserializable<sui_types::TypedS
 
 namespace sui_types {
 
-    inline bool operator==(const UID &lhs, const UID &rhs) {
-        if (!(lhs.value == rhs.value)) { return false; }
+    inline bool operator==(const TypedStoreError::MetricsReporting &lhs, const TypedStoreError::MetricsReporting &rhs) {
         return true;
     }
 
@@ -4286,91 +4800,12 @@ namespace sui_types {
 
 template <>
 template <typename Serializer>
-void serde::Serializable<sui_types::UID>::serialize(const sui_types::UID &obj, Serializer &serializer) {
-    serializer.increase_container_depth();
-    serde::Serializable<decltype(obj.value)>::serialize(obj.value, serializer);
-    serializer.decrease_container_depth();
+void serde::Serializable<sui_types::TypedStoreError::MetricsReporting>::serialize(const sui_types::TypedStoreError::MetricsReporting &obj, Serializer &serializer) {
 }
 
 template <>
 template <typename Deserializer>
-sui_types::UID serde::Deserializable<sui_types::UID>::deserialize(Deserializer &deserializer) {
-    deserializer.increase_container_depth();
-    sui_types::UID obj;
-    obj.value = serde::Deserializable<decltype(obj.value)>::deserialize(deserializer);
-    deserializer.decrease_container_depth();
-    return obj;
-}
-
-namespace sui_types {
-
-    inline bool operator==(const UpdateItem &lhs, const UpdateItem &rhs) {
-        if (!(lhs.value == rhs.value)) { return false; }
-        return true;
-    }
-
-} // end of namespace sui_types
-
-template <>
-template <typename Serializer>
-void serde::Serializable<sui_types::UpdateItem>::serialize(const sui_types::UpdateItem &obj, Serializer &serializer) {
-    serializer.increase_container_depth();
-    serde::Serializable<decltype(obj.value)>::serialize(obj.value, serializer);
-    serializer.decrease_container_depth();
-}
-
-template <>
-template <typename Deserializer>
-sui_types::UpdateItem serde::Deserializable<sui_types::UpdateItem>::deserialize(Deserializer &deserializer) {
-    deserializer.increase_container_depth();
-    sui_types::UpdateItem obj;
-    obj.value = serde::Deserializable<decltype(obj.value)>::deserialize(deserializer);
-    deserializer.decrease_container_depth();
-    return obj;
-}
-
-namespace sui_types {
-
-    inline bool operator==(const UpdateItem::Transaction &lhs, const UpdateItem::Transaction &rhs) {
-        if (!(lhs.value == rhs.value)) { return false; }
-        return true;
-    }
-
-} // end of namespace sui_types
-
-template <>
-template <typename Serializer>
-void serde::Serializable<sui_types::UpdateItem::Transaction>::serialize(const sui_types::UpdateItem::Transaction &obj, Serializer &serializer) {
-    serde::Serializable<decltype(obj.value)>::serialize(obj.value, serializer);
-}
-
-template <>
-template <typename Deserializer>
-sui_types::UpdateItem::Transaction serde::Deserializable<sui_types::UpdateItem::Transaction>::deserialize(Deserializer &deserializer) {
-    sui_types::UpdateItem::Transaction obj;
-    obj.value = serde::Deserializable<decltype(obj.value)>::deserialize(deserializer);
-    return obj;
-}
-
-namespace sui_types {
-
-    inline bool operator==(const UpdateItem::Batch &lhs, const UpdateItem::Batch &rhs) {
-        if (!(lhs.value == rhs.value)) { return false; }
-        return true;
-    }
-
-} // end of namespace sui_types
-
-template <>
-template <typename Serializer>
-void serde::Serializable<sui_types::UpdateItem::Batch>::serialize(const sui_types::UpdateItem::Batch &obj, Serializer &serializer) {
-    serde::Serializable<decltype(obj.value)>::serialize(obj.value, serializer);
-}
-
-template <>
-template <typename Deserializer>
-sui_types::UpdateItem::Batch serde::Deserializable<sui_types::UpdateItem::Batch>::deserialize(Deserializer &deserializer) {
-    sui_types::UpdateItem::Batch obj;
-    obj.value = serde::Deserializable<decltype(obj.value)>::deserialize(deserializer);
+sui_types::TypedStoreError::MetricsReporting serde::Deserializable<sui_types::TypedStoreError::MetricsReporting>::deserialize(Deserializer &deserializer) {
+    sui_types::TypedStoreError::MetricsReporting obj;
     return obj;
 }
