@@ -9,6 +9,7 @@
 #include <nlohmann/json.hpp>
 
 #include "Coin.h"
+#include "HexCoding.h"
 
 using namespace TW;
 using json = nlohmann::json;
@@ -26,6 +27,14 @@ TWString *_Nonnull TWAnySignerSignJSON(TWString *_Nonnull json, TWData *_Nonnull
     auto result = TW::anySignJSON(coin, jsonString, keyData);
     return TWStringCreateWithUTF8Bytes(result.c_str());
 }
+
+TWString *_Nonnull CppJsonTransactionPrivateKey(const char *_Nonnull json, const char *_Nonnull key, enum TWCoinType coin) {
+    Data keyData = TW::parse_hex(key);
+    std::string jsonTxInput = json;
+    auto result = TW::anySignJSON(coin, jsonTxInput, keyData);
+    return TWStringCreateWithUTF8Bytes(result.c_str());
+}
+
 extern bool TWAnySignerSupportsJSON(enum TWCoinType coin) {
     return TW::supportsJSONSigning(coin);
 }

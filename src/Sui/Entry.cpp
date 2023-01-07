@@ -44,7 +44,6 @@ bool Json2RawTx(json& jtx, sui_types::TransactionData& rawTx, uint64_t& realAmou
     rawTx.gas_budget = strtoull(jtx["gasLimit"].get<string>().c_str(), NULL, 10);
     rawTx.gas_price = strtoull(jtx["gasPrice"].get<string>().c_str(), NULL, 10);
     rawTx.sender.value = fromAddr.bytes;
-
     json suiObjs = jtx["suiObjects"].get<json>();
     if(suiObjs.size() == 0) return false;
 
@@ -65,159 +64,148 @@ bool Json2RawTx(json& jtx, sui_types::TransactionData& rawTx, uint64_t& realAmou
         sui_types::ObjectDigest{.value = digest}
     };
 
-    string payloadHex;
-    if(jtx.contains("payload")) {
-        jtx["payload"].get_to(payloadHex);
-    }
-
-    if(payloadHex.size() > 0) {
-        TW::Data payloadData = TW::parse_hex(payloadHex);
-        serde::BcsDeserialize(payloadData, rawTx.kind);
-
-    } else {
-        json action = jtx["action"].get<json>();
-        vector<sui_types::SingleTransactionKind> batchTx;
+    json action = jtx["action"].get<json>();
+    vector<sui_types::SingleTransactionKind> batchTx;
+    sui_types::SingleTransactionKind trans;
+    if(action.contains("transfer")) {
         sui_types::SingleTransactionKind trans;
-        if(action.contains("transfer")) {
-            sui_types::SingleTransactionKind trans;
-            json inner =  action["transfer"].get<json>();
-            const auto toAddr = Address(inner["toAddress"].get<string>());
+        json inner =  action["transfer"].get<json>();
+        const auto toAddr = Address(inner["toAddress"].get<string>());
 
-            if(inner.contains("object")) {
-                json obj = inner["object"].get<json>();
-                const auto objAddr = Address(obj["objectId"].get<string>());
-                uint64_t seqNo = strtoull(obj["seqNo"].get<string>().c_str(), NULL, 10);
-                TW::Data digest = TW::Base64::decode(obj["digest"].get<string>());
-                trans.value = sui_types::SingleTransactionKind::TransferObject{
-                    .value = sui_types::TransferObject{
-                        .recipient = sui_types::SuiAddress{.value = toAddr.bytes},
-                        .object_ref = {
-                            sui_types::ObjectID{.value = sui_types::AccountAddress{.value = objAddr.bytes}},
-                            sui_types::SequenceNumber{.value = seqNo},
-                            sui_types::ObjectDigest{.value = digest}
-                        }
-                    }
-                };
-                batchTx.push_back(trans);
-            } else {
-                realAmount = 0;
-                uint64_t amount = strtoull(inner["amount"].get<string>().c_str(), NULL, 10);
-                uint64_t gasAmount = rawTx.gas_price * rawTx.gas_budget;
-                if(sortObjs[0].second < gasAmount) {//balance insufficient
-                    cout << "largest sui object balance insufficient" << endl;
-                    return false;
-                }
-                sui_types::PaySui paySui;
-                for(int i = 0; i < sortObjs.size() && realAmount < amount + gasAmount; i++) {
-                    uint64_t thisPay = sortObjs[i].second;
-
-                    json obj = suiObjs[sortObjs[i].first];
-                    const auto objAddr = Address(obj["objectId"].get<string>());
-                    uint64_t seqNo = strtoull(obj["seqNo"].get<string>().c_str(), NULL, 10);
-                    TW::Data digest = TW::Base64::decode(obj["digest"].get<string>());
-
-                    paySui.coins.push_back({
+        if(inner.contains("object")) {
+            json obj = inner["object"].get<json>();
+            const auto objAddr = Address(obj["objectId"].get<string>());
+            uint64_t seqNo = strtoull(obj["seqNo"].get<string>().c_str(), NULL, 10);
+            TW::Data digest = TW::Base64::decode(obj["digest"].get<string>());
+            trans.value = sui_types::SingleTransactionKind::TransferObject{
+                .value = sui_types::TransferObject{
+                    .recipient = sui_types::SuiAddress{.value = toAddr.bytes},
+                    .object_ref = {
                         sui_types::ObjectID{.value = sui_types::AccountAddress{.value = objAddr.bytes}},
                         sui_types::SequenceNumber{.value = seqNo},
                         sui_types::ObjectDigest{.value = digest}
-                    });
-                    realAmount += thisPay;
-                    cout << "pay sui object: " << obj["objectId"].get<string>() << endl;
-                }
-
-                if(realAmount < amount + gasAmount) {//余额不足
-                    cout << "insufficient balance" << endl;
-                    return false;
-                }
-                paySui.amounts.push_back(amount);
-                paySui.recipients.push_back(sui_types::SuiAddress{.value = toAddr.bytes});
-                trans.value = sui_types::SingleTransactionKind::PaySui{
-                    .value = paySui
-                };
-            }
-            if(batchTx.size() == 0) {
-                rawTx.kind = sui_types::TransactionKind {
-                    .value = sui_types::TransactionKind::Single{
-                        .value = trans
                     }
-                };
-            } else {
-                rawTx.kind = sui_types::TransactionKind {
-                    .value = sui_types::TransactionKind::Batch{
-                        .value = batchTx
-                    }
-                };
-            }
-
-        } else if(action.contains("merge")) {
-            sui_types::MoveCall merge;
-            merge.package = {
-                sui_types::ObjectID{.value = sui_types::AccountAddress{.value = Address("0x2").bytes}},
-                sui_types::SequenceNumber{.value = 1},
-                sui_types::ObjectDigest{.value = TW::Base64::decode("nfn23WvLEc9CrMBIfUO2S1Bj5fpFq/I+69xmyEdLTAE=")}
+                }
             };
-            merge.function.value = "join";
-            merge.module.value = "coin";
-            merge.type_arguments.push_back(
-                sui_types::TypeTag{
-                    .value = sui_types::TypeTag::Struct{
-                        .value = sui_types::StructTag{
-                            .address = sui_types::AccountAddress{.value = Address("0x2").bytes},
-                            .module = sui_types::Identifier{.value = "sui"},
-                            .name = sui_types::Identifier{.value = "SUI"},
-                        }
-                    }
-                }
-            );
-
-            vector<json> mergeObjs;
-            json inner = action["merge"].get<json>();
-            for(int i = 0; i < inner.size(); i++) {
-                mergeObjs.push_back(inner[i]);
-            }
-            if(mergeObjs.size() == 0) {
-                for(int i = 1; i < sortObjs.size(); i++) {//第一个用于gas payment
-                    mergeObjs.push_back(suiObjs[sortObjs[i].first]);
-                }
-            }
-            if(mergeObjs.size() < 2) {//merge数量不足
-                cout << "merge object mast more than 2" << endl;
+            batchTx.push_back(trans);
+        } else {
+            realAmount = 0;
+            uint64_t amount = strtoull(inner["amount"].get<string>().c_str(), NULL, 10);
+            uint64_t gasAmount = rawTx.gas_price * rawTx.gas_budget;
+            if(sortObjs[0].second < gasAmount) {//balance insufficient
+                cout << "largest sui object balance insufficient" << endl;
                 return false;
             }
+            sui_types::PaySui paySui;
+            for(int i = 0; i < sortObjs.size() && realAmount < amount + gasAmount; i++) {
+                uint64_t thisPay = sortObjs[i].second;
 
-            for(int i = 0; i < mergeObjs.size(); i++) {
-                sui_types::CallArg arg;
-                const auto objAddr = Address(mergeObjs[i]["objectId"].get<string>());
-                if(objAddr.bytes == gasObj.bytes) {
-                    cout << "gas payment object reuse!" << endl;
-                    return false;
-                }
-                uint64_t seqNo = strtoull(mergeObjs[i]["seqNo"].get<string>().c_str(), NULL, 10);
-                TW::Data digest = TW::Base64::decode(mergeObjs[i]["digest"].get<string>());
-                arg.value = sui_types::CallArg::Object{
-                    .value = sui_types::ObjectArg{
-                        .value = sui_types::ObjectArg::ImmOrOwnedObject{
-                            .value = {
-                                sui_types::ObjectID{.value = sui_types::AccountAddress{.value = objAddr.bytes}},
-                                sui_types::SequenceNumber{.value = seqNo},
-                                sui_types::ObjectDigest{.value = digest},
-                            }
-                        }
-                    }
-                };
-                merge.arguments.push_back(arg);
-                if(i % 2 == 1) { //两两合并
-                    trans.value = sui_types::SingleTransactionKind::Call{.value = merge};
-                    batchTx.push_back(trans);
-                    merge.arguments.clear();
-                }
+                json obj = suiObjs[sortObjs[i].first];
+                const auto objAddr = Address(obj["objectId"].get<string>());
+                uint64_t seqNo = strtoull(obj["seqNo"].get<string>().c_str(), NULL, 10);
+                TW::Data digest = TW::Base64::decode(obj["digest"].get<string>());
+
+                paySui.coins.push_back({
+                    sui_types::ObjectID{.value = sui_types::AccountAddress{.value = objAddr.bytes}},
+                    sui_types::SequenceNumber{.value = seqNo},
+                    sui_types::ObjectDigest{.value = digest}
+                });
+                realAmount += thisPay;
+                cout << "pay sui object: " << obj["objectId"].get<string>() << endl;
             }
+
+            if(realAmount < amount + gasAmount) {//余额不足
+                cout << "insufficient balance" << endl;
+                return false;
+            }
+            paySui.amounts.push_back(amount);
+            paySui.recipients.push_back(sui_types::SuiAddress{.value = toAddr.bytes});
+            trans.value = sui_types::SingleTransactionKind::PaySui{
+                .value = paySui
+            };
+        }
+        if(batchTx.size() == 0) {
+            rawTx.kind = sui_types::TransactionKind {
+                .value = sui_types::TransactionKind::Single{
+                    .value = trans
+                }
+            };
+        } else {
             rawTx.kind = sui_types::TransactionKind {
                 .value = sui_types::TransactionKind::Batch{
                     .value = batchTx
                 }
             };
         }
+
+    } else if(action.contains("merge")) {
+        sui_types::MoveCall merge;
+        merge.package = {
+            sui_types::ObjectID{.value = sui_types::AccountAddress{.value = Address("0x2").bytes}},
+            sui_types::SequenceNumber{.value = 1},
+            sui_types::ObjectDigest{.value = TW::Base64::decode("nfn23WvLEc9CrMBIfUO2S1Bj5fpFq/I+69xmyEdLTAE=")}
+        };
+        merge.function.value = "join";
+        merge.module.value = "coin";
+        merge.type_arguments.push_back(
+            sui_types::TypeTag{
+                .value = sui_types::TypeTag::Struct{
+                    .value = sui_types::StructTag{
+                        .address = sui_types::AccountAddress{.value = Address("0x2").bytes},
+                        .module = sui_types::Identifier{.value = "sui"},
+                        .name = sui_types::Identifier{.value = "SUI"},
+                    }
+                }
+            }
+        );
+
+        vector<json> mergeObjs;
+        json inner = action["merge"].get<json>();
+        for(int i = 0; i < inner.size(); i++) {
+            mergeObjs.push_back(inner[i]);
+        }
+        if(mergeObjs.size() == 0) {
+            for(int i = 1; i < sortObjs.size(); i++) {//第一个用于gas payment
+                mergeObjs.push_back(suiObjs[sortObjs[i].first]);
+            }
+        }
+        if(mergeObjs.size() < 2) {//merge数量不足
+            cout << "merge object mast more than 2" << endl;
+            return false;
+        }
+
+        for(int i = 0; i < mergeObjs.size(); i++) {
+            sui_types::CallArg arg;
+            const auto objAddr = Address(mergeObjs[i]["objectId"].get<string>());
+            if(objAddr.bytes == gasObj.bytes) {
+                cout << "gas payment object reuse!" << endl;
+                return false;
+            }
+            uint64_t seqNo = strtoull(mergeObjs[i]["seqNo"].get<string>().c_str(), NULL, 10);
+            TW::Data digest = TW::Base64::decode(mergeObjs[i]["digest"].get<string>());
+            arg.value = sui_types::CallArg::Object{
+                .value = sui_types::ObjectArg{
+                    .value = sui_types::ObjectArg::ImmOrOwnedObject{
+                        .value = {
+                            sui_types::ObjectID{.value = sui_types::AccountAddress{.value = objAddr.bytes}},
+                            sui_types::SequenceNumber{.value = seqNo},
+                            sui_types::ObjectDigest{.value = digest},
+                        }
+                    }
+                }
+            };
+            merge.arguments.push_back(arg);
+            if(i % 2 == 1) { //两两合并
+                trans.value = sui_types::SingleTransactionKind::Call{.value = merge};
+                batchTx.push_back(trans);
+                merge.arguments.clear();
+            }
+        }
+        rawTx.kind = sui_types::TransactionKind {
+            .value = sui_types::TransactionKind::Batch{
+                .value = batchTx
+            }
+        };
     }
     return true;
 }
@@ -226,7 +214,17 @@ string Entry::signJSON(TWCoinType coin, const std::string& jsonTx, const Data& k
     json jtx = json::parse(jsonTx);
     sui_types::TransactionData rawTx;
     uint64_t realAmount = 0;
-    if(!Json2RawTx(jtx, rawTx, realAmount)) {
+    string payloadHex;
+
+    if(jtx.contains("payload")) {
+        jtx["payload"].get_to(payloadHex);
+    }
+
+    if(payloadHex.size() > 0) {
+        TW::Data payloadData = TW::parse_hex(payloadHex);
+        serde::BcsDeserialize(payloadData, rawTx);
+
+    } else if(!Json2RawTx(jtx, rawTx, realAmount)) {
         throw MiliException{E_PARAM};
     }
 
@@ -249,6 +247,10 @@ string Entry::signJSON(TWCoinType coin, const std::string& jsonTx, const Data& k
         Base64::encode(data(pubKey.bytes.data(), pubKey.bytes.size())),
         "WaitForLocalExecution"
     };
+
+    if(payloadHex.size() > 0) {
+        return sendTx.dump();
+    }
     json outTx = {
         {"rawTx", sendTx.dump()},
         {"realAmount", realAmount}

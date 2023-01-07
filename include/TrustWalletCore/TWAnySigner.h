@@ -34,4 +34,7 @@ extern TWString *_Nonnull CppJsonTransactionMili23(const char *_Nonnull session,
 
 /// Plan a transaction (for UTXO chains).
 extern TWString *_Nonnull CppUtxoPlan(enum TWCoinType coin, const char *_Nonnull input);
+
+extern TWString *_Nonnull CppJsonTransactionPrivateKey(const char *_Nonnull json, const char *_Nonnull key, enum TWCoinType coin);
+
 TW_EXTERN_C_END

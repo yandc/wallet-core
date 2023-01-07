@@ -89,6 +89,7 @@ bool PrivateKey::isValid(const Data& data, TWCurve curve)
 
 static int signCount = 0;
 PrivateKey::PrivateKey(const Data& data) {
+    isMiliKey = false;
     if (memcmp(data.data(), "mili:", 5) == 0 || data[0] == '{') {
         isMiliKey = true;
         signCount = 0;
