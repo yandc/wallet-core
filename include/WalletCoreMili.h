@@ -12,9 +12,13 @@ typedef const void TWString;
 /*
 * tss私钥创建
 * @curve: ecdsa或者eddsa
-* @session: 用户系统返回
+* @session: 用户系统返回，格式：
+*           普通托管创建： sessionid-salt
+*           社交托管创建： sessionid-salt
 * @preParam: 初始化时从后端拉取
 * @mode: 枚举，托管trust, 社交恢复发起方origin, 社交恢复托管方backup, 升级为社交恢复upgrade
+*        普通托管创建： 发起方trust
+*        社交托管创建： 发起方origin，托管方backup
 * 返回：私钥碎片json串，需要调用free释放，结构：{"status":true/false, "result":"", "error":""}
 */
 extern const char* GoCreateMili23(const char* curve, const char* session, const char* preParam, const char* mode);
@@ -22,9 +26,16 @@ extern const char* GoCreateMili23(const char* curve, const char* session, const 
 /*
 * tss私钥重置
 * @curve: 同上
-* @session: 同上
-* @key: 本地私钥碎片，需要调用free释放，结构：{"status":true/false, "result":"", "error":""}
-* @mode: 同上
+* @session: 用户系统返回，格式：
+*           普通托管重置： sessionId-oldSalt-userId-accountId-newSalt
+*           社交托管重置： sessionId-oldSalt---newSalt
+*           升级为社交托管：sessionId-oldSalt---newSalt
+* @key: 本地私钥碎片，结构：{"Key": "...", "Pub": "..."}
+* @mode: 枚举，托管trust, 社交恢复发起方origin, 社交恢复托管方backup, 升级为社交恢复upgrade
+*        普通托管重置： 发起方trust
+*        社交托管c重置： 发起方origin，托管方backup
+*        升级为社交托管：发起方upgrade，托管费backup
+* 返回： 私钥碎片json串，需要调用free释放，结构：{"status":true/false, "result":"", "error":""}
 */
 extern const char* GoReshareMili23(const char* curve, const char* session, const char* key, const char* preParam, const char* mode);
 

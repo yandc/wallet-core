@@ -42,6 +42,20 @@ message TransferTRC20Contract {
     bytes amount = 4;
 }
 
+message ApproveTRC20Contract {
+    // Contract name.
+    string contract_address = 1;
+
+    // Sender address.
+    string owner_address = 2;
+
+    // Spender address.
+    string spender_address = 3;
+
+    // Amount to approve, uint256, big-endian.
+    bytes amount = 4;
+}
+
 message FreezeBalanceContract {
     // Sender address.
     string owner_address = 1;
@@ -136,6 +150,7 @@ message Transaction {
         VoteWitnessContract vote_witness = 17;
         TriggerSmartContract trigger_smart_contract = 18;
         TransferTRC20Contract transfer_trc20_contract = 19;
+        ApproveTRC20Contract approve_trc20_contract = 20;
     }
 }
 

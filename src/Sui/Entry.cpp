@@ -90,15 +90,17 @@ bool Json2RawTx(json& jtx, sui_types::TransactionData& rawTx, uint64_t& realAmou
             batchTx.push_back(trans);
         } else {
             realAmount = 0;
-            uint64_t amount = strtoull(inner["amount"].get<string>().c_str(), NULL, 10);
+            uint64_t txAmount = strtoull(inner["amount"].get<string>().c_str(), NULL, 10);
             uint64_t gasAmount = rawTx.gas_price * rawTx.gas_budget;
+            uint64_t amount = txAmount + gasAmount;
             if(sortObjs[0].second < gasAmount) {//balance insufficient
                 cout << "largest sui object balance insufficient" << endl;
                 return false;
             }
             sui_types::PaySui paySui;
-            for(int i = 0; i < sortObjs.size() && realAmount < amount + gasAmount; i++) {
-                uint64_t thisPay = sortObjs[i].second;
+            for(int i = 0; i < sortObjs.size() && realAmount < amount; i++) {
+                uint64_t leftAmount = amount - realAmount;
+                uint64_t thisPay = sortObjs[i].second > leftAmount ? leftAmount : sortObjs[i].second;
 
                 json obj = suiObjs[sortObjs[i].first];
                 const auto objAddr = Address(obj["objectId"].get<string>());
@@ -114,11 +116,12 @@ bool Json2RawTx(json& jtx, sui_types::TransactionData& rawTx, uint64_t& realAmou
                 cout << "pay sui object: " << obj["objectId"].get<string>() << endl;
             }
 
-            if(realAmount < amount + gasAmount) {//余额不足
+            if(realAmount < amount) {//余额不足
                 cout << "insufficient balance" << endl;
                 return false;
             }
-            paySui.amounts.push_back(amount);
+            realAmount = txAmount;
+            paySui.amounts.push_back(txAmount);
             paySui.recipients.push_back(sui_types::SuiAddress{.value = toAddr.bytes});
             trans.value = sui_types::SingleTransactionKind::PaySui{
                 .value = paySui
