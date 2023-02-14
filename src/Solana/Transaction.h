@@ -95,6 +95,7 @@ struct Instruction {
     // The program input data
     Data data;
 
+    Instruction(std::string programId, Data data) : programId(Address(programId)), data(data) {}
     Instruction(const Address& programId, const std::vector<AccountMeta>& accounts, const Data& data)
         : programId(programId), accounts(accounts), data(data) {}
 
@@ -192,8 +193,9 @@ struct CompiledInstruction {
     Data data;
 
     // Reference to the address vector
-    const std::vector<Address>& addresses;
+    const std::vector<Address> addresses;
 
+    CompiledInstruction() {}
     /// Supplied address vector is expected to contain all addresses and programId from the instruction; they are replaced by index into the address vector.
     CompiledInstruction(const Instruction& instruction, const std::vector<Address>& addresses): addresses(addresses) {
         programIdIndex = findAccount(instruction.programId);
