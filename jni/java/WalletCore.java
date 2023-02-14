@@ -259,6 +259,64 @@ public class WalletCore
     */
     public native String chaindata_abiDecode(String chain, String contract, String data);
 
+    /*
+    chaindata_addressActive：判断当前地址的token地址时候有激活(主要是aptos)
+    chain: 链名称
+    address: 钱包地址
+    result:返回所有激活的token
+    */
+    public native String chaindata_addressActive(String chain, String address);
+
+    /*
+    chaindata_getResourceActive：获取address下的token资源是否激活(solana使用)
+    chain: 链名称
+    resourceInfo: {"address":"","token_address":""}格式的json字符串
+    result:true:激活；false：没有激活
+    */
+    public native String chaindata_getResourceActive(String chain, String resourceInfo);
+
+    /*
+    chaindata_getRpcURL：获取当前链的rpc(web端是在显示当前节点地方调用)
+    */
+    public native String chaindata_getRpcURL(String chain);
+
+    /*
+    chaindata_detectNode 探测节点(web端是打开所有可用节点的时候调用，主动触发)
+    chain:链
+    nodeURL:节点
+    result:返回map,字段key是height，subTime
+    */
+    public native String chaindata_detectNode(String chain, String nodeURL);
+
+    /*
+    chaindata_setRpc 设置当前节点(web端在rpc节点选择的时候去选择节点)
+    chain：链
+    nodeURL:节点
+    recordFlag：是否设置成最优节点 bool
+    */
+    public native String chaindata_setRpc(String chain, String nodeURL, String recordFlag);
+
+    /*
+    chaindata_getSubTime 获取当前节点状况，网络延时，web在节点地方调用
+    chain：链
+    nodeURL:节点
+    result:返回map，字段key是sub_time，own_flag
+    */
+    public native String chaindata_getSubTime(String chain, String nodeURL);
+
+    /*
+    chaindata_getNonce 获取nonce
+    chain：链
+    address:地址
+    */
+    public native String chaindata_getNonce(String chain, String address);
+
+    /*
+    chaindata_getDirectTransfer 获取是否支持转nft(aptos nft用到)
+    chain：链
+    address:地址
+    */
+    public native String chaindata_getDirectTransfer(String chain, String address);
     public static void main(String[] args) {
         System.loadLibrary("wallet_core.android.arm64.a"); //载入本地库
         WalletCore wc = new WalletCore();

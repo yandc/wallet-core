@@ -276,6 +276,65 @@ data: dapp rpc交互中data字段
 */
 extern const char* chaindata_abiDecode(const char* chain, const char* contract, const char* data);
 
+/*
+chain_addressActive：判断当前地址的token地址时候有激活(主要是aptos)
+chain: 链名称
+address: 钱包地址
+result:返回所有激活的token
+*/
+extern const char* chaindata_addressActive(const char* chain, const char* address);
+
+/*
+chaindata_getResourceActive：获取address下的token资源是否激活(solana使用)
+chain: 链名称
+resourceInfo: {"address":"","token_address":""}格式的json字符串
+result:true:激活；false：没有激活
+*/
+extern const char* chaindata_getResourceActive(const char* chain, const char* resourceInfo);
+
+/*
+chaindata_getRpcURL：获取当前链的rpc(web端是在显示当前节点地方调用)
+*/
+extern const char* chaindata_getRpcURL(const char* chain);
+
+/*
+chaindata_detectNode 探测节点(web端是打开所有可用节点的时候调用，主动触发)
+chain:链
+nodeURL:节点
+result:返回map,字段key是height，subTime
+ */
+extern const char* chaindata_detectNode(const char* chain, const char* nodeURL);
+
+/*
+chaindata_setRpc 设置当前节点(web端在rpc节点选择的时候去选择节点)
+chain：链
+nodeURL:节点
+recordFlag：是否设置成最优节点 bool
+ */
+extern const char* chaindata_setRpc(const char* chain, const char* nodeURL, const char* recordFlag);
+
+/*
+chaindata_getSubTime 获取当前节点状况，网络延时，web在节点地方调用
+chain：链
+nodeURL:节点
+result:返回map，字段key是sub_time，own_flag
+ */
+extern const char* chaindata_getSubTime(const char* chain, const char* nodeURL);
+
+/*
+chaindata_getNonce 获取nonce
+chain：链
+address:地址
+*/
+extern const char* chaindata_getNonce(const char* chain, const char* address);
+
+/*
+chaindata_getDirectTransfer 获取是否支持转nft(aptos nft用到)
+chain：链
+address:地址
+*/
+extern const char* chaindata_getDirectTransfer(const char* chain, const char* address);
+
 #ifdef __cplusplus
 }
 #endif

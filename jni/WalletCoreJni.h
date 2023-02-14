@@ -255,6 +255,70 @@ JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_chaindata_1ge
 JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_chaindata_1abiDecode
   (JNIEnv *, jobject, jstring, jstring, jstring);
 
+/*
+ * Class:     com_openblock_wallet_jni_WalletCore
+ * Method:    chaindata_addressActive
+ * Signature: (Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+ */
+JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_chaindata_1addressActive
+  (JNIEnv *, jobject, jstring, jstring);
+
+/*
+ * Class:     com_openblock_wallet_jni_WalletCore
+ * Method:    chaindata_getResourceActive
+ * Signature: (Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+ */
+JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_chaindata_1getResourceActive
+  (JNIEnv *, jobject, jstring, jstring);
+
+/*
+ * Class:     com_openblock_wallet_jni_WalletCore
+ * Method:    chaindata_getRpcURL
+ * Signature: (Ljava/lang/String;)Ljava/lang/String;
+ */
+JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_chaindata_1getRpcURL
+  (JNIEnv *, jobject, jstring);
+
+/*
+ * Class:     com_openblock_wallet_jni_WalletCore
+ * Method:    chaindata_detectNode
+ * Signature: (Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+ */
+JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_chaindata_1detectNode
+  (JNIEnv *, jobject, jstring, jstring);
+
+/*
+ * Class:     com_openblock_wallet_jni_WalletCore
+ * Method:    chaindata_setRpc
+ * Signature: (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+ */
+JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_chaindata_1setRpc
+  (JNIEnv *, jobject, jstring, jstring, jstring);
+
+/*
+ * Class:     com_openblock_wallet_jni_WalletCore
+ * Method:    chaindata_getSubTime
+ * Signature: (Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+ */
+JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_chaindata_1getSubTime
+  (JNIEnv *, jobject, jstring, jstring);
+
+/*
+ * Class:     com_openblock_wallet_jni_WalletCore
+ * Method:    chaindata_getNonce
+ * Signature: (Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+ */
+JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_chaindata_1getNonce
+  (JNIEnv *, jobject, jstring, jstring);
+
+/*
+ * Class:     com_openblock_wallet_jni_WalletCore
+ * Method:    chaindata_getDirectTransfer
+ * Signature: (Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+ */
+JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_chaindata_1getDirectTransfer
+  (JNIEnv *, jobject, jstring, jstring);
+
 #ifdef __cplusplus
 }
 #endif

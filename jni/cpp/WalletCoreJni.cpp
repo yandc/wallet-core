@@ -38,6 +38,14 @@ extern "C" {
   extern const char* chaindata_allBalance(const char* chain, const char* address);
   extern const char* chaindata_getGasEstimate(const char* chain, const char* params);
   extern const char* chaindata_abiDecode(const char* chain, const char* contract, const char* data);
+  extern const char* chaindata_addressActive(const char* chain, const char* address);
+  extern const char* chaindata_getResourceActive(const char* chain, const char* resourceInfo);
+  extern const char* chaindata_getRpcURL(const char* chain);
+  extern const char* chaindata_detectNode(const char* chain, const char* nodeURL);
+  extern const char* chaindata_setRpc(const char* chain, const char* nodeURL, const char* recordFlag);
+  extern const char* chaindata_getSubTime(const char* chain, const char* nodeURL);
+  extern const char* chaindata_getNonce(const char* chain, const char* address);
+  extern const char* chaindata_getDirectTransfer(const char* chain, const char* address);
 }
 
 static jstring CStrToJString(JNIEnv *env, const char *cstr) {
@@ -490,6 +498,102 @@ JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_chaindata_1ab
   env->ReleaseStringUTFChars(arg1Jstr, arg1);
   env->ReleaseStringUTFChars(arg2Jstr, arg2);
   env->ReleaseStringUTFChars(arg3Jstr, arg3);
+  jstring ret = env->NewStringUTF(goRet);
+  free((void*)goRet);
+  return ret;
+}
+
+JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_chaindata_1addressActive(JNIEnv *env, jobject jthis, jstring arg1Jstr, jstring arg2Jstr)
+{
+  const char* arg1 = env->GetStringUTFChars(arg1Jstr, NULL);
+  const char* arg2 = env->GetStringUTFChars(arg2Jstr, NULL);
+  const char* goRet = chaindata_addressActive(arg1, arg2);
+  env->ReleaseStringUTFChars(arg1Jstr, arg1);
+  env->ReleaseStringUTFChars(arg2Jstr, arg2);
+  jstring ret = env->NewStringUTF(goRet);
+  free((void*)goRet);
+  return ret;
+}
+
+JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_chaindata_1getResourceActive(JNIEnv *env, jobject jthis, jstring arg1Jstr, jstring arg2Jstr)
+{
+  const char* arg1 = env->GetStringUTFChars(arg1Jstr, NULL);
+  const char* arg2 = env->GetStringUTFChars(arg2Jstr, NULL);
+  const char* goRet = chaindata_getResourceActive(arg1, arg2);
+  env->ReleaseStringUTFChars(arg1Jstr, arg1);
+  env->ReleaseStringUTFChars(arg2Jstr, arg2);
+  jstring ret = env->NewStringUTF(goRet);
+  free((void*)goRet);
+  return ret;
+}
+
+JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_chaindata_1getRpcURL(JNIEnv *env, jobject jthis, jstring arg1Jstr)
+{
+  const char* arg1 = env->GetStringUTFChars(arg1Jstr, NULL);
+  const char* goRet = chaindata_getRpcURL(arg1);
+  env->ReleaseStringUTFChars(arg1Jstr, arg1);
+  jstring ret = env->NewStringUTF(goRet);
+  free((void*)goRet);
+  return ret;
+}
+
+JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_chaindata_1detectNode(JNIEnv *env, jobject jthis, jstring arg1Jstr, jstring arg2Jstr)
+{
+  const char* arg1 = env->GetStringUTFChars(arg1Jstr, NULL);
+  const char* arg2 = env->GetStringUTFChars(arg2Jstr, NULL);
+  const char* goRet = chaindata_detectNode(arg1, arg2);
+  env->ReleaseStringUTFChars(arg1Jstr, arg1);
+  env->ReleaseStringUTFChars(arg2Jstr, arg2);
+  jstring ret = env->NewStringUTF(goRet);
+  free((void*)goRet);
+  return ret;
+}
+
+JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_chaindata_1setRpc(JNIEnv *env, jobject jthis, jstring arg1Jstr, jstring arg2Jstr, jstring arg3Jstr)
+{
+  const char* arg1 = env->GetStringUTFChars(arg1Jstr, NULL);
+  const char* arg2 = env->GetStringUTFChars(arg2Jstr, NULL);
+  const char* arg3 = env->GetStringUTFChars(arg3Jstr, NULL);
+  const char* goRet = chaindata_setRpc(arg1, arg2, arg3);
+  env->ReleaseStringUTFChars(arg1Jstr, arg1);
+  env->ReleaseStringUTFChars(arg2Jstr, arg2);
+  env->ReleaseStringUTFChars(arg3Jstr, arg3);
+  jstring ret = env->NewStringUTF(goRet);
+  free((void*)goRet);
+  return ret;
+}
+
+JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_chaindata_1getSubTime(JNIEnv *env, jobject jthis, jstring arg1Jstr, jstring arg2Jstr)
+{
+  const char* arg1 = env->GetStringUTFChars(arg1Jstr, NULL);
+  const char* arg2 = env->GetStringUTFChars(arg2Jstr, NULL);
+  const char* goRet = chaindata_getSubTime(arg1, arg2);
+  env->ReleaseStringUTFChars(arg1Jstr, arg1);
+  env->ReleaseStringUTFChars(arg2Jstr, arg2);
+  jstring ret = env->NewStringUTF(goRet);
+  free((void*)goRet);
+  return ret;
+}
+
+JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_chaindata_1getNonce(JNIEnv *env, jobject jthis, jstring arg1Jstr, jstring arg2Jstr)
+{
+  const char* arg1 = env->GetStringUTFChars(arg1Jstr, NULL);
+  const char* arg2 = env->GetStringUTFChars(arg2Jstr, NULL);
+  const char* goRet = chaindata_getNonce(arg1, arg2);
+  env->ReleaseStringUTFChars(arg1Jstr, arg1);
+  env->ReleaseStringUTFChars(arg2Jstr, arg2);
+  jstring ret = env->NewStringUTF(goRet);
+  free((void*)goRet);
+  return ret;
+}
+
+JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_chaindata_1getDirectTransfer(JNIEnv *env, jobject jthis, jstring arg1Jstr, jstring arg2Jstr)
+{
+  const char* arg1 = env->GetStringUTFChars(arg1Jstr, NULL);
+  const char* arg2 = env->GetStringUTFChars(arg2Jstr, NULL);
+  const char* goRet = chaindata_getDirectTransfer(arg1, arg2);
+  env->ReleaseStringUTFChars(arg1Jstr, arg1);
+  env->ReleaseStringUTFChars(arg2Jstr, arg2);
   jstring ret = env->NewStringUTF(goRet);
   free((void*)goRet);
   return ret;
