@@ -276,7 +276,10 @@ const char* TW::anySignMessage(TWCoinType coinType, const std::string& msg, cons
     Data digest = dispatcher->hashMessage(coinType, msg);
     PrivateKey privKey(key);
 
-    const Data& sign = privKey.sign(digest, curve(coinType));
+    Data sign = privKey.sign(digest, curve(coinType));
+    if(coinType == TWCoinTypeEthereum || coinType == TWCoinTypeTron) {
+        sign[64] += 27;
+    }
     for(int i = 0; i < sign.size(); i++) {
         sprintf(sig+i*2, "%02x", sign[i]);
     }

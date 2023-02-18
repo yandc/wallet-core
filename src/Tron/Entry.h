@@ -20,6 +20,7 @@ public:
     virtual void sign(TWCoinType coin, const Data& dataIn, Data& dataOut) const;
     virtual bool supportsJSONSigning() const { return true; }
     virtual std::string signJSON(TWCoinType coin, const std::string& json, const Data& key) const;
+    virtual Data hashMessage(TWCoinType coin, const std::string& msg) const;
 };
 
 } // namespace TW::Tron

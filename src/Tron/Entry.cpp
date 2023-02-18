@@ -8,6 +8,8 @@
 
 #include "Address.h"
 #include "Signer.h"
+#include "Hash.h"
+#include "HexCoding.h"
 
 using namespace TW::Tron;
 using namespace std;
@@ -28,4 +30,14 @@ void Entry::sign(TWCoinType coin, const TW::Data& dataIn, TW::Data& dataOut) con
 
 string Entry::signJSON(TWCoinType coin, const std::string& json, const Data& key) const {
     return Signer::signJSON(json, key);
+}
+
+TW::Data Entry::hashMessage(TWCoinType coin, const string& msg) const {
+    string m = "\x19""TRON Signed Message:\n32";
+    Data msgData = data(msg);
+    if(msg.substr(0, 2) == "0x") {
+        msgData = parse_hex(msg, true);
+    }
+    m.append(msgData.begin(), msgData.end());
+    return TW::Hash::keccak256((const byte*)m.c_str(), m.size());
 }
