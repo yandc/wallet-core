@@ -44,6 +44,7 @@ bool Json2RawTx(json& jtx, sui_types::TransactionData& rawTx, uint64_t& realAmou
     rawTx.gas_budget = strtoull(jtx["gasLimit"].get<string>().c_str(), NULL, 10);
     rawTx.gas_price = strtoull(jtx["gasPrice"].get<string>().c_str(), NULL, 10);
     rawTx.sender.value = fromAddr.bytes;
+    rawTx.owner.value = fromAddr.bytes;
     json suiObjs = jtx["suiObjects"].get<json>();
     if(suiObjs.size() == 0) return false;
 
@@ -144,9 +145,7 @@ bool Json2RawTx(json& jtx, sui_types::TransactionData& rawTx, uint64_t& realAmou
     } else if(action.contains("merge")) {
         sui_types::MoveCall merge;
         merge.package = {
-            sui_types::ObjectID{.value = sui_types::AccountAddress{.value = Address("0x2").bytes}},
-            sui_types::SequenceNumber{.value = 1},
-            sui_types::ObjectDigest{.value = TW::Base64::decode("nfn23WvLEc9CrMBIfUO2S1Bj5fpFq/I+69xmyEdLTAE=")}
+            sui_types::ObjectID{.value = sui_types::AccountAddress{.value = Address("0x2").bytes}}
         };
         merge.function.value = "join";
         merge.module.value = "coin";
@@ -242,12 +241,13 @@ string Entry::signJSON(TWCoinType coin, const std::string& jsonTx, const Data& k
     }
 
     PublicKey pubKey = privKey.getPublicKey(TWPublicKeyTypeED25519);
+    Data serSign = {0};//flag, ed25519
+    append(serSign, sign);
+    append(serSign, pubKey.bytes);
 
     json sendTx = {
         Base64::encode(rawData),
-        "ED25519",
-        Base64::encode(sign),
-        Base64::encode(data(pubKey.bytes.data(), pubKey.bytes.size())),
+        Base64::encode(serSign),
         "WaitForLocalExecution"
     };
 
