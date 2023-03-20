@@ -20,7 +20,7 @@ public:
     static Proto::TransactionPlan plan(const Proto::SigningInput& signingInputProto) noexcept;
 
     /// Signs a Proto::SigningInput transaction
-    static Proto::SigningOutput sign(const Proto::SigningInput& signingInputProto) noexcept;
+    static Proto::SigningOutput sign(const Proto::SigningInput& signingInputProto);
 
     static std::string signJSON(const std::string& json, const Data& key);
 };

@@ -40,7 +40,7 @@ std::vector<Address> convertReferences(const google::protobuf::RepeatedPtrField<
     return ret;
 }
 
-Proto::SigningOutput Signer::sign(const Proto::SigningInput& input) noexcept {
+Proto::SigningOutput Signer::sign(const Proto::SigningInput& input) {
     auto blockhash = Solana::Hash(input.recent_blockhash());
     auto key = PrivateKey(Data(input.private_key().begin(), input.private_key().end()));
     Message message;

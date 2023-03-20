@@ -171,6 +171,8 @@ void TransactionPlan::selectMaximumCapacity() {
                         });
     uint64_t fee = calculateFee();
     outputs[0].capacity = selectedCapacity - fee;
+    feeAmount = fee;
+    outputCapacity = selectedCapacity - fee;
 }
 
 void TransactionPlan::selectRequiredCapacity(const Address& changeAddress) {
@@ -179,10 +181,12 @@ void TransactionPlan::selectRequiredCapacity(const Address& changeAddress) {
     uint64_t feeForChangeOutput = sizeOfSingleOutput(changeAddress) * m_byteFee;
     uint64_t selectedCapacity = getSelectedCapacity();
     uint64_t requiredCapacityPlusFees = requiredCapacity + fee + feeForChangeOutput;
+    outputCapacity = requiredCapacity;
     if (selectedCapacity >= requiredCapacityPlusFees + Constants::gMinCellCapacityForNativeToken) {
         outputs.emplace_back(selectedCapacity - requiredCapacityPlusFees, Script(changeAddress),
                              Script());
         outputsData.emplace_back();
+        feeAmount = fee + feeForChangeOutput;
         return;
     }
     sortAccordingToCapacity();
@@ -196,6 +200,7 @@ void TransactionPlan::selectRequiredCapacity(const Address& changeAddress) {
         fee += sizeOfSingleInputAndWitness(cell.inputType, cell.outputType) * m_byteFee;
         if (selectedCapacity >= requiredCapacity + fee) {
             gotEnough = true;
+            feeAmount = fee;
             uint64_t remainingCapacity = selectedCapacity - requiredCapacity - fee;
             if (remainingCapacity >=
                 feeForChangeOutput + Constants::gMinCellCapacityForNativeToken) {
@@ -203,14 +208,17 @@ void TransactionPlan::selectRequiredCapacity(const Address& changeAddress) {
                 outputs.emplace_back(remainingCapacity - feeForChangeOutput, Script(changeAddress),
                                      Script());
                 outputsData.emplace_back();
+                feeAmount += feeForChangeOutput;
             } else {
                 // If change is not enough, add it to the destination address
                 outputs[outputs.size() - 1].capacity += remainingCapacity;
+                outputCapacity += remainingCapacity;
             }
             break;
         }
     }
     if (!gotEnough) {
+        outputCapacity = selectedCapacity;
         error = Common::Proto::Error_not_enough_utxos;
     }
 }
@@ -232,9 +240,11 @@ void TransactionPlan::selectSudtTokens(const bool useMaxAmount, const uint256_t 
         if (useMaxAmount) {
             // Transfer maximum available tokens
             gotEnough = true;
+            outputSudtAmount = selectedSudtAmount;
         } else if (selectedSudtAmount >= amount) {
             // Transfer exact number of tokens
             gotEnough = true;
+            outputSudtAmount = amount;
             uint256_t changeValue = selectedSudtAmount - amount;
             if (changeValue > 0) {
                 outputs.emplace_back(Constants::gMinCellCapacityForSUDT, Script(changeAddress),
@@ -245,6 +255,7 @@ void TransactionPlan::selectSudtTokens(const bool useMaxAmount, const uint256_t 
         }
     }
     if (!gotEnough) {
+        outputSudtAmount = selectedSudtAmount;
         error = Common::Proto::Error_not_enough_utxos;
         return;
     }

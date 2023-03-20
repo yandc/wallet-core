@@ -83,13 +83,16 @@ TWString *_Nonnull CppJsonTransactionMili23(const char *_Nonnull session, const 
     const std::string jsonString(input);
 
     json txJson;
+    txJson["result"] = "";
+    txJson["status"] = false;
     try {
         txJson["result"] = TW::anySignJSON(coin, jsonString, keyData);
         txJson["status"] = true;
         txJson["error"] = "";
     } catch (MiliException& e) {
-        txJson["result"] = "";
-        txJson["status"] = false;
+        txJson["error"] = e.what();
+
+    } catch (std::invalid_argument& e) {
         txJson["error"] = e.what();
     }
     std::string result = txJson.dump();

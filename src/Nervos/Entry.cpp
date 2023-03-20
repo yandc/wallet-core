@@ -8,6 +8,7 @@
 
 #include "Address.h"
 #include "Signer.h"
+#include "TransactionPlan.h"
 #include <google/protobuf/util/json_util.h>
 #include <TrustWalletCore/MiliException.h>
 #include <nlohmann/json.hpp>
@@ -44,23 +45,19 @@ std::string Entry::planJson(TWCoinType coin, const std::string& jsonInput) const
     if(coin == TWCoinTypeNervosTest) Address::isTestNet = true;
     auto input = Proto::SigningInput();
     google::protobuf::util::JsonStringToMessage(jsonInput, &input);
-    auto plan = Signer::plan(input);
-    if(plan.error() != Common::Proto::OK) {
-        nlohmann::json j = {{"utxo_size", 0}, {"amount", 0}, {"fee", 0}, {"error", ERROR_INFOS[int(plan.error())].what()}};
-        return j.dump();
+    TransactionPlan plan;
+    plan.plan(input);
+    nlohmann::json j = {
+        {"utxo_size", 0},
+        {"amount", toString(plan.outputCapacity)},
+        {"sudt_amount", toString(plan.outputSudtAmount)},
+        {"fee", toString(plan.feeAmount)}
+    };
+    if(plan.error != Common::Proto::OK) {
+        j["error"] = ERROR_INFOS[int(plan.error)].what();
+    } else {
+        j["utxo_size"] = 1;
     }
-    uint64_t inputCapacity(0), outputCapacity(0);
-    for(int i=0; i < plan.selected_cells_size(); i++) {
-        inputCapacity += plan.selected_cells(i).capacity();
-    }
-    for(int i=0; i < plan.outputs_size(); i++) {
-        outputCapacity += plan.outputs(i).capacity();
-    }
-    uint64_t amount = outputCapacity;
-    if(plan.outputs_size() > 1 && plan.outputs_data(plan.outputs_size()-1).size() == 0) { //last output is change cell
-        amount -= plan.outputs(plan.outputs_size()-1).capacity();
-    }
-    nlohmann::json j = {{"utxo_size", 1}, {"amount", amount}, {"fee", inputCapacity-outputCapacity}};
     return j.dump();
 }
 } // namespace TW::Nervos

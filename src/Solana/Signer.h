@@ -27,7 +27,7 @@ class Signer {
                                     Transaction& transaction, Solana::Hash& recentBlockhash);
     static Data signRawMessage(const std::vector<PrivateKey>& privateKeys, const Data messageData);
 
-    static Proto::SigningOutput sign(const Proto::SigningInput& input) noexcept;
+    static Proto::SigningOutput sign(const Proto::SigningInput& input);
 };
 
 } // namespace TW::Solana

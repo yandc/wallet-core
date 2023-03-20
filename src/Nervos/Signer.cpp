@@ -18,7 +18,7 @@ Proto::TransactionPlan Signer::plan(const Proto::SigningInput& signingInput) noe
     return txPlan.proto();
 }
 
-Proto::SigningOutput Signer::sign(const Proto::SigningInput& signingInput) noexcept {
+Proto::SigningOutput Signer::sign(const Proto::SigningInput& signingInput) {
     Proto::SigningOutput output;
     TransactionPlan txPlan;
     if (signingInput.has_plan()) {

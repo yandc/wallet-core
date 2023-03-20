@@ -30,6 +30,9 @@ namespace TW::Nervos {
 
 class TransactionPlan {
 public:
+    uint256_t outputSudtAmount;
+    uint256_t outputCapacity;
+    uint256_t feeAmount;
     // List of cell deps
     CellDeps cellDeps;
 
@@ -52,6 +55,9 @@ public:
 
     /// Initializes a transaction from a Protobuf transaction.
     TransactionPlan(const Proto::TransactionPlan& txPlan) {
+        outputCapacity = 0;
+        outputSudtAmount = 0;
+        feeAmount = 0;
         for (auto&& cellDep : txPlan.cell_deps()) {
             cellDeps.emplace_back(cellDep);
         }

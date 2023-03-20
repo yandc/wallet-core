@@ -460,7 +460,25 @@ namespace starcoin_types {
             friend bool operator==(const Bool&, const Bool&);
         };
 
-        std::variant<U8, U64, U128, Address, U8Vector, Bool> value;
+        struct U16 {
+            uint16_t value;
+
+            friend bool operator==(const U16&, const U16&);
+        };
+
+        struct U32 {
+            uint32_t value;
+
+            friend bool operator==(const U32&, const U32&);
+        };
+
+        struct U256 {
+            std::array<uint8_t, 32> value;
+
+            friend bool operator==(const U256&, const U256&);
+        };
+
+        std::variant<U8, U64, U128, Address, U8Vector, Bool, U16, U32, U256> value;
 
         friend bool operator==(const TransactionArgument&, const TransactionArgument&);
     };
@@ -1940,6 +1958,75 @@ template <>
 template <typename Deserializer>
 starcoin_types::TransactionArgument::Bool serde::Deserializable<starcoin_types::TransactionArgument::Bool>::deserialize(Deserializer &deserializer) {
     starcoin_types::TransactionArgument::Bool obj;
+    obj.value = serde::Deserializable<decltype(obj.value)>::deserialize(deserializer);
+    return obj;
+}
+
+namespace starcoin_types {
+
+    inline bool operator==(const TransactionArgument::U16 &lhs, const TransactionArgument::U16 &rhs) {
+        if (!(lhs.value == rhs.value)) { return false; }
+        return true;
+    }
+
+} // end of namespace starcoin_types
+
+template <>
+template <typename Serializer>
+void serde::Serializable<starcoin_types::TransactionArgument::U16>::serialize(const starcoin_types::TransactionArgument::U16 &obj, Serializer &serializer) {
+    serde::Serializable<decltype(obj.value)>::serialize(obj.value, serializer);
+}
+
+template <>
+template <typename Deserializer>
+starcoin_types::TransactionArgument::U16 serde::Deserializable<starcoin_types::TransactionArgument::U16>::deserialize(Deserializer &deserializer) {
+    starcoin_types::TransactionArgument::U16 obj;
+    obj.value = serde::Deserializable<decltype(obj.value)>::deserialize(deserializer);
+    return obj;
+}
+
+namespace starcoin_types {
+
+    inline bool operator==(const TransactionArgument::U32 &lhs, const TransactionArgument::U32 &rhs) {
+        if (!(lhs.value == rhs.value)) { return false; }
+        return true;
+    }
+
+} // end of namespace starcoin_types
+
+template <>
+template <typename Serializer>
+void serde::Serializable<starcoin_types::TransactionArgument::U32>::serialize(const starcoin_types::TransactionArgument::U32 &obj, Serializer &serializer) {
+    serde::Serializable<decltype(obj.value)>::serialize(obj.value, serializer);
+}
+
+template <>
+template <typename Deserializer>
+starcoin_types::TransactionArgument::U32 serde::Deserializable<starcoin_types::TransactionArgument::U32>::deserialize(Deserializer &deserializer) {
+    starcoin_types::TransactionArgument::U32 obj;
+    obj.value = serde::Deserializable<decltype(obj.value)>::deserialize(deserializer);
+    return obj;
+}
+
+namespace starcoin_types {
+
+    inline bool operator==(const TransactionArgument::U256 &lhs, const TransactionArgument::U256 &rhs) {
+        if (!(lhs.value == rhs.value)) { return false; }
+        return true;
+    }
+
+} // end of namespace starcoin_types
+
+template <>
+template <typename Serializer>
+void serde::Serializable<starcoin_types::TransactionArgument::U256>::serialize(const starcoin_types::TransactionArgument::U256 &obj, Serializer &serializer) {
+    serde::Serializable<decltype(obj.value)>::serialize(obj.value, serializer);
+}
+
+template <>
+template <typename Deserializer>
+starcoin_types::TransactionArgument::U256 serde::Deserializable<starcoin_types::TransactionArgument::U256>::deserialize(Deserializer &deserializer) {
+    starcoin_types::TransactionArgument::U256 obj;
     obj.value = serde::Deserializable<decltype(obj.value)>::deserialize(deserializer);
     return obj;
 }
