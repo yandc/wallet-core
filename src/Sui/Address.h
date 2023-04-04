@@ -17,7 +17,7 @@ namespace TW::Sui {
 
 class Address {
   public:
-    static const size_t size = 20;
+    static const size_t size = 32;
     std::array<uint8_t, size> bytes;
 
     /// Determines whether a collection of bytes makes a valid  address.
@@ -52,7 +52,7 @@ class Address {
     Address(const PublicKey& publicKey) {
       Data hash_data = {0};
       append(hash_data, Data(publicKey.bytes.begin(), publicKey.bytes.end()));
-      auto hash = Hash::sha3_256(hash_data);
+      auto hash = Hash::blake2b(hash_data, 32);
       std::copy(hash.begin(), hash.begin()+size, bytes.begin());
     }
 
@@ -61,4 +61,3 @@ class Address {
     }
 };
 } // namespace TW::Aptos
-

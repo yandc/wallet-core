@@ -11,7 +11,7 @@ CFLAGS += -fexceptions
 CFLAGS += $(INCLUDE_FLAG)
 
 ifeq ($(OS),ios)
-	CFLAGS += -fno-aligned-allocation
+	CFLAGS += -fno-aligned-allocation -Wno-deprecated-declarations
 else ifeq ($(OS), android)
 	CFLAGS += -fPIC
 else

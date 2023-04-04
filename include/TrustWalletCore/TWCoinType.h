@@ -103,7 +103,7 @@ enum TWCoinType {
     TWCoinTypeSmartBitcoinCash = 10000145,
     TWCoinTypeStarcoin = 101010,
     TWCoinTypeAptos = 101011,
-    TWCoinTypeSui = 101012,
+    TWCoinTypeSui = 1010120,
     TWCoinTypeNervos = 309,
     TWCoinTypeNervosTest = 1000309,
     TWCoinTypeCasper = 101013,

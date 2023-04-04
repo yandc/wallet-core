@@ -27,6 +27,7 @@ public class WalletCore
     *        普通托管重置： 发起方trust
     *        社交托管c重置： 发起方origin，托管方backup
     *        升级为社交托管：发起方upgrade，托管费backup
+    *        企业钱包邀请管理员：创建founder，管理员manager
     * 返回：私钥碎片，结构：{"status":true/false, "result":"", "error":""}
     */
     public native String ReshareMili23(String curve, String session, String key, String preParam, String mode);

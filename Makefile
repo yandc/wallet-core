@@ -60,6 +60,7 @@ ifeq ($(OS),web)
 
 else ifeq ($(OS),ios)
 	TARGET ?= $(BIN_PATH)/wallet_core.$(OS).$(ARCH).a
+	CFLAGS += -Wno-deprecated-declarations
 	LDFLAGS =
 
 else ifeq ($(OS),android)

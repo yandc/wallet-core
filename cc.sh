@@ -5,6 +5,9 @@ if [ "$OS" = "ios" ]; then
     AR=`xcrun --sdk iphoneos --find ar`
     if [ "$ARCH" = "x86_64" ]; then
         SDK_PATH=`xcrun --sdk iphonesimulator --show-sdk-path`
+    elif [ "$ARCH" = "m1sim" ]; then
+        SDK_PATH=`xcrun --sdk iphonesimulator --show-sdk-path`
+        ARCH="arm64"
     elif [ "$ARCH" = "arm64" ]; then
         SDK_PATH=`xcrun --sdk iphoneos --show-sdk-path`
     fi

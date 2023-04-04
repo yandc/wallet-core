@@ -35,6 +35,7 @@ extern const char* GoCreateMili23(const char* curve, const char* session, const 
 *        普通托管重置： 发起方trust
 *        社交托管c重置： 发起方origin，托管方backup
 *        升级为社交托管：发起方upgrade，托管费backup
+*        企业钱包邀请管理员：创建founder，管理员manager
 * 返回： 私钥碎片json串，需要调用free释放，结构：{"status":true/false, "result":"", "error":""}
 */
 extern const char* GoReshareMili23(const char* curve, const char* session, const char* key, const char* preParam, const char* mode);

@@ -937,7 +937,7 @@ const CoinInfo getCoinInfo(TWCoinType coin) {
                 12,
                 "",
                 "",
-                101012,
+                1010120,
             };
         case TWCoinTypeAeternity:
             return CoinInfo {

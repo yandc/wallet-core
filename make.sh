@@ -10,6 +10,10 @@ OS=ios ARCH=x86_64 make -f Makefile_pb
 OS=ios ARCH=x86_64 make -f Makefile_trezor
 OS=ios ARCH=x86_64 make
 
+#OS=ios ARCH=m1sim make -f Makefile_pb
+#OS=ios ARCH=m1sim make -f Makefile_trezor
+#OS=ios ARCH=m1sim make
+
 OS=android ARCH=arm64 make -f Makefile_pb
 OS=android ARCH=arm64 make -f Makefile_trezor
 OS=android ARCH=arm64 make
