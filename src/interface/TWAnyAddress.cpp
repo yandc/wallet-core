@@ -44,6 +44,16 @@ struct TWAnyAddress* _Nonnull TWAnyAddressCreateWithPublicKey(
     return new TWAnyAddress{TWStringCreateWithUTF8Bytes(address.c_str()), coin};
 }
 
+const char*_Nonnull CppAddressCreateWithPKey(const char *_Nonnull pkey, enum TWCoinType coin) {
+    static char addr[512];
+    TWPrivateKey pKey{TW::PrivateKey(TW::parse_hex(pkey))};
+
+    const std::string& a = TW::deriveAddress(coin, pKey.impl);
+    memcpy(addr, a.c_str(), a.size());
+    addr[a.size()] = 0;
+    return addr;
+}
+
 const char*_Nonnull CppAddressCreateWithMiliKey(const char *_Nonnull key, enum TWCoinType coin) {
     static char addr[512];
     TWPrivateKey miliKey{TW::PrivateKey(key)};

@@ -1,4 +1,4 @@
-// Copyright © 2017-2021 Trust Wallet.
+// Copyright © 2017-2023 Trust Wallet.
 //
 // This file is part of Trust. The full Trust copyright notice, including
 // terms governing use, modification, and redistribution, is contained in the
@@ -12,7 +12,9 @@
 #include <nlohmann/json.hpp>
 #include <string>
 
-namespace TW::Cosmos {
+#include <TrustWalletCore/TWCoinType.h>
+
+namespace TW::Cosmos::Protobuf {
 
 std::string buildProtoTxBody(const Proto::SigningInput& input);
 
@@ -20,12 +22,16 @@ std::string buildAuthInfo(const Proto::SigningInput& input);
 
 Data buildSignature(const Proto::SigningInput& input, const std::string& serializedTxBody, const std::string& serializedAuthInfo);
 
-std::string buildProtoTxRaw(const Proto::SigningInput& input, const std::string& serializedTxBody, const std::string& serializedAuthInfo, const Data& signature);
+std::string buildProtoTxRaw(const std::string& serializedTxBody, const std::string& serializedAuthInfo, const Data& signature);
 
 std::string buildProtoTxJson(const Proto::SigningInput& input, const std::string& serializedTx);
+
+nlohmann::json wasmExecuteTransferPayload(const Proto::Message_WasmExecuteContractTransfer& msg);
+
+nlohmann::json wasmExecuteSendPayload(const Proto::Message_WasmExecuteContractSend& msg);
 
 nlohmann::json wasmTerraExecuteTransferPayload(const Proto::Message_WasmTerraExecuteContractTransfer& msg);
 
 nlohmann::json wasmTerraExecuteSendPayload(const Proto::Message_WasmTerraExecuteContractSend& msg);
 
-} // namespace
+} // namespace TW::Cosmos::protobuf

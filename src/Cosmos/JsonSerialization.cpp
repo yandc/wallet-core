@@ -1,4 +1,4 @@
-// Copyright © 2017-2022 Trust Wallet.
+// Copyright © 2017-2023 Trust Wallet.
 //
 // This file is part of Trust. The full Trust copyright notice, including
 // terms governing use, modification, and redistribution, is contained in the
@@ -13,12 +13,11 @@
 #include "PrivateKey.h"
 
 using namespace TW;
-using namespace TW::Cosmos;
+
+namespace TW::Cosmos::Json {
 
 using json = nlohmann::json;
 using string = std::string;
-
-namespace TW::Cosmos {
 
 const string TYPE_PREFIX_MSG_SEND = "cosmos-sdk/MsgSend";
 const string TYPE_PREFIX_MSG_DELEGATE = "cosmos-sdk/MsgDelegate";
@@ -26,6 +25,7 @@ const string TYPE_PREFIX_MSG_UNDELEGATE = "cosmos-sdk/MsgUndelegate";
 const string TYPE_PREFIX_MSG_REDELEGATE = "cosmos-sdk/MsgBeginRedelegate";
 const string TYPE_PREFIX_MSG_WITHDRAW_REWARD = "cosmos-sdk/MsgWithdrawDelegationReward";
 const string TYPE_PREFIX_PUBLIC_KEY = "tendermint/PubKeySecp256k1";
+const string TYPE_EVMOS_PREFIX_PUBLIC_KEY = "ethermint/PubKeyEthSecp256k1";
 const string TYPE_PREFIX_WASM_MSG_EXECUTE = "wasm/MsgExecuteContract";
 
 static string broadcastMode(Proto::BroadcastMode mode) {
@@ -47,7 +47,7 @@ static json broadcastJSON(json& j, Proto::BroadcastMode mode) {
 
 static json amountJSON(const Proto::Amount& amount) {
     return {
-        {"amount", std::to_string(amount.amount())},
+        {"amount", amount.amount()},
         {"denom", amount.denom()}
     };
 }
@@ -145,7 +145,7 @@ json messageWasmTerraTransfer(const Proto::Message_WasmTerraExecuteContractTrans
             {
                 {"sender", msg.sender_address()},
                 {"contract", msg.contract_address()},
-                {"execute_msg", wasmTerraExecuteTransferPayload(msg)},
+                {"execute_msg", Protobuf::wasmTerraExecuteTransferPayload(msg)},
                 {"coins", json::array()}  // used in case you are sending native tokens along with this message
             }
         }
@@ -174,17 +174,17 @@ static json messagesJSON(const Proto::SigningInput& input) {
             j.push_back(messageRedelegate(msg.restake_message()));
         } else if (msg.has_raw_json_message()) {
             j.push_back(messageRawJSON(msg.raw_json_message()));
-        } else if (msg.has_transfer_tokens_message()) {
-            assert(false); // not suppored, use protobuf serialization
-            return json::array();
         } else if ((msg.has_wasm_terra_execute_contract_transfer_message())) {
             j.push_back(messageWasmTerraTransfer(msg.wasm_terra_execute_contract_transfer_message()));
+        } else if (msg.has_transfer_tokens_message() || msg.has_wasm_terra_execute_contract_generic()) {
+            assert(false); // not supported, use protobuf serialization
+            return json::array();
         }
     }
     return j;
 }
 
-static json signatureJSON(const Data& signature, const Data& pubkey) {
+json signatureJSON(const Data& signature, const Data& pubkey) {
     return {
         {"pub_key", {
             {"type", TYPE_PREFIX_PUBLIC_KEY},
@@ -219,4 +219,4 @@ json transactionJSON(const Proto::SigningInput& input, const Data& signature) {
     return broadcastJSON(tx, input.mode());
 }
 
-} // namespace
+} // namespace TW::Cosmos

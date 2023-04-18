@@ -54,7 +54,11 @@ bool Json2RawTx(json& jtx, sui_types::TransactionDataV1& rawTx, uint64_t& realAm
     typedef pair<uint32_t, uint64_t> SORT_ITEM;
     vector<SORT_ITEM> sortObjs;
     for(int i = 0; i < suiObjs.size(); i++) {
-        sortObjs.push_back(SORT_ITEM(i, strtoull(suiObjs[i]["balance"].get<string>().c_str(), NULL, 10)));
+        if(suiObjs[i].contains("balance")) {
+            sortObjs.push_back(SORT_ITEM(i, strtoull(suiObjs[i]["balance"].get<string>().c_str(), NULL, 10)));
+        } else {
+            sortObjs.push_back(SORT_ITEM(i, 0));
+        }
     }
     sort(sortObjs.begin(), sortObjs.end(), [](SORT_ITEM x, SORT_ITEM y){ return x.second > y.second; });
 
@@ -107,30 +111,40 @@ bool Json2RawTx(json& jtx, sui_types::TransactionDataV1& rawTx, uint64_t& realAm
         }
         realAmount = txAmount;
 
-        if(inner.contains("object")) {
-            json obj = inner["object"].get<json>();
-            const auto id = Address(obj["objectId"].get<string>());
-            uint64_t seqNo = strtoull(obj["seqNo"].get<string>().c_str(), NULL, 10);
-            TW::Data digest = TW::Base58::bitcoin.decode(obj["digest"].get<string>());
+        if(inner.contains("nft")) {
+            string nftAddr = inner["nft"].get<string>();
+            for(int i = 0; i < sortObjs.size(); i++) {
+                json suiObj = suiObjs[sortObjs[i].first];
+                if(!suiObj.contains("nft")) continue;
+                if(suiObj["nft"].get<string>() != nftAddr) continue;
 
-            coins.push_back(sui_types::Argument{
-                .value = sui_types::Argument::Input{
-                    .value = (uint16_t)inputs.size()
-                }
-            });
-            inputs.push_back(sui_types::CallArg{
-                .value = sui_types::CallArg::Object{
-                    .value = sui_types::ObjectArg {
-                        .value = sui_types::ObjectArg::ImmOrOwnedObject{
-                            .value = {
-                                sui_types::ObjectID{.value = sui_types::AccountAddress{.value = id.bytes}},
-                                sui_types::SequenceNumber{.value = seqNo},
-                                sui_types::ObjectDigest{.value = sui_types::Sha3Digest{.value = digest}}
+                const auto id = Address(suiObj["objectId"].get<string>());
+                uint64_t seqNo = strtoull(suiObj["seqNo"].get<string>().c_str(), NULL, 10);
+                TW::Data digest = TW::Base58::bitcoin.decode(suiObj["digest"].get<string>());
+
+                coins.push_back(sui_types::Argument{
+                    .value = sui_types::Argument::Input{
+                        .value = (uint16_t)inputs.size()
+                    }
+                });
+                inputs.push_back(sui_types::CallArg{
+                    .value = sui_types::CallArg::Object{
+                        .value = sui_types::ObjectArg {
+                            .value = sui_types::ObjectArg::ImmOrOwnedObject{
+                                .value = {
+                                    sui_types::ObjectID{.value = sui_types::AccountAddress{.value = id.bytes}},
+                                    sui_types::SequenceNumber{.value = seqNo},
+                                    sui_types::ObjectDigest{.value = sui_types::Sha3Digest{.value = digest}}
+                                }
                             }
                         }
                     }
-                }
-            });
+                });
+            }
+            if(inputs.size() == 0) {
+                cout << "empty nft object" << endl;
+                return false;
+            }
         } else if(suiAmount > gasAmount) { //split coin object and transfer object
             coins.push_back(sui_types::Argument{
                 .value = sui_types::Argument::Result{
@@ -152,22 +166,26 @@ bool Json2RawTx(json& jtx, sui_types::TransactionDataV1& rawTx, uint64_t& realAm
             });
         } else if(tokenAmount > 0) {
             realAmount = 0;
+            string tokenAddr = inner["token"].get<string>();
             for(int i = 0; i < sortObjs.size() && realAmount < tokenAmount; i++) {
                 uint64_t leftAmount = tokenAmount - realAmount;
                 uint64_t thisPay = sortObjs[i].second > leftAmount ? leftAmount : sortObjs[i].second;
 
                 json suiObj = suiObjs[sortObjs[i].first];
                 if(!suiObj.contains("token")) continue;
+                if(suiObj["token"].get<string>() != tokenAddr) continue;
 
                 const auto id = Address(suiObj["objectId"].get<string>());
                 uint64_t seqNo = strtoull(suiObj["seqNo"].get<string>().c_str(), NULL, 10);
                 TW::Data digest = TW::Base58::bitcoin.decode(suiObj["digest"].get<string>());
 
-                coins.push_back(sui_types::Argument{
-                    .value = sui_types::Argument::Input{
-                        .value = (uint16_t)inputs.size()
-                    }
-                });
+                if(thisPay == sortObjs[i].second) {
+                    coins.push_back(sui_types::Argument{
+                        .value = sui_types::Argument::Input{
+                            .value = (uint16_t)inputs.size()
+                        }
+                    });
+                }
                 inputs.push_back(sui_types::CallArg{
                     .value = sui_types::CallArg::Object{
                         .value = sui_types::ObjectArg {
@@ -193,7 +211,7 @@ bool Json2RawTx(json& jtx, sui_types::TransactionDataV1& rawTx, uint64_t& realAm
                     commands.push_back(sui_types::Command{
                         .value = sui_types::Command::SplitCoin{
                             .value = {
-                                sui_types::Argument{.value = sui_types::Argument::GasCoin{}},
+                                sui_types::Argument{.value = sui_types::Argument::Input{.value = (uint16_t)(inputs.size()-1)}},
                                 vector<sui_types::Argument>{sui_types::Argument{.value = sui_types::Argument::Input{.value = (uint16_t)inputs.size()}}}
                             }
                         }

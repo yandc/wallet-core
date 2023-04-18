@@ -31,7 +31,7 @@ class Address {
         if(pos2 == std::string::npos) return false;
         return Address::isValid(address.substr(0, pos1));
       }
-      if (address.size() != 2+2*size || address[0] != '0' || address[1] != 'x') {
+      if (address[0] != '0' || address[1] != 'x') {
           return false;
       }
       const auto data = parse_hex(address, true);

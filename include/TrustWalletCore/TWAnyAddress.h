@@ -35,6 +35,10 @@ struct TWAnyAddress* _Nullable TWAnyAddressCreateWithString(TWString* _Nonnull s
 TW_EXPORT_STATIC_METHOD
 struct TWAnyAddress* _Nonnull TWAnyAddressCreateWithPublicKey(struct TWPublicKey* _Nonnull publicKey, enum TWCoinType coin);
 
+/// Creates an address from a private key.
+TW_EXPORT_STATIC_METHOD
+const char*_Nonnull CppAddressCreateWithPKey(const char *_Nonnull pkey, enum TWCoinType coin);
+
 /// Creates an address from a public key data x and y.
 TW_EXPORT_STATIC_METHOD
 const char *_Nonnull CppAddressCreateWithMiliKey(const char *_Nonnull key, enum TWCoinType coin);
