@@ -1,4 +1,4 @@
-// Copyright © 2017-2020 Trust Wallet.
+// Copyright © 2017-2023 Trust Wallet.
 //
 // This file is part of Trust. The full Trust copyright notice, including
 // terms governing use, modification, and redistribution, is contained in the
@@ -18,9 +18,7 @@
 #include <chrono>
 #include <cassert>
 
-using namespace TW;
-using namespace TW::Tron;
-using namespace std::chrono;
+namespace TW::Tron {
 
 const std::string TRANSFER_TOKEN_FUNCTION = "0xa9059cbb";
 const std::string APPROVE_TOKEN_FUNCTION = "0x095ea7b3";
@@ -84,6 +82,20 @@ protocol::FreezeBalanceContract to_internal(const Proto::FreezeBalanceContract& 
     return internal;
 }
 
+protocol::FreezeBalanceV2Contract to_internal(const Proto::FreezeBalanceV2Contract& freezeContract) {
+    auto internal = protocol::FreezeBalanceV2Contract();
+    auto resource = protocol::ResourceCode();
+    const auto ownerAddress = Base58::bitcoin.decodeCheck(Hex2Base58(freezeContract.owner_address()));
+
+    protocol::ResourceCode_Parse(freezeContract.resource(), &resource);
+
+    internal.set_resource(resource);
+    internal.set_owner_address(ownerAddress.data(), ownerAddress.size());
+    internal.set_frozen_balance(freezeContract.frozen_balance());
+
+    return internal;
+}
+
 protocol::UnfreezeBalanceContract to_internal(const Proto::UnfreezeBalanceContract& unfreezeContract) {
     auto internal = protocol::UnfreezeBalanceContract();
     auto resource = protocol::ResourceCode();
@@ -96,6 +108,60 @@ protocol::UnfreezeBalanceContract to_internal(const Proto::UnfreezeBalanceContra
     internal.set_owner_address(ownerAddress.data(), ownerAddress.size());
     internal.set_receiver_address(receiverAddress.data(), receiverAddress.size());
 
+    return internal;
+}
+
+protocol::UnfreezeBalanceV2Contract to_internal(const Proto::UnfreezeBalanceV2Contract& unfreezeContract) {
+    auto internal = protocol::UnfreezeBalanceV2Contract();
+    auto resource = protocol::ResourceCode();
+    const auto ownerAddress = Base58::bitcoin.decodeCheck(Hex2Base58(unfreezeContract.owner_address()));
+
+    protocol::ResourceCode_Parse(unfreezeContract.resource(), &resource);
+
+    internal.set_resource(resource);
+    internal.set_owner_address(ownerAddress.data(), ownerAddress.size());
+    internal.set_unfreeze_balance(unfreezeContract.unfreeze_balance());
+
+    return internal;
+}
+
+protocol::DelegateResourceContract to_internal(const Proto::DelegateResourceContract& delegateContract) {
+    auto internal = protocol::DelegateResourceContract();
+    auto resource = protocol::ResourceCode();
+    const auto ownerAddress = Base58::bitcoin.decodeCheck(Hex2Base58(delegateContract.owner_address()));
+    const auto receiverAddress = Base58::bitcoin.decodeCheck(Hex2Base58(delegateContract.receiver_address()));
+
+    protocol::ResourceCode_Parse(delegateContract.resource(), &resource);
+
+    internal.set_resource(resource);
+    internal.set_owner_address(ownerAddress.data(), ownerAddress.size());
+    internal.set_receiver_address(receiverAddress.data(), receiverAddress.size());
+    internal.set_balance(delegateContract.balance());
+    internal.set_lock(delegateContract.lock());
+
+    return internal;
+}
+
+protocol::UnDelegateResourceContract to_internal(const Proto::UnDelegateResourceContract& undelegateContract) {
+    auto internal = protocol::UnDelegateResourceContract();
+    auto resource = protocol::ResourceCode();
+    const auto ownerAddress = Base58::bitcoin.decodeCheck(Hex2Base58(undelegateContract.owner_address()));
+    const auto receiverAddress = Base58::bitcoin.decodeCheck(Hex2Base58(undelegateContract.receiver_address()));
+
+    protocol::ResourceCode_Parse(undelegateContract.resource(), &resource);
+
+    internal.set_resource(resource);
+    internal.set_owner_address(ownerAddress.data(), ownerAddress.size());
+    internal.set_receiver_address(receiverAddress.data(), receiverAddress.size());
+    internal.set_balance(undelegateContract.balance());
+
+    return internal;
+}
+
+protocol::WithdrawExpireUnfreezeContract to_internal(const Proto::WithdrawExpireUnfreezeContract& withdrawExpireUnfreezeContract) {
+    auto internal = protocol::WithdrawExpireUnfreezeContract();
+    const auto ownerAddress = Base58::bitcoin.decodeCheck(Hex2Base58(withdrawExpireUnfreezeContract.owner_address()));
+    internal.set_owner_address(ownerAddress.data(), ownerAddress.size());
     return internal;
 }
 
@@ -235,7 +301,21 @@ void setBlockReference(const Proto::Transaction& transaction, protocol::Transact
     internal.mutable_raw_data()->set_ref_block_bytes(heightData.data() + heightData.size() - 2, 2);
 }
 
+Proto::SigningOutput signDirect(const Proto::SigningInput& input) {
+    const auto key = PrivateKey(Data(input.private_key().begin(), input.private_key().end()));
+    auto hash = parse_hex(input.txid());
+    const auto signature = key.sign(hash, TWCurveSECP256k1);
+    auto output = Proto::SigningOutput();
+    output.set_signature(signature.data(), signature.size());
+    output.set_id(input.txid());
+    output.set_id(hash.data(), hash.size());
+    return output;
+}
+
 Proto::SigningOutput Signer::sign(const Proto::SigningInput& input) {
+    if (!input.txid().empty()) {
+        return signDirect(input);
+    }
     auto internal = protocol::Transaction();
     auto output = Proto::SigningOutput();
 
@@ -263,6 +343,13 @@ Proto::SigningOutput Signer::sign(const Proto::SigningInput& input) {
         google::protobuf::Any any;
         any.PackFrom(freeze_balance);
         *contract->mutable_parameter() = any;
+    } else if (input.transaction().has_freeze_balance_v2()) {
+        auto* contract = internal.mutable_raw_data()->add_contract();
+        contract->set_type(protocol::Transaction_Contract_ContractType_FreezeBalanceV2Contract);
+        auto freeze_balance = to_internal(input.transaction().freeze_balance_v2());
+        google::protobuf::Any any;
+        any.PackFrom(freeze_balance);
+        *contract->mutable_parameter() = any;
     } else if (input.transaction().has_unfreeze_balance()) {
         auto* contract = internal.mutable_raw_data()->add_contract();
         contract->set_type(protocol::Transaction_Contract_ContractType_UnfreezeBalanceContract);
@@ -270,6 +357,34 @@ Proto::SigningOutput Signer::sign(const Proto::SigningInput& input) {
         auto unfreeze_balance = to_internal(input.transaction().unfreeze_balance());
         google::protobuf::Any any;
         any.PackFrom(unfreeze_balance);
+        *contract->mutable_parameter() = any;
+    } else if (input.transaction().has_unfreeze_balance_v2()) {
+        auto* contract = internal.mutable_raw_data()->add_contract();
+        contract->set_type(protocol::Transaction_Contract_ContractType_UnfreezeBalanceV2Contract);
+        auto unfreeze_balance = to_internal(input.transaction().unfreeze_balance_v2());
+        google::protobuf::Any any;
+        any.PackFrom(unfreeze_balance);
+        *contract->mutable_parameter() = any;
+    } else if (input.transaction().has_withdraw_expire_unfreeze()) {
+        auto* contract = internal.mutable_raw_data()->add_contract();
+        contract->set_type(protocol::Transaction_Contract_ContractType_WithdrawExpireUnfreezeContract);
+        auto withdraw_expire_unfreeze = to_internal(input.transaction().withdraw_expire_unfreeze());
+        google::protobuf::Any any;
+        any.PackFrom(withdraw_expire_unfreeze);
+        *contract->mutable_parameter() = any;
+    } else if (input.transaction().has_delegate_resource()) {
+        auto* contract = internal.mutable_raw_data()->add_contract();
+        contract->set_type(protocol::Transaction_Contract_ContractType_DelegateResourceContract);
+        auto delegate_resource = to_internal(input.transaction().delegate_resource());
+        google::protobuf::Any any;
+        any.PackFrom(delegate_resource);
+        *contract->mutable_parameter() = any;
+    } else if (input.transaction().has_undelegate_resource()) {
+        auto* contract = internal.mutable_raw_data()->add_contract();
+        contract->set_type(protocol::Transaction_Contract_ContractType_UnDelegateResourceContract);
+        auto undelegate_resource = to_internal(input.transaction().undelegate_resource());
+        google::protobuf::Any any;
+        any.PackFrom(undelegate_resource);
         *contract->mutable_parameter() = any;
     } else if (input.transaction().has_unfreeze_asset()) {
         auto* contract = internal.mutable_raw_data()->add_contract();
@@ -330,15 +445,15 @@ Proto::SigningOutput Signer::sign(const Proto::SigningInput& input) {
     }
 
     // Get default timestamp and expiration
-    const uint64_t now = duration_cast< milliseconds >(
-            system_clock::now().time_since_epoch()
-    ).count();
+    const uint64_t now = duration_cast<std::chrono::milliseconds>(
+                             std::chrono::system_clock::now().time_since_epoch())
+                             .count();
     const uint64_t timestamp = input.transaction().timestamp() == 0
-            ? now
-            : input.transaction().timestamp();
+                                   ? now
+                                   : input.transaction().timestamp();
     const uint64_t expiration = input.transaction().expiration() == 0
-            ? timestamp + 10 * 60 * 60 * 1000 // 10 hours
-            : input.transaction().expiration();
+                                    ? timestamp + 10 * 60 * 60 * 1000 // 10 hours
+                                    : input.transaction().expiration();
 
     internal.mutable_raw_data()->set_timestamp(timestamp);
     internal.mutable_raw_data()->set_expiration(expiration);
@@ -369,4 +484,5 @@ std::string Signer::signJSON(const std::string& json, const Data& key) {
     input.set_private_key(key.data(), key.size());
     auto output = Signer::sign(input);
     return output.json();
+}
 }
