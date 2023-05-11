@@ -343,15 +343,19 @@ std::string buildAuthInfo(const Proto::SigningInput& input) {
 }
 
 Data buildSignature(const Proto::SigningInput& input, const std::string& serializedTxBody, const std::string& serializedAuthInfo) {
-    // SignDoc Preimage
-    auto signDoc = cosmos::SignDoc();
-    signDoc.set_body_bytes(serializedTxBody);
-    signDoc.set_auth_info_bytes(serializedAuthInfo);
-    signDoc.set_chain_id(input.chain_id());
-    signDoc.set_account_number(input.account_number());
-    const auto serializedSignDoc = signDoc.SerializeAsString();
-
-    auto hashToSign = Hash::sha256(serializedSignDoc);
+    Data hashToSign;
+    if(input.messages(0).has_sign_direct_message() && input.messages(0).sign_direct_message().amino_hash().size() > 0) {
+        hashToSign = data(input.messages(0).sign_direct_message().amino_hash());
+    } else {
+        // SignDoc Preimage
+        auto signDoc = cosmos::SignDoc();
+        signDoc.set_body_bytes(serializedTxBody);
+        signDoc.set_auth_info_bytes(serializedAuthInfo);
+        signDoc.set_chain_id(input.chain_id());
+        signDoc.set_account_number(input.account_number());
+        const auto serializedSignDoc = signDoc.SerializeAsString();
+        hashToSign = Hash::sha256(serializedSignDoc);
+    }
     const auto privateKey = PrivateKey(input.private_key());
     auto signedHash = privateKey.sign(hashToSign, TWCurveSECP256k1);
     auto signature = Data(signedHash.begin(), signedHash.end() - 1);

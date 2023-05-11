@@ -213,6 +213,8 @@ message Message {
         bytes body_bytes = 1;
         // The prepared serialized AuthInfo
         bytes auth_info_bytes = 2;
+        // sign amino
+        bytes amino_hash = 3;
     }
 
     // StakeAuthorization defines authorization for delegate/undelegate/redelegate.

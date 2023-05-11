@@ -26,6 +26,6 @@ OS=android ARCH=x86 make -f Makefile_pb
 OS=android ARCH=x86 make -f Makefile_trezor
 OS=android ARCH=x86 make
 
-OS=android ARCH=x86_64 make -f Makefile_pb
-OS=android ARCH=x86_64 make -f Makefile_trezor
-OS=android ARCH=x86_64 make
+#OS=android ARCH=x86_64 make -f Makefile_pb
+#OS=android ARCH=x86_64 make -f Makefile_trezor
+#OS=android ARCH=x86_64 make

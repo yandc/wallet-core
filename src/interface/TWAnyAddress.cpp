@@ -76,6 +76,19 @@ const char*_Nonnull CppPublicKeyWithMiliKey(const char *_Nonnull key, enum TWCoi
     return pubkey;
 }
 
+const char*_Nonnull CppPublicKeyWithPKey(const char *_Nonnull key, enum TWCoinType coin) {
+    static char pubkey[512];
+    auto keyData = parse_hex(key);
+    TWPrivateKey privKey{TW::PrivateKey(keyData)};
+    TWPublicKeyType keyType = TW::publicKeyType(coin);
+    TW::PublicKey pub = privKey.impl.getPublicKey(keyType);
+
+    const std::string& a = TW::hex(pub.bytes);
+    memcpy(pubkey, a.c_str(), a.size());
+    pubkey[a.size()] = 0;
+    return pubkey;
+}
+
 bool CppAddressIsValid(const char *_Nonnull address, enum TWCoinType coin) {
     return TW::validateAddress(coin, address);
 }
