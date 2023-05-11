@@ -19,6 +19,7 @@ typedef const void TWString;
 * @mode: 枚举，托管trust, 社交恢复发起方origin, 社交恢复托管方backup, 升级为社交恢复upgrade
 *        普通托管创建： 发起方trust
 *        社交托管创建： 发起方origin，托管方backup
+*        企业钱包创建2-2： user_v2
 * 返回：私钥碎片json串，需要调用free释放，结构：{"status":true/false, "result":"", "error":""}
 */
 extern const char* GoCreateMili23(const char* curve, const char* session, const char* preParam, const char* mode);
@@ -36,6 +37,7 @@ extern const char* GoCreateMili23(const char* curve, const char* session, const 
 *        社交托管c重置： 发起方origin，托管方backup
 *        升级为社交托管：发起方upgrade，托管费backup
 *        企业钱包邀请管理员：创建founder，管理员manager
+*        企业钱包v2：邀请人manager_v2_invitor, 管理员manager_v2
 * 返回： 私钥碎片json串，需要调用free释放，结构：{"status":true/false, "result":"", "error":""}
 */
 extern const char* GoReshareMili23(const char* curve, const char* session, const char* key, const char* preParam, const char* mode);
