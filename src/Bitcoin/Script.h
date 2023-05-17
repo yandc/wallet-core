@@ -50,6 +50,8 @@ class Script {
     /// Determines whether this is a witness programm script.
     bool isWitnessProgram() const;
 
+    bool matchKaspaPayToPublicKey(Data& result) const;
+
     /// Matches the script to a pay-to-public-key (P2PK) script.
     bool matchPayToPublicKey(Data& publicKey) const;
 
@@ -67,6 +69,8 @@ class Script {
 
     /// Matches the script to a multisig script.
     bool matchMultisig(std::vector<Data>& publicKeys, int& required) const;
+
+    static Script buildKaspaPayToPublicKey(const Data& addressData);
 
     /// Builds a pay-to-public-key (P2PK) script from a public key.
     static Script buildPayToPublicKey(const Data& publickKey);

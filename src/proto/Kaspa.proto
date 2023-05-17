@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package TW.Kaspa.Proto;
+option java_package = "wallet.core.jni.proto";
+
+import "Common.proto";
+
+
+message Transaction{
+    uint32 version = 1;
+    repeated TransactionInput inputs = 2;
+    repeated TransactionOutput outputs = 3;
+    uint64 lockTime = 4;
+    string subnetworkId = 5;
+    uint64 gas = 6;
+    bytes payload = 8;
+}
+
+message TransactionInput{
+    Outpoint previousOutpoint = 1;
+    string signatureScript = 2;
+    uint64 sequence = 3;
+    uint32 sigOpCount = 4;
+}
+
+message Outpoint{
+    string transactionId = 1;
+    uint32 index = 2;
+}
+
+message ScriptPublicKey {
+    string scriptPublicKey = 1;
+    uint32 version = 2;
+}
+
+message TransactionOutput{
+    uint64 amount = 1;
+    ScriptPublicKey scriptPublicKey = 2;
+}
+
+message SigningOutput {
+    // Resulting transaction. Note that the amount may be different than the requested amount to account for fees and available funds.
+    Transaction transaction = 1;
+
+    // Signed and encoded transaction bytes.
+    bytes encoded = 2;
+
+    // Transaction id
+    string transaction_id = 3;
+
+    // Optional error
+    Common.Proto.SigningError error = 4;
+}

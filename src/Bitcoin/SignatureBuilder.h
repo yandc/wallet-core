@@ -57,7 +57,7 @@ private:
 
 public:
     /// Initializes a transaction signer with signing input.
-    /// estimationMode: is set, no real signing is performed, only as much as needed to get the almost-exact signed size 
+    /// estimationMode: is set, no real signing is performed, only as much as needed to get the almost-exact signed size
     SignatureBuilder(
         const SigningInput& input,
         const TransactionPlan& plan,
@@ -86,6 +86,10 @@ private:
     Data createSignature(const Transaction& transaction, const Script& script,
                          const Data& publicKeyHash, const std::optional<KeyPair>& key,
                          size_t index, Amount amount, uint32_t version);
+
+    Data createKaspaSignature(const Transaction& transaction, const Script& script,
+                              const Data& publicKeyHash, const std::optional<KeyPair>& key,
+                              size_t index, Amount amount, uint32_t version);
 
     /// Returns the private key for the given public key hash.
     std::optional<KeyPair> keyPairForPubKeyHash(const Data& hash) const;

@@ -17,6 +17,7 @@
 #include "../Data.h"
 #include "../Decred/Address.h"
 #include "../Groestlcoin/Address.h"
+#include "../Kaspa/Address.h"
 #include "../Hash.h"
 #include "../PublicKey.h"
 #include "../Zcash/TAddress.h"
@@ -71,6 +72,17 @@ bool Script::matchPayToPublicKey(Data& result) const {
     }
     if (bytes.size() == PublicKey::secp256k1Size + 2 && bytes[0] == PublicKey::secp256k1Size &&
         bytes.back() == OP_CHECKSIG) {
+        result.clear();
+        std::copy(std::begin(bytes) + 1, std::begin(bytes) + 1 + PublicKey::secp256k1Size,
+                  std::back_inserter(result));
+        return true;
+    }
+    return false;
+}
+
+bool Script::matchKaspaPayToPublicKey(Data& result) const {
+    if (bytes.size() == PublicKey::secp256k1Size + 2 && bytes[0] == PublicKey::secp256k1Size &&
+        (bytes.back() == OP_CHECKSIG || bytes.back() == OP_CHECKSIG-1)) {
         result.clear();
         std::copy(std::begin(bytes) + 1, std::begin(bytes) + 1 + PublicKey::secp256k1Size,
                   std::back_inserter(result));
@@ -206,6 +218,18 @@ bool Script::getScriptOp(size_t& index, uint8_t& opcode, Data& operand) const {
     return true;
 }
 
+Script Script::buildKaspaPayToPublicKey(const Data& publicKey) {
+    Script script;
+    script.bytes.push_back(static_cast<byte>(publicKey.size()-1));
+    append(script.bytes, subData(publicKey, 1));
+    if (publicKey[0] == 1) {//AddressPublicKeyECDSA
+        script.bytes.push_back(OP_CHECKSIG-1);
+    } else {//AddressPublicKey
+        script.bytes.push_back(OP_CHECKSIG);
+    }
+    return script;
+}
+
 Script Script::buildPayToPublicKey(const Data& publicKey) {
     assert(publicKey.size() == PublicKey::secp256k1Size || publicKey.size() == PublicKey::secp256k1ExtendedSize);
     Script script;
@@ -283,7 +307,12 @@ void Script::encode(Data& data) const {
 }
 
 Script Script::lockScriptForAddress(const std::string& string, enum TWCoinType coin) {
-    if (Address::isValid(string)) {
+    if (coin == TWCoinTypeKaspa || coin == TWCoinTypeKaspaTest) {
+        Kaspa::Address address(string);
+        if (address.bytes.size() > 0) {
+            return buildKaspaPayToPublicKey(address.bytes);
+        }
+    } else if (Address::isValid(string)) {
         auto address = Address(string);
         auto p2pkh = TW::p2pkhPrefix(coin);
         auto p2sh = TW::p2shPrefix(coin);

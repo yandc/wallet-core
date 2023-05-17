@@ -11,6 +11,7 @@
 #include "../Groestlcoin/Transaction.h"
 #include "../Zcash/Transaction.h"
 #include "../Zcash/TransactionBuilder.h"
+#include "../Kaspa/Transaction.h"
 
 using namespace TW;
 using namespace TW::Bitcoin;
@@ -54,3 +55,4 @@ HashPubkeyList TransactionSigner<Transaction, TransactionBuilder>::preImageHashe
 template class Bitcoin::TransactionSigner<Bitcoin::Transaction, TransactionBuilder>;
 template class Bitcoin::TransactionSigner<Zcash::Transaction, Zcash::TransactionBuilder>;
 template class Bitcoin::TransactionSigner<Groestlcoin::Transaction, TransactionBuilder>;
+template class Bitcoin::TransactionSigner<Kaspa::Transaction, TransactionBuilder>;

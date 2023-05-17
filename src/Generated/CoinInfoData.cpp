@@ -1997,6 +1997,29 @@ const CoinInfo getCoinInfo(TWCoinType coin) {
                 "https://bscscan.com/address/",
                 101013,
             };
+        case TWCoinTypeKaspa:
+            return CoinInfo {
+                "kaspa",
+                "Kaspa",
+                TWBlockchainBitcoin,
+                TWPurposeBIP44,
+                TWCurveSECP256k1,
+                TWHDVersionXPUB,
+                TWHDVersionXPRV,
+                "m/44'/2301'/0'/0/0",
+                TWPublicKeyTypeSECP256k1,
+                0,
+                1,
+                8,
+                TWHRPKaspa,
+                Hash::sha256ripemd,
+                Hash::sha256d,
+                "KAS",
+                8,
+                "",
+                "",
+                111111,
+            };
         default:
             return defaultsForMissing;
     }

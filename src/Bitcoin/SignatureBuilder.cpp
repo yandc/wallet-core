@@ -18,6 +18,7 @@
 #include "../Groestlcoin/Transaction.h"
 #include "../Zcash/Transaction.h"
 #include "../Zcash/TransactionBuilder.h"
+#include "../Kaspa/Transaction.h"
 
 using namespace TW;
 using namespace TW::Bitcoin;
@@ -181,6 +182,20 @@ Result<std::vector<Data>, Common::Proto::SigningError> SignatureBuilder<Transact
         results.resize(required + 1);
         return Result<std::vector<Data>, Common::Proto::SigningError>::success(std::move(results));
     }
+    if (script.matchKaspaPayToPublicKey(data)) {
+        auto keyHash = Hash::ripemd(Hash::sha256(data));
+        auto pair = keyPairForPubKeyHash(keyHash);
+        if (!pair.has_value() && signingMode == SigningMode_Normal) {
+            // Error: Missing key
+            return Result<std::vector<Data>, Common::Proto::SigningError>::failure(Common::Proto::Error_missing_private_key);
+        }
+        auto signature = createKaspaSignature(transactionToSign, script, keyHash, pair, index, utxo.amount, version);
+        if (signature.empty()) {
+            // Error: Failed to sign
+            return Result<std::vector<Data>, Common::Proto::SigningError>::failure(Common::Proto::Error_signing);
+        }
+        return Result<std::vector<Data>, Common::Proto::SigningError>::success({signature});
+    }
     if (script.matchPayToPublicKey(data)) {
         auto keyHash = Hash::ripemd(Hash::sha256(data));
         auto pair = keyPairForPubKeyHash(keyHash);
@@ -294,6 +309,70 @@ Data SignatureBuilder<Transaction>::createSignature(
 }
 
 template <typename Transaction>
+Data SignatureBuilder<Transaction>::createKaspaSignature(
+    const Transaction& transaction,
+    const Script& script,
+    const Data& publicKeyHash,
+    const std::optional<KeyPair>& pair,
+    size_t index,
+    Amount amount,
+    uint32_t version
+) {
+    if (signingMode == SigningMode_SizeEstimationOnly) {
+        // Don't sign, only estimate signature size. It is 71-72 bytes.  Return placeholder.
+        return Data(72);
+    }
+
+    const Data sighash = transaction.getSignatureHash(script, index, input.hashType, amount,
+                                                      static_cast<SignatureVersion>(version));
+
+    if (signingMode == SigningMode_HashOnly) {
+        // Don't sign, only store hash-to-be-signed + pubkeyhash.  Return placeholder.
+        hashesForSigning.push_back(std::make_pair(sighash, publicKeyHash));
+        return Data(72);
+    }
+
+    if (signingMode == SigningMode_External) {
+        // Use externally-provided signature
+        // Store hash, only for counting
+        size_t index = hashesForSigning.size();
+        hashesForSigning.push_back(std::make_pair(sighash, publicKeyHash));
+
+        if (!externalSignatures.has_value() || externalSignatures.value().size() <= index) {
+            // Error: no or not enough signatures provided
+            return Data();
+        }
+
+        Data externalSignature = std::get<0>(externalSignatures.value()[index]);
+        const Data publicKey = std::get<1>(externalSignatures.value()[index]);
+
+        // Verify provided signature
+        if (!PublicKey::isValid(publicKey, TWPublicKeyTypeSECP256k1)) {
+            // Error: invalid public key
+            return Data();
+        }
+        const auto publicKeyObj = PublicKey(publicKey, TWPublicKeyTypeSECP256k1);
+        if (!publicKeyObj.verifyAsDER(externalSignature, sighash)) {
+            // Error: Signature does not match publickey+hash
+            return Data();
+        }
+        externalSignature.push_back(static_cast<byte>(input.hashType));
+
+        return externalSignature;
+    }
+
+    const auto key = std::get<0>(pair.value());
+    const auto pk = PrivateKey(key);
+
+    auto sig = pk.sign(sighash, TWCurveSECP256k1);
+    if (!sig.empty()) {
+        //sig.push_back(static_cast<byte>(input.hashType));
+        sig[64] = static_cast<byte>(input.hashType);
+    }
+    return sig;
+}
+
+template <typename Transaction>
 Data SignatureBuilder<Transaction>::pushAll(const std::vector<Data>& results) {
     Data data;
     for (auto& result : results) {
@@ -348,3 +427,4 @@ Data SignatureBuilder<Transaction>::scriptForScriptHash(const Data& hash) const 
 template class Bitcoin::SignatureBuilder<Bitcoin::Transaction>;
 template class Bitcoin::SignatureBuilder<Zcash::Transaction>;
 template class Bitcoin::SignatureBuilder<Groestlcoin::Transaction>;
+template class Bitcoin::SignatureBuilder<Kaspa::Transaction>;
