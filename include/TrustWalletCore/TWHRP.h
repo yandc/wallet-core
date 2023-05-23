@@ -47,6 +47,7 @@ enum TWHRP {
     TWHRPNervos     /*"ckb"*/,
     TWHRPNervosTest     /*"ckt"*/,
     TWHRPKaspa     /*kaspa*/,
+    TWHRPSei      /*sei*/
 };
 
 static const char *_Nonnull HRP_BITCOIN = "bc";
@@ -77,6 +78,7 @@ static const char *_Nonnull HRP_OSMOSIS = "osmo";
 static const char *_Nonnull HRP_NERVOS = "ckb";
 static const char *_Nonnull HRP_NERVOS_TEST = "ckt";
 static const char *_Nonnull HRP_KASPA = "kaspa";
+static const char *_Nonnull HRP_SEI = "sei";
 
 const char *_Nullable stringForHRP(enum TWHRP hrp);
 enum TWHRP hrpForString(const char *_Nonnull string);

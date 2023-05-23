@@ -69,6 +69,8 @@ const char* stringForHRP(enum TWHRP hrp) {
         return HRP_NERVOS_TEST;
     case TWHRPKaspa:
         return HRP_KASPA;
+    case TWHRPSei:
+        return HRP_SEI;
     default: return nullptr;
     }
 }
@@ -128,8 +130,10 @@ enum TWHRP hrpForString(const char *_Nonnull string) {
         return TWHRPNervos;
     } else if (std::strcmp(string, HRP_NERVOS_TEST) == 0) {
         return TWHRPNervosTest;
-    } else if (std::strcmp(string, HRP_KASPA)) {
+    } else if (std::strcmp(string, HRP_KASPA) == 0) {
         return TWHRPKaspa;
+    } else if (std::strcmp(string, HRP_SEI) == 0)  {
+        return TWHRPSei;
     } else {
         return TWHRPUnknown;
     }

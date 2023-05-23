@@ -204,6 +204,7 @@ CoinEntry* coinDispatcher(TWCoinType coinType) {
         case TWCoinTypeNervosTest: entry = &NervosDP; break;
         case TWCoinTypeCasper: entry = &CasperDP; break;
         case TWCoinTypeKaspa: entry = &KaspaDP; break;
+        case TWCoinTypeSei: entry = &cosmosDP; break;
         // end_of_coin_dipatcher_switch_marker_do_not_modify
 
         default: entry = nullptr; break;

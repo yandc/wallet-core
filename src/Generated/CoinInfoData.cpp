@@ -1744,6 +1744,29 @@ const CoinInfo getCoinInfo(TWCoinType coin) {
                 "https://mintscan.io/osmosis/account/",
                 10000118,
             };
+        case TWCoinTypeSei:
+            return CoinInfo {
+                "sei",
+                "Sei",
+                TWBlockchainCosmos,
+                TWPurposeBIP44,
+                TWCurveSECP256k1,
+                TWHDVersionNone,
+                TWHDVersionNone,
+                "m/44'/118'/0'/0/0",
+                TWPublicKeyTypeSECP256k1,
+                0,
+                0,
+                0,
+                TWHRPSei,
+                Hash::sha256ripemd,
+                Hash::sha256d,
+                "SEI",
+                6,
+                "https://sei.explorers.guru/txs/",
+                "https://sei.explorers.guru/account/",
+                10000119,
+            };
         case TWCoinTypeSmartBitcoinCash:
             return CoinInfo {
                 "smartbch",
