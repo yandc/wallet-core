@@ -46,7 +46,7 @@ struct TableStruct_Solana_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxiliaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[16]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[17]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -59,6 +59,9 @@ namespace Proto {
 class AccountKey;
 class AccountKeyDefaultTypeInternal;
 extern AccountKeyDefaultTypeInternal _AccountKey_default_instance_;
+class AddressTableLookups;
+class AddressTableLookupsDefaultTypeInternal;
+extern AddressTableLookupsDefaultTypeInternal _AddressTableLookups_default_instance_;
 class CompiledInstruction;
 class CompiledInstructionDefaultTypeInternal;
 extern CompiledInstructionDefaultTypeInternal _CompiledInstruction_default_instance_;
@@ -109,6 +112,7 @@ extern WithdrawStakeDefaultTypeInternal _WithdrawStake_default_instance_;
 }  // namespace TW
 PROTOBUF_NAMESPACE_OPEN
 template<> ::TW::Solana::Proto::AccountKey* Arena::CreateMaybeMessage<::TW::Solana::Proto::AccountKey>(Arena*);
+template<> ::TW::Solana::Proto::AddressTableLookups* Arena::CreateMaybeMessage<::TW::Solana::Proto::AddressTableLookups>(Arena*);
 template<> ::TW::Solana::Proto::CompiledInstruction* Arena::CreateMaybeMessage<::TW::Solana::Proto::CompiledInstruction>(Arena*);
 template<> ::TW::Solana::Proto::CreateAndTransferToken* Arena::CreateMaybeMessage<::TW::Solana::Proto::CreateAndTransferToken>(Arena*);
 template<> ::TW::Solana::Proto::CreateTokenAccount* Arena::CreateMaybeMessage<::TW::Solana::Proto::CreateTokenAccount>(Arena*);
@@ -2672,6 +2676,199 @@ class CompiledInstruction PROTOBUF_FINAL :
 };
 // -------------------------------------------------------------------
 
+class AddressTableLookups PROTOBUF_FINAL :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:TW.Solana.Proto.AddressTableLookups) */ {
+ public:
+  inline AddressTableLookups() : AddressTableLookups(nullptr) {}
+  virtual ~AddressTableLookups();
+
+  AddressTableLookups(const AddressTableLookups& from);
+  AddressTableLookups(AddressTableLookups&& from) noexcept
+    : AddressTableLookups() {
+    *this = ::std::move(from);
+  }
+
+  inline AddressTableLookups& operator=(const AddressTableLookups& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline AddressTableLookups& operator=(AddressTableLookups&& from) noexcept {
+    if (GetArena() == from.GetArena()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const AddressTableLookups& default_instance();
+
+  static inline const AddressTableLookups* internal_default_instance() {
+    return reinterpret_cast<const AddressTableLookups*>(
+               &_AddressTableLookups_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    14;
+
+  friend void swap(AddressTableLookups& a, AddressTableLookups& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(AddressTableLookups* other) {
+    if (other == this) return;
+    if (GetArena() == other->GetArena()) {
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(AddressTableLookups* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline AddressTableLookups* New() const final {
+    return CreateMaybeMessage<AddressTableLookups>(nullptr);
+  }
+
+  AddressTableLookups* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<AddressTableLookups>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const AddressTableLookups& from);
+  void MergeFrom(const AddressTableLookups& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(AddressTableLookups* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "TW.Solana.Proto.AddressTableLookups";
+  }
+  protected:
+  explicit AddressTableLookups(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_Solana_2eproto);
+    return ::descriptor_table_Solana_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kWritableIndexesFieldNumber = 2,
+    kReadonlyIndexesFieldNumber = 3,
+    kAccountKeyFieldNumber = 1,
+  };
+  // repeated uint32 writable_indexes = 2;
+  int writable_indexes_size() const;
+  private:
+  int _internal_writable_indexes_size() const;
+  public:
+  void clear_writable_indexes();
+  private:
+  ::PROTOBUF_NAMESPACE_ID::uint32 _internal_writable_indexes(int index) const;
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::uint32 >&
+      _internal_writable_indexes() const;
+  void _internal_add_writable_indexes(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::uint32 >*
+      _internal_mutable_writable_indexes();
+  public:
+  ::PROTOBUF_NAMESPACE_ID::uint32 writable_indexes(int index) const;
+  void set_writable_indexes(int index, ::PROTOBUF_NAMESPACE_ID::uint32 value);
+  void add_writable_indexes(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::uint32 >&
+      writable_indexes() const;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::uint32 >*
+      mutable_writable_indexes();
+
+  // repeated uint32 readonly_indexes = 3;
+  int readonly_indexes_size() const;
+  private:
+  int _internal_readonly_indexes_size() const;
+  public:
+  void clear_readonly_indexes();
+  private:
+  ::PROTOBUF_NAMESPACE_ID::uint32 _internal_readonly_indexes(int index) const;
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::uint32 >&
+      _internal_readonly_indexes() const;
+  void _internal_add_readonly_indexes(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::uint32 >*
+      _internal_mutable_readonly_indexes();
+  public:
+  ::PROTOBUF_NAMESPACE_ID::uint32 readonly_indexes(int index) const;
+  void set_readonly_indexes(int index, ::PROTOBUF_NAMESPACE_ID::uint32 value);
+  void add_readonly_indexes(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::uint32 >&
+      readonly_indexes() const;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::uint32 >*
+      mutable_readonly_indexes();
+
+  // string account_key = 1;
+  void clear_account_key();
+  const std::string& account_key() const;
+  void set_account_key(const std::string& value);
+  void set_account_key(std::string&& value);
+  void set_account_key(const char* value);
+  void set_account_key(const char* value, size_t size);
+  std::string* mutable_account_key();
+  std::string* release_account_key();
+  void set_allocated_account_key(std::string* account_key);
+  private:
+  const std::string& _internal_account_key() const;
+  void _internal_set_account_key(const std::string& value);
+  std::string* _internal_mutable_account_key();
+  public:
+
+  // @@protoc_insertion_point(class_scope:TW.Solana.Proto.AddressTableLookups)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::uint32 > writable_indexes_;
+  mutable std::atomic<int> _writable_indexes_cached_byte_size_;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::uint32 > readonly_indexes_;
+  mutable std::atomic<int> _readonly_indexes_cached_byte_size_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr account_key_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_Solana_2eproto;
+};
+// -------------------------------------------------------------------
+
 class SigningInput PROTOBUF_FINAL :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:TW.Solana.Proto.SigningInput) */ {
  public:
@@ -2726,7 +2923,7 @@ class SigningInput PROTOBUF_FINAL :
                &_SigningInput_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    14;
+    15;
 
   friend void swap(SigningInput& a, SigningInput& b) {
     a.Swap(&b);
@@ -2800,6 +2997,7 @@ class SigningInput PROTOBUF_FINAL :
     kStaticAccountKeysFieldNumber = 15,
     kCompiledInstructionsFieldNumber = 16,
     kInstructionsFieldNumber = 17,
+    kAddressTableLookupsFieldNumber = 18,
     kPrivateKeyFieldNumber = 1,
     kRecentBlockhashFieldNumber = 2,
     kFromAddressFieldNumber = 12,
@@ -2874,6 +3072,24 @@ class SigningInput PROTOBUF_FINAL :
   ::TW::Solana::Proto::Instruction* add_instructions();
   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::TW::Solana::Proto::Instruction >&
       instructions() const;
+
+  // repeated .TW.Solana.Proto.AddressTableLookups address_table_lookups = 18;
+  int address_table_lookups_size() const;
+  private:
+  int _internal_address_table_lookups_size() const;
+  public:
+  void clear_address_table_lookups();
+  ::TW::Solana::Proto::AddressTableLookups* mutable_address_table_lookups(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::TW::Solana::Proto::AddressTableLookups >*
+      mutable_address_table_lookups();
+  private:
+  const ::TW::Solana::Proto::AddressTableLookups& _internal_address_table_lookups(int index) const;
+  ::TW::Solana::Proto::AddressTableLookups* _internal_add_address_table_lookups();
+  public:
+  const ::TW::Solana::Proto::AddressTableLookups& address_table_lookups(int index) const;
+  ::TW::Solana::Proto::AddressTableLookups* add_address_table_lookups();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::TW::Solana::Proto::AddressTableLookups >&
+      address_table_lookups() const;
 
   // bytes private_key = 1;
   void clear_private_key();
@@ -3143,6 +3359,7 @@ class SigningInput PROTOBUF_FINAL :
   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> static_account_keys_;
   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::TW::Solana::Proto::CompiledInstruction > compiled_instructions_;
   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::TW::Solana::Proto::Instruction > instructions_;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::TW::Solana::Proto::AddressTableLookups > address_table_lookups_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr private_key_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr recent_blockhash_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr from_address_;
@@ -3208,7 +3425,7 @@ class SigningOutput PROTOBUF_FINAL :
                &_SigningOutput_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    15;
+    16;
 
   friend void swap(SigningOutput& a, SigningOutput& b) {
     a.Swap(&b);
@@ -5660,6 +5877,165 @@ inline void CompiledInstruction::set_allocated_data(std::string* data) {
 
 // -------------------------------------------------------------------
 
+// AddressTableLookups
+
+// string account_key = 1;
+inline void AddressTableLookups::clear_account_key() {
+  account_key_.ClearToEmpty();
+}
+inline const std::string& AddressTableLookups::account_key() const {
+  // @@protoc_insertion_point(field_get:TW.Solana.Proto.AddressTableLookups.account_key)
+  return _internal_account_key();
+}
+inline void AddressTableLookups::set_account_key(const std::string& value) {
+  _internal_set_account_key(value);
+  // @@protoc_insertion_point(field_set:TW.Solana.Proto.AddressTableLookups.account_key)
+}
+inline std::string* AddressTableLookups::mutable_account_key() {
+  // @@protoc_insertion_point(field_mutable:TW.Solana.Proto.AddressTableLookups.account_key)
+  return _internal_mutable_account_key();
+}
+inline const std::string& AddressTableLookups::_internal_account_key() const {
+  return account_key_.Get();
+}
+inline void AddressTableLookups::_internal_set_account_key(const std::string& value) {
+  
+  account_key_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArena());
+}
+inline void AddressTableLookups::set_account_key(std::string&& value) {
+  
+  account_key_.Set(
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::move(value), GetArena());
+  // @@protoc_insertion_point(field_set_rvalue:TW.Solana.Proto.AddressTableLookups.account_key)
+}
+inline void AddressTableLookups::set_account_key(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  account_key_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::string(value), GetArena());
+  // @@protoc_insertion_point(field_set_char:TW.Solana.Proto.AddressTableLookups.account_key)
+}
+inline void AddressTableLookups::set_account_key(const char* value,
+    size_t size) {
+  
+  account_key_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::string(
+      reinterpret_cast<const char*>(value), size), GetArena());
+  // @@protoc_insertion_point(field_set_pointer:TW.Solana.Proto.AddressTableLookups.account_key)
+}
+inline std::string* AddressTableLookups::_internal_mutable_account_key() {
+  
+  return account_key_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArena());
+}
+inline std::string* AddressTableLookups::release_account_key() {
+  // @@protoc_insertion_point(field_release:TW.Solana.Proto.AddressTableLookups.account_key)
+  return account_key_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline void AddressTableLookups::set_allocated_account_key(std::string* account_key) {
+  if (account_key != nullptr) {
+    
+  } else {
+    
+  }
+  account_key_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), account_key,
+      GetArena());
+  // @@protoc_insertion_point(field_set_allocated:TW.Solana.Proto.AddressTableLookups.account_key)
+}
+
+// repeated uint32 writable_indexes = 2;
+inline int AddressTableLookups::_internal_writable_indexes_size() const {
+  return writable_indexes_.size();
+}
+inline int AddressTableLookups::writable_indexes_size() const {
+  return _internal_writable_indexes_size();
+}
+inline void AddressTableLookups::clear_writable_indexes() {
+  writable_indexes_.Clear();
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 AddressTableLookups::_internal_writable_indexes(int index) const {
+  return writable_indexes_.Get(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 AddressTableLookups::writable_indexes(int index) const {
+  // @@protoc_insertion_point(field_get:TW.Solana.Proto.AddressTableLookups.writable_indexes)
+  return _internal_writable_indexes(index);
+}
+inline void AddressTableLookups::set_writable_indexes(int index, ::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  writable_indexes_.Set(index, value);
+  // @@protoc_insertion_point(field_set:TW.Solana.Proto.AddressTableLookups.writable_indexes)
+}
+inline void AddressTableLookups::_internal_add_writable_indexes(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  writable_indexes_.Add(value);
+}
+inline void AddressTableLookups::add_writable_indexes(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  _internal_add_writable_indexes(value);
+  // @@protoc_insertion_point(field_add:TW.Solana.Proto.AddressTableLookups.writable_indexes)
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::uint32 >&
+AddressTableLookups::_internal_writable_indexes() const {
+  return writable_indexes_;
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::uint32 >&
+AddressTableLookups::writable_indexes() const {
+  // @@protoc_insertion_point(field_list:TW.Solana.Proto.AddressTableLookups.writable_indexes)
+  return _internal_writable_indexes();
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::uint32 >*
+AddressTableLookups::_internal_mutable_writable_indexes() {
+  return &writable_indexes_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::uint32 >*
+AddressTableLookups::mutable_writable_indexes() {
+  // @@protoc_insertion_point(field_mutable_list:TW.Solana.Proto.AddressTableLookups.writable_indexes)
+  return _internal_mutable_writable_indexes();
+}
+
+// repeated uint32 readonly_indexes = 3;
+inline int AddressTableLookups::_internal_readonly_indexes_size() const {
+  return readonly_indexes_.size();
+}
+inline int AddressTableLookups::readonly_indexes_size() const {
+  return _internal_readonly_indexes_size();
+}
+inline void AddressTableLookups::clear_readonly_indexes() {
+  readonly_indexes_.Clear();
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 AddressTableLookups::_internal_readonly_indexes(int index) const {
+  return readonly_indexes_.Get(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 AddressTableLookups::readonly_indexes(int index) const {
+  // @@protoc_insertion_point(field_get:TW.Solana.Proto.AddressTableLookups.readonly_indexes)
+  return _internal_readonly_indexes(index);
+}
+inline void AddressTableLookups::set_readonly_indexes(int index, ::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  readonly_indexes_.Set(index, value);
+  // @@protoc_insertion_point(field_set:TW.Solana.Proto.AddressTableLookups.readonly_indexes)
+}
+inline void AddressTableLookups::_internal_add_readonly_indexes(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  readonly_indexes_.Add(value);
+}
+inline void AddressTableLookups::add_readonly_indexes(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  _internal_add_readonly_indexes(value);
+  // @@protoc_insertion_point(field_add:TW.Solana.Proto.AddressTableLookups.readonly_indexes)
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::uint32 >&
+AddressTableLookups::_internal_readonly_indexes() const {
+  return readonly_indexes_;
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::uint32 >&
+AddressTableLookups::readonly_indexes() const {
+  // @@protoc_insertion_point(field_list:TW.Solana.Proto.AddressTableLookups.readonly_indexes)
+  return _internal_readonly_indexes();
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::uint32 >*
+AddressTableLookups::_internal_mutable_readonly_indexes() {
+  return &readonly_indexes_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::uint32 >*
+AddressTableLookups::mutable_readonly_indexes() {
+  // @@protoc_insertion_point(field_mutable_list:TW.Solana.Proto.AddressTableLookups.readonly_indexes)
+  return _internal_mutable_readonly_indexes();
+}
+
+// -------------------------------------------------------------------
+
 // SigningInput
 
 // bytes private_key = 1;
@@ -6798,6 +7174,45 @@ SigningInput::instructions() const {
   return instructions_;
 }
 
+// repeated .TW.Solana.Proto.AddressTableLookups address_table_lookups = 18;
+inline int SigningInput::_internal_address_table_lookups_size() const {
+  return address_table_lookups_.size();
+}
+inline int SigningInput::address_table_lookups_size() const {
+  return _internal_address_table_lookups_size();
+}
+inline void SigningInput::clear_address_table_lookups() {
+  address_table_lookups_.Clear();
+}
+inline ::TW::Solana::Proto::AddressTableLookups* SigningInput::mutable_address_table_lookups(int index) {
+  // @@protoc_insertion_point(field_mutable:TW.Solana.Proto.SigningInput.address_table_lookups)
+  return address_table_lookups_.Mutable(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::TW::Solana::Proto::AddressTableLookups >*
+SigningInput::mutable_address_table_lookups() {
+  // @@protoc_insertion_point(field_mutable_list:TW.Solana.Proto.SigningInput.address_table_lookups)
+  return &address_table_lookups_;
+}
+inline const ::TW::Solana::Proto::AddressTableLookups& SigningInput::_internal_address_table_lookups(int index) const {
+  return address_table_lookups_.Get(index);
+}
+inline const ::TW::Solana::Proto::AddressTableLookups& SigningInput::address_table_lookups(int index) const {
+  // @@protoc_insertion_point(field_get:TW.Solana.Proto.SigningInput.address_table_lookups)
+  return _internal_address_table_lookups(index);
+}
+inline ::TW::Solana::Proto::AddressTableLookups* SigningInput::_internal_add_address_table_lookups() {
+  return address_table_lookups_.Add();
+}
+inline ::TW::Solana::Proto::AddressTableLookups* SigningInput::add_address_table_lookups() {
+  // @@protoc_insertion_point(field_add:TW.Solana.Proto.SigningInput.address_table_lookups)
+  return _internal_add_address_table_lookups();
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::TW::Solana::Proto::AddressTableLookups >&
+SigningInput::address_table_lookups() const {
+  // @@protoc_insertion_point(field_list:TW.Solana.Proto.SigningInput.address_table_lookups)
+  return address_table_lookups_;
+}
+
 inline bool SigningInput::has_transaction_type() const {
   return transaction_type_case() != TRANSACTION_TYPE_NOT_SET;
 }
@@ -6875,6 +7290,8 @@ inline void SigningOutput::set_allocated_encoded(std::string* encoded) {
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

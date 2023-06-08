@@ -49,7 +49,7 @@ public:
 /// Bitcoin Segwit transaction fee calculator
 class SegwitFeeCalculator : public LinearFeeCalculator {
 public:
-    SegwitFeeCalculator(): LinearFeeCalculator(101.25, 31, 10) {}
+    SegwitFeeCalculator(): LinearFeeCalculator(41+27.3, 31, 10) {}
 };
 
 /// Return the fee calculator for the given coin.

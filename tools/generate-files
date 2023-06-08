@@ -36,7 +36,7 @@ PROTOC="$PREFIX/bin/protoc"
 which $PROTOC
 $PROTOC --version
 
-"$PROTOC" -I=$PREFIX/include -I=src/proto --cpp_out=src/proto --java_out=jni/java src/proto/Cosmos.proto
+"$PROTOC" -I=$PREFIX/include -I=src/proto --cpp_out=src/proto --java_out=jni/java src/proto/Solana.proto
 echo -e "please edit this file..."
 exit 0
 

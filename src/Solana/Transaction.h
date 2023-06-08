@@ -208,6 +208,13 @@ struct CompiledInstruction {
     uint8_t findAccount(const Address& address);
 };
 
+struct AddressLookupTable {
+    Address accountKey;
+    std::vector<uint8_t> readonlyIndexes;
+    std::vector<uint8_t> writableIndexes;
+    AddressLookupTable(const std::string& key): accountKey(Address(key)) {}
+};
+
 class Hash {
   public:
     static const size_t size = 32;
@@ -268,6 +275,7 @@ class Message {
     std::vector<Address> unsignedAccounts;
     std::vector<Address> readOnlyAccounts;
     std::vector<CompiledInstruction> compiledInstructions;
+    std::vector<AddressLookupTable> addressLookups;
 
     Message() : recentBlockhash(NULL_ID_ADDRESS) {};
 

@@ -15,6 +15,7 @@
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
 extern PROTOBUF_INTERNAL_EXPORT_Solana_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_AccountKey_Solana_2eproto;
+extern PROTOBUF_INTERNAL_EXPORT_Solana_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_AddressTableLookups_Solana_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_Solana_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_CompiledInstruction_Solana_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_Solana_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_CreateAndTransferToken_Solana_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_Solana_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_CreateTokenAccount_Solana_2eproto;
@@ -87,6 +88,10 @@ class CompiledInstructionDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<CompiledInstruction> _instance;
 } _CompiledInstruction_default_instance_;
+class AddressTableLookupsDefaultTypeInternal {
+ public:
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<AddressTableLookups> _instance;
+} _AddressTableLookups_default_instance_;
 class SigningInputDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<SigningInput> _instance;
@@ -110,6 +115,19 @@ static void InitDefaultsscc_info_AccountKey_Solana_2eproto() {
 
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_AccountKey_Solana_2eproto =
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_AccountKey_Solana_2eproto}, {}};
+
+static void InitDefaultsscc_info_AddressTableLookups_Solana_2eproto() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::TW::Solana::Proto::_AddressTableLookups_default_instance_;
+    new (ptr) ::TW::Solana::Proto::AddressTableLookups();
+    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
+  }
+}
+
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_AddressTableLookups_Solana_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_AddressTableLookups_Solana_2eproto}, {}};
 
 static void InitDefaultsscc_info_CompiledInstruction_Solana_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -226,8 +244,8 @@ static void InitDefaultsscc_info_SigningInput_Solana_2eproto() {
   }
 }
 
-::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<12> scc_info_SigningInput_Solana_2eproto =
-    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 12, 0, InitDefaultsscc_info_SigningInput_Solana_2eproto}, {
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<13> scc_info_SigningInput_Solana_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 13, 0, InitDefaultsscc_info_SigningInput_Solana_2eproto}, {
       &scc_info_Transfer_Solana_2eproto.base,
       &scc_info_DelegateStake_Solana_2eproto.base,
       &scc_info_DeactivateStake_Solana_2eproto.base,
@@ -239,7 +257,8 @@ static void InitDefaultsscc_info_SigningInput_Solana_2eproto() {
       &scc_info_CreateAndTransferToken_Solana_2eproto.base,
       &scc_info_MessageHeader_Solana_2eproto.base,
       &scc_info_CompiledInstruction_Solana_2eproto.base,
-      &scc_info_Instruction_Solana_2eproto.base,}};
+      &scc_info_Instruction_Solana_2eproto.base,
+      &scc_info_AddressTableLookups_Solana_2eproto.base,}};
 
 static void InitDefaultsscc_info_SigningOutput_Solana_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -320,7 +339,7 @@ static void InitDefaultsscc_info_WithdrawStake_Solana_2eproto() {
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_WithdrawStake_Solana_2eproto =
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_WithdrawStake_Solana_2eproto}, {}};
 
-static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_Solana_2eproto[16];
+static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_Solana_2eproto[17];
 static constexpr ::PROTOBUF_NAMESPACE_ID::EnumDescriptor const** file_level_enum_descriptors_Solana_2eproto = nullptr;
 static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_Solana_2eproto = nullptr;
 
@@ -443,6 +462,14 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_Solana_2eproto::offsets[] PROT
   PROTOBUF_FIELD_OFFSET(::TW::Solana::Proto::CompiledInstruction, account_key_indexes_),
   PROTOBUF_FIELD_OFFSET(::TW::Solana::Proto::CompiledInstruction, data_),
   ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::TW::Solana::Proto::AddressTableLookups, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::TW::Solana::Proto::AddressTableLookups, account_key_),
+  PROTOBUF_FIELD_OFFSET(::TW::Solana::Proto::AddressTableLookups, writable_indexes_),
+  PROTOBUF_FIELD_OFFSET(::TW::Solana::Proto::AddressTableLookups, readonly_indexes_),
+  ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::TW::Solana::Proto::SigningInput, _internal_metadata_),
   ~0u,  // no _extensions_
   PROTOBUF_FIELD_OFFSET(::TW::Solana::Proto::SigningInput, _oneof_case_[0]),
@@ -464,6 +491,7 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_Solana_2eproto::offsets[] PROT
   PROTOBUF_FIELD_OFFSET(::TW::Solana::Proto::SigningInput, static_account_keys_),
   PROTOBUF_FIELD_OFFSET(::TW::Solana::Proto::SigningInput, compiled_instructions_),
   PROTOBUF_FIELD_OFFSET(::TW::Solana::Proto::SigningInput, instructions_),
+  PROTOBUF_FIELD_OFFSET(::TW::Solana::Proto::SigningInput, address_table_lookups_),
   PROTOBUF_FIELD_OFFSET(::TW::Solana::Proto::SigningInput, transaction_type_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::TW::Solana::Proto::SigningOutput, _internal_metadata_),
@@ -487,8 +515,9 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOB
   { 93, -1, sizeof(::TW::Solana::Proto::Instruction)},
   { 101, -1, sizeof(::TW::Solana::Proto::MessageHeader)},
   { 109, -1, sizeof(::TW::Solana::Proto::CompiledInstruction)},
-  { 117, -1, sizeof(::TW::Solana::Proto::SigningInput)},
-  { 140, -1, sizeof(::TW::Solana::Proto::SigningOutput)},
+  { 117, -1, sizeof(::TW::Solana::Proto::AddressTableLookups)},
+  { 125, -1, sizeof(::TW::Solana::Proto::SigningInput)},
+  { 149, -1, sizeof(::TW::Solana::Proto::SigningOutput)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -506,6 +535,7 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::TW::Solana::Proto::_Instruction_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::TW::Solana::Proto::_MessageHeader_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::TW::Solana::Proto::_CompiledInstruction_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::TW::Solana::Proto::_AddressTableLookups_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::TW::Solana::Proto::_SigningInput_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::TW::Solana::Proto::_SigningOutput_default_instance_),
 };
@@ -545,39 +575,44 @@ const char descriptor_table_protodef_Solana_2eproto[] PROTOBUF_SECTION_VARIABLE(
   "gned_accounts\030\002 \001(\r\022&\n\036num_readonly_unsi"
   "gned_accounts\030\003 \001(\r\"Z\n\023CompiledInstructi"
   "on\022\030\n\020program_id_index\030\001 \001(\r\022\033\n\023account_"
-  "key_indexes\030\002 \003(\r\022\014\n\004data\030\003 \001(\014\"\325\007\n\014Sign"
-  "ingInput\022\023\n\013private_key\030\001 \001(\014\022\030\n\020recent_"
-  "blockhash\030\002 \001(\t\0229\n\024transfer_transaction\030"
-  "\003 \001(\0132\031.TW.Solana.Proto.TransferH\000\022D\n\032de"
-  "legate_stake_transaction\030\004 \001(\0132\036.TW.Sola"
-  "na.Proto.DelegateStakeH\000\022H\n\034deactivate_s"
-  "take_transaction\030\005 \001(\0132 .TW.Solana.Proto"
-  ".DeactivateStakeH\000\022O\n deactivate_all_sta"
-  "ke_transaction\030\006 \001(\0132#.TW.Solana.Proto.D"
-  "eactivateAllStakeH\000\022>\n\024withdraw_transact"
-  "ion\030\007 \001(\0132\036.TW.Solana.Proto.WithdrawStak"
-  "eH\000\022E\n\030withdraw_all_transaction\030\010 \001(\0132!."
-  "TW.Solana.Proto.WithdrawAllStakeH\000\022O\n cr"
-  "eate_token_account_transaction\030\t \001(\0132#.T"
-  "W.Solana.Proto.CreateTokenAccountH\000\022D\n\032t"
-  "oken_transfer_transaction\030\n \001(\0132\036.TW.Sol"
-  "ana.Proto.TokenTransferH\000\022X\n%create_and_"
-  "transfer_token_transaction\030\013 \001(\0132\'.TW.So"
-  "lana.Proto.CreateAndTransferTokenH\000\022\024\n\014f"
-  "rom_address\030\014 \001(\t\022\022\n\nto_address\030\r \001(\t\022.\n"
-  "\006header\030\016 \001(\0132\036.TW.Solana.Proto.MessageH"
-  "eader\022\033\n\023static_account_keys\030\017 \003(\t\022C\n\025co"
-  "mpiled_instructions\030\020 \003(\0132$.TW.Solana.Pr"
-  "oto.CompiledInstruction\0222\n\014instructions\030"
-  "\021 \003(\0132\034.TW.Solana.Proto.InstructionB\022\n\020t"
-  "ransaction_type\" \n\rSigningOutput\022\017\n\007enco"
-  "ded\030\001 \001(\tB\027\n\025wallet.core.jni.protob\006prot"
-  "o3"
+  "key_indexes\030\002 \003(\r\022\014\n\004data\030\003 \001(\014\"^\n\023Addre"
+  "ssTableLookups\022\023\n\013account_key\030\001 \001(\t\022\030\n\020w"
+  "ritable_indexes\030\002 \003(\r\022\030\n\020readonly_indexe"
+  "s\030\003 \003(\r\"\232\010\n\014SigningInput\022\023\n\013private_key\030"
+  "\001 \001(\014\022\030\n\020recent_blockhash\030\002 \001(\t\0229\n\024trans"
+  "fer_transaction\030\003 \001(\0132\031.TW.Solana.Proto."
+  "TransferH\000\022D\n\032delegate_stake_transaction"
+  "\030\004 \001(\0132\036.TW.Solana.Proto.DelegateStakeH\000"
+  "\022H\n\034deactivate_stake_transaction\030\005 \001(\0132 "
+  ".TW.Solana.Proto.DeactivateStakeH\000\022O\n de"
+  "activate_all_stake_transaction\030\006 \001(\0132#.T"
+  "W.Solana.Proto.DeactivateAllStakeH\000\022>\n\024w"
+  "ithdraw_transaction\030\007 \001(\0132\036.TW.Solana.Pr"
+  "oto.WithdrawStakeH\000\022E\n\030withdraw_all_tran"
+  "saction\030\010 \001(\0132!.TW.Solana.Proto.Withdraw"
+  "AllStakeH\000\022O\n create_token_account_trans"
+  "action\030\t \001(\0132#.TW.Solana.Proto.CreateTok"
+  "enAccountH\000\022D\n\032token_transfer_transactio"
+  "n\030\n \001(\0132\036.TW.Solana.Proto.TokenTransferH"
+  "\000\022X\n%create_and_transfer_token_transacti"
+  "on\030\013 \001(\0132\'.TW.Solana.Proto.CreateAndTran"
+  "sferTokenH\000\022\024\n\014from_address\030\014 \001(\t\022\022\n\nto_"
+  "address\030\r \001(\t\022.\n\006header\030\016 \001(\0132\036.TW.Solan"
+  "a.Proto.MessageHeader\022\033\n\023static_account_"
+  "keys\030\017 \003(\t\022C\n\025compiled_instructions\030\020 \003("
+  "\0132$.TW.Solana.Proto.CompiledInstruction\022"
+  "2\n\014instructions\030\021 \003(\0132\034.TW.Solana.Proto."
+  "Instruction\022C\n\025address_table_lookups\030\022 \003"
+  "(\0132$.TW.Solana.Proto.AddressTableLookups"
+  "B\022\n\020transaction_type\" \n\rSigningOutput\022\017\n"
+  "\007encoded\030\001 \001(\tB\027\n\025wallet.core.jni.protob"
+  "\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_Solana_2eproto_deps[1] = {
 };
-static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_Solana_2eproto_sccs[16] = {
+static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_Solana_2eproto_sccs[17] = {
   &scc_info_AccountKey_Solana_2eproto.base,
+  &scc_info_AddressTableLookups_Solana_2eproto.base,
   &scc_info_CompiledInstruction_Solana_2eproto.base,
   &scc_info_CreateAndTransferToken_Solana_2eproto.base,
   &scc_info_CreateTokenAccount_Solana_2eproto.base,
@@ -596,10 +631,10 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_Sol
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_Solana_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_Solana_2eproto = {
-  false, false, descriptor_table_protodef_Solana_2eproto, "Solana.proto", 2442,
-  &descriptor_table_Solana_2eproto_once, descriptor_table_Solana_2eproto_sccs, descriptor_table_Solana_2eproto_deps, 16, 0,
+  false, false, descriptor_table_protodef_Solana_2eproto, "Solana.proto", 2607,
+  &descriptor_table_Solana_2eproto_once, descriptor_table_Solana_2eproto_sccs, descriptor_table_Solana_2eproto_deps, 17, 0,
   schemas, file_default_instances, TableStruct_Solana_2eproto::offsets,
-  file_level_metadata_Solana_2eproto, 16, file_level_enum_descriptors_Solana_2eproto, file_level_service_descriptors_Solana_2eproto,
+  file_level_metadata_Solana_2eproto, 17, file_level_enum_descriptors_Solana_2eproto, file_level_service_descriptors_Solana_2eproto,
 };
 
 // Force running AddDescriptors() at dynamic initialization time.
@@ -4592,6 +4627,290 @@ void CompiledInstruction::InternalSwap(CompiledInstruction* other) {
 
 // ===================================================================
 
+class AddressTableLookups::_Internal {
+ public:
+};
+
+AddressTableLookups::AddressTableLookups(::PROTOBUF_NAMESPACE_ID::Arena* arena)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena),
+  writable_indexes_(arena),
+  readonly_indexes_(arena) {
+  SharedCtor();
+  RegisterArenaDtor(arena);
+  // @@protoc_insertion_point(arena_constructor:TW.Solana.Proto.AddressTableLookups)
+}
+AddressTableLookups::AddressTableLookups(const AddressTableLookups& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message(),
+      writable_indexes_(from.writable_indexes_),
+      readonly_indexes_(from.readonly_indexes_) {
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  account_key_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (!from._internal_account_key().empty()) {
+    account_key_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_account_key(), 
+      GetArena());
+  }
+  // @@protoc_insertion_point(copy_constructor:TW.Solana.Proto.AddressTableLookups)
+}
+
+void AddressTableLookups::SharedCtor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_AddressTableLookups_Solana_2eproto.base);
+  account_key_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+
+AddressTableLookups::~AddressTableLookups() {
+  // @@protoc_insertion_point(destructor:TW.Solana.Proto.AddressTableLookups)
+  SharedDtor();
+  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+void AddressTableLookups::SharedDtor() {
+  GOOGLE_DCHECK(GetArena() == nullptr);
+  account_key_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+
+void AddressTableLookups::ArenaDtor(void* object) {
+  AddressTableLookups* _this = reinterpret_cast< AddressTableLookups* >(object);
+  (void)_this;
+}
+void AddressTableLookups::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
+}
+void AddressTableLookups::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const AddressTableLookups& AddressTableLookups::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_AddressTableLookups_Solana_2eproto.base);
+  return *internal_default_instance();
+}
+
+
+void AddressTableLookups::Clear() {
+// @@protoc_insertion_point(message_clear_start:TW.Solana.Proto.AddressTableLookups)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  writable_indexes_.Clear();
+  readonly_indexes_.Clear();
+  account_key_.ClearToEmpty();
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* AddressTableLookups::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    CHK_(ptr);
+    switch (tag >> 3) {
+      // string account_key = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
+          auto str = _internal_mutable_account_key();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "TW.Solana.Proto.AddressTableLookups.account_key"));
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // repeated uint32 writable_indexes = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedUInt32Parser(_internal_mutable_writable_indexes(), ptr, ctx);
+          CHK_(ptr);
+        } else if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16) {
+          _internal_add_writable_indexes(::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr));
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // repeated uint32 readonly_indexes = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedUInt32Parser(_internal_mutable_readonly_indexes(), ptr, ctx);
+          CHK_(ptr);
+        } else if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24) {
+          _internal_add_readonly_indexes(::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr));
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      default: {
+      handle_unusual:
+        if ((tag & 7) == 4 || tag == 0) {
+          ctx->SetLastTag(tag);
+          goto success;
+        }
+        ptr = UnknownFieldParse(tag,
+            _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+            ptr, ctx);
+        CHK_(ptr != nullptr);
+        continue;
+      }
+    }  // switch
+  }  // while
+success:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto success;
+#undef CHK_
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* AddressTableLookups::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:TW.Solana.Proto.AddressTableLookups)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // string account_key = 1;
+  if (this->account_key().size() > 0) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_account_key().data(), static_cast<int>(this->_internal_account_key().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "TW.Solana.Proto.AddressTableLookups.account_key");
+    target = stream->WriteStringMaybeAliased(
+        1, this->_internal_account_key(), target);
+  }
+
+  // repeated uint32 writable_indexes = 2;
+  {
+    int byte_size = _writable_indexes_cached_byte_size_.load(std::memory_order_relaxed);
+    if (byte_size > 0) {
+      target = stream->WriteUInt32Packed(
+          2, _internal_writable_indexes(), byte_size, target);
+    }
+  }
+
+  // repeated uint32 readonly_indexes = 3;
+  {
+    int byte_size = _readonly_indexes_cached_byte_size_.load(std::memory_order_relaxed);
+    if (byte_size > 0) {
+      target = stream->WriteUInt32Packed(
+          3, _internal_readonly_indexes(), byte_size, target);
+    }
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:TW.Solana.Proto.AddressTableLookups)
+  return target;
+}
+
+size_t AddressTableLookups::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:TW.Solana.Proto.AddressTableLookups)
+  size_t total_size = 0;
+
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // repeated uint32 writable_indexes = 2;
+  {
+    size_t data_size = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      UInt32Size(this->writable_indexes_);
+    if (data_size > 0) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+            static_cast<::PROTOBUF_NAMESPACE_ID::int32>(data_size));
+    }
+    int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(data_size);
+    _writable_indexes_cached_byte_size_.store(cached_size,
+                                    std::memory_order_relaxed);
+    total_size += data_size;
+  }
+
+  // repeated uint32 readonly_indexes = 3;
+  {
+    size_t data_size = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      UInt32Size(this->readonly_indexes_);
+    if (data_size > 0) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+            static_cast<::PROTOBUF_NAMESPACE_ID::int32>(data_size));
+    }
+    int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(data_size);
+    _readonly_indexes_cached_byte_size_.store(cached_size,
+                                    std::memory_order_relaxed);
+    total_size += data_size;
+  }
+
+  // string account_key = 1;
+  if (this->account_key().size() > 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_account_key());
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
+        _internal_metadata_, total_size, &_cached_size_);
+  }
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void AddressTableLookups::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:TW.Solana.Proto.AddressTableLookups)
+  GOOGLE_DCHECK_NE(&from, this);
+  const AddressTableLookups* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<AddressTableLookups>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:TW.Solana.Proto.AddressTableLookups)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:TW.Solana.Proto.AddressTableLookups)
+    MergeFrom(*source);
+  }
+}
+
+void AddressTableLookups::MergeFrom(const AddressTableLookups& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:TW.Solana.Proto.AddressTableLookups)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  writable_indexes_.MergeFrom(from.writable_indexes_);
+  readonly_indexes_.MergeFrom(from.readonly_indexes_);
+  if (from.account_key().size() > 0) {
+    _internal_set_account_key(from._internal_account_key());
+  }
+}
+
+void AddressTableLookups::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:TW.Solana.Proto.AddressTableLookups)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void AddressTableLookups::CopyFrom(const AddressTableLookups& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:TW.Solana.Proto.AddressTableLookups)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool AddressTableLookups::IsInitialized() const {
+  return true;
+}
+
+void AddressTableLookups::InternalSwap(AddressTableLookups* other) {
+  using std::swap;
+  _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
+  writable_indexes_.InternalSwap(&other->writable_indexes_);
+  readonly_indexes_.InternalSwap(&other->readonly_indexes_);
+  account_key_.Swap(&other->account_key_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata AddressTableLookups::GetMetadata() const {
+  return GetMetadataStatic();
+}
+
+
+// ===================================================================
+
 class SigningInput::_Internal {
  public:
   static const ::TW::Solana::Proto::Transfer& transfer_transaction(const SigningInput* msg);
@@ -4785,7 +5104,8 @@ SigningInput::SigningInput(::PROTOBUF_NAMESPACE_ID::Arena* arena)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena),
   static_account_keys_(arena),
   compiled_instructions_(arena),
-  instructions_(arena) {
+  instructions_(arena),
+  address_table_lookups_(arena) {
   SharedCtor();
   RegisterArenaDtor(arena);
   // @@protoc_insertion_point(arena_constructor:TW.Solana.Proto.SigningInput)
@@ -4794,7 +5114,8 @@ SigningInput::SigningInput(const SigningInput& from)
   : ::PROTOBUF_NAMESPACE_ID::Message(),
       static_account_keys_(from.static_account_keys_),
       compiled_instructions_(from.compiled_instructions_),
-      instructions_(from.instructions_) {
+      instructions_(from.instructions_),
+      address_table_lookups_(from.address_table_lookups_) {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   private_key_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   if (!from._internal_private_key().empty()) {
@@ -4983,6 +5304,7 @@ void SigningInput::Clear() {
   static_account_keys_.Clear();
   compiled_instructions_.Clear();
   instructions_.Clear();
+  address_table_lookups_.Clear();
   private_key_.ClearToEmpty();
   recent_blockhash_.ClearToEmpty();
   from_address_.ClearToEmpty();
@@ -5143,6 +5465,18 @@ const char* SigningInput::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_I
             CHK_(ptr);
             if (!ctx->DataAvailable(ptr)) break;
           } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<138>(ptr));
+        } else goto handle_unusual;
+        continue;
+      // repeated .TW.Solana.Proto.AddressTableLookups address_table_lookups = 18;
+      case 18:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 146)) {
+          ptr -= 2;
+          do {
+            ptr += 2;
+            ptr = ctx->ParseMessage(_internal_add_address_table_lookups(), ptr);
+            CHK_(ptr);
+            if (!ctx->DataAvailable(ptr)) break;
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<146>(ptr));
         } else goto handle_unusual;
         continue;
       default: {
@@ -5315,6 +5649,14 @@ failure:
       InternalWriteMessage(17, this->_internal_instructions(i), target, stream);
   }
 
+  // repeated .TW.Solana.Proto.AddressTableLookups address_table_lookups = 18;
+  for (unsigned int i = 0,
+      n = static_cast<unsigned int>(this->_internal_address_table_lookups_size()); i < n; i++) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(18, this->_internal_address_table_lookups(i), target, stream);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -5349,6 +5691,13 @@ size_t SigningInput::ByteSizeLong() const {
   // repeated .TW.Solana.Proto.Instruction instructions = 17;
   total_size += 2UL * this->_internal_instructions_size();
   for (const auto& msg : this->instructions_) {
+    total_size +=
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
+  }
+
+  // repeated .TW.Solana.Proto.AddressTableLookups address_table_lookups = 18;
+  total_size += 2UL * this->_internal_address_table_lookups_size();
+  for (const auto& msg : this->address_table_lookups_) {
     total_size +=
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
   }
@@ -5490,6 +5839,7 @@ void SigningInput::MergeFrom(const SigningInput& from) {
   static_account_keys_.MergeFrom(from.static_account_keys_);
   compiled_instructions_.MergeFrom(from.compiled_instructions_);
   instructions_.MergeFrom(from.instructions_);
+  address_table_lookups_.MergeFrom(from.address_table_lookups_);
   if (from.private_key().size() > 0) {
     _internal_set_private_key(from._internal_private_key());
   }
@@ -5572,6 +5922,7 @@ void SigningInput::InternalSwap(SigningInput* other) {
   static_account_keys_.InternalSwap(&other->static_account_keys_);
   compiled_instructions_.InternalSwap(&other->compiled_instructions_);
   instructions_.InternalSwap(&other->instructions_);
+  address_table_lookups_.InternalSwap(&other->address_table_lookups_);
   private_key_.Swap(&other->private_key_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
   recent_blockhash_.Swap(&other->recent_blockhash_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
   from_address_.Swap(&other->from_address_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
@@ -5838,6 +6189,9 @@ template<> PROTOBUF_NOINLINE ::TW::Solana::Proto::MessageHeader* Arena::CreateMa
 }
 template<> PROTOBUF_NOINLINE ::TW::Solana::Proto::CompiledInstruction* Arena::CreateMaybeMessage< ::TW::Solana::Proto::CompiledInstruction >(Arena* arena) {
   return Arena::CreateMessageInternal< ::TW::Solana::Proto::CompiledInstruction >(arena);
+}
+template<> PROTOBUF_NOINLINE ::TW::Solana::Proto::AddressTableLookups* Arena::CreateMaybeMessage< ::TW::Solana::Proto::AddressTableLookups >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::TW::Solana::Proto::AddressTableLookups >(arena);
 }
 template<> PROTOBUF_NOINLINE ::TW::Solana::Proto::SigningInput* Arena::CreateMaybeMessage< ::TW::Solana::Proto::SigningInput >(Arena* arena) {
   return Arena::CreateMessageInternal< ::TW::Solana::Proto::SigningInput >(arena);

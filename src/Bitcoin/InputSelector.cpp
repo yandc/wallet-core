@@ -135,6 +135,7 @@ std::vector<TypeWithAmount> InputSelector<TypeWithAmount>::select(int64_t target
     for (size_t numInputs = 1; numInputs <= n; ++numInputs) {
         const auto fee = feeCalculator.calculate(numInputs, numOutputs, byteFee);
         const auto targetWithFee = targetValue + fee;
+        std::cout << "fee: " << fee << ", targetWithFee: " << targetWithFee << std::endl;
         if (maxWithXInputs[numInputs] < targetWithFee) {
             // no way to satisfy with only numInputs inputs, skip
             continue;

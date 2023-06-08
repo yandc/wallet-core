@@ -107,7 +107,7 @@ std::string Transaction::serialize() const {
 
 Data Transaction::messageData() const {
     Data buffer;
-
+    if (message.addressLookups.size() > 0) buffer.push_back(0x80);
     buffer.push_back(this->message.header.numRequiredSignatures);
     buffer.push_back(this->message.header.numCreditOnlySignedAccounts);
     buffer.push_back(this->message.header.numCreditOnlyUnsignedAccounts);
@@ -129,7 +129,17 @@ Data Transaction::messageData() const {
         append(buffer, shortVecLength<uint8_t>(instruction.data));
         append(buffer, instruction.data);
     }
+    if (message.addressLookups.size() == 0) return buffer;
 
+    append(buffer, shortVecLength<AddressLookupTable>(message.addressLookups));
+    for (auto lookup: message.addressLookups) {
+        Data account_key_vec(lookup.accountKey.bytes.begin(), lookup.accountKey.bytes.end());
+        append(buffer, account_key_vec);
+        append(buffer, shortVecLength<uint8_t>(lookup.writableIndexes));
+        append(buffer, lookup.writableIndexes);
+        append(buffer, shortVecLength<uint8_t>(lookup.readonlyIndexes));
+        append(buffer, lookup.readonlyIndexes);
+    }
     return buffer;
 }
 

@@ -106,6 +106,12 @@ message CompiledInstruction {
     bytes data = 3;
 }
 
+message AddressTableLookups {
+    string account_key = 1;
+    repeated uint32 writable_indexes = 2;
+    repeated uint32 readonly_indexes = 3;
+}
+
 // Input data necessary to create a signed transaction.
 message SigningInput {
     bytes private_key = 1;
@@ -127,6 +133,7 @@ message SigningInput {
     repeated string static_account_keys = 15; //optional, appear in dapp call with compiled_instructions
     repeated CompiledInstruction compiled_instructions = 16; //v0 dapp call
     repeated Instruction instructions = 17; //legacy dapp call
+    repeated AddressTableLookups address_table_lookups = 18; //v0 + address table
 }
 
 // Transaction signing output.

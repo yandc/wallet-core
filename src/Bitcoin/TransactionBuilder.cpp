@@ -97,6 +97,7 @@ TransactionPlan TransactionBuilder::plan(const SigningInput& input) {
     } else {
         const auto& feeCalculator = getFeeCalculator(static_cast<TWCoinType>(input.coinType));
         const int64_t dustThreshold = feeCalculator.calculateSingleInput(input.byteFee);
+        std::cout << "dust threshold: " << dustThreshold << std::endl;
         if(dustThreshold > input.amount) {
             plan.amount = 0;
             return plan;
@@ -114,10 +115,10 @@ TransactionPlan TransactionBuilder::plan(const SigningInput& input) {
         }
 
         auto extraOutputs = extraOutputCount(input);
-        auto output_size = 2;
+        auto output_size = 1;
         UTXOs selectedInputs;
         if (!maxAmount) {
-            output_size = 2 + extraOutputs; // output + change
+            output_size = 1 + extraOutputs; // output + change
             if (input.utxos.size() <= SimpleModeLimit && input.utxos.size() <= MaxUtxosHardLimit) {
                 selectedInputs = inputSelector.select(plan.amount, input.byteFee, output_size);
             } else {
@@ -148,14 +149,21 @@ TransactionPlan TransactionBuilder::plan(const SigningInput& input) {
             if (!maxAmount) {
                 assert(input.amount <= plan.availableAmount);
                 plan.amount = input.amount;
-                plan.fee = 0;
                 plan.change = plan.availableAmount - plan.amount;
+                plan.fee = estimateSegwitFee(feeCalculator, plan, output_size + 1, input);
+                if (plan.availableAmount - plan.amount - plan.fee < dustThreshold) {//no change
+                    plan.change = 0;
+                    plan.fee = estimateSegwitFee(feeCalculator, plan, output_size, input);
+                    if (plan.amount + plan.fee > plan.availableAmount) {
+                        plan.fee = plan.availableAmount - plan.amount;
+                    }
+                }
             } else {
                 plan.amount = plan.availableAmount;
                 plan.fee = 0;
                 plan.change = 0;
+                plan.fee = estimateSegwitFee(feeCalculator, plan, output_size, input);
             }
-            plan.fee = estimateSegwitFee(feeCalculator, plan, output_size, input);
             // If fee is larger then availableAmount (can happen in special maxAmount case), we reduce it (and hope it will go through)
             plan.fee = std::min(plan.availableAmount, plan.fee);
             assert(plan.fee >= 0 && plan.fee <= plan.availableAmount);

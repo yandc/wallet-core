@@ -65,6 +65,17 @@ Proto::SigningOutput Signer::sign(const Proto::SigningInput& input) {
             }
             message.compiledInstructions.push_back(ci);
         }
+        for(int i = 0; i < input.address_table_lookups_size(); i++) {
+            auto lookup = input.address_table_lookups(i);
+            AddressLookupTable lookupTable(lookup.account_key());
+            for(int j = 0; j < lookup.writable_indexes_size(); j++) {
+                lookupTable.writableIndexes.push_back((uint8_t)lookup.writable_indexes(j));
+            }
+            for(int j = 0; j < lookup.readonly_indexes_size(); j++) {
+                lookupTable.readonlyIndexes.push_back((uint8_t)lookup.readonly_indexes(j));
+            }
+            message.addressLookups.push_back(lookupTable);
+        }
         signerKeys.push_back(key);
 
     } else if(input.instructions_size() > 0) {
