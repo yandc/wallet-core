@@ -318,9 +318,21 @@ std::string buildProtoTxBody(const Proto::SigningInput& input) {
 
 std::string buildAuthInfo(const Proto::SigningInput& input) {
     if (input.messages_size() >= 1 && input.messages(0).has_sign_direct_message()) {
-        return input.messages(0).sign_direct_message().auth_info_bytes();
+        if (input.fee().amounts_size() > 0) {
+            auto authInfo = cosmos::AuthInfo();
+            if (authInfo.ParseFromString(input.messages(0).sign_direct_message().auth_info_bytes())) {
+                auto fee = authInfo.mutable_fee();
+                fee->set_gas_limit(input.fee().gas());
+                if (fee->amount_size() > 0 && fee->amount(0).denom() == input.fee().amounts(0).denom()) {
+                    auto amount = fee->mutable_amount(0);
+                    amount->set_amount(input.fee().amounts(0).amount());
+                }
+            }
+            return authInfo.SerializeAsString();
+        } else {
+            return input.messages(0).sign_direct_message().auth_info_bytes();
+        }
     }
-
     // AuthInfo
     const auto privateKey = PrivateKey(input.private_key());
     const auto publicKey = privateKey.getPublicKey(TWPublicKeyTypeSECP256k1);

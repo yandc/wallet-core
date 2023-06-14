@@ -170,9 +170,10 @@ void TWStringDelete(TWString* string);
 chaindata_initChainConfig下发链配置，初始化SDK之后，需要先调用一下
 chainConfig:是链配置数组的字符串
 chainConfig例子：[{"chain_type":"EVM","chain":"ETH","proxy_key":"gasOracleETH","rpc_urls":["https://mainnet.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161","https://web3os.tokenpocket.pro"],"proxy_cache_time":15}]
+resolvers: json对象，链配置中获取，具体文档：https://tk3en79uf0.larksuite.com/docx/doxus5KstWG3LsebEHAdoj62vWb
 返回结构：{"status":true/false, "result":"", "error":""}
 */
-extern const char* chaindata_initChainConfig(const char* chainConfig);
+extern const char* chaindata_initChainConfig(const char* chainConfig, const char* resolvers);
 
 /*
 chaindata_getTransactionParams统一获取交易参数的接口
@@ -338,6 +339,14 @@ address:地址
 */
 extern const char* chaindata_getDirectTransfer(const char* chain, const char* address);
 
+/*
+queryInfo: json object，内部字段如下：
+query: 域名或地址
+reverse: 是否反向解析， "true" or "false"
+project: 查询项目
+具体文档：https://tk3en79uf0.larksuite.com/docx/doxus5KstWG3LsebEHAdoj62vWb
+*/
+extern const char* chaindata_lookupDomain(const char* chain, const char* queryInfo);
 #ifdef __cplusplus
 }
 #endif
