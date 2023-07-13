@@ -321,6 +321,14 @@ JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_chaindata_1ge
 
 /*
  * Class:     com_openblock_wallet_jni_WalletCore
+ * Method:    chaindata_identifyRiskAddress
+ * Signature: (Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+ */
+JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_chaindata_1identifyRiskAddress
+  (JNIEnv *, jobject, jstring, jstring);
+
+/*
+ * Class:     com_openblock_wallet_jni_WalletCore
  * Method:    chaindata_lookupDomain
  * Signature: (Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
  */

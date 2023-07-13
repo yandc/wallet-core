@@ -323,6 +323,11 @@ public class WalletCore
     public native String chaindata_getDirectTransfer(String chain, String address);
 
     /*
+    chaindata_identifyRiskAddress 转账风险地址判定
+    query: {"from_address": "", "to_address": ""}
+    */
+    public native String chaindata_identifyRiskAddress(String chain, String query);
+    /*
     queryInfo: json object，内部字段如下：
     query: 域名或地址
     reverse: 是否反向解析， "true" or "false"

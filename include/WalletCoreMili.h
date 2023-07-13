@@ -347,6 +347,12 @@ project: 查询项目
 具体文档：https://tk3en79uf0.larksuite.com/docx/doxus5KstWG3LsebEHAdoj62vWb
 */
 extern const char* chaindata_lookupDomain(const char* chain, const char* queryInfo);
+
+/*
+chaindata_identifyRiskAddress 转账风险地址判定
+query: {"from_address": "", "to_address": ""}
+*/
+extern const char* chaindata_identifyRiskAddress(const char* chain, const char* query);
 #ifdef __cplusplus
 }
 #endif
