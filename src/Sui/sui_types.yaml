@@ -434,6 +434,31 @@ ProgrammableTransaction:
           TYPENAME: Command
 ProtocolVersion:
   NEWTYPESTRUCT: U64
+SenderSignedData:
+  NEWTYPESTRUCT:
+    SEQ:
+      TYPENAME: SenderSignedTransaction
+SenderSignedTransaction:
+  STRUCT:
+    - intent_message:
+        TYPENAME: IntentMessage
+    - tx_signatures:
+        SEQ:
+          TYPENAME: GenericSignature
+IntentMessage:
+  STRUCT:
+    - intent:
+        TYPENAME: Intent
+    - value:
+        TYPENAME: TransactionData
+Intent:
+  STRUCT:
+    - scope: U8
+    - version: U8
+    - app_id: U8
+GenericSignature:
+  NEWTYPESTRUCT:
+    SEQ: U8
 SequenceNumber:
   NEWTYPESTRUCT: U64
 Sha3Digest:

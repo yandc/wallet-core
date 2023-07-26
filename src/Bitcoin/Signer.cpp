@@ -80,5 +80,5 @@ std::string Signer::signJSON(TWCoinType coin, const std::string& json, const Dat
     if(output.error() != Common::Proto::OK) {
         throw ERROR_INFOS[int(output.error())];
     }
-    return hex(output.encoded());
+    return output.transaction_id() + "#" + hex(output.encoded());
 }

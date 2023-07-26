@@ -26,6 +26,7 @@ public:
 
   Data getSignatureHash(const Bitcoin::Script& scriptCode, size_t index, enum TWBitcoinSigHashType hashType,
                         uint64_t amount, enum Bitcoin::SignatureVersion version) const;
+  Data getTransactionID() const;
 
 private:
   void hashOutpoint(const Bitcoin::OutPoint& outpoint, Data& data) const;

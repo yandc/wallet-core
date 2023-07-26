@@ -483,6 +483,6 @@ std::string Signer::signJSON(const std::string& json, const Data& key) {
     google::protobuf::util::JsonStringToMessage(json, &input);
     input.set_private_key(key.data(), key.size());
     auto output = Signer::sign(input);
-    return output.json();
+    return hex(output.id()) + "#" + output.json();
 }
 }

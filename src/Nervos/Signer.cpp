@@ -60,7 +60,7 @@ std::string Signer::signJSON(const std::string& json, const Data& key) {
     if(output.error() != Common::Proto::OK) {
         throw ERROR_INFOS[int(output.error())];
     }
-    return output.transaction_json();
+    return output.transaction_id() + "#" + output.transaction_json();
 }
 
 } // namespace TW::Nervos

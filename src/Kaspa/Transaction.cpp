@@ -119,4 +119,29 @@ Data Transaction::getSignatureHash(const Bitcoin::Script& scriptCode, size_t ind
     return Hash::sha256(finalHashData);
 }
 
+Data Transaction::getTransactionID() const {
+    Data subnetId(20, 0);
+    Data data;
+    encode16LE(0, data);//version
+    encode64LE(inputs.size(), data);
+    for (int i = 0; i < inputs.size(); i++) {//kaspad/domain/consensus/utils/consensushashing/transaction.go:writeTransactionInput
+        hashOutpoint(inputs[i].previousOutput, data);
+        encode64LE(0, data);//writeVarBytes(w, []byte{})
+        encode64LE(uint64_t(inputs[i].sequence), data);
+    }
+    encode64LE(outputs.size(), data);
+    for (int i = 0; i < outputs.size(); i++) {
+        hashOutput(outputs[i], data);
+    }
+    encode64LE(uint64_t(lockTime), data);
+    append(data, subnetId);
+    encode64LE(0, data);//gas
+    encode64LE(0, data);//payload: []bytes
+
+    Data txID(32, 0);
+    std::string key = "TransactionID";
+    blake2b_Key(data.data(), data.size(), key.c_str(), key.size(), txID.data(), 32);
+    return txID;
+}
+
 } // namespace

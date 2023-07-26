@@ -278,6 +278,10 @@ string Entry::signJSON(TWCoinType coin, const std::string& jsonTx, const Data& k
         throw MiliException{E_SIGN};
     }
 
+    Data prefix = data("TransactionData::");
+    append(prefix, rawData);
+    string txDigest = TW::Base58::bitcoin.encode(Hash::blake2b(prefix, 32));
+
     PublicKey pubKey = privKey.getPublicKey(TWPublicKeyTypeED25519);
     Data serSign = {0};//flag, ed25519
     append(serSign, sign);
@@ -306,5 +310,5 @@ string Entry::signJSON(TWCoinType coin, const std::string& jsonTx, const Data& k
         {"rawTx", sendTx.dump()},
         {"realAmount", realAmount}
     };
-    return outTx.dump();
+    return txDigest + "#" + outTx.dump();
 }

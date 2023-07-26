@@ -241,7 +241,7 @@ Proto::SigningOutput Signer::sign(const Proto::SigningInput& input) {
 
     auto protoOutput = Proto::SigningOutput();
     auto encoded = transaction.serialize();
-    protoOutput.set_encoded(encoded);
+    protoOutput.set_encoded(Base58::bitcoin.encode(transaction.signatures[0].bytes) + "#" + encoded);
 
     return protoOutput;
 }

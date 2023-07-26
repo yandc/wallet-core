@@ -43,5 +43,5 @@ std::string Signer::signJSON(const std::string& json, const Data& key) {
     era->set_period(512);
     era->set_block_number(input.block_number());
     auto output = Signer::sign(input);
-    return hex(output.encoded());
+    return hexEncoded(Hash::blake2b(output.encoded(), 32)) + "#" + hex(output.encoded());
 }

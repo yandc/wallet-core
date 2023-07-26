@@ -390,5 +390,14 @@ string Entry::signJSON(TWCoinType coin, const std::string& jsonTx, const Data& k
         .raw_txn = rawTx,
         .authenticator = auth
     };
-    return TW::hex(serde::BcsSerialize(signedTx));
+    aptos_types::Transaction tx = {
+        .value = aptos_types::Transaction::UserTransaction{
+            .value = signedTx
+        }
+    };
+    Data prefix = Hash::sha3_256(data("APTOS::Transaction"));
+    Data txBytes = serde::BcsSerialize(signedTx);
+    Data txBytes4Hash = serde::BcsSerialize(tx);
+    append(prefix, txBytes4Hash);
+    return hexEncoded(Hash::sha3_256(prefix)) + "#" + hex(txBytes);
 }

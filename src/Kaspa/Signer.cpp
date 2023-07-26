@@ -32,10 +32,7 @@ Proto::SigningOutput Signer::sign(const Bitcoin::Proto::SigningInput& input) {
     tx.encode(encoded);
     output.set_encoded(encoded.data(), encoded.size());
 
-    Data txHashData = encoded;
-    auto txHash = Hash::sha256d(txHashData.data(), txHashData.size());
-    std::reverse(txHash.begin(), txHash.end());
-    output.set_transaction_id(hex(txHash));
+    output.set_transaction_id(hex(tx.getTransactionID()));
     return output;
 }
 
@@ -59,5 +56,5 @@ std::string Signer::signJSON(TWCoinType coin, const std::string& json, const Dat
     google::protobuf::util::JsonPrintOptions options;
     options.always_print_primitive_fields = true;
     google::protobuf::util::MessageToJsonString(output.transaction(), &result, options);
-    return result;
+    return output.transaction_id() + "#" + result;
 }

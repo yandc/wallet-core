@@ -125,5 +125,5 @@ string Entry::signJSON(TWCoinType coin, const std::string& txInput, const Data& 
     });
 
     json jtx{{"deploy", json(deploy)}};
-    return jtx.dump();
+    return hex(deploy.hash.value) + "#" + jtx.dump();
 }

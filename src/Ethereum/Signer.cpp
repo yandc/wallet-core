@@ -46,7 +46,7 @@ std::string Signer::signJSON(const std::string& json, const Data& key) {
     google::protobuf::util::JsonStringToMessage(json, &input);
     input.set_private_key(key.data(), key.size());
     auto output = Signer::sign(input);
-    return hex(output.encoded());
+    return hexEncoded(Hash::keccak256(output.encoded())) + "#" + hex(output.encoded());
 }
 
 Proto::SigningOutput Signer::compile(const Proto::SigningInput& input, const Data& signature) noexcept {

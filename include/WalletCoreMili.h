@@ -34,6 +34,7 @@ extern const char* GoCreateMili23(const char* curve, const char* session, const 
 * @key: 本地私钥碎片，结构：{"Key": "...", "Pub": "..."}
 * @mode: 枚举，托管trust, 社交恢复发起方origin, 社交恢复托管方backup, 升级为社交恢复upgrade
 *        普通托管重置： 发起方trust
+*        快速托管重置： 发起方trust_v2
 *        社交托管c重置： 发起方origin，托管方backup
 *        升级为社交托管：发起方upgrade，托管费backup
 *        企业钱包邀请管理员：创建founder，管理员manager

@@ -11,6 +11,7 @@
 
 #include "PrivateKey.h"
 #include "Data.h"
+#include "HexCoding.h"
 
 #include <google/protobuf/util/json_util.h>
 
@@ -19,7 +20,7 @@ using namespace TW::Cosmos;
 
 namespace TW::Cosmos {
 
-Proto::SigningOutput Signer::sign(const Proto::SigningInput& input) noexcept {
+Proto::SigningOutput Signer::sign(const Proto::SigningInput& input) {
     switch (input.signing_mode()) {
         case Proto::JSON:
             return signJsonSerialized(input);
@@ -30,7 +31,7 @@ Proto::SigningOutput Signer::sign(const Proto::SigningInput& input) noexcept {
     }
 }
 
-Proto::SigningOutput Signer::signJsonSerialized(const Proto::SigningInput& input) noexcept {
+Proto::SigningOutput Signer::signJsonSerialized(const Proto::SigningInput& input) {
     auto key = PrivateKey(input.private_key());
     auto preimage = Json::signaturePreimageJSON(input).dump();
     auto hash = Hash::sha256(preimage);
@@ -47,30 +48,26 @@ Proto::SigningOutput Signer::signJsonSerialized(const Proto::SigningInput& input
     return output;
 }
 
-Proto::SigningOutput Signer::signProtobuf(const Proto::SigningInput& input) noexcept {
+Proto::SigningOutput Signer::signProtobuf(const Proto::SigningInput& input) {
     using namespace Protobuf;
     using namespace Json;
-    try {
-        const auto serializedTxBody = buildProtoTxBody(input);
-        const auto serializedAuthInfo = buildAuthInfo(input);
-        const auto signature = buildSignature(input, serializedTxBody, serializedAuthInfo);
-        auto serializedTxRaw = buildProtoTxRaw(serializedTxBody, serializedAuthInfo, signature);
 
-        auto output = Proto::SigningOutput();
-        const std::string jsonSerialized = buildProtoTxJson(input, serializedTxRaw);
-        auto publicKey = PrivateKey(input.private_key()).getPublicKey(TWPublicKeyTypeSECP256k1);
-        auto signatures = nlohmann::json::array({signatureJSON(signature, publicKey.bytes)});
-        output.set_serialized(jsonSerialized);
-        output.set_signature(signature.data(), signature.size());
-        output.set_json("");
-        output.set_error("");
-        output.set_signature_json(signatures.dump());
-        return output;
-    } catch (const std::exception& ex) {
-        auto output = Proto::SigningOutput();
-        output.set_error(std::string("Error: ") + ex.what());
-        return output;
-    }
+    const auto serializedTxBody = buildProtoTxBody(input);
+    const auto serializedAuthInfo = buildAuthInfo(input);
+    const auto signature = buildSignature(input, serializedTxBody, serializedAuthInfo);
+    auto serializedTxRaw = buildProtoTxRaw(serializedTxBody, serializedAuthInfo, signature);
+    std::string txid = hex(Hash::sha256(serializedTxRaw));
+
+    auto output = Proto::SigningOutput();
+    const std::string jsonSerialized = buildProtoTxJson(input, serializedTxRaw);
+    auto publicKey = PrivateKey(input.private_key()).getPublicKey(TWPublicKeyTypeSECP256k1);
+    auto signatures = nlohmann::json::array({signatureJSON(signature, publicKey.bytes)});
+    output.set_serialized(txid + "#" + jsonSerialized);
+    output.set_signature(signature.data(), signature.size());
+    output.set_json("");
+    output.set_error("");
+    output.set_signature_json(signatures.dump());
+    return output;
 }
 
 std::string Signer::signJSON(const std::string& json, const Data& key) {

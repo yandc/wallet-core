@@ -768,6 +768,47 @@ namespace sui_types {
         friend bool operator==(const MoveStructLayout&, const MoveStructLayout&);
     };
 
+    struct Intent {
+        uint8_t scope;
+        uint8_t version;
+        uint8_t app_id;
+
+        friend bool operator==(const Intent&, const Intent&);
+    };
+
+    struct TransactionData {
+
+        struct V1 {
+            sui_types::TransactionDataV1 value;
+
+            friend bool operator==(const V1&, const V1&);
+        };
+
+        std::variant<V1> value;
+
+        friend bool operator==(const TransactionData&, const TransactionData&);
+    };
+
+    struct IntentMessage {
+        sui_types::Intent intent;
+        sui_types::TransactionData value;
+
+        friend bool operator==(const IntentMessage&, const IntentMessage&);
+    };
+
+    struct GenericSignature {
+        std::vector<uint8_t> value;
+
+        friend bool operator==(const GenericSignature&, const GenericSignature&);
+    };
+
+    struct SenderSignedTransaction {
+        sui_types::IntentMessage intent_message;
+        std::vector<sui_types::GenericSignature> tx_signatures;
+
+        friend bool operator==(const SenderSignedTransaction&, const SenderSignedTransaction&);
+    };
+
     struct AbortLocation {
 
         struct Module {
@@ -820,17 +861,10 @@ namespace sui_types {
         friend bool operator==(const ObjectInfoRequestKind&, const ObjectInfoRequestKind&);
     };
 
-    struct TransactionData {
+    struct SenderSignedData {
+        std::vector<sui_types::SenderSignedTransaction> value;
 
-        struct V1 {
-            sui_types::TransactionDataV1 value;
-
-            friend bool operator==(const V1&, const V1&);
-        };
-
-        std::variant<V1> value;
-
-        friend bool operator==(const TransactionData&, const TransactionData&);
+        friend bool operator==(const SenderSignedData&, const SenderSignedData&);
     };
 
     struct TransactionDigest {
@@ -2588,6 +2622,33 @@ sui_types::GasData serde::Deserializable<sui_types::GasData>::deserialize(Deseri
 
 namespace sui_types {
 
+    inline bool operator==(const GenericSignature &lhs, const GenericSignature &rhs) {
+        if (!(lhs.value == rhs.value)) { return false; }
+        return true;
+    }
+
+} // end of namespace sui_types
+
+template <>
+template <typename Serializer>
+void serde::Serializable<sui_types::GenericSignature>::serialize(const sui_types::GenericSignature &obj, Serializer &serializer) {
+    serializer.increase_container_depth();
+    serde::Serializable<decltype(obj.value)>::serialize(obj.value, serializer);
+    serializer.decrease_container_depth();
+}
+
+template <>
+template <typename Deserializer>
+sui_types::GenericSignature serde::Deserializable<sui_types::GenericSignature>::deserialize(Deserializer &deserializer) {
+    deserializer.increase_container_depth();
+    sui_types::GenericSignature obj;
+    obj.value = serde::Deserializable<decltype(obj.value)>::deserialize(deserializer);
+    deserializer.decrease_container_depth();
+    return obj;
+}
+
+namespace sui_types {
+
     inline bool operator==(const GenesisObject &lhs, const GenesisObject &rhs) {
         if (!(lhs.value == rhs.value)) { return false; }
         return true;
@@ -2688,6 +2749,69 @@ template <typename Deserializer>
 sui_types::Identifier serde::Deserializable<sui_types::Identifier>::deserialize(Deserializer &deserializer) {
     deserializer.increase_container_depth();
     sui_types::Identifier obj;
+    obj.value = serde::Deserializable<decltype(obj.value)>::deserialize(deserializer);
+    deserializer.decrease_container_depth();
+    return obj;
+}
+
+namespace sui_types {
+
+    inline bool operator==(const Intent &lhs, const Intent &rhs) {
+        if (!(lhs.scope == rhs.scope)) { return false; }
+        if (!(lhs.version == rhs.version)) { return false; }
+        if (!(lhs.app_id == rhs.app_id)) { return false; }
+        return true;
+    }
+
+} // end of namespace sui_types
+
+template <>
+template <typename Serializer>
+void serde::Serializable<sui_types::Intent>::serialize(const sui_types::Intent &obj, Serializer &serializer) {
+    serializer.increase_container_depth();
+    serde::Serializable<decltype(obj.scope)>::serialize(obj.scope, serializer);
+    serde::Serializable<decltype(obj.version)>::serialize(obj.version, serializer);
+    serde::Serializable<decltype(obj.app_id)>::serialize(obj.app_id, serializer);
+    serializer.decrease_container_depth();
+}
+
+template <>
+template <typename Deserializer>
+sui_types::Intent serde::Deserializable<sui_types::Intent>::deserialize(Deserializer &deserializer) {
+    deserializer.increase_container_depth();
+    sui_types::Intent obj;
+    obj.scope = serde::Deserializable<decltype(obj.scope)>::deserialize(deserializer);
+    obj.version = serde::Deserializable<decltype(obj.version)>::deserialize(deserializer);
+    obj.app_id = serde::Deserializable<decltype(obj.app_id)>::deserialize(deserializer);
+    deserializer.decrease_container_depth();
+    return obj;
+}
+
+namespace sui_types {
+
+    inline bool operator==(const IntentMessage &lhs, const IntentMessage &rhs) {
+        if (!(lhs.intent == rhs.intent)) { return false; }
+        if (!(lhs.value == rhs.value)) { return false; }
+        return true;
+    }
+
+} // end of namespace sui_types
+
+template <>
+template <typename Serializer>
+void serde::Serializable<sui_types::IntentMessage>::serialize(const sui_types::IntentMessage &obj, Serializer &serializer) {
+    serializer.increase_container_depth();
+    serde::Serializable<decltype(obj.intent)>::serialize(obj.intent, serializer);
+    serde::Serializable<decltype(obj.value)>::serialize(obj.value, serializer);
+    serializer.decrease_container_depth();
+}
+
+template <>
+template <typename Deserializer>
+sui_types::IntentMessage serde::Deserializable<sui_types::IntentMessage>::deserialize(Deserializer &deserializer) {
+    deserializer.increase_container_depth();
+    sui_types::IntentMessage obj;
+    obj.intent = serde::Deserializable<decltype(obj.intent)>::deserialize(deserializer);
     obj.value = serde::Deserializable<decltype(obj.value)>::deserialize(deserializer);
     deserializer.decrease_container_depth();
     return obj;
@@ -3761,6 +3885,63 @@ sui_types::ProtocolVersion serde::Deserializable<sui_types::ProtocolVersion>::de
     deserializer.increase_container_depth();
     sui_types::ProtocolVersion obj;
     obj.value = serde::Deserializable<decltype(obj.value)>::deserialize(deserializer);
+    deserializer.decrease_container_depth();
+    return obj;
+}
+
+namespace sui_types {
+
+    inline bool operator==(const SenderSignedData &lhs, const SenderSignedData &rhs) {
+        if (!(lhs.value == rhs.value)) { return false; }
+        return true;
+    }
+
+} // end of namespace sui_types
+
+template <>
+template <typename Serializer>
+void serde::Serializable<sui_types::SenderSignedData>::serialize(const sui_types::SenderSignedData &obj, Serializer &serializer) {
+    serializer.increase_container_depth();
+    serde::Serializable<decltype(obj.value)>::serialize(obj.value, serializer);
+    serializer.decrease_container_depth();
+}
+
+template <>
+template <typename Deserializer>
+sui_types::SenderSignedData serde::Deserializable<sui_types::SenderSignedData>::deserialize(Deserializer &deserializer) {
+    deserializer.increase_container_depth();
+    sui_types::SenderSignedData obj;
+    obj.value = serde::Deserializable<decltype(obj.value)>::deserialize(deserializer);
+    deserializer.decrease_container_depth();
+    return obj;
+}
+
+namespace sui_types {
+
+    inline bool operator==(const SenderSignedTransaction &lhs, const SenderSignedTransaction &rhs) {
+        if (!(lhs.intent_message == rhs.intent_message)) { return false; }
+        if (!(lhs.tx_signatures == rhs.tx_signatures)) { return false; }
+        return true;
+    }
+
+} // end of namespace sui_types
+
+template <>
+template <typename Serializer>
+void serde::Serializable<sui_types::SenderSignedTransaction>::serialize(const sui_types::SenderSignedTransaction &obj, Serializer &serializer) {
+    serializer.increase_container_depth();
+    serde::Serializable<decltype(obj.intent_message)>::serialize(obj.intent_message, serializer);
+    serde::Serializable<decltype(obj.tx_signatures)>::serialize(obj.tx_signatures, serializer);
+    serializer.decrease_container_depth();
+}
+
+template <>
+template <typename Deserializer>
+sui_types::SenderSignedTransaction serde::Deserializable<sui_types::SenderSignedTransaction>::deserialize(Deserializer &deserializer) {
+    deserializer.increase_container_depth();
+    sui_types::SenderSignedTransaction obj;
+    obj.intent_message = serde::Deserializable<decltype(obj.intent_message)>::deserialize(deserializer);
+    obj.tx_signatures = serde::Deserializable<decltype(obj.tx_signatures)>::deserialize(deserializer);
     deserializer.decrease_container_depth();
     return obj;
 }

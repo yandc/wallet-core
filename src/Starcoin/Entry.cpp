@@ -134,8 +134,10 @@ string Entry::signJSON(TWCoinType coin, const std::string& jtx, const Data& key)
         .raw_txn = rawTx,
         .authenticator = auth
     };
-
-    return TW::hex(serde::BcsSerialize(signedTx));
+    preHash = Hash::sha3_256(data("STARCOIN::SignedUserTransaction"));
+    Data txBytes = serde::BcsSerialize(signedTx);
+    append(preHash, txBytes);
+    return hexEncoded(Hash::sha3_256(preHash)) + "#" + hex(txBytes);
 }
 
 TW::Data Entry::hashMessage(TWCoinType coin, const string& msg) const {

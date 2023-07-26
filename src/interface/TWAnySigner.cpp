@@ -83,12 +83,20 @@ TWString *_Nonnull CppJsonTransactionMili23(const char *_Nonnull session, const 
     const std::string jsonString(input);
 
     json txJson;
+    txJson["txid"] = "";
     txJson["result"] = "";
     txJson["status"] = false;
+    txJson["error"] = "";
     try {
-        txJson["result"] = TW::anySignJSON(coin, jsonString, keyData);
-        txJson["status"] = true;
-        txJson["error"] = "";
+        std::string result = TW::anySignJSON(coin, jsonString, keyData);
+        size_t pos = result.find("#");
+        if (pos != std::string::npos) {
+            txJson["txid"] = result.substr(0, pos);
+            txJson["result"] = result.substr(pos+1);
+            txJson["status"] = true;
+        } else {
+            txJson["error"] = "loss of txid";
+        }
     } catch (MiliException& e) {
         txJson["error"] = e.what();
 
