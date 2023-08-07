@@ -63,6 +63,7 @@ public class WalletCore
 
     /*
     * 构建可上链交易
+    * @session: 拼接格式：sessionId-salt[-offset](offset可选)
     * @input: 交易输入参数，json结构
     * 返回：十六进制交易
     */
@@ -70,19 +71,22 @@ public class WalletCore
 
     /*
     * 对任意消息签名
+    * @session: 拼接格式：sessionId-salt[-offset](offset可选)
     * @msg: 签名消息，任意字符串
     * 返回：十六进制签名结果
     */
     public native String SignMili23(String session, String key, String preSign, int coinId, String msg);
 
     /*
-     * 对十六进制数据签名，如果dapp传入数据未经转换就直接传入，可能直接转移资产
-     * @hexMsg: 十六进制消息
+    * 对十六进制数据签名，如果dapp传入数据未经转换就直接传入，可能直接转移资产
+    * @session: 拼接格式：sessionId-salt[-offset](offset可选)
+    * @hexMsg: 十六进制消息
     */
     public native String RawSignMili23(String curve, String session, String key, String preSign, String hexMsg);
 
     /*
     * 预签名，目前只支持ECDSA
+    * @session: 拼接格式：sessionId-salt[-offset](offset可选)
     * 返回：预签名结果，结构：{"status":true/false, "result":"preSign", "error":""}
     */
     public native String OfflineSignMili23(String curve, String session, String key);
@@ -336,6 +340,13 @@ public class WalletCore
     具体文档：https://tk3en79uf0.larksuite.com/docx/doxus5KstWG3LsebEHAdoj62vWb
     */
     public native String chaindata_lookupDomain(String chain, String queryInfo);
+
+    /*
+    chaindata_initCustomConfig 添加自定义链
+    chainConfig:是链配置数组的字符串
+    chainConfig例子：[{"type":"EVM","chain":"ETH","proxyKey":"gasOracleETH","rpcURLs":["https://mainnet.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161","https://web3os.tokenpocket.pro"],"proxyCacheTime":15,"useNodeProxy":true,"chainId":1}]
+    */
+    public native String chaindata_initCustomConfig(String chainConfig);
 
     public static void main(String[] args) {
         System.loadLibrary("wallet_core.android.arm64.a"); //载入本地库

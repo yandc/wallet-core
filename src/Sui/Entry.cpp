@@ -304,7 +304,7 @@ string Entry::signJSON(TWCoinType coin, const std::string& jsonTx, const Data& k
     };
 
     if(payloadHex.size() > 0) {
-        return sendTx.dump();
+        return txDigest + "#" + sendTx.dump();
     }
     json outTx = {
         {"rawTx", sendTx.dump()},

@@ -9,7 +9,7 @@ extern "C" {
 
 typedef const void TWString;
 
-/*
+/**
 * tss私钥创建
 * @curve: ecdsa或者eddsa
 * @session: 用户系统返回，格式：
@@ -24,7 +24,7 @@ typedef const void TWString;
 */
 extern const char* GoCreateMili23(const char* curve, const char* session, const char* preParam, const char* mode);
 
-/*
+/**
 * tss私钥重置
 * @curve: 同上
 * @session: 用户系统返回，格式：
@@ -43,9 +43,10 @@ extern const char* GoCreateMili23(const char* curve, const char* session, const 
 */
 extern const char* GoReshareMili23(const char* curve, const char* session, const char* key, const char* preParam, const char* mode);
 
-/*
+/**
 * 预签名，目前只支持ECDSA
-* 返回：预签名结果，结构：{"status":true/false, "result":"preSign", "error":""}
+* @session: 拼接格式：sessionId-salt[-offset](offset可选)
+* 返回：预签名结果，结构：{"status":true/false, "result":"preSign", "error":""
 */
 extern const char* GoOfflineSignMili23(const char* curve, const char* session, const char* key);
 
@@ -53,6 +54,7 @@ extern const char* GoOfflineSignMili23(const char* curve, const char* session, c
  * 对十六进制数据签名，如果dapp传入数据未经转换就直接传入，可能直接转移资产
  * @curve: 同上
  * @key: 拼接字段，格式："mili:{}:{}{}".format(session, preSign, key)
+ *       session拼接格式：sessionId-salt[-offset](offset可选)
  * @msg: 十六进制消息
  *
  */
@@ -136,6 +138,7 @@ extern bool CppAddressIsValid(const char* address, int coinId);
 
 /*
 * 对任意消息签名
+* @session: 拼接格式：sessionId-salt[-offset](offset可选)
 * @msg: 签名消息
 * 返回：十六进制签名结果，结构：{"status":true/false, "result":"", "error":""}
 */
@@ -143,6 +146,7 @@ extern TWString* CppSignMili23(const char* session, const char* key, const char*
 
 /*
 * 构建可上链交易
+* @session: 拼接格式：sessionId-salt[-offset](offset可选)
 * @input: 交易输入参数，json结构
 * 返回：十六进制交易，结构：{"status":true/false, "result":"", "error":""}
 */
@@ -354,6 +358,14 @@ chaindata_identifyRiskAddress 转账风险地址判定
 query: {"from_address": "", "to_address": ""}
 */
 extern const char* chaindata_identifyRiskAddress(const char* chain, const char* query);
+
+/*
+chaindata_initCustomConfig 添加自定义链
+chainConfig:是链配置数组的字符串
+chainConfig例子：[{"type":"EVM","chain":"ETH","proxyKey":"gasOracleETH","rpcURLs":["https://mainnet.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161","https://web3os.tokenpocket.pro"],"proxyCacheTime":15,"useNodeProxy":true,"chainId":1}]
+*/
+extern const char* chaindata_initCustomConfig(const char* chainConfig);
+
 #ifdef __cplusplus
 }
 #endif
