@@ -25,6 +25,14 @@ JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_ReshareMili23
 
 /*
  * Class:     com_openblock_wallet_jni_WalletCore
+ * Method:    DeriveMili23
+ * Signature: (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+ */
+JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_DeriveMili23
+  (JNIEnv *, jobject, jstring, jstring, jstring);
+
+/*
+ * Class:     com_openblock_wallet_jni_WalletCore
  * Method:    GetAddress
  * Signature: (Ljava/lang/String;I)Ljava/lang/String;
  */

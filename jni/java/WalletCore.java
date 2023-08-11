@@ -36,6 +36,13 @@ public class WalletCore
     public native String ReshareMili23(String curve, String session, String key, String preParam, String mode);
 
     /*
+    * @key: 本地单元，格式{"Key":"...", "Pub":["...","..."]}
+    * @offset: 后端返回
+    * 返回：{"Key":md5(managerKey), "Pub":managerKey.Pub}，和企业钱包普通成员的派生结果作用相同
+    */
+    public native String DeriveMili23(String curve, String key, String offset);
+
+    /*
     * 地址创建
     * @key: 本地私钥碎片
     * @coinId: 链配置中的coinId

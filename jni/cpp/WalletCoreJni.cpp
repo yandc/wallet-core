@@ -17,6 +17,7 @@ extern "C" {
   extern const char* GoOfflineSignMili23(const char* curve, const char* session, const char* key);
   extern const char* GoSignMili23(const char* curve, const char* key, const char* msg);
   extern const char* GoReshareMili23(const char* curve, const char* session, const char* localkey, const char* preParam, const char* mode);
+  extern const char* GoDeriveMili23(const char* curve, const char* key, const char* offset);
   extern const char* GoDecryptShareKey(const char* userId, const char* accountId, const char* enKey);
   extern const char* GoEncryptShareKey(const char* userId, const char* accountId, const char* deKey);
   extern void GoSetRequestEnv(const char* jsonEnv);
@@ -95,6 +96,21 @@ JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_ReshareMili23
   env->ReleaseStringUTFChars(keyJstr, key);
   env->ReleaseStringUTFChars(preParamJstr, preParam);
   env->ReleaseStringUTFChars(modeJstr, mode);
+  jstring ret = env->NewStringUTF(goRet);
+  free((void*)goRet);
+  return ret;
+}
+
+JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_DeriveMili23
+  (JNIEnv *env, jobject jthis, jstring arg1Jstr, jstring arg2Jstr, jstring arg3Jstr)
+{
+  const char* arg1 = env->GetStringUTFChars(arg1Jstr, NULL);
+  const char* arg2 = env->GetStringUTFChars(arg2Jstr, NULL);
+  const char* arg3 = env->GetStringUTFChars(arg3Jstr, NULL);
+  const char* goRet = GoDeriveMili23(arg1, arg2, arg3);
+  env->ReleaseStringUTFChars(arg1Jstr, arg1);
+  env->ReleaseStringUTFChars(arg2Jstr, arg2);
+  env->ReleaseStringUTFChars(arg3Jstr, arg3);
   jstring ret = env->NewStringUTF(goRet);
   free((void*)goRet);
   return ret;

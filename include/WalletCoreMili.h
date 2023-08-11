@@ -43,6 +43,14 @@ extern const char* GoCreateMili23(const char* curve, const char* session, const 
 */
 extern const char* GoReshareMili23(const char* curve, const char* session, const char* key, const char* preParam, const char* mode);
 
+
+/**
+* @key: 本地单元，格式{"Key":"...", "Pub":["...","..."]}
+* @offset: 后端返回
+* 返回：{"Key":md5(managerKey), "Pub":managerKey.Pub}，和企业钱包普通成员的派生结果作用相同
+*/
+extern const char* GoDeriveMili23(const char* curve, const char* key, const char* offset);
+
 /**
 * 预签名，目前只支持ECDSA
 * @session: 拼接格式：sessionId-salt[-offset](offset可选)
