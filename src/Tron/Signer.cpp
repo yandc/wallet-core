@@ -26,6 +26,7 @@ const std::string APPROVE_TOKEN_FUNCTION = "0x095ea7b3";
 size_t base58Capacity = 128;
 
 std::string Hex2Base58(const std::string& hexAddress) {
+    if (hexAddress.size() == 0) throw std::invalid_argument("empty address");
     if (hexAddress.size() < 42) return hexAddress;
     Data bytes = parse_hex(hexAddress, true);
     if (bytes[0] != 0x41) return hexAddress;
