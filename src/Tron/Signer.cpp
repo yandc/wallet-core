@@ -22,6 +22,9 @@ namespace TW::Tron {
 
 const std::string TRANSFER_TOKEN_FUNCTION = "0xa9059cbb";
 const std::string APPROVE_TOKEN_FUNCTION = "0x095ea7b3";
+const std::string APPROVE_NFT_FUNCTION = "a22cb465";
+const std::string ERC721_TRANSFER_FUNCTION = "23b872dd";
+const std::string ERC1155_TRANSFER_FUNCTION = "f242432a";
 
 size_t base58Capacity = 128;
 
@@ -271,6 +274,79 @@ protocol::TriggerSmartContract to_internal(const Proto::ApproveTRC20Contract& ap
     return to_internal(triggerSmartContract);
 }
 
+protocol::TriggerSmartContract to_internal(const Proto::TransferTRC721Contract& transferTrc721Contract) {
+    auto fromAddress = Base58::bitcoin.decodeCheck(Hex2Base58(transferTrc721Contract.owner_address()));
+    auto toAddress = Base58::bitcoin.decodeCheck(Hex2Base58(transferTrc721Contract.to_address()));
+    // amount is 256 bits, big endian
+    Data tokenId = data(transferTrc721Contract.token_id());
+
+    // Encode smart contract call parameters
+    auto contract_params = parse_hex(ERC721_TRANSFER_FUNCTION);
+    pad_left(fromAddress, 32);
+    pad_left(toAddress, 32);
+    pad_left(tokenId, 32);
+    append(contract_params, fromAddress);
+    append(contract_params, toAddress);
+    append(contract_params, tokenId);
+
+    auto triggerSmartContract = Proto::TriggerSmartContract();
+    triggerSmartContract.set_owner_address(transferTrc721Contract.owner_address());
+    triggerSmartContract.set_contract_address(transferTrc721Contract.contract_address());
+    triggerSmartContract.set_data(contract_params.data(), contract_params.size());
+
+    return to_internal(triggerSmartContract);
+}
+
+protocol::TriggerSmartContract to_internal(const Proto::TransferTRC1155Contract& transferTrc1155Contract) {
+    auto fromAddress = Base58::bitcoin.decodeCheck(Hex2Base58(transferTrc1155Contract.owner_address()));
+    auto toAddress = Base58::bitcoin.decodeCheck(Hex2Base58(transferTrc1155Contract.to_address()));
+    // amount is 256 bits, big endian
+    Data tokenId = data(transferTrc1155Contract.token_id());
+    Data value = data(transferTrc1155Contract.value());
+    Data dat = data(transferTrc1155Contract.data());
+
+    // Encode smart contract call parameters
+    auto contract_params = parse_hex(ERC1155_TRANSFER_FUNCTION);
+    pad_left(fromAddress, 32);
+    pad_left(toAddress, 32);
+    pad_left(tokenId, 32);
+    pad_left(value, 32);
+
+    append(contract_params, fromAddress);
+    append(contract_params, toAddress);
+    append(contract_params, tokenId);
+    append(contract_params, value);
+    append(contract_params, dat);
+
+    auto triggerSmartContract = Proto::TriggerSmartContract();
+    triggerSmartContract.set_owner_address(transferTrc1155Contract.owner_address());
+    triggerSmartContract.set_contract_address(transferTrc1155Contract.contract_address());
+    triggerSmartContract.set_data(contract_params.data(), contract_params.size());
+
+    return to_internal(triggerSmartContract);
+}
+
+protocol::TriggerSmartContract to_internal(const Proto::ApproveTRC721Contract& approveTrc721Contract) {
+    auto toAddress = Base58::bitcoin.decodeCheck(Hex2Base58(approveTrc721Contract.spender_address()));
+    bool approved = approveTrc721Contract.approved();
+    Data amount;
+    append(amount, uint8_t(approved));
+
+    // Encode smart contract call parameters
+    auto contract_params = parse_hex(APPROVE_NFT_FUNCTION);
+    pad_left(toAddress, 32);
+    pad_left(amount, 32);
+    append(contract_params, toAddress);
+    append(contract_params, amount);
+
+    auto triggerSmartContract = Proto::TriggerSmartContract();
+    triggerSmartContract.set_owner_address(approveTrc721Contract.owner_address());
+    triggerSmartContract.set_contract_address(approveTrc721Contract.contract_address());
+    triggerSmartContract.set_data(contract_params.data(), contract_params.size());
+
+    return to_internal(triggerSmartContract);
+}
+
 /// Converts an external BlockHeader to an internal one used for signing.
 protocol::BlockHeader to_internal(const Proto::BlockHeader& header) {
     auto internal = protocol::BlockHeader();
@@ -440,6 +516,30 @@ Proto::SigningOutput Signer::sign(const Proto::SigningInput& input) {
         contract->set_type(protocol::Transaction_Contract_ContractType_TriggerSmartContract);
 
         auto trigger_smart_contract = to_internal(input.transaction().approve_trc20_contract());
+        google::protobuf::Any any;
+        any.PackFrom(trigger_smart_contract);
+        *contract->mutable_parameter() = any;
+    } else if (input.transaction().has_approve_trc721_contract()) {
+        auto* contract = internal.mutable_raw_data()->add_contract();
+        contract->set_type(protocol::Transaction_Contract_ContractType_TriggerSmartContract);
+
+        auto trigger_smart_contract = to_internal(input.transaction().approve_trc721_contract());
+        google::protobuf::Any any;
+        any.PackFrom(trigger_smart_contract);
+        *contract->mutable_parameter() = any;
+    } else if (input.transaction().has_transfer_trc721_contract()) {
+        auto* contract = internal.mutable_raw_data()->add_contract();
+        contract->set_type(protocol::Transaction_Contract_ContractType_TriggerSmartContract);
+
+        auto trigger_smart_contract = to_internal(input.transaction().transfer_trc721_contract());
+        google::protobuf::Any any;
+        any.PackFrom(trigger_smart_contract);
+        *contract->mutable_parameter() = any;
+    } else if (input.transaction().has_transfer_trc1155_contract()) {
+        auto* contract = internal.mutable_raw_data()->add_contract();
+        contract->set_type(protocol::Transaction_Contract_ContractType_TriggerSmartContract);
+
+        auto trigger_smart_contract = to_internal(input.transaction().transfer_trc1155_contract());
         google::protobuf::Any any;
         any.PackFrom(trigger_smart_contract);
         *contract->mutable_parameter() = any;

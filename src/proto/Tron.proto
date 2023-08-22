@@ -59,6 +59,29 @@ message ApproveTRC20Contract {
     bytes amount = 4;
 }
 
+message TransferTRC721Contract {
+    string contract_address = 1;
+    string owner_address = 2;
+    string to_address = 3;
+    bytes  token_id = 4;
+}
+
+message TransferTRC1155Contract {
+    string contract_address = 1;
+    string owner_address = 2;
+    string to_address = 3;
+    bytes  token_id = 4;
+    bytes  value = 5;
+    bytes  data = 6;
+}
+
+message ApproveTRC721Contract {
+    string contract_address = 1;
+    string owner_address = 2;
+    string spender_address = 3;
+    bool approved = 4;
+}
+
 message FreezeBalanceContract {
     // Sender address.
     string owner_address = 1;
@@ -260,6 +283,9 @@ message Transaction {
         WithdrawExpireUnfreezeContract withdraw_expire_unfreeze = 23;
         DelegateResourceContract delegate_resource = 24;
         UnDelegateResourceContract undelegate_resource = 25;
+        TransferTRC721Contract transfer_trc721_contract = 26;
+        TransferTRC1155Contract transfer_trc1155_contract = 27;
+        ApproveTRC721Contract approve_trc721_contract = 28;
     }
 }
 

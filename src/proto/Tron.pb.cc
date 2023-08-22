@@ -15,14 +15,17 @@
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
 extern PROTOBUF_INTERNAL_EXPORT_Tron_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_ApproveTRC20Contract_Tron_2eproto;
+extern PROTOBUF_INTERNAL_EXPORT_Tron_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_ApproveTRC721Contract_Tron_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_Tron_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_BlockHeader_Tron_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_Tron_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_DelegateResourceContract_Tron_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_Tron_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_FreezeBalanceContract_Tron_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_Tron_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_FreezeBalanceV2Contract_Tron_2eproto;
-extern PROTOBUF_INTERNAL_EXPORT_Tron_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<17> scc_info_Transaction_Tron_2eproto;
+extern PROTOBUF_INTERNAL_EXPORT_Tron_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<20> scc_info_Transaction_Tron_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_Tron_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_TransferAssetContract_Tron_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_Tron_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_TransferContract_Tron_2eproto;
+extern PROTOBUF_INTERNAL_EXPORT_Tron_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_TransferTRC1155Contract_Tron_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_Tron_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_TransferTRC20Contract_Tron_2eproto;
+extern PROTOBUF_INTERNAL_EXPORT_Tron_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_TransferTRC721Contract_Tron_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_Tron_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_TriggerSmartContract_Tron_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_Tron_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_UnDelegateResourceContract_Tron_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_Tron_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_UnfreezeAssetContract_Tron_2eproto;
@@ -52,6 +55,18 @@ class ApproveTRC20ContractDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<ApproveTRC20Contract> _instance;
 } _ApproveTRC20Contract_default_instance_;
+class TransferTRC721ContractDefaultTypeInternal {
+ public:
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<TransferTRC721Contract> _instance;
+} _TransferTRC721Contract_default_instance_;
+class TransferTRC1155ContractDefaultTypeInternal {
+ public:
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<TransferTRC1155Contract> _instance;
+} _TransferTRC1155Contract_default_instance_;
+class ApproveTRC721ContractDefaultTypeInternal {
+ public:
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<ApproveTRC721Contract> _instance;
+} _ApproveTRC721Contract_default_instance_;
 class FreezeBalanceContractDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<FreezeBalanceContract> _instance;
@@ -135,6 +150,19 @@ static void InitDefaultsscc_info_ApproveTRC20Contract_Tron_2eproto() {
 
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_ApproveTRC20Contract_Tron_2eproto =
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_ApproveTRC20Contract_Tron_2eproto}, {}};
+
+static void InitDefaultsscc_info_ApproveTRC721Contract_Tron_2eproto() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::TW::Tron::Proto::_ApproveTRC721Contract_default_instance_;
+    new (ptr) ::TW::Tron::Proto::ApproveTRC721Contract();
+    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
+  }
+}
+
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_ApproveTRC721Contract_Tron_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_ApproveTRC721Contract_Tron_2eproto}, {}};
 
 static void InitDefaultsscc_info_BlockHeader_Tron_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -225,8 +253,8 @@ static void InitDefaultsscc_info_Transaction_Tron_2eproto() {
   }
 }
 
-::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<17> scc_info_Transaction_Tron_2eproto =
-    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 17, 0, InitDefaultsscc_info_Transaction_Tron_2eproto}, {
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<20> scc_info_Transaction_Tron_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 20, 0, InitDefaultsscc_info_Transaction_Tron_2eproto}, {
       &scc_info_BlockHeader_Tron_2eproto.base,
       &scc_info_TransferContract_Tron_2eproto.base,
       &scc_info_TransferAssetContract_Tron_2eproto.base,
@@ -243,7 +271,10 @@ static void InitDefaultsscc_info_Transaction_Tron_2eproto() {
       &scc_info_UnfreezeBalanceV2Contract_Tron_2eproto.base,
       &scc_info_WithdrawExpireUnfreezeContract_Tron_2eproto.base,
       &scc_info_DelegateResourceContract_Tron_2eproto.base,
-      &scc_info_UnDelegateResourceContract_Tron_2eproto.base,}};
+      &scc_info_UnDelegateResourceContract_Tron_2eproto.base,
+      &scc_info_TransferTRC721Contract_Tron_2eproto.base,
+      &scc_info_TransferTRC1155Contract_Tron_2eproto.base,
+      &scc_info_ApproveTRC721Contract_Tron_2eproto.base,}};
 
 static void InitDefaultsscc_info_TransferAssetContract_Tron_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -271,6 +302,19 @@ static void InitDefaultsscc_info_TransferContract_Tron_2eproto() {
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_TransferContract_Tron_2eproto =
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_TransferContract_Tron_2eproto}, {}};
 
+static void InitDefaultsscc_info_TransferTRC1155Contract_Tron_2eproto() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::TW::Tron::Proto::_TransferTRC1155Contract_default_instance_;
+    new (ptr) ::TW::Tron::Proto::TransferTRC1155Contract();
+    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
+  }
+}
+
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_TransferTRC1155Contract_Tron_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_TransferTRC1155Contract_Tron_2eproto}, {}};
+
 static void InitDefaultsscc_info_TransferTRC20Contract_Tron_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
@@ -283,6 +327,19 @@ static void InitDefaultsscc_info_TransferTRC20Contract_Tron_2eproto() {
 
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_TransferTRC20Contract_Tron_2eproto =
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_TransferTRC20Contract_Tron_2eproto}, {}};
+
+static void InitDefaultsscc_info_TransferTRC721Contract_Tron_2eproto() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::TW::Tron::Proto::_TransferTRC721Contract_default_instance_;
+    new (ptr) ::TW::Tron::Proto::TransferTRC721Contract();
+    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
+  }
+}
+
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_TransferTRC721Contract_Tron_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_TransferTRC721Contract_Tron_2eproto}, {}};
 
 static void InitDefaultsscc_info_TriggerSmartContract_Tron_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -415,7 +472,7 @@ static void InitDefaultsscc_info_WithdrawExpireUnfreezeContract_Tron_2eproto() {
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_WithdrawExpireUnfreezeContract_Tron_2eproto =
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_WithdrawExpireUnfreezeContract_Tron_2eproto}, {}};
 
-static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_Tron_2eproto[21];
+static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_Tron_2eproto[24];
 static constexpr ::PROTOBUF_NAMESPACE_ID::EnumDescriptor const** file_level_enum_descriptors_Tron_2eproto = nullptr;
 static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_Tron_2eproto = nullptr;
 
@@ -455,6 +512,35 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_Tron_2eproto::offsets[] PROTOB
   PROTOBUF_FIELD_OFFSET(::TW::Tron::Proto::ApproveTRC20Contract, owner_address_),
   PROTOBUF_FIELD_OFFSET(::TW::Tron::Proto::ApproveTRC20Contract, spender_address_),
   PROTOBUF_FIELD_OFFSET(::TW::Tron::Proto::ApproveTRC20Contract, amount_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::TW::Tron::Proto::TransferTRC721Contract, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::TW::Tron::Proto::TransferTRC721Contract, contract_address_),
+  PROTOBUF_FIELD_OFFSET(::TW::Tron::Proto::TransferTRC721Contract, owner_address_),
+  PROTOBUF_FIELD_OFFSET(::TW::Tron::Proto::TransferTRC721Contract, to_address_),
+  PROTOBUF_FIELD_OFFSET(::TW::Tron::Proto::TransferTRC721Contract, token_id_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::TW::Tron::Proto::TransferTRC1155Contract, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::TW::Tron::Proto::TransferTRC1155Contract, contract_address_),
+  PROTOBUF_FIELD_OFFSET(::TW::Tron::Proto::TransferTRC1155Contract, owner_address_),
+  PROTOBUF_FIELD_OFFSET(::TW::Tron::Proto::TransferTRC1155Contract, to_address_),
+  PROTOBUF_FIELD_OFFSET(::TW::Tron::Proto::TransferTRC1155Contract, token_id_),
+  PROTOBUF_FIELD_OFFSET(::TW::Tron::Proto::TransferTRC1155Contract, value_),
+  PROTOBUF_FIELD_OFFSET(::TW::Tron::Proto::TransferTRC1155Contract, data_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::TW::Tron::Proto::ApproveTRC721Contract, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::TW::Tron::Proto::ApproveTRC721Contract, contract_address_),
+  PROTOBUF_FIELD_OFFSET(::TW::Tron::Proto::ApproveTRC721Contract, owner_address_),
+  PROTOBUF_FIELD_OFFSET(::TW::Tron::Proto::ApproveTRC721Contract, spender_address_),
+  PROTOBUF_FIELD_OFFSET(::TW::Tron::Proto::ApproveTRC721Contract, approved_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::TW::Tron::Proto::FreezeBalanceContract, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -597,6 +683,9 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_Tron_2eproto::offsets[] PROTOB
   ::PROTOBUF_NAMESPACE_ID::internal::kInvalidFieldOffsetTag,
   ::PROTOBUF_NAMESPACE_ID::internal::kInvalidFieldOffsetTag,
   ::PROTOBUF_NAMESPACE_ID::internal::kInvalidFieldOffsetTag,
+  ::PROTOBUF_NAMESPACE_ID::internal::kInvalidFieldOffsetTag,
+  ::PROTOBUF_NAMESPACE_ID::internal::kInvalidFieldOffsetTag,
+  ::PROTOBUF_NAMESPACE_ID::internal::kInvalidFieldOffsetTag,
   PROTOBUF_FIELD_OFFSET(::TW::Tron::Proto::Transaction, contract_oneof_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::TW::Tron::Proto::SigningInput, _internal_metadata_),
@@ -622,23 +711,26 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOB
   { 8, -1, sizeof(::TW::Tron::Proto::TransferAssetContract)},
   { 17, -1, sizeof(::TW::Tron::Proto::TransferTRC20Contract)},
   { 26, -1, sizeof(::TW::Tron::Proto::ApproveTRC20Contract)},
-  { 35, -1, sizeof(::TW::Tron::Proto::FreezeBalanceContract)},
-  { 45, -1, sizeof(::TW::Tron::Proto::FreezeBalanceV2Contract)},
-  { 53, -1, sizeof(::TW::Tron::Proto::UnfreezeBalanceV2Contract)},
-  { 61, -1, sizeof(::TW::Tron::Proto::WithdrawExpireUnfreezeContract)},
-  { 67, -1, sizeof(::TW::Tron::Proto::DelegateResourceContract)},
-  { 77, -1, sizeof(::TW::Tron::Proto::UnDelegateResourceContract)},
-  { 86, -1, sizeof(::TW::Tron::Proto::UnfreezeBalanceContract)},
-  { 94, -1, sizeof(::TW::Tron::Proto::UnfreezeAssetContract)},
-  { 100, -1, sizeof(::TW::Tron::Proto::VoteAssetContract)},
-  { 109, -1, sizeof(::TW::Tron::Proto::VoteWitnessContract_Vote)},
-  { 116, -1, sizeof(::TW::Tron::Proto::VoteWitnessContract)},
-  { 124, -1, sizeof(::TW::Tron::Proto::WithdrawBalanceContract)},
-  { 130, -1, sizeof(::TW::Tron::Proto::TriggerSmartContract)},
-  { 141, -1, sizeof(::TW::Tron::Proto::BlockHeader)},
-  { 152, -1, sizeof(::TW::Tron::Proto::Transaction)},
-  { 178, -1, sizeof(::TW::Tron::Proto::SigningInput)},
-  { 186, -1, sizeof(::TW::Tron::Proto::SigningOutput)},
+  { 35, -1, sizeof(::TW::Tron::Proto::TransferTRC721Contract)},
+  { 44, -1, sizeof(::TW::Tron::Proto::TransferTRC1155Contract)},
+  { 55, -1, sizeof(::TW::Tron::Proto::ApproveTRC721Contract)},
+  { 64, -1, sizeof(::TW::Tron::Proto::FreezeBalanceContract)},
+  { 74, -1, sizeof(::TW::Tron::Proto::FreezeBalanceV2Contract)},
+  { 82, -1, sizeof(::TW::Tron::Proto::UnfreezeBalanceV2Contract)},
+  { 90, -1, sizeof(::TW::Tron::Proto::WithdrawExpireUnfreezeContract)},
+  { 96, -1, sizeof(::TW::Tron::Proto::DelegateResourceContract)},
+  { 106, -1, sizeof(::TW::Tron::Proto::UnDelegateResourceContract)},
+  { 115, -1, sizeof(::TW::Tron::Proto::UnfreezeBalanceContract)},
+  { 123, -1, sizeof(::TW::Tron::Proto::UnfreezeAssetContract)},
+  { 129, -1, sizeof(::TW::Tron::Proto::VoteAssetContract)},
+  { 138, -1, sizeof(::TW::Tron::Proto::VoteWitnessContract_Vote)},
+  { 145, -1, sizeof(::TW::Tron::Proto::VoteWitnessContract)},
+  { 153, -1, sizeof(::TW::Tron::Proto::WithdrawBalanceContract)},
+  { 159, -1, sizeof(::TW::Tron::Proto::TriggerSmartContract)},
+  { 170, -1, sizeof(::TW::Tron::Proto::BlockHeader)},
+  { 181, -1, sizeof(::TW::Tron::Proto::Transaction)},
+  { 210, -1, sizeof(::TW::Tron::Proto::SigningInput)},
+  { 218, -1, sizeof(::TW::Tron::Proto::SigningOutput)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -646,6 +738,9 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::TW::Tron::Proto::_TransferAssetContract_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::TW::Tron::Proto::_TransferTRC20Contract_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::TW::Tron::Proto::_ApproveTRC20Contract_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::TW::Tron::Proto::_TransferTRC721Contract_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::TW::Tron::Proto::_TransferTRC1155Contract_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::TW::Tron::Proto::_ApproveTRC721Contract_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::TW::Tron::Proto::_FreezeBalanceContract_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::TW::Tron::Proto::_FreezeBalanceV2Contract_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::TW::Tron::Proto::_UnfreezeBalanceV2Contract_default_instance_),
@@ -676,83 +771,99 @@ const char descriptor_table_protodef_Tron_2eproto[] PROTOBUF_SECTION_VARIABLE(pr
   " \001(\t\022\022\n\nto_address\030\003 \001(\t\022\016\n\006amount\030\004 \001(\014"
   "\"p\n\024ApproveTRC20Contract\022\030\n\020contract_add"
   "ress\030\001 \001(\t\022\025\n\rowner_address\030\002 \001(\t\022\027\n\017spe"
-  "nder_address\030\003 \001(\t\022\016\n\006amount\030\004 \001(\014\"\213\001\n\025F"
-  "reezeBalanceContract\022\025\n\rowner_address\030\001 "
-  "\001(\t\022\026\n\016frozen_balance\030\002 \001(\003\022\027\n\017frozen_du"
-  "ration\030\003 \001(\003\022\020\n\010resource\030\n \001(\t\022\030\n\020receiv"
-  "er_address\030\017 \001(\t\"Z\n\027FreezeBalanceV2Contr"
-  "act\022\025\n\rowner_address\030\001 \001(\t\022\026\n\016frozen_bal"
-  "ance\030\002 \001(\003\022\020\n\010resource\030\003 \001(\t\"^\n\031Unfreeze"
+  "nder_address\030\003 \001(\t\022\016\n\006amount\030\004 \001(\014\"o\n\026Tr"
+  "ansferTRC721Contract\022\030\n\020contract_address"
+  "\030\001 \001(\t\022\025\n\rowner_address\030\002 \001(\t\022\022\n\nto_addr"
+  "ess\030\003 \001(\t\022\020\n\010token_id\030\004 \001(\014\"\215\001\n\027Transfer"
+  "TRC1155Contract\022\030\n\020contract_address\030\001 \001("
+  "\t\022\025\n\rowner_address\030\002 \001(\t\022\022\n\nto_address\030\003"
+  " \001(\t\022\020\n\010token_id\030\004 \001(\014\022\r\n\005value\030\005 \001(\014\022\014\n"
+  "\004data\030\006 \001(\014\"s\n\025ApproveTRC721Contract\022\030\n\020"
+  "contract_address\030\001 \001(\t\022\025\n\rowner_address\030"
+  "\002 \001(\t\022\027\n\017spender_address\030\003 \001(\t\022\020\n\010approv"
+  "ed\030\004 \001(\010\"\213\001\n\025FreezeBalanceContract\022\025\n\row"
+  "ner_address\030\001 \001(\t\022\026\n\016frozen_balance\030\002 \001("
+  "\003\022\027\n\017frozen_duration\030\003 \001(\003\022\020\n\010resource\030\n"
+  " \001(\t\022\030\n\020receiver_address\030\017 \001(\t\"Z\n\027Freeze"
   "BalanceV2Contract\022\025\n\rowner_address\030\001 \001(\t"
-  "\022\030\n\020unfreeze_balance\030\002 \001(\003\022\020\n\010resource\030\003"
-  " \001(\t\"7\n\036WithdrawExpireUnfreezeContract\022\025"
-  "\n\rowner_address\030\001 \001(\t\"|\n\030DelegateResourc"
-  "eContract\022\025\n\rowner_address\030\001 \001(\t\022\020\n\010reso"
-  "urce\030\002 \001(\t\022\017\n\007balance\030\003 \001(\003\022\030\n\020receiver_"
-  "address\030\004 \001(\t\022\014\n\004lock\030\005 \001(\010\"p\n\032UnDelegat"
-  "eResourceContract\022\025\n\rowner_address\030\001 \001(\t"
-  "\022\020\n\010resource\030\002 \001(\t\022\017\n\007balance\030\003 \001(\003\022\030\n\020r"
-  "eceiver_address\030\004 \001(\t\"\\\n\027UnfreezeBalance"
-  "Contract\022\025\n\rowner_address\030\001 \001(\t\022\020\n\010resou"
-  "rce\030\n \001(\t\022\030\n\020receiver_address\030\017 \001(\t\".\n\025U"
-  "nfreezeAssetContract\022\025\n\rowner_address\030\001 "
-  "\001(\t\"`\n\021VoteAssetContract\022\025\n\rowner_addres"
-  "s\030\001 \001(\t\022\024\n\014vote_address\030\002 \003(\t\022\017\n\007support"
-  "\030\003 \001(\010\022\r\n\005count\030\005 \001(\005\"\247\001\n\023VoteWitnessCon"
-  "tract\022\025\n\rowner_address\030\001 \001(\t\0226\n\005votes\030\002 "
-  "\003(\0132\'.TW.Tron.Proto.VoteWitnessContract."
-  "Vote\022\017\n\007support\030\003 \001(\010\0320\n\004Vote\022\024\n\014vote_ad"
-  "dress\030\001 \001(\t\022\022\n\nvote_count\030\002 \001(\003\"0\n\027Withd"
-  "rawBalanceContract\022\025\n\rowner_address\030\001 \001("
-  "\t\"\225\001\n\024TriggerSmartContract\022\025\n\rowner_addr"
-  "ess\030\001 \001(\t\022\030\n\020contract_address\030\002 \001(\t\022\022\n\nc"
-  "all_value\030\003 \001(\003\022\014\n\004data\030\004 \001(\014\022\030\n\020call_to"
-  "ken_value\030\005 \001(\003\022\020\n\010token_id\030\006 \001(\003\"\205\001\n\013Bl"
-  "ockHeader\022\021\n\ttimestamp\030\001 \001(\003\022\024\n\014tx_trie_"
-  "root\030\002 \001(\014\022\023\n\013parent_hash\030\003 \001(\014\022\016\n\006numbe"
-  "r\030\007 \001(\003\022\027\n\017witness_address\030\t \001(\014\022\017\n\007vers"
-  "ion\030\n \001(\005\"\304\t\n\013Transaction\022\021\n\ttimestamp\030\001"
-  " \001(\003\022\022\n\nexpiration\030\002 \001(\003\0220\n\014block_header"
-  "\030\003 \001(\0132\032.TW.Tron.Proto.BlockHeader\022\021\n\tfe"
-  "e_limit\030\004 \001(\003\0223\n\010transfer\030\n \001(\0132\037.TW.Tro"
-  "n.Proto.TransferContractH\000\022>\n\016transfer_a"
-  "sset\030\013 \001(\0132$.TW.Tron.Proto.TransferAsset"
-  "ContractH\000\022>\n\016freeze_balance\030\014 \001(\0132$.TW."
-  "Tron.Proto.FreezeBalanceContractH\000\022B\n\020un"
-  "freeze_balance\030\r \001(\0132&.TW.Tron.Proto.Unf"
-  "reezeBalanceContractH\000\022>\n\016unfreeze_asset"
-  "\030\016 \001(\0132$.TW.Tron.Proto.UnfreezeAssetCont"
-  "ractH\000\022B\n\020withdraw_balance\030\017 \001(\0132&.TW.Tr"
-  "on.Proto.WithdrawBalanceContractH\000\0226\n\nvo"
-  "te_asset\030\020 \001(\0132 .TW.Tron.Proto.VoteAsset"
-  "ContractH\000\022:\n\014vote_witness\030\021 \001(\0132\".TW.Tr"
-  "on.Proto.VoteWitnessContractH\000\022E\n\026trigge"
-  "r_smart_contract\030\022 \001(\0132#.TW.Tron.Proto.T"
-  "riggerSmartContractH\000\022G\n\027transfer_trc20_"
-  "contract\030\023 \001(\0132$.TW.Tron.Proto.TransferT"
-  "RC20ContractH\000\022E\n\026approve_trc20_contract"
-  "\030\024 \001(\0132#.TW.Tron.Proto.ApproveTRC20Contr"
-  "actH\000\022C\n\021freeze_balance_v2\030\025 \001(\0132&.TW.Tr"
-  "on.Proto.FreezeBalanceV2ContractH\000\022G\n\023un"
-  "freeze_balance_v2\030\026 \001(\0132(.TW.Tron.Proto."
-  "UnfreezeBalanceV2ContractH\000\022Q\n\030withdraw_"
-  "expire_unfreeze\030\027 \001(\0132-.TW.Tron.Proto.Wi"
-  "thdrawExpireUnfreezeContractH\000\022D\n\021delega"
-  "te_resource\030\030 \001(\0132\'.TW.Tron.Proto.Delega"
-  "teResourceContractH\000\022H\n\023undelegate_resou"
-  "rce\030\031 \001(\0132).TW.Tron.Proto.UnDelegateReso"
-  "urceContractH\000B\020\n\016contract_oneof\"b\n\014Sign"
-  "ingInput\022/\n\013transaction\030\001 \001(\0132\032.TW.Tron."
-  "Proto.Transaction\022\023\n\013private_key\030\002 \001(\014\022\014"
-  "\n\004txId\030\003 \001(\t\"m\n\rSigningOutput\022\n\n\002id\030\001 \001("
-  "\014\022\021\n\tsignature\030\002 \001(\014\022\027\n\017ref_block_bytes\030"
-  "\003 \001(\014\022\026\n\016ref_block_hash\030\004 \001(\014\022\014\n\004json\030\005 "
-  "\001(\tB\027\n\025wallet.core.jni.protob\006proto3"
+  "\022\026\n\016frozen_balance\030\002 \001(\003\022\020\n\010resource\030\003 \001"
+  "(\t\"^\n\031UnfreezeBalanceV2Contract\022\025\n\rowner"
+  "_address\030\001 \001(\t\022\030\n\020unfreeze_balance\030\002 \001(\003"
+  "\022\020\n\010resource\030\003 \001(\t\"7\n\036WithdrawExpireUnfr"
+  "eezeContract\022\025\n\rowner_address\030\001 \001(\t\"|\n\030D"
+  "elegateResourceContract\022\025\n\rowner_address"
+  "\030\001 \001(\t\022\020\n\010resource\030\002 \001(\t\022\017\n\007balance\030\003 \001("
+  "\003\022\030\n\020receiver_address\030\004 \001(\t\022\014\n\004lock\030\005 \001("
+  "\010\"p\n\032UnDelegateResourceContract\022\025\n\rowner"
+  "_address\030\001 \001(\t\022\020\n\010resource\030\002 \001(\t\022\017\n\007bala"
+  "nce\030\003 \001(\003\022\030\n\020receiver_address\030\004 \001(\t\"\\\n\027U"
+  "nfreezeBalanceContract\022\025\n\rowner_address\030"
+  "\001 \001(\t\022\020\n\010resource\030\n \001(\t\022\030\n\020receiver_addr"
+  "ess\030\017 \001(\t\".\n\025UnfreezeAssetContract\022\025\n\row"
+  "ner_address\030\001 \001(\t\"`\n\021VoteAssetContract\022\025"
+  "\n\rowner_address\030\001 \001(\t\022\024\n\014vote_address\030\002 "
+  "\003(\t\022\017\n\007support\030\003 \001(\010\022\r\n\005count\030\005 \001(\005\"\247\001\n\023"
+  "VoteWitnessContract\022\025\n\rowner_address\030\001 \001"
+  "(\t\0226\n\005votes\030\002 \003(\0132\'.TW.Tron.Proto.VoteWi"
+  "tnessContract.Vote\022\017\n\007support\030\003 \001(\010\0320\n\004V"
+  "ote\022\024\n\014vote_address\030\001 \001(\t\022\022\n\nvote_count\030"
+  "\002 \001(\003\"0\n\027WithdrawBalanceContract\022\025\n\rowne"
+  "r_address\030\001 \001(\t\"\225\001\n\024TriggerSmartContract"
+  "\022\025\n\rowner_address\030\001 \001(\t\022\030\n\020contract_addr"
+  "ess\030\002 \001(\t\022\022\n\ncall_value\030\003 \001(\003\022\014\n\004data\030\004 "
+  "\001(\014\022\030\n\020call_token_value\030\005 \001(\003\022\020\n\010token_i"
+  "d\030\006 \001(\003\"\205\001\n\013BlockHeader\022\021\n\ttimestamp\030\001 \001"
+  "(\003\022\024\n\014tx_trie_root\030\002 \001(\014\022\023\n\013parent_hash\030"
+  "\003 \001(\014\022\016\n\006number\030\007 \001(\003\022\027\n\017witness_address"
+  "\030\t \001(\014\022\017\n\007version\030\n \001(\005\"\245\013\n\013Transaction\022"
+  "\021\n\ttimestamp\030\001 \001(\003\022\022\n\nexpiration\030\002 \001(\003\0220"
+  "\n\014block_header\030\003 \001(\0132\032.TW.Tron.Proto.Blo"
+  "ckHeader\022\021\n\tfee_limit\030\004 \001(\003\0223\n\010transfer\030"
+  "\n \001(\0132\037.TW.Tron.Proto.TransferContractH\000"
+  "\022>\n\016transfer_asset\030\013 \001(\0132$.TW.Tron.Proto"
+  ".TransferAssetContractH\000\022>\n\016freeze_balan"
+  "ce\030\014 \001(\0132$.TW.Tron.Proto.FreezeBalanceCo"
+  "ntractH\000\022B\n\020unfreeze_balance\030\r \001(\0132&.TW."
+  "Tron.Proto.UnfreezeBalanceContractH\000\022>\n\016"
+  "unfreeze_asset\030\016 \001(\0132$.TW.Tron.Proto.Unf"
+  "reezeAssetContractH\000\022B\n\020withdraw_balance"
+  "\030\017 \001(\0132&.TW.Tron.Proto.WithdrawBalanceCo"
+  "ntractH\000\0226\n\nvote_asset\030\020 \001(\0132 .TW.Tron.P"
+  "roto.VoteAssetContractH\000\022:\n\014vote_witness"
+  "\030\021 \001(\0132\".TW.Tron.Proto.VoteWitnessContra"
+  "ctH\000\022E\n\026trigger_smart_contract\030\022 \001(\0132#.T"
+  "W.Tron.Proto.TriggerSmartContractH\000\022G\n\027t"
+  "ransfer_trc20_contract\030\023 \001(\0132$.TW.Tron.P"
+  "roto.TransferTRC20ContractH\000\022E\n\026approve_"
+  "trc20_contract\030\024 \001(\0132#.TW.Tron.Proto.App"
+  "roveTRC20ContractH\000\022C\n\021freeze_balance_v2"
+  "\030\025 \001(\0132&.TW.Tron.Proto.FreezeBalanceV2Co"
+  "ntractH\000\022G\n\023unfreeze_balance_v2\030\026 \001(\0132(."
+  "TW.Tron.Proto.UnfreezeBalanceV2ContractH"
+  "\000\022Q\n\030withdraw_expire_unfreeze\030\027 \001(\0132-.TW"
+  ".Tron.Proto.WithdrawExpireUnfreezeContra"
+  "ctH\000\022D\n\021delegate_resource\030\030 \001(\0132\'.TW.Tro"
+  "n.Proto.DelegateResourceContractH\000\022H\n\023un"
+  "delegate_resource\030\031 \001(\0132).TW.Tron.Proto."
+  "UnDelegateResourceContractH\000\022I\n\030transfer"
+  "_trc721_contract\030\032 \001(\0132%.TW.Tron.Proto.T"
+  "ransferTRC721ContractH\000\022K\n\031transfer_trc1"
+  "155_contract\030\033 \001(\0132&.TW.Tron.Proto.Trans"
+  "ferTRC1155ContractH\000\022G\n\027approve_trc721_c"
+  "ontract\030\034 \001(\0132$.TW.Tron.Proto.ApproveTRC"
+  "721ContractH\000B\020\n\016contract_oneof\"b\n\014Signi"
+  "ngInput\022/\n\013transaction\030\001 \001(\0132\032.TW.Tron.P"
+  "roto.Transaction\022\023\n\013private_key\030\002 \001(\014\022\014\n"
+  "\004txId\030\003 \001(\t\"m\n\rSigningOutput\022\n\n\002id\030\001 \001(\014"
+  "\022\021\n\tsignature\030\002 \001(\014\022\027\n\017ref_block_bytes\030\003"
+  " \001(\014\022\026\n\016ref_block_hash\030\004 \001(\014\022\014\n\004json\030\005 \001"
+  "(\tB\027\n\025wallet.core.jni.protob\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_Tron_2eproto_deps[1] = {
 };
-static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_Tron_2eproto_sccs[21] = {
+static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_Tron_2eproto_sccs[24] = {
   &scc_info_ApproveTRC20Contract_Tron_2eproto.base,
+  &scc_info_ApproveTRC721Contract_Tron_2eproto.base,
   &scc_info_BlockHeader_Tron_2eproto.base,
   &scc_info_DelegateResourceContract_Tron_2eproto.base,
   &scc_info_FreezeBalanceContract_Tron_2eproto.base,
@@ -762,7 +873,9 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_Tro
   &scc_info_Transaction_Tron_2eproto.base,
   &scc_info_TransferAssetContract_Tron_2eproto.base,
   &scc_info_TransferContract_Tron_2eproto.base,
+  &scc_info_TransferTRC1155Contract_Tron_2eproto.base,
   &scc_info_TransferTRC20Contract_Tron_2eproto.base,
+  &scc_info_TransferTRC721Contract_Tron_2eproto.base,
   &scc_info_TriggerSmartContract_Tron_2eproto.base,
   &scc_info_UnDelegateResourceContract_Tron_2eproto.base,
   &scc_info_UnfreezeAssetContract_Tron_2eproto.base,
@@ -776,10 +889,10 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_Tro
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_Tron_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_Tron_2eproto = {
-  false, false, descriptor_table_protodef_Tron_2eproto, "Tron.proto", 3276,
-  &descriptor_table_Tron_2eproto_once, descriptor_table_Tron_2eproto_sccs, descriptor_table_Tron_2eproto_deps, 21, 0,
+  false, false, descriptor_table_protodef_Tron_2eproto, "Tron.proto", 3875,
+  &descriptor_table_Tron_2eproto_once, descriptor_table_Tron_2eproto_sccs, descriptor_table_Tron_2eproto_deps, 24, 0,
   schemas, file_default_instances, TableStruct_Tron_2eproto::offsets,
-  file_level_metadata_Tron_2eproto, 21, file_level_enum_descriptors_Tron_2eproto, file_level_service_descriptors_Tron_2eproto,
+  file_level_metadata_Tron_2eproto, 24, file_level_enum_descriptors_Tron_2eproto, file_level_service_descriptors_Tron_2eproto,
 };
 
 // Force running AddDescriptors() at dynamic initialization time.
@@ -1994,6 +2107,1009 @@ void ApproveTRC20Contract::InternalSwap(ApproveTRC20Contract* other) {
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata ApproveTRC20Contract::GetMetadata() const {
+  return GetMetadataStatic();
+}
+
+
+// ===================================================================
+
+class TransferTRC721Contract::_Internal {
+ public:
+};
+
+TransferTRC721Contract::TransferTRC721Contract(::PROTOBUF_NAMESPACE_ID::Arena* arena)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
+  SharedCtor();
+  RegisterArenaDtor(arena);
+  // @@protoc_insertion_point(arena_constructor:TW.Tron.Proto.TransferTRC721Contract)
+}
+TransferTRC721Contract::TransferTRC721Contract(const TransferTRC721Contract& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  contract_address_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (!from._internal_contract_address().empty()) {
+    contract_address_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_contract_address(), 
+      GetArena());
+  }
+  owner_address_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (!from._internal_owner_address().empty()) {
+    owner_address_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_owner_address(), 
+      GetArena());
+  }
+  to_address_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (!from._internal_to_address().empty()) {
+    to_address_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_to_address(), 
+      GetArena());
+  }
+  token_id_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (!from._internal_token_id().empty()) {
+    token_id_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_token_id(), 
+      GetArena());
+  }
+  // @@protoc_insertion_point(copy_constructor:TW.Tron.Proto.TransferTRC721Contract)
+}
+
+void TransferTRC721Contract::SharedCtor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_TransferTRC721Contract_Tron_2eproto.base);
+  contract_address_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  owner_address_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  to_address_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  token_id_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+
+TransferTRC721Contract::~TransferTRC721Contract() {
+  // @@protoc_insertion_point(destructor:TW.Tron.Proto.TransferTRC721Contract)
+  SharedDtor();
+  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+void TransferTRC721Contract::SharedDtor() {
+  GOOGLE_DCHECK(GetArena() == nullptr);
+  contract_address_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  owner_address_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  to_address_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  token_id_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+
+void TransferTRC721Contract::ArenaDtor(void* object) {
+  TransferTRC721Contract* _this = reinterpret_cast< TransferTRC721Contract* >(object);
+  (void)_this;
+}
+void TransferTRC721Contract::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
+}
+void TransferTRC721Contract::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const TransferTRC721Contract& TransferTRC721Contract::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_TransferTRC721Contract_Tron_2eproto.base);
+  return *internal_default_instance();
+}
+
+
+void TransferTRC721Contract::Clear() {
+// @@protoc_insertion_point(message_clear_start:TW.Tron.Proto.TransferTRC721Contract)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  contract_address_.ClearToEmpty();
+  owner_address_.ClearToEmpty();
+  to_address_.ClearToEmpty();
+  token_id_.ClearToEmpty();
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* TransferTRC721Contract::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    CHK_(ptr);
+    switch (tag >> 3) {
+      // string contract_address = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
+          auto str = _internal_mutable_contract_address();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "TW.Tron.Proto.TransferTRC721Contract.contract_address"));
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // string owner_address = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
+          auto str = _internal_mutable_owner_address();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "TW.Tron.Proto.TransferTRC721Contract.owner_address"));
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // string to_address = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
+          auto str = _internal_mutable_to_address();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "TW.Tron.Proto.TransferTRC721Contract.to_address"));
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // bytes token_id = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 34)) {
+          auto str = _internal_mutable_token_id();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      default: {
+      handle_unusual:
+        if ((tag & 7) == 4 || tag == 0) {
+          ctx->SetLastTag(tag);
+          goto success;
+        }
+        ptr = UnknownFieldParse(tag,
+            _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+            ptr, ctx);
+        CHK_(ptr != nullptr);
+        continue;
+      }
+    }  // switch
+  }  // while
+success:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto success;
+#undef CHK_
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* TransferTRC721Contract::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:TW.Tron.Proto.TransferTRC721Contract)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // string contract_address = 1;
+  if (this->contract_address().size() > 0) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_contract_address().data(), static_cast<int>(this->_internal_contract_address().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "TW.Tron.Proto.TransferTRC721Contract.contract_address");
+    target = stream->WriteStringMaybeAliased(
+        1, this->_internal_contract_address(), target);
+  }
+
+  // string owner_address = 2;
+  if (this->owner_address().size() > 0) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_owner_address().data(), static_cast<int>(this->_internal_owner_address().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "TW.Tron.Proto.TransferTRC721Contract.owner_address");
+    target = stream->WriteStringMaybeAliased(
+        2, this->_internal_owner_address(), target);
+  }
+
+  // string to_address = 3;
+  if (this->to_address().size() > 0) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_to_address().data(), static_cast<int>(this->_internal_to_address().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "TW.Tron.Proto.TransferTRC721Contract.to_address");
+    target = stream->WriteStringMaybeAliased(
+        3, this->_internal_to_address(), target);
+  }
+
+  // bytes token_id = 4;
+  if (this->token_id().size() > 0) {
+    target = stream->WriteBytesMaybeAliased(
+        4, this->_internal_token_id(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:TW.Tron.Proto.TransferTRC721Contract)
+  return target;
+}
+
+size_t TransferTRC721Contract::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:TW.Tron.Proto.TransferTRC721Contract)
+  size_t total_size = 0;
+
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // string contract_address = 1;
+  if (this->contract_address().size() > 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_contract_address());
+  }
+
+  // string owner_address = 2;
+  if (this->owner_address().size() > 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_owner_address());
+  }
+
+  // string to_address = 3;
+  if (this->to_address().size() > 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_to_address());
+  }
+
+  // bytes token_id = 4;
+  if (this->token_id().size() > 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
+        this->_internal_token_id());
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
+        _internal_metadata_, total_size, &_cached_size_);
+  }
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void TransferTRC721Contract::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:TW.Tron.Proto.TransferTRC721Contract)
+  GOOGLE_DCHECK_NE(&from, this);
+  const TransferTRC721Contract* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<TransferTRC721Contract>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:TW.Tron.Proto.TransferTRC721Contract)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:TW.Tron.Proto.TransferTRC721Contract)
+    MergeFrom(*source);
+  }
+}
+
+void TransferTRC721Contract::MergeFrom(const TransferTRC721Contract& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:TW.Tron.Proto.TransferTRC721Contract)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from.contract_address().size() > 0) {
+    _internal_set_contract_address(from._internal_contract_address());
+  }
+  if (from.owner_address().size() > 0) {
+    _internal_set_owner_address(from._internal_owner_address());
+  }
+  if (from.to_address().size() > 0) {
+    _internal_set_to_address(from._internal_to_address());
+  }
+  if (from.token_id().size() > 0) {
+    _internal_set_token_id(from._internal_token_id());
+  }
+}
+
+void TransferTRC721Contract::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:TW.Tron.Proto.TransferTRC721Contract)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void TransferTRC721Contract::CopyFrom(const TransferTRC721Contract& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:TW.Tron.Proto.TransferTRC721Contract)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool TransferTRC721Contract::IsInitialized() const {
+  return true;
+}
+
+void TransferTRC721Contract::InternalSwap(TransferTRC721Contract* other) {
+  using std::swap;
+  _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
+  contract_address_.Swap(&other->contract_address_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  owner_address_.Swap(&other->owner_address_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  to_address_.Swap(&other->to_address_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  token_id_.Swap(&other->token_id_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata TransferTRC721Contract::GetMetadata() const {
+  return GetMetadataStatic();
+}
+
+
+// ===================================================================
+
+class TransferTRC1155Contract::_Internal {
+ public:
+};
+
+TransferTRC1155Contract::TransferTRC1155Contract(::PROTOBUF_NAMESPACE_ID::Arena* arena)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
+  SharedCtor();
+  RegisterArenaDtor(arena);
+  // @@protoc_insertion_point(arena_constructor:TW.Tron.Proto.TransferTRC1155Contract)
+}
+TransferTRC1155Contract::TransferTRC1155Contract(const TransferTRC1155Contract& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  contract_address_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (!from._internal_contract_address().empty()) {
+    contract_address_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_contract_address(), 
+      GetArena());
+  }
+  owner_address_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (!from._internal_owner_address().empty()) {
+    owner_address_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_owner_address(), 
+      GetArena());
+  }
+  to_address_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (!from._internal_to_address().empty()) {
+    to_address_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_to_address(), 
+      GetArena());
+  }
+  token_id_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (!from._internal_token_id().empty()) {
+    token_id_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_token_id(), 
+      GetArena());
+  }
+  value_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (!from._internal_value().empty()) {
+    value_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_value(), 
+      GetArena());
+  }
+  data_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (!from._internal_data().empty()) {
+    data_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_data(), 
+      GetArena());
+  }
+  // @@protoc_insertion_point(copy_constructor:TW.Tron.Proto.TransferTRC1155Contract)
+}
+
+void TransferTRC1155Contract::SharedCtor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_TransferTRC1155Contract_Tron_2eproto.base);
+  contract_address_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  owner_address_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  to_address_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  token_id_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  value_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  data_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+
+TransferTRC1155Contract::~TransferTRC1155Contract() {
+  // @@protoc_insertion_point(destructor:TW.Tron.Proto.TransferTRC1155Contract)
+  SharedDtor();
+  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+void TransferTRC1155Contract::SharedDtor() {
+  GOOGLE_DCHECK(GetArena() == nullptr);
+  contract_address_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  owner_address_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  to_address_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  token_id_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  value_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  data_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+
+void TransferTRC1155Contract::ArenaDtor(void* object) {
+  TransferTRC1155Contract* _this = reinterpret_cast< TransferTRC1155Contract* >(object);
+  (void)_this;
+}
+void TransferTRC1155Contract::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
+}
+void TransferTRC1155Contract::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const TransferTRC1155Contract& TransferTRC1155Contract::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_TransferTRC1155Contract_Tron_2eproto.base);
+  return *internal_default_instance();
+}
+
+
+void TransferTRC1155Contract::Clear() {
+// @@protoc_insertion_point(message_clear_start:TW.Tron.Proto.TransferTRC1155Contract)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  contract_address_.ClearToEmpty();
+  owner_address_.ClearToEmpty();
+  to_address_.ClearToEmpty();
+  token_id_.ClearToEmpty();
+  value_.ClearToEmpty();
+  data_.ClearToEmpty();
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* TransferTRC1155Contract::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    CHK_(ptr);
+    switch (tag >> 3) {
+      // string contract_address = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
+          auto str = _internal_mutable_contract_address();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "TW.Tron.Proto.TransferTRC1155Contract.contract_address"));
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // string owner_address = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
+          auto str = _internal_mutable_owner_address();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "TW.Tron.Proto.TransferTRC1155Contract.owner_address"));
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // string to_address = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
+          auto str = _internal_mutable_to_address();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "TW.Tron.Proto.TransferTRC1155Contract.to_address"));
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // bytes token_id = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 34)) {
+          auto str = _internal_mutable_token_id();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // bytes value = 5;
+      case 5:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 42)) {
+          auto str = _internal_mutable_value();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // bytes data = 6;
+      case 6:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 50)) {
+          auto str = _internal_mutable_data();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      default: {
+      handle_unusual:
+        if ((tag & 7) == 4 || tag == 0) {
+          ctx->SetLastTag(tag);
+          goto success;
+        }
+        ptr = UnknownFieldParse(tag,
+            _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+            ptr, ctx);
+        CHK_(ptr != nullptr);
+        continue;
+      }
+    }  // switch
+  }  // while
+success:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto success;
+#undef CHK_
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* TransferTRC1155Contract::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:TW.Tron.Proto.TransferTRC1155Contract)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // string contract_address = 1;
+  if (this->contract_address().size() > 0) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_contract_address().data(), static_cast<int>(this->_internal_contract_address().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "TW.Tron.Proto.TransferTRC1155Contract.contract_address");
+    target = stream->WriteStringMaybeAliased(
+        1, this->_internal_contract_address(), target);
+  }
+
+  // string owner_address = 2;
+  if (this->owner_address().size() > 0) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_owner_address().data(), static_cast<int>(this->_internal_owner_address().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "TW.Tron.Proto.TransferTRC1155Contract.owner_address");
+    target = stream->WriteStringMaybeAliased(
+        2, this->_internal_owner_address(), target);
+  }
+
+  // string to_address = 3;
+  if (this->to_address().size() > 0) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_to_address().data(), static_cast<int>(this->_internal_to_address().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "TW.Tron.Proto.TransferTRC1155Contract.to_address");
+    target = stream->WriteStringMaybeAliased(
+        3, this->_internal_to_address(), target);
+  }
+
+  // bytes token_id = 4;
+  if (this->token_id().size() > 0) {
+    target = stream->WriteBytesMaybeAliased(
+        4, this->_internal_token_id(), target);
+  }
+
+  // bytes value = 5;
+  if (this->value().size() > 0) {
+    target = stream->WriteBytesMaybeAliased(
+        5, this->_internal_value(), target);
+  }
+
+  // bytes data = 6;
+  if (this->data().size() > 0) {
+    target = stream->WriteBytesMaybeAliased(
+        6, this->_internal_data(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:TW.Tron.Proto.TransferTRC1155Contract)
+  return target;
+}
+
+size_t TransferTRC1155Contract::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:TW.Tron.Proto.TransferTRC1155Contract)
+  size_t total_size = 0;
+
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // string contract_address = 1;
+  if (this->contract_address().size() > 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_contract_address());
+  }
+
+  // string owner_address = 2;
+  if (this->owner_address().size() > 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_owner_address());
+  }
+
+  // string to_address = 3;
+  if (this->to_address().size() > 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_to_address());
+  }
+
+  // bytes token_id = 4;
+  if (this->token_id().size() > 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
+        this->_internal_token_id());
+  }
+
+  // bytes value = 5;
+  if (this->value().size() > 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
+        this->_internal_value());
+  }
+
+  // bytes data = 6;
+  if (this->data().size() > 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
+        this->_internal_data());
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
+        _internal_metadata_, total_size, &_cached_size_);
+  }
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void TransferTRC1155Contract::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:TW.Tron.Proto.TransferTRC1155Contract)
+  GOOGLE_DCHECK_NE(&from, this);
+  const TransferTRC1155Contract* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<TransferTRC1155Contract>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:TW.Tron.Proto.TransferTRC1155Contract)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:TW.Tron.Proto.TransferTRC1155Contract)
+    MergeFrom(*source);
+  }
+}
+
+void TransferTRC1155Contract::MergeFrom(const TransferTRC1155Contract& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:TW.Tron.Proto.TransferTRC1155Contract)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from.contract_address().size() > 0) {
+    _internal_set_contract_address(from._internal_contract_address());
+  }
+  if (from.owner_address().size() > 0) {
+    _internal_set_owner_address(from._internal_owner_address());
+  }
+  if (from.to_address().size() > 0) {
+    _internal_set_to_address(from._internal_to_address());
+  }
+  if (from.token_id().size() > 0) {
+    _internal_set_token_id(from._internal_token_id());
+  }
+  if (from.value().size() > 0) {
+    _internal_set_value(from._internal_value());
+  }
+  if (from.data().size() > 0) {
+    _internal_set_data(from._internal_data());
+  }
+}
+
+void TransferTRC1155Contract::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:TW.Tron.Proto.TransferTRC1155Contract)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void TransferTRC1155Contract::CopyFrom(const TransferTRC1155Contract& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:TW.Tron.Proto.TransferTRC1155Contract)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool TransferTRC1155Contract::IsInitialized() const {
+  return true;
+}
+
+void TransferTRC1155Contract::InternalSwap(TransferTRC1155Contract* other) {
+  using std::swap;
+  _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
+  contract_address_.Swap(&other->contract_address_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  owner_address_.Swap(&other->owner_address_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  to_address_.Swap(&other->to_address_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  token_id_.Swap(&other->token_id_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  value_.Swap(&other->value_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  data_.Swap(&other->data_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata TransferTRC1155Contract::GetMetadata() const {
+  return GetMetadataStatic();
+}
+
+
+// ===================================================================
+
+class ApproveTRC721Contract::_Internal {
+ public:
+};
+
+ApproveTRC721Contract::ApproveTRC721Contract(::PROTOBUF_NAMESPACE_ID::Arena* arena)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
+  SharedCtor();
+  RegisterArenaDtor(arena);
+  // @@protoc_insertion_point(arena_constructor:TW.Tron.Proto.ApproveTRC721Contract)
+}
+ApproveTRC721Contract::ApproveTRC721Contract(const ApproveTRC721Contract& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  contract_address_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (!from._internal_contract_address().empty()) {
+    contract_address_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_contract_address(), 
+      GetArena());
+  }
+  owner_address_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (!from._internal_owner_address().empty()) {
+    owner_address_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_owner_address(), 
+      GetArena());
+  }
+  spender_address_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (!from._internal_spender_address().empty()) {
+    spender_address_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_spender_address(), 
+      GetArena());
+  }
+  approved_ = from.approved_;
+  // @@protoc_insertion_point(copy_constructor:TW.Tron.Proto.ApproveTRC721Contract)
+}
+
+void ApproveTRC721Contract::SharedCtor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_ApproveTRC721Contract_Tron_2eproto.base);
+  contract_address_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  owner_address_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  spender_address_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  approved_ = false;
+}
+
+ApproveTRC721Contract::~ApproveTRC721Contract() {
+  // @@protoc_insertion_point(destructor:TW.Tron.Proto.ApproveTRC721Contract)
+  SharedDtor();
+  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+void ApproveTRC721Contract::SharedDtor() {
+  GOOGLE_DCHECK(GetArena() == nullptr);
+  contract_address_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  owner_address_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  spender_address_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+
+void ApproveTRC721Contract::ArenaDtor(void* object) {
+  ApproveTRC721Contract* _this = reinterpret_cast< ApproveTRC721Contract* >(object);
+  (void)_this;
+}
+void ApproveTRC721Contract::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
+}
+void ApproveTRC721Contract::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const ApproveTRC721Contract& ApproveTRC721Contract::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_ApproveTRC721Contract_Tron_2eproto.base);
+  return *internal_default_instance();
+}
+
+
+void ApproveTRC721Contract::Clear() {
+// @@protoc_insertion_point(message_clear_start:TW.Tron.Proto.ApproveTRC721Contract)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  contract_address_.ClearToEmpty();
+  owner_address_.ClearToEmpty();
+  spender_address_.ClearToEmpty();
+  approved_ = false;
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* ApproveTRC721Contract::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    CHK_(ptr);
+    switch (tag >> 3) {
+      // string contract_address = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
+          auto str = _internal_mutable_contract_address();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "TW.Tron.Proto.ApproveTRC721Contract.contract_address"));
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // string owner_address = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
+          auto str = _internal_mutable_owner_address();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "TW.Tron.Proto.ApproveTRC721Contract.owner_address"));
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // string spender_address = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
+          auto str = _internal_mutable_spender_address();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "TW.Tron.Proto.ApproveTRC721Contract.spender_address"));
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // bool approved = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 32)) {
+          approved_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      default: {
+      handle_unusual:
+        if ((tag & 7) == 4 || tag == 0) {
+          ctx->SetLastTag(tag);
+          goto success;
+        }
+        ptr = UnknownFieldParse(tag,
+            _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+            ptr, ctx);
+        CHK_(ptr != nullptr);
+        continue;
+      }
+    }  // switch
+  }  // while
+success:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto success;
+#undef CHK_
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* ApproveTRC721Contract::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:TW.Tron.Proto.ApproveTRC721Contract)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // string contract_address = 1;
+  if (this->contract_address().size() > 0) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_contract_address().data(), static_cast<int>(this->_internal_contract_address().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "TW.Tron.Proto.ApproveTRC721Contract.contract_address");
+    target = stream->WriteStringMaybeAliased(
+        1, this->_internal_contract_address(), target);
+  }
+
+  // string owner_address = 2;
+  if (this->owner_address().size() > 0) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_owner_address().data(), static_cast<int>(this->_internal_owner_address().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "TW.Tron.Proto.ApproveTRC721Contract.owner_address");
+    target = stream->WriteStringMaybeAliased(
+        2, this->_internal_owner_address(), target);
+  }
+
+  // string spender_address = 3;
+  if (this->spender_address().size() > 0) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_spender_address().data(), static_cast<int>(this->_internal_spender_address().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "TW.Tron.Proto.ApproveTRC721Contract.spender_address");
+    target = stream->WriteStringMaybeAliased(
+        3, this->_internal_spender_address(), target);
+  }
+
+  // bool approved = 4;
+  if (this->approved() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(4, this->_internal_approved(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:TW.Tron.Proto.ApproveTRC721Contract)
+  return target;
+}
+
+size_t ApproveTRC721Contract::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:TW.Tron.Proto.ApproveTRC721Contract)
+  size_t total_size = 0;
+
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // string contract_address = 1;
+  if (this->contract_address().size() > 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_contract_address());
+  }
+
+  // string owner_address = 2;
+  if (this->owner_address().size() > 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_owner_address());
+  }
+
+  // string spender_address = 3;
+  if (this->spender_address().size() > 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_spender_address());
+  }
+
+  // bool approved = 4;
+  if (this->approved() != 0) {
+    total_size += 1 + 1;
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
+        _internal_metadata_, total_size, &_cached_size_);
+  }
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void ApproveTRC721Contract::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:TW.Tron.Proto.ApproveTRC721Contract)
+  GOOGLE_DCHECK_NE(&from, this);
+  const ApproveTRC721Contract* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<ApproveTRC721Contract>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:TW.Tron.Proto.ApproveTRC721Contract)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:TW.Tron.Proto.ApproveTRC721Contract)
+    MergeFrom(*source);
+  }
+}
+
+void ApproveTRC721Contract::MergeFrom(const ApproveTRC721Contract& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:TW.Tron.Proto.ApproveTRC721Contract)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from.contract_address().size() > 0) {
+    _internal_set_contract_address(from._internal_contract_address());
+  }
+  if (from.owner_address().size() > 0) {
+    _internal_set_owner_address(from._internal_owner_address());
+  }
+  if (from.spender_address().size() > 0) {
+    _internal_set_spender_address(from._internal_spender_address());
+  }
+  if (from.approved() != 0) {
+    _internal_set_approved(from._internal_approved());
+  }
+}
+
+void ApproveTRC721Contract::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:TW.Tron.Proto.ApproveTRC721Contract)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void ApproveTRC721Contract::CopyFrom(const ApproveTRC721Contract& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:TW.Tron.Proto.ApproveTRC721Contract)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool ApproveTRC721Contract::IsInitialized() const {
+  return true;
+}
+
+void ApproveTRC721Contract::InternalSwap(ApproveTRC721Contract* other) {
+  using std::swap;
+  _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
+  contract_address_.Swap(&other->contract_address_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  owner_address_.Swap(&other->owner_address_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  spender_address_.Swap(&other->spender_address_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  swap(approved_, other->approved_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata ApproveTRC721Contract::GetMetadata() const {
   return GetMetadataStatic();
 }
 
@@ -5969,6 +7085,9 @@ class Transaction::_Internal {
   static const ::TW::Tron::Proto::WithdrawExpireUnfreezeContract& withdraw_expire_unfreeze(const Transaction* msg);
   static const ::TW::Tron::Proto::DelegateResourceContract& delegate_resource(const Transaction* msg);
   static const ::TW::Tron::Proto::UnDelegateResourceContract& undelegate_resource(const Transaction* msg);
+  static const ::TW::Tron::Proto::TransferTRC721Contract& transfer_trc721_contract(const Transaction* msg);
+  static const ::TW::Tron::Proto::TransferTRC1155Contract& transfer_trc1155_contract(const Transaction* msg);
+  static const ::TW::Tron::Proto::ApproveTRC721Contract& approve_trc721_contract(const Transaction* msg);
 };
 
 const ::TW::Tron::Proto::BlockHeader&
@@ -6038,6 +7157,18 @@ Transaction::_Internal::delegate_resource(const Transaction* msg) {
 const ::TW::Tron::Proto::UnDelegateResourceContract&
 Transaction::_Internal::undelegate_resource(const Transaction* msg) {
   return *msg->contract_oneof_.undelegate_resource_;
+}
+const ::TW::Tron::Proto::TransferTRC721Contract&
+Transaction::_Internal::transfer_trc721_contract(const Transaction* msg) {
+  return *msg->contract_oneof_.transfer_trc721_contract_;
+}
+const ::TW::Tron::Proto::TransferTRC1155Contract&
+Transaction::_Internal::transfer_trc1155_contract(const Transaction* msg) {
+  return *msg->contract_oneof_.transfer_trc1155_contract_;
+}
+const ::TW::Tron::Proto::ApproveTRC721Contract&
+Transaction::_Internal::approve_trc721_contract(const Transaction* msg) {
+  return *msg->contract_oneof_.approve_trc721_contract_;
 }
 void Transaction::set_allocated_transfer(::TW::Tron::Proto::TransferContract* transfer) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArena();
@@ -6279,6 +7410,51 @@ void Transaction::set_allocated_undelegate_resource(::TW::Tron::Proto::UnDelegat
   }
   // @@protoc_insertion_point(field_set_allocated:TW.Tron.Proto.Transaction.undelegate_resource)
 }
+void Transaction::set_allocated_transfer_trc721_contract(::TW::Tron::Proto::TransferTRC721Contract* transfer_trc721_contract) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArena();
+  clear_contract_oneof();
+  if (transfer_trc721_contract) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+      ::PROTOBUF_NAMESPACE_ID::Arena::GetArena(transfer_trc721_contract);
+    if (message_arena != submessage_arena) {
+      transfer_trc721_contract = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, transfer_trc721_contract, submessage_arena);
+    }
+    set_has_transfer_trc721_contract();
+    contract_oneof_.transfer_trc721_contract_ = transfer_trc721_contract;
+  }
+  // @@protoc_insertion_point(field_set_allocated:TW.Tron.Proto.Transaction.transfer_trc721_contract)
+}
+void Transaction::set_allocated_transfer_trc1155_contract(::TW::Tron::Proto::TransferTRC1155Contract* transfer_trc1155_contract) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArena();
+  clear_contract_oneof();
+  if (transfer_trc1155_contract) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+      ::PROTOBUF_NAMESPACE_ID::Arena::GetArena(transfer_trc1155_contract);
+    if (message_arena != submessage_arena) {
+      transfer_trc1155_contract = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, transfer_trc1155_contract, submessage_arena);
+    }
+    set_has_transfer_trc1155_contract();
+    contract_oneof_.transfer_trc1155_contract_ = transfer_trc1155_contract;
+  }
+  // @@protoc_insertion_point(field_set_allocated:TW.Tron.Proto.Transaction.transfer_trc1155_contract)
+}
+void Transaction::set_allocated_approve_trc721_contract(::TW::Tron::Proto::ApproveTRC721Contract* approve_trc721_contract) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArena();
+  clear_contract_oneof();
+  if (approve_trc721_contract) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+      ::PROTOBUF_NAMESPACE_ID::Arena::GetArena(approve_trc721_contract);
+    if (message_arena != submessage_arena) {
+      approve_trc721_contract = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, approve_trc721_contract, submessage_arena);
+    }
+    set_has_approve_trc721_contract();
+    contract_oneof_.approve_trc721_contract_ = approve_trc721_contract;
+  }
+  // @@protoc_insertion_point(field_set_allocated:TW.Tron.Proto.Transaction.approve_trc721_contract)
+}
 Transaction::Transaction(::PROTOBUF_NAMESPACE_ID::Arena* arena)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
   SharedCtor();
@@ -6360,6 +7536,18 @@ Transaction::Transaction(const Transaction& from)
     }
     case kUndelegateResource: {
       _internal_mutable_undelegate_resource()->::TW::Tron::Proto::UnDelegateResourceContract::MergeFrom(from._internal_undelegate_resource());
+      break;
+    }
+    case kTransferTrc721Contract: {
+      _internal_mutable_transfer_trc721_contract()->::TW::Tron::Proto::TransferTRC721Contract::MergeFrom(from._internal_transfer_trc721_contract());
+      break;
+    }
+    case kTransferTrc1155Contract: {
+      _internal_mutable_transfer_trc1155_contract()->::TW::Tron::Proto::TransferTRC1155Contract::MergeFrom(from._internal_transfer_trc1155_contract());
+      break;
+    }
+    case kApproveTrc721Contract: {
+      _internal_mutable_approve_trc721_contract()->::TW::Tron::Proto::ApproveTRC721Contract::MergeFrom(from._internal_approve_trc721_contract());
       break;
     }
     case CONTRACT_ONEOF_NOT_SET: {
@@ -6503,6 +7691,24 @@ void Transaction::clear_contract_oneof() {
     case kUndelegateResource: {
       if (GetArena() == nullptr) {
         delete contract_oneof_.undelegate_resource_;
+      }
+      break;
+    }
+    case kTransferTrc721Contract: {
+      if (GetArena() == nullptr) {
+        delete contract_oneof_.transfer_trc721_contract_;
+      }
+      break;
+    }
+    case kTransferTrc1155Contract: {
+      if (GetArena() == nullptr) {
+        delete contract_oneof_.transfer_trc1155_contract_;
+      }
+      break;
+    }
+    case kApproveTrc721Contract: {
+      if (GetArena() == nullptr) {
+        delete contract_oneof_.approve_trc721_contract_;
       }
       break;
     }
@@ -6675,6 +7881,27 @@ const char* Transaction::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID
       case 25:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 202)) {
           ptr = ctx->ParseMessage(_internal_mutable_undelegate_resource(), ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // .TW.Tron.Proto.TransferTRC721Contract transfer_trc721_contract = 26;
+      case 26:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 210)) {
+          ptr = ctx->ParseMessage(_internal_mutable_transfer_trc721_contract(), ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // .TW.Tron.Proto.TransferTRC1155Contract transfer_trc1155_contract = 27;
+      case 27:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 218)) {
+          ptr = ctx->ParseMessage(_internal_mutable_transfer_trc1155_contract(), ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // .TW.Tron.Proto.ApproveTRC721Contract approve_trc721_contract = 28;
+      case 28:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 226)) {
+          ptr = ctx->ParseMessage(_internal_mutable_approve_trc721_contract(), ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -6860,6 +8087,30 @@ failure:
         25, _Internal::undelegate_resource(this), target, stream);
   }
 
+  // .TW.Tron.Proto.TransferTRC721Contract transfer_trc721_contract = 26;
+  if (_internal_has_transfer_trc721_contract()) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(
+        26, _Internal::transfer_trc721_contract(this), target, stream);
+  }
+
+  // .TW.Tron.Proto.TransferTRC1155Contract transfer_trc1155_contract = 27;
+  if (_internal_has_transfer_trc1155_contract()) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(
+        27, _Internal::transfer_trc1155_contract(this), target, stream);
+  }
+
+  // .TW.Tron.Proto.ApproveTRC721Contract approve_trc721_contract = 28;
+  if (_internal_has_approve_trc721_contract()) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(
+        28, _Internal::approve_trc721_contract(this), target, stream);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -7017,6 +8268,27 @@ size_t Transaction::ByteSizeLong() const {
           *contract_oneof_.undelegate_resource_);
       break;
     }
+    // .TW.Tron.Proto.TransferTRC721Contract transfer_trc721_contract = 26;
+    case kTransferTrc721Contract: {
+      total_size += 2 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+          *contract_oneof_.transfer_trc721_contract_);
+      break;
+    }
+    // .TW.Tron.Proto.TransferTRC1155Contract transfer_trc1155_contract = 27;
+    case kTransferTrc1155Contract: {
+      total_size += 2 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+          *contract_oneof_.transfer_trc1155_contract_);
+      break;
+    }
+    // .TW.Tron.Proto.ApproveTRC721Contract approve_trc721_contract = 28;
+    case kApproveTrc721Contract: {
+      total_size += 2 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+          *contract_oneof_.approve_trc721_contract_);
+      break;
+    }
     case CONTRACT_ONEOF_NOT_SET: {
       break;
     }
@@ -7127,6 +8399,18 @@ void Transaction::MergeFrom(const Transaction& from) {
     }
     case kUndelegateResource: {
       _internal_mutable_undelegate_resource()->::TW::Tron::Proto::UnDelegateResourceContract::MergeFrom(from._internal_undelegate_resource());
+      break;
+    }
+    case kTransferTrc721Contract: {
+      _internal_mutable_transfer_trc721_contract()->::TW::Tron::Proto::TransferTRC721Contract::MergeFrom(from._internal_transfer_trc721_contract());
+      break;
+    }
+    case kTransferTrc1155Contract: {
+      _internal_mutable_transfer_trc1155_contract()->::TW::Tron::Proto::TransferTRC1155Contract::MergeFrom(from._internal_transfer_trc1155_contract());
+      break;
+    }
+    case kApproveTrc721Contract: {
+      _internal_mutable_approve_trc721_contract()->::TW::Tron::Proto::ApproveTRC721Contract::MergeFrom(from._internal_approve_trc721_contract());
       break;
     }
     case CONTRACT_ONEOF_NOT_SET: {
@@ -7806,6 +9090,15 @@ template<> PROTOBUF_NOINLINE ::TW::Tron::Proto::TransferTRC20Contract* Arena::Cr
 }
 template<> PROTOBUF_NOINLINE ::TW::Tron::Proto::ApproveTRC20Contract* Arena::CreateMaybeMessage< ::TW::Tron::Proto::ApproveTRC20Contract >(Arena* arena) {
   return Arena::CreateMessageInternal< ::TW::Tron::Proto::ApproveTRC20Contract >(arena);
+}
+template<> PROTOBUF_NOINLINE ::TW::Tron::Proto::TransferTRC721Contract* Arena::CreateMaybeMessage< ::TW::Tron::Proto::TransferTRC721Contract >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::TW::Tron::Proto::TransferTRC721Contract >(arena);
+}
+template<> PROTOBUF_NOINLINE ::TW::Tron::Proto::TransferTRC1155Contract* Arena::CreateMaybeMessage< ::TW::Tron::Proto::TransferTRC1155Contract >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::TW::Tron::Proto::TransferTRC1155Contract >(arena);
+}
+template<> PROTOBUF_NOINLINE ::TW::Tron::Proto::ApproveTRC721Contract* Arena::CreateMaybeMessage< ::TW::Tron::Proto::ApproveTRC721Contract >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::TW::Tron::Proto::ApproveTRC721Contract >(arena);
 }
 template<> PROTOBUF_NOINLINE ::TW::Tron::Proto::FreezeBalanceContract* Arena::CreateMaybeMessage< ::TW::Tron::Proto::FreezeBalanceContract >(Arena* arena) {
   return Arena::CreateMessageInternal< ::TW::Tron::Proto::FreezeBalanceContract >(arena);

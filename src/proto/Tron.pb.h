@@ -46,7 +46,7 @@ struct TableStruct_Tron_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxiliaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[21]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[24]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -59,6 +59,9 @@ namespace Proto {
 class ApproveTRC20Contract;
 class ApproveTRC20ContractDefaultTypeInternal;
 extern ApproveTRC20ContractDefaultTypeInternal _ApproveTRC20Contract_default_instance_;
+class ApproveTRC721Contract;
+class ApproveTRC721ContractDefaultTypeInternal;
+extern ApproveTRC721ContractDefaultTypeInternal _ApproveTRC721Contract_default_instance_;
 class BlockHeader;
 class BlockHeaderDefaultTypeInternal;
 extern BlockHeaderDefaultTypeInternal _BlockHeader_default_instance_;
@@ -86,9 +89,15 @@ extern TransferAssetContractDefaultTypeInternal _TransferAssetContract_default_i
 class TransferContract;
 class TransferContractDefaultTypeInternal;
 extern TransferContractDefaultTypeInternal _TransferContract_default_instance_;
+class TransferTRC1155Contract;
+class TransferTRC1155ContractDefaultTypeInternal;
+extern TransferTRC1155ContractDefaultTypeInternal _TransferTRC1155Contract_default_instance_;
 class TransferTRC20Contract;
 class TransferTRC20ContractDefaultTypeInternal;
 extern TransferTRC20ContractDefaultTypeInternal _TransferTRC20Contract_default_instance_;
+class TransferTRC721Contract;
+class TransferTRC721ContractDefaultTypeInternal;
+extern TransferTRC721ContractDefaultTypeInternal _TransferTRC721Contract_default_instance_;
 class TriggerSmartContract;
 class TriggerSmartContractDefaultTypeInternal;
 extern TriggerSmartContractDefaultTypeInternal _TriggerSmartContract_default_instance_;
@@ -124,6 +133,7 @@ extern WithdrawExpireUnfreezeContractDefaultTypeInternal _WithdrawExpireUnfreeze
 }  // namespace TW
 PROTOBUF_NAMESPACE_OPEN
 template<> ::TW::Tron::Proto::ApproveTRC20Contract* Arena::CreateMaybeMessage<::TW::Tron::Proto::ApproveTRC20Contract>(Arena*);
+template<> ::TW::Tron::Proto::ApproveTRC721Contract* Arena::CreateMaybeMessage<::TW::Tron::Proto::ApproveTRC721Contract>(Arena*);
 template<> ::TW::Tron::Proto::BlockHeader* Arena::CreateMaybeMessage<::TW::Tron::Proto::BlockHeader>(Arena*);
 template<> ::TW::Tron::Proto::DelegateResourceContract* Arena::CreateMaybeMessage<::TW::Tron::Proto::DelegateResourceContract>(Arena*);
 template<> ::TW::Tron::Proto::FreezeBalanceContract* Arena::CreateMaybeMessage<::TW::Tron::Proto::FreezeBalanceContract>(Arena*);
@@ -133,7 +143,9 @@ template<> ::TW::Tron::Proto::SigningOutput* Arena::CreateMaybeMessage<::TW::Tro
 template<> ::TW::Tron::Proto::Transaction* Arena::CreateMaybeMessage<::TW::Tron::Proto::Transaction>(Arena*);
 template<> ::TW::Tron::Proto::TransferAssetContract* Arena::CreateMaybeMessage<::TW::Tron::Proto::TransferAssetContract>(Arena*);
 template<> ::TW::Tron::Proto::TransferContract* Arena::CreateMaybeMessage<::TW::Tron::Proto::TransferContract>(Arena*);
+template<> ::TW::Tron::Proto::TransferTRC1155Contract* Arena::CreateMaybeMessage<::TW::Tron::Proto::TransferTRC1155Contract>(Arena*);
 template<> ::TW::Tron::Proto::TransferTRC20Contract* Arena::CreateMaybeMessage<::TW::Tron::Proto::TransferTRC20Contract>(Arena*);
+template<> ::TW::Tron::Proto::TransferTRC721Contract* Arena::CreateMaybeMessage<::TW::Tron::Proto::TransferTRC721Contract>(Arena*);
 template<> ::TW::Tron::Proto::TriggerSmartContract* Arena::CreateMaybeMessage<::TW::Tron::Proto::TriggerSmartContract>(Arena*);
 template<> ::TW::Tron::Proto::UnDelegateResourceContract* Arena::CreateMaybeMessage<::TW::Tron::Proto::UnDelegateResourceContract>(Arena*);
 template<> ::TW::Tron::Proto::UnfreezeAssetContract* Arena::CreateMaybeMessage<::TW::Tron::Proto::UnfreezeAssetContract>(Arena*);
@@ -907,6 +919,626 @@ class ApproveTRC20Contract PROTOBUF_FINAL :
 };
 // -------------------------------------------------------------------
 
+class TransferTRC721Contract PROTOBUF_FINAL :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:TW.Tron.Proto.TransferTRC721Contract) */ {
+ public:
+  inline TransferTRC721Contract() : TransferTRC721Contract(nullptr) {}
+  virtual ~TransferTRC721Contract();
+
+  TransferTRC721Contract(const TransferTRC721Contract& from);
+  TransferTRC721Contract(TransferTRC721Contract&& from) noexcept
+    : TransferTRC721Contract() {
+    *this = ::std::move(from);
+  }
+
+  inline TransferTRC721Contract& operator=(const TransferTRC721Contract& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline TransferTRC721Contract& operator=(TransferTRC721Contract&& from) noexcept {
+    if (GetArena() == from.GetArena()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const TransferTRC721Contract& default_instance();
+
+  static inline const TransferTRC721Contract* internal_default_instance() {
+    return reinterpret_cast<const TransferTRC721Contract*>(
+               &_TransferTRC721Contract_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    4;
+
+  friend void swap(TransferTRC721Contract& a, TransferTRC721Contract& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(TransferTRC721Contract* other) {
+    if (other == this) return;
+    if (GetArena() == other->GetArena()) {
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(TransferTRC721Contract* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline TransferTRC721Contract* New() const final {
+    return CreateMaybeMessage<TransferTRC721Contract>(nullptr);
+  }
+
+  TransferTRC721Contract* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<TransferTRC721Contract>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const TransferTRC721Contract& from);
+  void MergeFrom(const TransferTRC721Contract& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(TransferTRC721Contract* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "TW.Tron.Proto.TransferTRC721Contract";
+  }
+  protected:
+  explicit TransferTRC721Contract(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_Tron_2eproto);
+    return ::descriptor_table_Tron_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kContractAddressFieldNumber = 1,
+    kOwnerAddressFieldNumber = 2,
+    kToAddressFieldNumber = 3,
+    kTokenIdFieldNumber = 4,
+  };
+  // string contract_address = 1;
+  void clear_contract_address();
+  const std::string& contract_address() const;
+  void set_contract_address(const std::string& value);
+  void set_contract_address(std::string&& value);
+  void set_contract_address(const char* value);
+  void set_contract_address(const char* value, size_t size);
+  std::string* mutable_contract_address();
+  std::string* release_contract_address();
+  void set_allocated_contract_address(std::string* contract_address);
+  private:
+  const std::string& _internal_contract_address() const;
+  void _internal_set_contract_address(const std::string& value);
+  std::string* _internal_mutable_contract_address();
+  public:
+
+  // string owner_address = 2;
+  void clear_owner_address();
+  const std::string& owner_address() const;
+  void set_owner_address(const std::string& value);
+  void set_owner_address(std::string&& value);
+  void set_owner_address(const char* value);
+  void set_owner_address(const char* value, size_t size);
+  std::string* mutable_owner_address();
+  std::string* release_owner_address();
+  void set_allocated_owner_address(std::string* owner_address);
+  private:
+  const std::string& _internal_owner_address() const;
+  void _internal_set_owner_address(const std::string& value);
+  std::string* _internal_mutable_owner_address();
+  public:
+
+  // string to_address = 3;
+  void clear_to_address();
+  const std::string& to_address() const;
+  void set_to_address(const std::string& value);
+  void set_to_address(std::string&& value);
+  void set_to_address(const char* value);
+  void set_to_address(const char* value, size_t size);
+  std::string* mutable_to_address();
+  std::string* release_to_address();
+  void set_allocated_to_address(std::string* to_address);
+  private:
+  const std::string& _internal_to_address() const;
+  void _internal_set_to_address(const std::string& value);
+  std::string* _internal_mutable_to_address();
+  public:
+
+  // bytes token_id = 4;
+  void clear_token_id();
+  const std::string& token_id() const;
+  void set_token_id(const std::string& value);
+  void set_token_id(std::string&& value);
+  void set_token_id(const char* value);
+  void set_token_id(const void* value, size_t size);
+  std::string* mutable_token_id();
+  std::string* release_token_id();
+  void set_allocated_token_id(std::string* token_id);
+  private:
+  const std::string& _internal_token_id() const;
+  void _internal_set_token_id(const std::string& value);
+  std::string* _internal_mutable_token_id();
+  public:
+
+  // @@protoc_insertion_point(class_scope:TW.Tron.Proto.TransferTRC721Contract)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr contract_address_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr owner_address_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr to_address_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr token_id_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_Tron_2eproto;
+};
+// -------------------------------------------------------------------
+
+class TransferTRC1155Contract PROTOBUF_FINAL :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:TW.Tron.Proto.TransferTRC1155Contract) */ {
+ public:
+  inline TransferTRC1155Contract() : TransferTRC1155Contract(nullptr) {}
+  virtual ~TransferTRC1155Contract();
+
+  TransferTRC1155Contract(const TransferTRC1155Contract& from);
+  TransferTRC1155Contract(TransferTRC1155Contract&& from) noexcept
+    : TransferTRC1155Contract() {
+    *this = ::std::move(from);
+  }
+
+  inline TransferTRC1155Contract& operator=(const TransferTRC1155Contract& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline TransferTRC1155Contract& operator=(TransferTRC1155Contract&& from) noexcept {
+    if (GetArena() == from.GetArena()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const TransferTRC1155Contract& default_instance();
+
+  static inline const TransferTRC1155Contract* internal_default_instance() {
+    return reinterpret_cast<const TransferTRC1155Contract*>(
+               &_TransferTRC1155Contract_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    5;
+
+  friend void swap(TransferTRC1155Contract& a, TransferTRC1155Contract& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(TransferTRC1155Contract* other) {
+    if (other == this) return;
+    if (GetArena() == other->GetArena()) {
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(TransferTRC1155Contract* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline TransferTRC1155Contract* New() const final {
+    return CreateMaybeMessage<TransferTRC1155Contract>(nullptr);
+  }
+
+  TransferTRC1155Contract* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<TransferTRC1155Contract>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const TransferTRC1155Contract& from);
+  void MergeFrom(const TransferTRC1155Contract& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(TransferTRC1155Contract* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "TW.Tron.Proto.TransferTRC1155Contract";
+  }
+  protected:
+  explicit TransferTRC1155Contract(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_Tron_2eproto);
+    return ::descriptor_table_Tron_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kContractAddressFieldNumber = 1,
+    kOwnerAddressFieldNumber = 2,
+    kToAddressFieldNumber = 3,
+    kTokenIdFieldNumber = 4,
+    kValueFieldNumber = 5,
+    kDataFieldNumber = 6,
+  };
+  // string contract_address = 1;
+  void clear_contract_address();
+  const std::string& contract_address() const;
+  void set_contract_address(const std::string& value);
+  void set_contract_address(std::string&& value);
+  void set_contract_address(const char* value);
+  void set_contract_address(const char* value, size_t size);
+  std::string* mutable_contract_address();
+  std::string* release_contract_address();
+  void set_allocated_contract_address(std::string* contract_address);
+  private:
+  const std::string& _internal_contract_address() const;
+  void _internal_set_contract_address(const std::string& value);
+  std::string* _internal_mutable_contract_address();
+  public:
+
+  // string owner_address = 2;
+  void clear_owner_address();
+  const std::string& owner_address() const;
+  void set_owner_address(const std::string& value);
+  void set_owner_address(std::string&& value);
+  void set_owner_address(const char* value);
+  void set_owner_address(const char* value, size_t size);
+  std::string* mutable_owner_address();
+  std::string* release_owner_address();
+  void set_allocated_owner_address(std::string* owner_address);
+  private:
+  const std::string& _internal_owner_address() const;
+  void _internal_set_owner_address(const std::string& value);
+  std::string* _internal_mutable_owner_address();
+  public:
+
+  // string to_address = 3;
+  void clear_to_address();
+  const std::string& to_address() const;
+  void set_to_address(const std::string& value);
+  void set_to_address(std::string&& value);
+  void set_to_address(const char* value);
+  void set_to_address(const char* value, size_t size);
+  std::string* mutable_to_address();
+  std::string* release_to_address();
+  void set_allocated_to_address(std::string* to_address);
+  private:
+  const std::string& _internal_to_address() const;
+  void _internal_set_to_address(const std::string& value);
+  std::string* _internal_mutable_to_address();
+  public:
+
+  // bytes token_id = 4;
+  void clear_token_id();
+  const std::string& token_id() const;
+  void set_token_id(const std::string& value);
+  void set_token_id(std::string&& value);
+  void set_token_id(const char* value);
+  void set_token_id(const void* value, size_t size);
+  std::string* mutable_token_id();
+  std::string* release_token_id();
+  void set_allocated_token_id(std::string* token_id);
+  private:
+  const std::string& _internal_token_id() const;
+  void _internal_set_token_id(const std::string& value);
+  std::string* _internal_mutable_token_id();
+  public:
+
+  // bytes value = 5;
+  void clear_value();
+  const std::string& value() const;
+  void set_value(const std::string& value);
+  void set_value(std::string&& value);
+  void set_value(const char* value);
+  void set_value(const void* value, size_t size);
+  std::string* mutable_value();
+  std::string* release_value();
+  void set_allocated_value(std::string* value);
+  private:
+  const std::string& _internal_value() const;
+  void _internal_set_value(const std::string& value);
+  std::string* _internal_mutable_value();
+  public:
+
+  // bytes data = 6;
+  void clear_data();
+  const std::string& data() const;
+  void set_data(const std::string& value);
+  void set_data(std::string&& value);
+  void set_data(const char* value);
+  void set_data(const void* value, size_t size);
+  std::string* mutable_data();
+  std::string* release_data();
+  void set_allocated_data(std::string* data);
+  private:
+  const std::string& _internal_data() const;
+  void _internal_set_data(const std::string& value);
+  std::string* _internal_mutable_data();
+  public:
+
+  // @@protoc_insertion_point(class_scope:TW.Tron.Proto.TransferTRC1155Contract)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr contract_address_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr owner_address_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr to_address_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr token_id_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr value_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr data_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_Tron_2eproto;
+};
+// -------------------------------------------------------------------
+
+class ApproveTRC721Contract PROTOBUF_FINAL :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:TW.Tron.Proto.ApproveTRC721Contract) */ {
+ public:
+  inline ApproveTRC721Contract() : ApproveTRC721Contract(nullptr) {}
+  virtual ~ApproveTRC721Contract();
+
+  ApproveTRC721Contract(const ApproveTRC721Contract& from);
+  ApproveTRC721Contract(ApproveTRC721Contract&& from) noexcept
+    : ApproveTRC721Contract() {
+    *this = ::std::move(from);
+  }
+
+  inline ApproveTRC721Contract& operator=(const ApproveTRC721Contract& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline ApproveTRC721Contract& operator=(ApproveTRC721Contract&& from) noexcept {
+    if (GetArena() == from.GetArena()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const ApproveTRC721Contract& default_instance();
+
+  static inline const ApproveTRC721Contract* internal_default_instance() {
+    return reinterpret_cast<const ApproveTRC721Contract*>(
+               &_ApproveTRC721Contract_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    6;
+
+  friend void swap(ApproveTRC721Contract& a, ApproveTRC721Contract& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(ApproveTRC721Contract* other) {
+    if (other == this) return;
+    if (GetArena() == other->GetArena()) {
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(ApproveTRC721Contract* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline ApproveTRC721Contract* New() const final {
+    return CreateMaybeMessage<ApproveTRC721Contract>(nullptr);
+  }
+
+  ApproveTRC721Contract* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<ApproveTRC721Contract>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const ApproveTRC721Contract& from);
+  void MergeFrom(const ApproveTRC721Contract& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(ApproveTRC721Contract* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "TW.Tron.Proto.ApproveTRC721Contract";
+  }
+  protected:
+  explicit ApproveTRC721Contract(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_Tron_2eproto);
+    return ::descriptor_table_Tron_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kContractAddressFieldNumber = 1,
+    kOwnerAddressFieldNumber = 2,
+    kSpenderAddressFieldNumber = 3,
+    kApprovedFieldNumber = 4,
+  };
+  // string contract_address = 1;
+  void clear_contract_address();
+  const std::string& contract_address() const;
+  void set_contract_address(const std::string& value);
+  void set_contract_address(std::string&& value);
+  void set_contract_address(const char* value);
+  void set_contract_address(const char* value, size_t size);
+  std::string* mutable_contract_address();
+  std::string* release_contract_address();
+  void set_allocated_contract_address(std::string* contract_address);
+  private:
+  const std::string& _internal_contract_address() const;
+  void _internal_set_contract_address(const std::string& value);
+  std::string* _internal_mutable_contract_address();
+  public:
+
+  // string owner_address = 2;
+  void clear_owner_address();
+  const std::string& owner_address() const;
+  void set_owner_address(const std::string& value);
+  void set_owner_address(std::string&& value);
+  void set_owner_address(const char* value);
+  void set_owner_address(const char* value, size_t size);
+  std::string* mutable_owner_address();
+  std::string* release_owner_address();
+  void set_allocated_owner_address(std::string* owner_address);
+  private:
+  const std::string& _internal_owner_address() const;
+  void _internal_set_owner_address(const std::string& value);
+  std::string* _internal_mutable_owner_address();
+  public:
+
+  // string spender_address = 3;
+  void clear_spender_address();
+  const std::string& spender_address() const;
+  void set_spender_address(const std::string& value);
+  void set_spender_address(std::string&& value);
+  void set_spender_address(const char* value);
+  void set_spender_address(const char* value, size_t size);
+  std::string* mutable_spender_address();
+  std::string* release_spender_address();
+  void set_allocated_spender_address(std::string* spender_address);
+  private:
+  const std::string& _internal_spender_address() const;
+  void _internal_set_spender_address(const std::string& value);
+  std::string* _internal_mutable_spender_address();
+  public:
+
+  // bool approved = 4;
+  void clear_approved();
+  bool approved() const;
+  void set_approved(bool value);
+  private:
+  bool _internal_approved() const;
+  void _internal_set_approved(bool value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:TW.Tron.Proto.ApproveTRC721Contract)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr contract_address_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr owner_address_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr spender_address_;
+  bool approved_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_Tron_2eproto;
+};
+// -------------------------------------------------------------------
+
 class FreezeBalanceContract PROTOBUF_FINAL :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:TW.Tron.Proto.FreezeBalanceContract) */ {
  public:
@@ -948,7 +1580,7 @@ class FreezeBalanceContract PROTOBUF_FINAL :
                &_FreezeBalanceContract_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    4;
+    7;
 
   friend void swap(FreezeBalanceContract& a, FreezeBalanceContract& b) {
     a.Swap(&b);
@@ -1149,7 +1781,7 @@ class FreezeBalanceV2Contract PROTOBUF_FINAL :
                &_FreezeBalanceV2Contract_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    5;
+    8;
 
   friend void swap(FreezeBalanceV2Contract& a, FreezeBalanceV2Contract& b) {
     a.Swap(&b);
@@ -1321,7 +1953,7 @@ class UnfreezeBalanceV2Contract PROTOBUF_FINAL :
                &_UnfreezeBalanceV2Contract_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    6;
+    9;
 
   friend void swap(UnfreezeBalanceV2Contract& a, UnfreezeBalanceV2Contract& b) {
     a.Swap(&b);
@@ -1493,7 +2125,7 @@ class WithdrawExpireUnfreezeContract PROTOBUF_FINAL :
                &_WithdrawExpireUnfreezeContract_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    7;
+    10;
 
   friend void swap(WithdrawExpireUnfreezeContract& a, WithdrawExpireUnfreezeContract& b) {
     a.Swap(&b);
@@ -1636,7 +2268,7 @@ class DelegateResourceContract PROTOBUF_FINAL :
                &_DelegateResourceContract_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    8;
+    11;
 
   friend void swap(DelegateResourceContract& a, DelegateResourceContract& b) {
     a.Swap(&b);
@@ -1837,7 +2469,7 @@ class UnDelegateResourceContract PROTOBUF_FINAL :
                &_UnDelegateResourceContract_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    9;
+    12;
 
   friend void swap(UnDelegateResourceContract& a, UnDelegateResourceContract& b) {
     a.Swap(&b);
@@ -2027,7 +2659,7 @@ class UnfreezeBalanceContract PROTOBUF_FINAL :
                &_UnfreezeBalanceContract_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    10;
+    13;
 
   friend void swap(UnfreezeBalanceContract& a, UnfreezeBalanceContract& b) {
     a.Swap(&b);
@@ -2206,7 +2838,7 @@ class UnfreezeAssetContract PROTOBUF_FINAL :
                &_UnfreezeAssetContract_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    11;
+    14;
 
   friend void swap(UnfreezeAssetContract& a, UnfreezeAssetContract& b) {
     a.Swap(&b);
@@ -2349,7 +2981,7 @@ class VoteAssetContract PROTOBUF_FINAL :
                &_VoteAssetContract_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    12;
+    15;
 
   friend void swap(VoteAssetContract& a, VoteAssetContract& b) {
     a.Swap(&b);
@@ -2540,7 +3172,7 @@ class VoteWitnessContract_Vote PROTOBUF_FINAL :
                &_VoteWitnessContract_Vote_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    13;
+    16;
 
   friend void swap(VoteWitnessContract_Vote& a, VoteWitnessContract_Vote& b) {
     a.Swap(&b);
@@ -2694,7 +3326,7 @@ class VoteWitnessContract PROTOBUF_FINAL :
                &_VoteWitnessContract_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    14;
+    17;
 
   friend void swap(VoteWitnessContract& a, VoteWitnessContract& b) {
     a.Swap(&b);
@@ -2870,7 +3502,7 @@ class WithdrawBalanceContract PROTOBUF_FINAL :
                &_WithdrawBalanceContract_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    15;
+    18;
 
   friend void swap(WithdrawBalanceContract& a, WithdrawBalanceContract& b) {
     a.Swap(&b);
@@ -3013,7 +3645,7 @@ class TriggerSmartContract PROTOBUF_FINAL :
                &_TriggerSmartContract_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    16;
+    19;
 
   friend void swap(TriggerSmartContract& a, TriggerSmartContract& b) {
     a.Swap(&b);
@@ -3225,7 +3857,7 @@ class BlockHeader PROTOBUF_FINAL :
                &_BlockHeader_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    17;
+    20;
 
   friend void swap(BlockHeader& a, BlockHeader& b) {
     a.Swap(&b);
@@ -3449,6 +4081,9 @@ class Transaction PROTOBUF_FINAL :
     kWithdrawExpireUnfreeze = 23,
     kDelegateResource = 24,
     kUndelegateResource = 25,
+    kTransferTrc721Contract = 26,
+    kTransferTrc1155Contract = 27,
+    kApproveTrc721Contract = 28,
     CONTRACT_ONEOF_NOT_SET = 0,
   };
 
@@ -3457,7 +4092,7 @@ class Transaction PROTOBUF_FINAL :
                &_Transaction_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    18;
+    21;
 
   friend void swap(Transaction& a, Transaction& b) {
     a.Swap(&b);
@@ -3548,6 +4183,9 @@ class Transaction PROTOBUF_FINAL :
     kWithdrawExpireUnfreezeFieldNumber = 23,
     kDelegateResourceFieldNumber = 24,
     kUndelegateResourceFieldNumber = 25,
+    kTransferTrc721ContractFieldNumber = 26,
+    kTransferTrc1155ContractFieldNumber = 27,
+    kApproveTrc721ContractFieldNumber = 28,
   };
   // .TW.Tron.Proto.BlockHeader block_header = 3;
   bool has_block_header() const;
@@ -3882,6 +4520,60 @@ class Transaction PROTOBUF_FINAL :
       ::TW::Tron::Proto::UnDelegateResourceContract* undelegate_resource);
   ::TW::Tron::Proto::UnDelegateResourceContract* unsafe_arena_release_undelegate_resource();
 
+  // .TW.Tron.Proto.TransferTRC721Contract transfer_trc721_contract = 26;
+  bool has_transfer_trc721_contract() const;
+  private:
+  bool _internal_has_transfer_trc721_contract() const;
+  public:
+  void clear_transfer_trc721_contract();
+  const ::TW::Tron::Proto::TransferTRC721Contract& transfer_trc721_contract() const;
+  ::TW::Tron::Proto::TransferTRC721Contract* release_transfer_trc721_contract();
+  ::TW::Tron::Proto::TransferTRC721Contract* mutable_transfer_trc721_contract();
+  void set_allocated_transfer_trc721_contract(::TW::Tron::Proto::TransferTRC721Contract* transfer_trc721_contract);
+  private:
+  const ::TW::Tron::Proto::TransferTRC721Contract& _internal_transfer_trc721_contract() const;
+  ::TW::Tron::Proto::TransferTRC721Contract* _internal_mutable_transfer_trc721_contract();
+  public:
+  void unsafe_arena_set_allocated_transfer_trc721_contract(
+      ::TW::Tron::Proto::TransferTRC721Contract* transfer_trc721_contract);
+  ::TW::Tron::Proto::TransferTRC721Contract* unsafe_arena_release_transfer_trc721_contract();
+
+  // .TW.Tron.Proto.TransferTRC1155Contract transfer_trc1155_contract = 27;
+  bool has_transfer_trc1155_contract() const;
+  private:
+  bool _internal_has_transfer_trc1155_contract() const;
+  public:
+  void clear_transfer_trc1155_contract();
+  const ::TW::Tron::Proto::TransferTRC1155Contract& transfer_trc1155_contract() const;
+  ::TW::Tron::Proto::TransferTRC1155Contract* release_transfer_trc1155_contract();
+  ::TW::Tron::Proto::TransferTRC1155Contract* mutable_transfer_trc1155_contract();
+  void set_allocated_transfer_trc1155_contract(::TW::Tron::Proto::TransferTRC1155Contract* transfer_trc1155_contract);
+  private:
+  const ::TW::Tron::Proto::TransferTRC1155Contract& _internal_transfer_trc1155_contract() const;
+  ::TW::Tron::Proto::TransferTRC1155Contract* _internal_mutable_transfer_trc1155_contract();
+  public:
+  void unsafe_arena_set_allocated_transfer_trc1155_contract(
+      ::TW::Tron::Proto::TransferTRC1155Contract* transfer_trc1155_contract);
+  ::TW::Tron::Proto::TransferTRC1155Contract* unsafe_arena_release_transfer_trc1155_contract();
+
+  // .TW.Tron.Proto.ApproveTRC721Contract approve_trc721_contract = 28;
+  bool has_approve_trc721_contract() const;
+  private:
+  bool _internal_has_approve_trc721_contract() const;
+  public:
+  void clear_approve_trc721_contract();
+  const ::TW::Tron::Proto::ApproveTRC721Contract& approve_trc721_contract() const;
+  ::TW::Tron::Proto::ApproveTRC721Contract* release_approve_trc721_contract();
+  ::TW::Tron::Proto::ApproveTRC721Contract* mutable_approve_trc721_contract();
+  void set_allocated_approve_trc721_contract(::TW::Tron::Proto::ApproveTRC721Contract* approve_trc721_contract);
+  private:
+  const ::TW::Tron::Proto::ApproveTRC721Contract& _internal_approve_trc721_contract() const;
+  ::TW::Tron::Proto::ApproveTRC721Contract* _internal_mutable_approve_trc721_contract();
+  public:
+  void unsafe_arena_set_allocated_approve_trc721_contract(
+      ::TW::Tron::Proto::ApproveTRC721Contract* approve_trc721_contract);
+  ::TW::Tron::Proto::ApproveTRC721Contract* unsafe_arena_release_approve_trc721_contract();
+
   void clear_contract_oneof();
   ContractOneofCase contract_oneof_case() const;
   // @@protoc_insertion_point(class_scope:TW.Tron.Proto.Transaction)
@@ -3903,6 +4595,9 @@ class Transaction PROTOBUF_FINAL :
   void set_has_withdraw_expire_unfreeze();
   void set_has_delegate_resource();
   void set_has_undelegate_resource();
+  void set_has_transfer_trc721_contract();
+  void set_has_transfer_trc1155_contract();
+  void set_has_approve_trc721_contract();
 
   inline bool has_contract_oneof() const;
   inline void clear_has_contract_oneof();
@@ -3932,6 +4627,9 @@ class Transaction PROTOBUF_FINAL :
     ::TW::Tron::Proto::WithdrawExpireUnfreezeContract* withdraw_expire_unfreeze_;
     ::TW::Tron::Proto::DelegateResourceContract* delegate_resource_;
     ::TW::Tron::Proto::UnDelegateResourceContract* undelegate_resource_;
+    ::TW::Tron::Proto::TransferTRC721Contract* transfer_trc721_contract_;
+    ::TW::Tron::Proto::TransferTRC1155Contract* transfer_trc1155_contract_;
+    ::TW::Tron::Proto::ApproveTRC721Contract* approve_trc721_contract_;
   } contract_oneof_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   ::PROTOBUF_NAMESPACE_ID::uint32 _oneof_case_[1];
@@ -3981,7 +4679,7 @@ class SigningInput PROTOBUF_FINAL :
                &_SigningInput_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    19;
+    22;
 
   friend void swap(SigningInput& a, SigningInput& b) {
     a.Swap(&b);
@@ -4162,7 +4860,7 @@ class SigningOutput PROTOBUF_FINAL :
                &_SigningOutput_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    20;
+    23;
 
   friend void swap(SigningOutput& a, SigningOutput& b) {
     a.Swap(&b);
@@ -5188,6 +5886,831 @@ inline void ApproveTRC20Contract::set_allocated_amount(std::string* amount) {
   amount_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), amount,
       GetArena());
   // @@protoc_insertion_point(field_set_allocated:TW.Tron.Proto.ApproveTRC20Contract.amount)
+}
+
+// -------------------------------------------------------------------
+
+// TransferTRC721Contract
+
+// string contract_address = 1;
+inline void TransferTRC721Contract::clear_contract_address() {
+  contract_address_.ClearToEmpty();
+}
+inline const std::string& TransferTRC721Contract::contract_address() const {
+  // @@protoc_insertion_point(field_get:TW.Tron.Proto.TransferTRC721Contract.contract_address)
+  return _internal_contract_address();
+}
+inline void TransferTRC721Contract::set_contract_address(const std::string& value) {
+  _internal_set_contract_address(value);
+  // @@protoc_insertion_point(field_set:TW.Tron.Proto.TransferTRC721Contract.contract_address)
+}
+inline std::string* TransferTRC721Contract::mutable_contract_address() {
+  // @@protoc_insertion_point(field_mutable:TW.Tron.Proto.TransferTRC721Contract.contract_address)
+  return _internal_mutable_contract_address();
+}
+inline const std::string& TransferTRC721Contract::_internal_contract_address() const {
+  return contract_address_.Get();
+}
+inline void TransferTRC721Contract::_internal_set_contract_address(const std::string& value) {
+  
+  contract_address_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArena());
+}
+inline void TransferTRC721Contract::set_contract_address(std::string&& value) {
+  
+  contract_address_.Set(
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::move(value), GetArena());
+  // @@protoc_insertion_point(field_set_rvalue:TW.Tron.Proto.TransferTRC721Contract.contract_address)
+}
+inline void TransferTRC721Contract::set_contract_address(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  contract_address_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::string(value), GetArena());
+  // @@protoc_insertion_point(field_set_char:TW.Tron.Proto.TransferTRC721Contract.contract_address)
+}
+inline void TransferTRC721Contract::set_contract_address(const char* value,
+    size_t size) {
+  
+  contract_address_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::string(
+      reinterpret_cast<const char*>(value), size), GetArena());
+  // @@protoc_insertion_point(field_set_pointer:TW.Tron.Proto.TransferTRC721Contract.contract_address)
+}
+inline std::string* TransferTRC721Contract::_internal_mutable_contract_address() {
+  
+  return contract_address_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArena());
+}
+inline std::string* TransferTRC721Contract::release_contract_address() {
+  // @@protoc_insertion_point(field_release:TW.Tron.Proto.TransferTRC721Contract.contract_address)
+  return contract_address_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline void TransferTRC721Contract::set_allocated_contract_address(std::string* contract_address) {
+  if (contract_address != nullptr) {
+    
+  } else {
+    
+  }
+  contract_address_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), contract_address,
+      GetArena());
+  // @@protoc_insertion_point(field_set_allocated:TW.Tron.Proto.TransferTRC721Contract.contract_address)
+}
+
+// string owner_address = 2;
+inline void TransferTRC721Contract::clear_owner_address() {
+  owner_address_.ClearToEmpty();
+}
+inline const std::string& TransferTRC721Contract::owner_address() const {
+  // @@protoc_insertion_point(field_get:TW.Tron.Proto.TransferTRC721Contract.owner_address)
+  return _internal_owner_address();
+}
+inline void TransferTRC721Contract::set_owner_address(const std::string& value) {
+  _internal_set_owner_address(value);
+  // @@protoc_insertion_point(field_set:TW.Tron.Proto.TransferTRC721Contract.owner_address)
+}
+inline std::string* TransferTRC721Contract::mutable_owner_address() {
+  // @@protoc_insertion_point(field_mutable:TW.Tron.Proto.TransferTRC721Contract.owner_address)
+  return _internal_mutable_owner_address();
+}
+inline const std::string& TransferTRC721Contract::_internal_owner_address() const {
+  return owner_address_.Get();
+}
+inline void TransferTRC721Contract::_internal_set_owner_address(const std::string& value) {
+  
+  owner_address_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArena());
+}
+inline void TransferTRC721Contract::set_owner_address(std::string&& value) {
+  
+  owner_address_.Set(
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::move(value), GetArena());
+  // @@protoc_insertion_point(field_set_rvalue:TW.Tron.Proto.TransferTRC721Contract.owner_address)
+}
+inline void TransferTRC721Contract::set_owner_address(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  owner_address_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::string(value), GetArena());
+  // @@protoc_insertion_point(field_set_char:TW.Tron.Proto.TransferTRC721Contract.owner_address)
+}
+inline void TransferTRC721Contract::set_owner_address(const char* value,
+    size_t size) {
+  
+  owner_address_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::string(
+      reinterpret_cast<const char*>(value), size), GetArena());
+  // @@protoc_insertion_point(field_set_pointer:TW.Tron.Proto.TransferTRC721Contract.owner_address)
+}
+inline std::string* TransferTRC721Contract::_internal_mutable_owner_address() {
+  
+  return owner_address_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArena());
+}
+inline std::string* TransferTRC721Contract::release_owner_address() {
+  // @@protoc_insertion_point(field_release:TW.Tron.Proto.TransferTRC721Contract.owner_address)
+  return owner_address_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline void TransferTRC721Contract::set_allocated_owner_address(std::string* owner_address) {
+  if (owner_address != nullptr) {
+    
+  } else {
+    
+  }
+  owner_address_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), owner_address,
+      GetArena());
+  // @@protoc_insertion_point(field_set_allocated:TW.Tron.Proto.TransferTRC721Contract.owner_address)
+}
+
+// string to_address = 3;
+inline void TransferTRC721Contract::clear_to_address() {
+  to_address_.ClearToEmpty();
+}
+inline const std::string& TransferTRC721Contract::to_address() const {
+  // @@protoc_insertion_point(field_get:TW.Tron.Proto.TransferTRC721Contract.to_address)
+  return _internal_to_address();
+}
+inline void TransferTRC721Contract::set_to_address(const std::string& value) {
+  _internal_set_to_address(value);
+  // @@protoc_insertion_point(field_set:TW.Tron.Proto.TransferTRC721Contract.to_address)
+}
+inline std::string* TransferTRC721Contract::mutable_to_address() {
+  // @@protoc_insertion_point(field_mutable:TW.Tron.Proto.TransferTRC721Contract.to_address)
+  return _internal_mutable_to_address();
+}
+inline const std::string& TransferTRC721Contract::_internal_to_address() const {
+  return to_address_.Get();
+}
+inline void TransferTRC721Contract::_internal_set_to_address(const std::string& value) {
+  
+  to_address_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArena());
+}
+inline void TransferTRC721Contract::set_to_address(std::string&& value) {
+  
+  to_address_.Set(
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::move(value), GetArena());
+  // @@protoc_insertion_point(field_set_rvalue:TW.Tron.Proto.TransferTRC721Contract.to_address)
+}
+inline void TransferTRC721Contract::set_to_address(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  to_address_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::string(value), GetArena());
+  // @@protoc_insertion_point(field_set_char:TW.Tron.Proto.TransferTRC721Contract.to_address)
+}
+inline void TransferTRC721Contract::set_to_address(const char* value,
+    size_t size) {
+  
+  to_address_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::string(
+      reinterpret_cast<const char*>(value), size), GetArena());
+  // @@protoc_insertion_point(field_set_pointer:TW.Tron.Proto.TransferTRC721Contract.to_address)
+}
+inline std::string* TransferTRC721Contract::_internal_mutable_to_address() {
+  
+  return to_address_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArena());
+}
+inline std::string* TransferTRC721Contract::release_to_address() {
+  // @@protoc_insertion_point(field_release:TW.Tron.Proto.TransferTRC721Contract.to_address)
+  return to_address_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline void TransferTRC721Contract::set_allocated_to_address(std::string* to_address) {
+  if (to_address != nullptr) {
+    
+  } else {
+    
+  }
+  to_address_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), to_address,
+      GetArena());
+  // @@protoc_insertion_point(field_set_allocated:TW.Tron.Proto.TransferTRC721Contract.to_address)
+}
+
+// bytes token_id = 4;
+inline void TransferTRC721Contract::clear_token_id() {
+  token_id_.ClearToEmpty();
+}
+inline const std::string& TransferTRC721Contract::token_id() const {
+  // @@protoc_insertion_point(field_get:TW.Tron.Proto.TransferTRC721Contract.token_id)
+  return _internal_token_id();
+}
+inline void TransferTRC721Contract::set_token_id(const std::string& value) {
+  _internal_set_token_id(value);
+  // @@protoc_insertion_point(field_set:TW.Tron.Proto.TransferTRC721Contract.token_id)
+}
+inline std::string* TransferTRC721Contract::mutable_token_id() {
+  // @@protoc_insertion_point(field_mutable:TW.Tron.Proto.TransferTRC721Contract.token_id)
+  return _internal_mutable_token_id();
+}
+inline const std::string& TransferTRC721Contract::_internal_token_id() const {
+  return token_id_.Get();
+}
+inline void TransferTRC721Contract::_internal_set_token_id(const std::string& value) {
+  
+  token_id_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArena());
+}
+inline void TransferTRC721Contract::set_token_id(std::string&& value) {
+  
+  token_id_.Set(
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::move(value), GetArena());
+  // @@protoc_insertion_point(field_set_rvalue:TW.Tron.Proto.TransferTRC721Contract.token_id)
+}
+inline void TransferTRC721Contract::set_token_id(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  token_id_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::string(value), GetArena());
+  // @@protoc_insertion_point(field_set_char:TW.Tron.Proto.TransferTRC721Contract.token_id)
+}
+inline void TransferTRC721Contract::set_token_id(const void* value,
+    size_t size) {
+  
+  token_id_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::string(
+      reinterpret_cast<const char*>(value), size), GetArena());
+  // @@protoc_insertion_point(field_set_pointer:TW.Tron.Proto.TransferTRC721Contract.token_id)
+}
+inline std::string* TransferTRC721Contract::_internal_mutable_token_id() {
+  
+  return token_id_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArena());
+}
+inline std::string* TransferTRC721Contract::release_token_id() {
+  // @@protoc_insertion_point(field_release:TW.Tron.Proto.TransferTRC721Contract.token_id)
+  return token_id_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline void TransferTRC721Contract::set_allocated_token_id(std::string* token_id) {
+  if (token_id != nullptr) {
+    
+  } else {
+    
+  }
+  token_id_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), token_id,
+      GetArena());
+  // @@protoc_insertion_point(field_set_allocated:TW.Tron.Proto.TransferTRC721Contract.token_id)
+}
+
+// -------------------------------------------------------------------
+
+// TransferTRC1155Contract
+
+// string contract_address = 1;
+inline void TransferTRC1155Contract::clear_contract_address() {
+  contract_address_.ClearToEmpty();
+}
+inline const std::string& TransferTRC1155Contract::contract_address() const {
+  // @@protoc_insertion_point(field_get:TW.Tron.Proto.TransferTRC1155Contract.contract_address)
+  return _internal_contract_address();
+}
+inline void TransferTRC1155Contract::set_contract_address(const std::string& value) {
+  _internal_set_contract_address(value);
+  // @@protoc_insertion_point(field_set:TW.Tron.Proto.TransferTRC1155Contract.contract_address)
+}
+inline std::string* TransferTRC1155Contract::mutable_contract_address() {
+  // @@protoc_insertion_point(field_mutable:TW.Tron.Proto.TransferTRC1155Contract.contract_address)
+  return _internal_mutable_contract_address();
+}
+inline const std::string& TransferTRC1155Contract::_internal_contract_address() const {
+  return contract_address_.Get();
+}
+inline void TransferTRC1155Contract::_internal_set_contract_address(const std::string& value) {
+  
+  contract_address_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArena());
+}
+inline void TransferTRC1155Contract::set_contract_address(std::string&& value) {
+  
+  contract_address_.Set(
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::move(value), GetArena());
+  // @@protoc_insertion_point(field_set_rvalue:TW.Tron.Proto.TransferTRC1155Contract.contract_address)
+}
+inline void TransferTRC1155Contract::set_contract_address(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  contract_address_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::string(value), GetArena());
+  // @@protoc_insertion_point(field_set_char:TW.Tron.Proto.TransferTRC1155Contract.contract_address)
+}
+inline void TransferTRC1155Contract::set_contract_address(const char* value,
+    size_t size) {
+  
+  contract_address_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::string(
+      reinterpret_cast<const char*>(value), size), GetArena());
+  // @@protoc_insertion_point(field_set_pointer:TW.Tron.Proto.TransferTRC1155Contract.contract_address)
+}
+inline std::string* TransferTRC1155Contract::_internal_mutable_contract_address() {
+  
+  return contract_address_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArena());
+}
+inline std::string* TransferTRC1155Contract::release_contract_address() {
+  // @@protoc_insertion_point(field_release:TW.Tron.Proto.TransferTRC1155Contract.contract_address)
+  return contract_address_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline void TransferTRC1155Contract::set_allocated_contract_address(std::string* contract_address) {
+  if (contract_address != nullptr) {
+    
+  } else {
+    
+  }
+  contract_address_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), contract_address,
+      GetArena());
+  // @@protoc_insertion_point(field_set_allocated:TW.Tron.Proto.TransferTRC1155Contract.contract_address)
+}
+
+// string owner_address = 2;
+inline void TransferTRC1155Contract::clear_owner_address() {
+  owner_address_.ClearToEmpty();
+}
+inline const std::string& TransferTRC1155Contract::owner_address() const {
+  // @@protoc_insertion_point(field_get:TW.Tron.Proto.TransferTRC1155Contract.owner_address)
+  return _internal_owner_address();
+}
+inline void TransferTRC1155Contract::set_owner_address(const std::string& value) {
+  _internal_set_owner_address(value);
+  // @@protoc_insertion_point(field_set:TW.Tron.Proto.TransferTRC1155Contract.owner_address)
+}
+inline std::string* TransferTRC1155Contract::mutable_owner_address() {
+  // @@protoc_insertion_point(field_mutable:TW.Tron.Proto.TransferTRC1155Contract.owner_address)
+  return _internal_mutable_owner_address();
+}
+inline const std::string& TransferTRC1155Contract::_internal_owner_address() const {
+  return owner_address_.Get();
+}
+inline void TransferTRC1155Contract::_internal_set_owner_address(const std::string& value) {
+  
+  owner_address_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArena());
+}
+inline void TransferTRC1155Contract::set_owner_address(std::string&& value) {
+  
+  owner_address_.Set(
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::move(value), GetArena());
+  // @@protoc_insertion_point(field_set_rvalue:TW.Tron.Proto.TransferTRC1155Contract.owner_address)
+}
+inline void TransferTRC1155Contract::set_owner_address(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  owner_address_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::string(value), GetArena());
+  // @@protoc_insertion_point(field_set_char:TW.Tron.Proto.TransferTRC1155Contract.owner_address)
+}
+inline void TransferTRC1155Contract::set_owner_address(const char* value,
+    size_t size) {
+  
+  owner_address_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::string(
+      reinterpret_cast<const char*>(value), size), GetArena());
+  // @@protoc_insertion_point(field_set_pointer:TW.Tron.Proto.TransferTRC1155Contract.owner_address)
+}
+inline std::string* TransferTRC1155Contract::_internal_mutable_owner_address() {
+  
+  return owner_address_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArena());
+}
+inline std::string* TransferTRC1155Contract::release_owner_address() {
+  // @@protoc_insertion_point(field_release:TW.Tron.Proto.TransferTRC1155Contract.owner_address)
+  return owner_address_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline void TransferTRC1155Contract::set_allocated_owner_address(std::string* owner_address) {
+  if (owner_address != nullptr) {
+    
+  } else {
+    
+  }
+  owner_address_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), owner_address,
+      GetArena());
+  // @@protoc_insertion_point(field_set_allocated:TW.Tron.Proto.TransferTRC1155Contract.owner_address)
+}
+
+// string to_address = 3;
+inline void TransferTRC1155Contract::clear_to_address() {
+  to_address_.ClearToEmpty();
+}
+inline const std::string& TransferTRC1155Contract::to_address() const {
+  // @@protoc_insertion_point(field_get:TW.Tron.Proto.TransferTRC1155Contract.to_address)
+  return _internal_to_address();
+}
+inline void TransferTRC1155Contract::set_to_address(const std::string& value) {
+  _internal_set_to_address(value);
+  // @@protoc_insertion_point(field_set:TW.Tron.Proto.TransferTRC1155Contract.to_address)
+}
+inline std::string* TransferTRC1155Contract::mutable_to_address() {
+  // @@protoc_insertion_point(field_mutable:TW.Tron.Proto.TransferTRC1155Contract.to_address)
+  return _internal_mutable_to_address();
+}
+inline const std::string& TransferTRC1155Contract::_internal_to_address() const {
+  return to_address_.Get();
+}
+inline void TransferTRC1155Contract::_internal_set_to_address(const std::string& value) {
+  
+  to_address_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArena());
+}
+inline void TransferTRC1155Contract::set_to_address(std::string&& value) {
+  
+  to_address_.Set(
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::move(value), GetArena());
+  // @@protoc_insertion_point(field_set_rvalue:TW.Tron.Proto.TransferTRC1155Contract.to_address)
+}
+inline void TransferTRC1155Contract::set_to_address(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  to_address_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::string(value), GetArena());
+  // @@protoc_insertion_point(field_set_char:TW.Tron.Proto.TransferTRC1155Contract.to_address)
+}
+inline void TransferTRC1155Contract::set_to_address(const char* value,
+    size_t size) {
+  
+  to_address_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::string(
+      reinterpret_cast<const char*>(value), size), GetArena());
+  // @@protoc_insertion_point(field_set_pointer:TW.Tron.Proto.TransferTRC1155Contract.to_address)
+}
+inline std::string* TransferTRC1155Contract::_internal_mutable_to_address() {
+  
+  return to_address_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArena());
+}
+inline std::string* TransferTRC1155Contract::release_to_address() {
+  // @@protoc_insertion_point(field_release:TW.Tron.Proto.TransferTRC1155Contract.to_address)
+  return to_address_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline void TransferTRC1155Contract::set_allocated_to_address(std::string* to_address) {
+  if (to_address != nullptr) {
+    
+  } else {
+    
+  }
+  to_address_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), to_address,
+      GetArena());
+  // @@protoc_insertion_point(field_set_allocated:TW.Tron.Proto.TransferTRC1155Contract.to_address)
+}
+
+// bytes token_id = 4;
+inline void TransferTRC1155Contract::clear_token_id() {
+  token_id_.ClearToEmpty();
+}
+inline const std::string& TransferTRC1155Contract::token_id() const {
+  // @@protoc_insertion_point(field_get:TW.Tron.Proto.TransferTRC1155Contract.token_id)
+  return _internal_token_id();
+}
+inline void TransferTRC1155Contract::set_token_id(const std::string& value) {
+  _internal_set_token_id(value);
+  // @@protoc_insertion_point(field_set:TW.Tron.Proto.TransferTRC1155Contract.token_id)
+}
+inline std::string* TransferTRC1155Contract::mutable_token_id() {
+  // @@protoc_insertion_point(field_mutable:TW.Tron.Proto.TransferTRC1155Contract.token_id)
+  return _internal_mutable_token_id();
+}
+inline const std::string& TransferTRC1155Contract::_internal_token_id() const {
+  return token_id_.Get();
+}
+inline void TransferTRC1155Contract::_internal_set_token_id(const std::string& value) {
+  
+  token_id_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArena());
+}
+inline void TransferTRC1155Contract::set_token_id(std::string&& value) {
+  
+  token_id_.Set(
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::move(value), GetArena());
+  // @@protoc_insertion_point(field_set_rvalue:TW.Tron.Proto.TransferTRC1155Contract.token_id)
+}
+inline void TransferTRC1155Contract::set_token_id(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  token_id_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::string(value), GetArena());
+  // @@protoc_insertion_point(field_set_char:TW.Tron.Proto.TransferTRC1155Contract.token_id)
+}
+inline void TransferTRC1155Contract::set_token_id(const void* value,
+    size_t size) {
+  
+  token_id_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::string(
+      reinterpret_cast<const char*>(value), size), GetArena());
+  // @@protoc_insertion_point(field_set_pointer:TW.Tron.Proto.TransferTRC1155Contract.token_id)
+}
+inline std::string* TransferTRC1155Contract::_internal_mutable_token_id() {
+  
+  return token_id_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArena());
+}
+inline std::string* TransferTRC1155Contract::release_token_id() {
+  // @@protoc_insertion_point(field_release:TW.Tron.Proto.TransferTRC1155Contract.token_id)
+  return token_id_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline void TransferTRC1155Contract::set_allocated_token_id(std::string* token_id) {
+  if (token_id != nullptr) {
+    
+  } else {
+    
+  }
+  token_id_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), token_id,
+      GetArena());
+  // @@protoc_insertion_point(field_set_allocated:TW.Tron.Proto.TransferTRC1155Contract.token_id)
+}
+
+// bytes value = 5;
+inline void TransferTRC1155Contract::clear_value() {
+  value_.ClearToEmpty();
+}
+inline const std::string& TransferTRC1155Contract::value() const {
+  // @@protoc_insertion_point(field_get:TW.Tron.Proto.TransferTRC1155Contract.value)
+  return _internal_value();
+}
+inline void TransferTRC1155Contract::set_value(const std::string& value) {
+  _internal_set_value(value);
+  // @@protoc_insertion_point(field_set:TW.Tron.Proto.TransferTRC1155Contract.value)
+}
+inline std::string* TransferTRC1155Contract::mutable_value() {
+  // @@protoc_insertion_point(field_mutable:TW.Tron.Proto.TransferTRC1155Contract.value)
+  return _internal_mutable_value();
+}
+inline const std::string& TransferTRC1155Contract::_internal_value() const {
+  return value_.Get();
+}
+inline void TransferTRC1155Contract::_internal_set_value(const std::string& value) {
+  
+  value_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArena());
+}
+inline void TransferTRC1155Contract::set_value(std::string&& value) {
+  
+  value_.Set(
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::move(value), GetArena());
+  // @@protoc_insertion_point(field_set_rvalue:TW.Tron.Proto.TransferTRC1155Contract.value)
+}
+inline void TransferTRC1155Contract::set_value(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  value_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::string(value), GetArena());
+  // @@protoc_insertion_point(field_set_char:TW.Tron.Proto.TransferTRC1155Contract.value)
+}
+inline void TransferTRC1155Contract::set_value(const void* value,
+    size_t size) {
+  
+  value_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::string(
+      reinterpret_cast<const char*>(value), size), GetArena());
+  // @@protoc_insertion_point(field_set_pointer:TW.Tron.Proto.TransferTRC1155Contract.value)
+}
+inline std::string* TransferTRC1155Contract::_internal_mutable_value() {
+  
+  return value_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArena());
+}
+inline std::string* TransferTRC1155Contract::release_value() {
+  // @@protoc_insertion_point(field_release:TW.Tron.Proto.TransferTRC1155Contract.value)
+  return value_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline void TransferTRC1155Contract::set_allocated_value(std::string* value) {
+  if (value != nullptr) {
+    
+  } else {
+    
+  }
+  value_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value,
+      GetArena());
+  // @@protoc_insertion_point(field_set_allocated:TW.Tron.Proto.TransferTRC1155Contract.value)
+}
+
+// bytes data = 6;
+inline void TransferTRC1155Contract::clear_data() {
+  data_.ClearToEmpty();
+}
+inline const std::string& TransferTRC1155Contract::data() const {
+  // @@protoc_insertion_point(field_get:TW.Tron.Proto.TransferTRC1155Contract.data)
+  return _internal_data();
+}
+inline void TransferTRC1155Contract::set_data(const std::string& value) {
+  _internal_set_data(value);
+  // @@protoc_insertion_point(field_set:TW.Tron.Proto.TransferTRC1155Contract.data)
+}
+inline std::string* TransferTRC1155Contract::mutable_data() {
+  // @@protoc_insertion_point(field_mutable:TW.Tron.Proto.TransferTRC1155Contract.data)
+  return _internal_mutable_data();
+}
+inline const std::string& TransferTRC1155Contract::_internal_data() const {
+  return data_.Get();
+}
+inline void TransferTRC1155Contract::_internal_set_data(const std::string& value) {
+  
+  data_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArena());
+}
+inline void TransferTRC1155Contract::set_data(std::string&& value) {
+  
+  data_.Set(
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::move(value), GetArena());
+  // @@protoc_insertion_point(field_set_rvalue:TW.Tron.Proto.TransferTRC1155Contract.data)
+}
+inline void TransferTRC1155Contract::set_data(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  data_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::string(value), GetArena());
+  // @@protoc_insertion_point(field_set_char:TW.Tron.Proto.TransferTRC1155Contract.data)
+}
+inline void TransferTRC1155Contract::set_data(const void* value,
+    size_t size) {
+  
+  data_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::string(
+      reinterpret_cast<const char*>(value), size), GetArena());
+  // @@protoc_insertion_point(field_set_pointer:TW.Tron.Proto.TransferTRC1155Contract.data)
+}
+inline std::string* TransferTRC1155Contract::_internal_mutable_data() {
+  
+  return data_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArena());
+}
+inline std::string* TransferTRC1155Contract::release_data() {
+  // @@protoc_insertion_point(field_release:TW.Tron.Proto.TransferTRC1155Contract.data)
+  return data_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline void TransferTRC1155Contract::set_allocated_data(std::string* data) {
+  if (data != nullptr) {
+    
+  } else {
+    
+  }
+  data_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), data,
+      GetArena());
+  // @@protoc_insertion_point(field_set_allocated:TW.Tron.Proto.TransferTRC1155Contract.data)
+}
+
+// -------------------------------------------------------------------
+
+// ApproveTRC721Contract
+
+// string contract_address = 1;
+inline void ApproveTRC721Contract::clear_contract_address() {
+  contract_address_.ClearToEmpty();
+}
+inline const std::string& ApproveTRC721Contract::contract_address() const {
+  // @@protoc_insertion_point(field_get:TW.Tron.Proto.ApproveTRC721Contract.contract_address)
+  return _internal_contract_address();
+}
+inline void ApproveTRC721Contract::set_contract_address(const std::string& value) {
+  _internal_set_contract_address(value);
+  // @@protoc_insertion_point(field_set:TW.Tron.Proto.ApproveTRC721Contract.contract_address)
+}
+inline std::string* ApproveTRC721Contract::mutable_contract_address() {
+  // @@protoc_insertion_point(field_mutable:TW.Tron.Proto.ApproveTRC721Contract.contract_address)
+  return _internal_mutable_contract_address();
+}
+inline const std::string& ApproveTRC721Contract::_internal_contract_address() const {
+  return contract_address_.Get();
+}
+inline void ApproveTRC721Contract::_internal_set_contract_address(const std::string& value) {
+  
+  contract_address_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArena());
+}
+inline void ApproveTRC721Contract::set_contract_address(std::string&& value) {
+  
+  contract_address_.Set(
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::move(value), GetArena());
+  // @@protoc_insertion_point(field_set_rvalue:TW.Tron.Proto.ApproveTRC721Contract.contract_address)
+}
+inline void ApproveTRC721Contract::set_contract_address(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  contract_address_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::string(value), GetArena());
+  // @@protoc_insertion_point(field_set_char:TW.Tron.Proto.ApproveTRC721Contract.contract_address)
+}
+inline void ApproveTRC721Contract::set_contract_address(const char* value,
+    size_t size) {
+  
+  contract_address_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::string(
+      reinterpret_cast<const char*>(value), size), GetArena());
+  // @@protoc_insertion_point(field_set_pointer:TW.Tron.Proto.ApproveTRC721Contract.contract_address)
+}
+inline std::string* ApproveTRC721Contract::_internal_mutable_contract_address() {
+  
+  return contract_address_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArena());
+}
+inline std::string* ApproveTRC721Contract::release_contract_address() {
+  // @@protoc_insertion_point(field_release:TW.Tron.Proto.ApproveTRC721Contract.contract_address)
+  return contract_address_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline void ApproveTRC721Contract::set_allocated_contract_address(std::string* contract_address) {
+  if (contract_address != nullptr) {
+    
+  } else {
+    
+  }
+  contract_address_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), contract_address,
+      GetArena());
+  // @@protoc_insertion_point(field_set_allocated:TW.Tron.Proto.ApproveTRC721Contract.contract_address)
+}
+
+// string owner_address = 2;
+inline void ApproveTRC721Contract::clear_owner_address() {
+  owner_address_.ClearToEmpty();
+}
+inline const std::string& ApproveTRC721Contract::owner_address() const {
+  // @@protoc_insertion_point(field_get:TW.Tron.Proto.ApproveTRC721Contract.owner_address)
+  return _internal_owner_address();
+}
+inline void ApproveTRC721Contract::set_owner_address(const std::string& value) {
+  _internal_set_owner_address(value);
+  // @@protoc_insertion_point(field_set:TW.Tron.Proto.ApproveTRC721Contract.owner_address)
+}
+inline std::string* ApproveTRC721Contract::mutable_owner_address() {
+  // @@protoc_insertion_point(field_mutable:TW.Tron.Proto.ApproveTRC721Contract.owner_address)
+  return _internal_mutable_owner_address();
+}
+inline const std::string& ApproveTRC721Contract::_internal_owner_address() const {
+  return owner_address_.Get();
+}
+inline void ApproveTRC721Contract::_internal_set_owner_address(const std::string& value) {
+  
+  owner_address_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArena());
+}
+inline void ApproveTRC721Contract::set_owner_address(std::string&& value) {
+  
+  owner_address_.Set(
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::move(value), GetArena());
+  // @@protoc_insertion_point(field_set_rvalue:TW.Tron.Proto.ApproveTRC721Contract.owner_address)
+}
+inline void ApproveTRC721Contract::set_owner_address(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  owner_address_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::string(value), GetArena());
+  // @@protoc_insertion_point(field_set_char:TW.Tron.Proto.ApproveTRC721Contract.owner_address)
+}
+inline void ApproveTRC721Contract::set_owner_address(const char* value,
+    size_t size) {
+  
+  owner_address_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::string(
+      reinterpret_cast<const char*>(value), size), GetArena());
+  // @@protoc_insertion_point(field_set_pointer:TW.Tron.Proto.ApproveTRC721Contract.owner_address)
+}
+inline std::string* ApproveTRC721Contract::_internal_mutable_owner_address() {
+  
+  return owner_address_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArena());
+}
+inline std::string* ApproveTRC721Contract::release_owner_address() {
+  // @@protoc_insertion_point(field_release:TW.Tron.Proto.ApproveTRC721Contract.owner_address)
+  return owner_address_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline void ApproveTRC721Contract::set_allocated_owner_address(std::string* owner_address) {
+  if (owner_address != nullptr) {
+    
+  } else {
+    
+  }
+  owner_address_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), owner_address,
+      GetArena());
+  // @@protoc_insertion_point(field_set_allocated:TW.Tron.Proto.ApproveTRC721Contract.owner_address)
+}
+
+// string spender_address = 3;
+inline void ApproveTRC721Contract::clear_spender_address() {
+  spender_address_.ClearToEmpty();
+}
+inline const std::string& ApproveTRC721Contract::spender_address() const {
+  // @@protoc_insertion_point(field_get:TW.Tron.Proto.ApproveTRC721Contract.spender_address)
+  return _internal_spender_address();
+}
+inline void ApproveTRC721Contract::set_spender_address(const std::string& value) {
+  _internal_set_spender_address(value);
+  // @@protoc_insertion_point(field_set:TW.Tron.Proto.ApproveTRC721Contract.spender_address)
+}
+inline std::string* ApproveTRC721Contract::mutable_spender_address() {
+  // @@protoc_insertion_point(field_mutable:TW.Tron.Proto.ApproveTRC721Contract.spender_address)
+  return _internal_mutable_spender_address();
+}
+inline const std::string& ApproveTRC721Contract::_internal_spender_address() const {
+  return spender_address_.Get();
+}
+inline void ApproveTRC721Contract::_internal_set_spender_address(const std::string& value) {
+  
+  spender_address_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArena());
+}
+inline void ApproveTRC721Contract::set_spender_address(std::string&& value) {
+  
+  spender_address_.Set(
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::move(value), GetArena());
+  // @@protoc_insertion_point(field_set_rvalue:TW.Tron.Proto.ApproveTRC721Contract.spender_address)
+}
+inline void ApproveTRC721Contract::set_spender_address(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  spender_address_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::string(value), GetArena());
+  // @@protoc_insertion_point(field_set_char:TW.Tron.Proto.ApproveTRC721Contract.spender_address)
+}
+inline void ApproveTRC721Contract::set_spender_address(const char* value,
+    size_t size) {
+  
+  spender_address_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::string(
+      reinterpret_cast<const char*>(value), size), GetArena());
+  // @@protoc_insertion_point(field_set_pointer:TW.Tron.Proto.ApproveTRC721Contract.spender_address)
+}
+inline std::string* ApproveTRC721Contract::_internal_mutable_spender_address() {
+  
+  return spender_address_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArena());
+}
+inline std::string* ApproveTRC721Contract::release_spender_address() {
+  // @@protoc_insertion_point(field_release:TW.Tron.Proto.ApproveTRC721Contract.spender_address)
+  return spender_address_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline void ApproveTRC721Contract::set_allocated_spender_address(std::string* spender_address) {
+  if (spender_address != nullptr) {
+    
+  } else {
+    
+  }
+  spender_address_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), spender_address,
+      GetArena());
+  // @@protoc_insertion_point(field_set_allocated:TW.Tron.Proto.ApproveTRC721Contract.spender_address)
+}
+
+// bool approved = 4;
+inline void ApproveTRC721Contract::clear_approved() {
+  approved_ = false;
+}
+inline bool ApproveTRC721Contract::_internal_approved() const {
+  return approved_;
+}
+inline bool ApproveTRC721Contract::approved() const {
+  // @@protoc_insertion_point(field_get:TW.Tron.Proto.ApproveTRC721Contract.approved)
+  return _internal_approved();
+}
+inline void ApproveTRC721Contract::_internal_set_approved(bool value) {
+  
+  approved_ = value;
+}
+inline void ApproveTRC721Contract::set_approved(bool value) {
+  _internal_set_approved(value);
+  // @@protoc_insertion_point(field_set:TW.Tron.Proto.ApproveTRC721Contract.approved)
 }
 
 // -------------------------------------------------------------------
@@ -8722,6 +10245,225 @@ inline ::TW::Tron::Proto::UnDelegateResourceContract* Transaction::mutable_undel
   return _internal_mutable_undelegate_resource();
 }
 
+// .TW.Tron.Proto.TransferTRC721Contract transfer_trc721_contract = 26;
+inline bool Transaction::_internal_has_transfer_trc721_contract() const {
+  return contract_oneof_case() == kTransferTrc721Contract;
+}
+inline bool Transaction::has_transfer_trc721_contract() const {
+  return _internal_has_transfer_trc721_contract();
+}
+inline void Transaction::set_has_transfer_trc721_contract() {
+  _oneof_case_[0] = kTransferTrc721Contract;
+}
+inline void Transaction::clear_transfer_trc721_contract() {
+  if (_internal_has_transfer_trc721_contract()) {
+    if (GetArena() == nullptr) {
+      delete contract_oneof_.transfer_trc721_contract_;
+    }
+    clear_has_contract_oneof();
+  }
+}
+inline ::TW::Tron::Proto::TransferTRC721Contract* Transaction::release_transfer_trc721_contract() {
+  // @@protoc_insertion_point(field_release:TW.Tron.Proto.Transaction.transfer_trc721_contract)
+  if (_internal_has_transfer_trc721_contract()) {
+    clear_has_contract_oneof();
+      ::TW::Tron::Proto::TransferTRC721Contract* temp = contract_oneof_.transfer_trc721_contract_;
+    if (GetArena() != nullptr) {
+      temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+    }
+    contract_oneof_.transfer_trc721_contract_ = nullptr;
+    return temp;
+  } else {
+    return nullptr;
+  }
+}
+inline const ::TW::Tron::Proto::TransferTRC721Contract& Transaction::_internal_transfer_trc721_contract() const {
+  return _internal_has_transfer_trc721_contract()
+      ? *contract_oneof_.transfer_trc721_contract_
+      : reinterpret_cast< ::TW::Tron::Proto::TransferTRC721Contract&>(::TW::Tron::Proto::_TransferTRC721Contract_default_instance_);
+}
+inline const ::TW::Tron::Proto::TransferTRC721Contract& Transaction::transfer_trc721_contract() const {
+  // @@protoc_insertion_point(field_get:TW.Tron.Proto.Transaction.transfer_trc721_contract)
+  return _internal_transfer_trc721_contract();
+}
+inline ::TW::Tron::Proto::TransferTRC721Contract* Transaction::unsafe_arena_release_transfer_trc721_contract() {
+  // @@protoc_insertion_point(field_unsafe_arena_release:TW.Tron.Proto.Transaction.transfer_trc721_contract)
+  if (_internal_has_transfer_trc721_contract()) {
+    clear_has_contract_oneof();
+    ::TW::Tron::Proto::TransferTRC721Contract* temp = contract_oneof_.transfer_trc721_contract_;
+    contract_oneof_.transfer_trc721_contract_ = nullptr;
+    return temp;
+  } else {
+    return nullptr;
+  }
+}
+inline void Transaction::unsafe_arena_set_allocated_transfer_trc721_contract(::TW::Tron::Proto::TransferTRC721Contract* transfer_trc721_contract) {
+  clear_contract_oneof();
+  if (transfer_trc721_contract) {
+    set_has_transfer_trc721_contract();
+    contract_oneof_.transfer_trc721_contract_ = transfer_trc721_contract;
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:TW.Tron.Proto.Transaction.transfer_trc721_contract)
+}
+inline ::TW::Tron::Proto::TransferTRC721Contract* Transaction::_internal_mutable_transfer_trc721_contract() {
+  if (!_internal_has_transfer_trc721_contract()) {
+    clear_contract_oneof();
+    set_has_transfer_trc721_contract();
+    contract_oneof_.transfer_trc721_contract_ = CreateMaybeMessage< ::TW::Tron::Proto::TransferTRC721Contract >(GetArena());
+  }
+  return contract_oneof_.transfer_trc721_contract_;
+}
+inline ::TW::Tron::Proto::TransferTRC721Contract* Transaction::mutable_transfer_trc721_contract() {
+  // @@protoc_insertion_point(field_mutable:TW.Tron.Proto.Transaction.transfer_trc721_contract)
+  return _internal_mutable_transfer_trc721_contract();
+}
+
+// .TW.Tron.Proto.TransferTRC1155Contract transfer_trc1155_contract = 27;
+inline bool Transaction::_internal_has_transfer_trc1155_contract() const {
+  return contract_oneof_case() == kTransferTrc1155Contract;
+}
+inline bool Transaction::has_transfer_trc1155_contract() const {
+  return _internal_has_transfer_trc1155_contract();
+}
+inline void Transaction::set_has_transfer_trc1155_contract() {
+  _oneof_case_[0] = kTransferTrc1155Contract;
+}
+inline void Transaction::clear_transfer_trc1155_contract() {
+  if (_internal_has_transfer_trc1155_contract()) {
+    if (GetArena() == nullptr) {
+      delete contract_oneof_.transfer_trc1155_contract_;
+    }
+    clear_has_contract_oneof();
+  }
+}
+inline ::TW::Tron::Proto::TransferTRC1155Contract* Transaction::release_transfer_trc1155_contract() {
+  // @@protoc_insertion_point(field_release:TW.Tron.Proto.Transaction.transfer_trc1155_contract)
+  if (_internal_has_transfer_trc1155_contract()) {
+    clear_has_contract_oneof();
+      ::TW::Tron::Proto::TransferTRC1155Contract* temp = contract_oneof_.transfer_trc1155_contract_;
+    if (GetArena() != nullptr) {
+      temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+    }
+    contract_oneof_.transfer_trc1155_contract_ = nullptr;
+    return temp;
+  } else {
+    return nullptr;
+  }
+}
+inline const ::TW::Tron::Proto::TransferTRC1155Contract& Transaction::_internal_transfer_trc1155_contract() const {
+  return _internal_has_transfer_trc1155_contract()
+      ? *contract_oneof_.transfer_trc1155_contract_
+      : reinterpret_cast< ::TW::Tron::Proto::TransferTRC1155Contract&>(::TW::Tron::Proto::_TransferTRC1155Contract_default_instance_);
+}
+inline const ::TW::Tron::Proto::TransferTRC1155Contract& Transaction::transfer_trc1155_contract() const {
+  // @@protoc_insertion_point(field_get:TW.Tron.Proto.Transaction.transfer_trc1155_contract)
+  return _internal_transfer_trc1155_contract();
+}
+inline ::TW::Tron::Proto::TransferTRC1155Contract* Transaction::unsafe_arena_release_transfer_trc1155_contract() {
+  // @@protoc_insertion_point(field_unsafe_arena_release:TW.Tron.Proto.Transaction.transfer_trc1155_contract)
+  if (_internal_has_transfer_trc1155_contract()) {
+    clear_has_contract_oneof();
+    ::TW::Tron::Proto::TransferTRC1155Contract* temp = contract_oneof_.transfer_trc1155_contract_;
+    contract_oneof_.transfer_trc1155_contract_ = nullptr;
+    return temp;
+  } else {
+    return nullptr;
+  }
+}
+inline void Transaction::unsafe_arena_set_allocated_transfer_trc1155_contract(::TW::Tron::Proto::TransferTRC1155Contract* transfer_trc1155_contract) {
+  clear_contract_oneof();
+  if (transfer_trc1155_contract) {
+    set_has_transfer_trc1155_contract();
+    contract_oneof_.transfer_trc1155_contract_ = transfer_trc1155_contract;
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:TW.Tron.Proto.Transaction.transfer_trc1155_contract)
+}
+inline ::TW::Tron::Proto::TransferTRC1155Contract* Transaction::_internal_mutable_transfer_trc1155_contract() {
+  if (!_internal_has_transfer_trc1155_contract()) {
+    clear_contract_oneof();
+    set_has_transfer_trc1155_contract();
+    contract_oneof_.transfer_trc1155_contract_ = CreateMaybeMessage< ::TW::Tron::Proto::TransferTRC1155Contract >(GetArena());
+  }
+  return contract_oneof_.transfer_trc1155_contract_;
+}
+inline ::TW::Tron::Proto::TransferTRC1155Contract* Transaction::mutable_transfer_trc1155_contract() {
+  // @@protoc_insertion_point(field_mutable:TW.Tron.Proto.Transaction.transfer_trc1155_contract)
+  return _internal_mutable_transfer_trc1155_contract();
+}
+
+// .TW.Tron.Proto.ApproveTRC721Contract approve_trc721_contract = 28;
+inline bool Transaction::_internal_has_approve_trc721_contract() const {
+  return contract_oneof_case() == kApproveTrc721Contract;
+}
+inline bool Transaction::has_approve_trc721_contract() const {
+  return _internal_has_approve_trc721_contract();
+}
+inline void Transaction::set_has_approve_trc721_contract() {
+  _oneof_case_[0] = kApproveTrc721Contract;
+}
+inline void Transaction::clear_approve_trc721_contract() {
+  if (_internal_has_approve_trc721_contract()) {
+    if (GetArena() == nullptr) {
+      delete contract_oneof_.approve_trc721_contract_;
+    }
+    clear_has_contract_oneof();
+  }
+}
+inline ::TW::Tron::Proto::ApproveTRC721Contract* Transaction::release_approve_trc721_contract() {
+  // @@protoc_insertion_point(field_release:TW.Tron.Proto.Transaction.approve_trc721_contract)
+  if (_internal_has_approve_trc721_contract()) {
+    clear_has_contract_oneof();
+      ::TW::Tron::Proto::ApproveTRC721Contract* temp = contract_oneof_.approve_trc721_contract_;
+    if (GetArena() != nullptr) {
+      temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+    }
+    contract_oneof_.approve_trc721_contract_ = nullptr;
+    return temp;
+  } else {
+    return nullptr;
+  }
+}
+inline const ::TW::Tron::Proto::ApproveTRC721Contract& Transaction::_internal_approve_trc721_contract() const {
+  return _internal_has_approve_trc721_contract()
+      ? *contract_oneof_.approve_trc721_contract_
+      : reinterpret_cast< ::TW::Tron::Proto::ApproveTRC721Contract&>(::TW::Tron::Proto::_ApproveTRC721Contract_default_instance_);
+}
+inline const ::TW::Tron::Proto::ApproveTRC721Contract& Transaction::approve_trc721_contract() const {
+  // @@protoc_insertion_point(field_get:TW.Tron.Proto.Transaction.approve_trc721_contract)
+  return _internal_approve_trc721_contract();
+}
+inline ::TW::Tron::Proto::ApproveTRC721Contract* Transaction::unsafe_arena_release_approve_trc721_contract() {
+  // @@protoc_insertion_point(field_unsafe_arena_release:TW.Tron.Proto.Transaction.approve_trc721_contract)
+  if (_internal_has_approve_trc721_contract()) {
+    clear_has_contract_oneof();
+    ::TW::Tron::Proto::ApproveTRC721Contract* temp = contract_oneof_.approve_trc721_contract_;
+    contract_oneof_.approve_trc721_contract_ = nullptr;
+    return temp;
+  } else {
+    return nullptr;
+  }
+}
+inline void Transaction::unsafe_arena_set_allocated_approve_trc721_contract(::TW::Tron::Proto::ApproveTRC721Contract* approve_trc721_contract) {
+  clear_contract_oneof();
+  if (approve_trc721_contract) {
+    set_has_approve_trc721_contract();
+    contract_oneof_.approve_trc721_contract_ = approve_trc721_contract;
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:TW.Tron.Proto.Transaction.approve_trc721_contract)
+}
+inline ::TW::Tron::Proto::ApproveTRC721Contract* Transaction::_internal_mutable_approve_trc721_contract() {
+  if (!_internal_has_approve_trc721_contract()) {
+    clear_contract_oneof();
+    set_has_approve_trc721_contract();
+    contract_oneof_.approve_trc721_contract_ = CreateMaybeMessage< ::TW::Tron::Proto::ApproveTRC721Contract >(GetArena());
+  }
+  return contract_oneof_.approve_trc721_contract_;
+}
+inline ::TW::Tron::Proto::ApproveTRC721Contract* Transaction::mutable_approve_trc721_contract() {
+  // @@protoc_insertion_point(field_mutable:TW.Tron.Proto.Transaction.approve_trc721_contract)
+  return _internal_mutable_approve_trc721_contract();
+}
+
 inline bool Transaction::has_contract_oneof() const {
   return contract_oneof_case() != CONTRACT_ONEOF_NOT_SET;
 }
@@ -9252,6 +10994,12 @@ inline void SigningOutput::set_allocated_json(std::string* json) {
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------
