@@ -355,6 +355,11 @@ public class WalletCore
     */
     public native String chaindata_initCustomConfig(String chainConfig);
 
+    /*
+     * chaindata_setOptimalURL 设置最优节点
+     */
+    public native String chaindata_setOptimalURL(String chain);
+
     public static void main(String[] args) {
         System.loadLibrary("wallet_core.android.arm64.a"); //载入本地库
         WalletCore wc = new WalletCore();

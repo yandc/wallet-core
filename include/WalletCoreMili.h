@@ -374,6 +374,11 @@ chainConfig例子：[{"type":"EVM","chain":"ETH","proxyKey":"gasOracleETH","rpcU
 */
 extern const char* chaindata_initCustomConfig(const char* chainConfig);
 
+/*
+chaindata_setOptimalURL 设置最优节点
+*/
+extern const char* chaindata_setOptimalURL(const char* chain);
+
 #ifdef __cplusplus
 }
 #endif

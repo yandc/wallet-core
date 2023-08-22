@@ -50,6 +50,7 @@ extern "C" {
   extern const char* chaindata_lookupDomain(const char* chain, const char* query);
   extern const char* chaindata_identifyRiskAddress(const char* chain, const char* query);
   extern const char* chaindata_initCustomConfig(const char* chainConfig);
+  extern const char* chaindata_setOptimalURL(const char* chain);
 }
 
 static jstring CStrToJString(JNIEnv *env, const char *cstr) {
@@ -648,6 +649,16 @@ JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_chaindata_1in
 {
   const char* arg1 = env->GetStringUTFChars(arg1Jstr, NULL);
   const char* goRet = chaindata_initCustomConfig(arg1);
+  env->ReleaseStringUTFChars(arg1Jstr, arg1);
+  jstring ret = env->NewStringUTF(goRet);
+  free((void*)goRet);
+  return ret;
+}
+
+JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_chaindata_1setOptimalURL(JNIEnv *env, jobject jthis, jstring arg1Jstr)
+{
+  const char* arg1 = env->GetStringUTFChars(arg1Jstr, NULL);
+  const char* goRet = chaindata_setOptimalURL(arg1);
   env->ReleaseStringUTFChars(arg1Jstr, arg1);
   jstring ret = env->NewStringUTF(goRet);
   free((void*)goRet);
