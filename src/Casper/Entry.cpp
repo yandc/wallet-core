@@ -67,7 +67,11 @@ bool Json2RawTx(json& jsonInput, casper_types::Deploy& deploy, Address& account)
         }
     );
 	srand((unsigned) time(NULL));
-    correlation_id.value = (uint64_t)(rand() % 1000000 + 1);
+    if(jsonInput.contains("correlation_id")) {
+        correlation_id.value = jsonInput["timestamp"].get<uint64_t>();
+    } else {
+        correlation_id.value = (uint64_t)(rand() % 1000000 + 1);
+    }
     //correlation_id.value = uint64_t(96134);
     session.args.push_back(
         casper_types::DeployArgument {
@@ -81,7 +85,12 @@ bool Json2RawTx(json& jsonInput, casper_types::Deploy& deploy, Address& account)
     body.hash.value = TW::Hash::blake2b(ret, 32);
     //cout << "=======byte body: " << TW::hex(ret) << endl;
 
-    uint64_t timestamp = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
+    uint64_t timestamp;
+    if(jsonInput.contains("timestamp")) {
+        timestamp = jsonInput["timestamp"].get<uint64_t>();
+    } else {
+        timestamp = duration_cast<seconds>(system_clock::now().time_since_epoch()).count();
+    }
     //uint64_t timestamp = 1670173440055;
     casper_types::DeployHeader header{
         .account = casper_types::PublicKey{casper_types::ByteArray{account.bytes}},

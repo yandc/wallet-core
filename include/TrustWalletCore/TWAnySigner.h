@@ -15,6 +15,13 @@ TW_EXTERN_C_BEGIN
 /// Helper class to sign any transactions.
 struct TWAnySigner;
 
+TW_EXPORT_ENUM(uint32_t)
+enum SignMode {
+    SignMili23 = 1,
+    PreImage = 2,
+    SignDigest = 3
+};
+
 /// Signs a transaction.
 extern TWData *_Nonnull TWAnySignerSign(TWData *_Nonnull input, enum TWCoinType coin);
 
@@ -31,6 +38,8 @@ extern TWString *_Nonnull CppSignMili23(const char *_Nonnull session, const char
 
 /// mili 钱包交易(json 格式)
 extern TWString *_Nonnull CppJsonTransactionMili23(const char *_Nonnull session, const char *_Nonnull key, const char *_Nonnull preSign, enum TWCoinType coin, const char *_Nonnull input);
+
+extern TWString *_Nonnull CppJsonTransaction(const char *_Nonnull session, const char *_Nonnull key, const char *_Nonnull preSign, enum TWCoinType coin, const char *_Nonnull input, enum SignMode mode = SignMili23);
 
 /// Plan a transaction (for UTXO chains).
 extern TWString *_Nonnull CppUtxoPlan(enum TWCoinType coin, const char *_Nonnull input);

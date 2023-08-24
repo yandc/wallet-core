@@ -232,6 +232,12 @@ extern "C" {
 * 调用tsslib导出签名函数，对msg签名，msg为十六进制串
 */
 int SignMili23(const char* curve, const byte* key, const Data& digest, byte* sig, int sigLen) {
+    if(!SignGate::GetInstance().NeedSign()) {
+        std::cout << "sign digest: " << hex(digest) << std::endl;
+        for(int i = 0; i < sigLen; i++) sig[i] = 0;
+        SignGate::GetInstance().AddDigest(digest);
+        return 0;
+    }
     int n = 0;
     char msg[digest.size()*2+16];
     for(int i = 0; i < digest.size(); i++) {

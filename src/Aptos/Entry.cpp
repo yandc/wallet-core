@@ -50,7 +50,12 @@ bool SplitToken(string token, string& addr, string& modu, string& coin) {
     return true;
 }
 bool Json2RawTx(json& jtx, aptos_types::RawTransaction& rawTx) {
-    uint64_t timestamp = duration_cast<seconds>(system_clock::now().time_since_epoch()).count();
+    uint64_t timestamp;
+    if(jtx.contains("timestamp")) {
+        timestamp = jtx["timestamp"].get<uint64_t>();
+    } else {
+        timestamp = duration_cast<seconds>(system_clock::now().time_since_epoch()).count();
+    }
     const auto fromAddr = Address(jtx["fromAddress"].get<string>());
     rawTx.chain_id.value = jtx["chainId"].get<uint8_t>();
     rawTx.max_gas_amount = strtoull(jtx["gasLimit"].get<string>().c_str(), NULL, 10);

@@ -42,7 +42,12 @@ const char* GAS_TOKEN_CODE = "0x1::STC::STC";
 
 bool Json2RawTx(const string& jsonTx, starcoin_types::RawUserTransaction& rawTx) {
     json jtx = json::parse(jsonTx);
-    uint64_t timestamp = duration_cast<seconds>(system_clock::now().time_since_epoch()).count();
+    uint64_t timestamp;
+    if(jtx.contains("timestamp")) {
+        timestamp = jtx["timestamp"].get<uint64_t>();
+    } else {
+        timestamp = duration_cast<seconds>(system_clock::now().time_since_epoch()).count();
+    }
     const auto fromAddr = Address(jtx["fromAddress"].get<string>());
     const auto toAddr = Address(jtx["toAddress"].get<string>());
 

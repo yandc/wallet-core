@@ -57,6 +57,7 @@ TWString *_Nonnull CppSignMili23(const char *_Nonnull session, const char *_Nonn
     Data keyData = TW::data(miliKey);
     keyData.push_back(0);//确保是cstr的0结尾
     json txJson;
+    SignGate::GetInstance().Lock(true);
     try {
         txJson["result"] = std::string(TW::anySignMessage(coin, msg, keyData));
         txJson["status"] = true;
@@ -66,11 +67,16 @@ TWString *_Nonnull CppSignMili23(const char *_Nonnull session, const char *_Nonn
         txJson["status"] = false;
         txJson["error"] = e.what();
     }
+    SignGate::GetInstance().Unlock();
     std::string result = txJson.dump();
     return TWStringCreateWithRawBytes((const uint8_t*)result.c_str(), result.size());
 }
 
 TWString *_Nonnull CppJsonTransactionMili23(const char *_Nonnull session, const char *_Nonnull key, const char *_Nonnull preSign, enum TWCoinType coin, const char *_Nonnull input) {
+    return CppJsonTransaction(session, key, preSign, coin, input, SignMili23);
+}
+
+TWString *_Nonnull CppJsonTransaction(const char *_Nonnull session, const char *_Nonnull key, const char *_Nonnull preSign, enum TWCoinType coin, const char *_Nonnull input, enum SignMode mode) {
     std::string miliKey = "mili:";
     miliKey += session;
     miliKey += ":";
@@ -87,15 +93,27 @@ TWString *_Nonnull CppJsonTransactionMili23(const char *_Nonnull session, const 
     txJson["result"] = "";
     txJson["status"] = false;
     txJson["error"] = "";
+
+    bool needSign = true;
+    if (mode == SignDigest || mode == PreImage) needSign = false;
+    SignGate::GetInstance().Lock(needSign);
     try {
         std::string result = TW::anySignJSON(coin, jsonString, keyData);
-        size_t pos = result.find("#");
-        if (pos != std::string::npos) {
-            txJson["txid"] = result.substr(0, pos);
-            txJson["result"] = result.substr(pos+1);
-            txJson["status"] = true;
-        } else {
-            txJson["error"] = "loss of txid";
+        if (mode == SignDigest) {
+            json digests;
+            for(auto digest: SignGate::GetInstance().GetDigests()) {
+                digests.push_back(hex(digest));
+            }
+            txJson["result"] = digests;
+        } else if (mode == SignMili23) {
+            size_t pos = result.find("#");
+            if (pos != std::string::npos) {
+                txJson["txid"] = result.substr(0, pos);
+                txJson["result"] = result.substr(pos+1);
+                txJson["status"] = true;
+            } else {
+                txJson["error"] = "loss of txid";
+            }
         }
     } catch (MiliException& e) {
         txJson["error"] = e.what();
@@ -103,6 +121,7 @@ TWString *_Nonnull CppJsonTransactionMili23(const char *_Nonnull session, const 
     } catch (std::invalid_argument& e) {
         txJson["error"] = e.what();
     }
+    SignGate::GetInstance().Unlock();
     std::string result = txJson.dump();
     return TWStringCreateWithRawBytes((const uint8_t*)result.c_str(), result.size());
 }

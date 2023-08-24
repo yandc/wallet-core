@@ -10,6 +10,7 @@
 #include "PublicKey.h"
 
 #include <TrustWalletCore/TWCurve.h>
+#include <mutex>
 
 namespace TW {
 
@@ -83,6 +84,38 @@ inline bool operator==(const PrivateKey& lhs, const PrivateKey& rhs) {
 inline bool operator!=(const PrivateKey& lhs, const PrivateKey& rhs) {
     return lhs.bytes != rhs.bytes;
 }
+
+class SignGate
+{
+public:
+    static SignGate &GetInstance() {
+        static SignGate intance;
+        return intance;
+    }
+    void Lock(bool needSig) {
+        mux.lock();
+        digests.clear();
+        needSign = needSig;
+    }
+    void Unlock() {
+        needSign = true;
+        digests.clear();
+        mux.unlock();
+    }
+    bool NeedSign() { return needSign; }
+    std::vector<Data> GetDigests() { return digests; }
+    void AddDigest(const Data& digest) { digests.push_back(digest); }
+
+private:
+    SignGate() : needSign(true) {};
+    ~SignGate() {};
+    SignGate(const SignGate &sigGate);
+    const SignGate &operator=(const SignGate &sigGate);
+
+    std::vector<Data> digests;
+    bool needSign;
+    std::mutex mux;
+};
 
 } // namespace TW
 
