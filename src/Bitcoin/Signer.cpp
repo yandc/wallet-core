@@ -13,9 +13,11 @@
 #include <google/protobuf/util/json_util.h>
 #include "SigHashType.h"
 #include <TrustWalletCore/MiliException.h>
+#include <nlohmann/json.hpp>
 
 using namespace TW;
 using namespace TW::Bitcoin;
+using json = nlohmann::json;
 
 Proto::TransactionPlan Signer::plan(const Proto::SigningInput& input) noexcept {
     auto plan = TransactionSigner<Transaction, TransactionBuilder>::plan(input);
@@ -49,7 +51,7 @@ Proto::SigningOutput Signer::sign(const Proto::SigningInput &input, std::optiona
 
     Data encoded;
     tx.encode(encoded);
-    output.set_encoded(encoded.data(), encoded.size());
+    //output.set_encoded(encoded.data(), encoded.size());
 
     Data txHashData = encoded;
     if (tx.hasWitness()) {
@@ -59,15 +61,30 @@ Proto::SigningOutput Signer::sign(const Proto::SigningInput &input, std::optiona
     auto txHash = Hash::sha256d(txHashData.data(), txHashData.size());
     std::reverse(txHash.begin(), txHash.end());
     output.set_transaction_id(hex(txHash));
+
+    json utxos = json::array();
+    for (int i = 0; i < tx.inputs.size(); i++) {
+        Data hash(tx.inputs[i].previousOutput.hash.rbegin(), tx.inputs[i].previousOutput.hash.rend());
+        utxos.push_back(json{
+            {"hash", hex(hash)},
+            {"index", tx.inputs[i].previousOutput.index}
+        });
+    }
+    json extendTx = {
+        {"tx", hex(encoded)},
+        {"utxos", utxos},
+        {"owner", input.change_address()}
+    };
+    output.set_encoded(extendTx.dump());
     return output;
 }
 
 HashPubkeyList Signer::preImageHashes(const Proto::SigningInput& input) noexcept {
     return TransactionSigner<Transaction, TransactionBuilder>::preImageHashes(input);
 }
-std::string Signer::signJSON(TWCoinType coin, const std::string& json, const Data& key) {
+std::string Signer::signJSON(TWCoinType coin, const std::string& jsonInput, const Data& key) {
     auto input = Proto::SigningInput();
-    google::protobuf::util::JsonStringToMessage(json, &input);
+    google::protobuf::util::JsonStringToMessage(jsonInput, &input);
     input.add_private_key(key.data(), key.size());
     input.set_coin_type(coin);
     input.set_hash_type(hashTypeForCoin(coin));
@@ -80,5 +97,5 @@ std::string Signer::signJSON(TWCoinType coin, const std::string& json, const Dat
     if(output.error() != Common::Proto::OK) {
         throw ERROR_INFOS[int(output.error())];
     }
-    return output.transaction_id() + "#" + hex(output.encoded());
+    return output.transaction_id() + "#" + output.encoded();
 }

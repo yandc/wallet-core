@@ -14,9 +14,11 @@
 
 #include <google/protobuf/util/json_util.h>
 #include <TrustWalletCore/MiliException.h>
+#include <nlohmann/json.hpp>
 
 using namespace TW;
 using namespace TW::Kaspa;
+using json = nlohmann::json;
 
 Proto::SigningOutput Signer::sign(const Bitcoin::Proto::SigningInput& input) {
     Proto::SigningOutput output;
@@ -36,9 +38,9 @@ Proto::SigningOutput Signer::sign(const Bitcoin::Proto::SigningInput& input) {
     return output;
 }
 
-std::string Signer::signJSON(TWCoinType coin, const std::string& json, const Data& key) {
+std::string Signer::signJSON(TWCoinType coin, const std::string& jsonInput, const Data& key) {
     auto input = Bitcoin::Proto::SigningInput();
-    google::protobuf::util::JsonStringToMessage(json, &input);
+    google::protobuf::util::JsonStringToMessage(jsonInput, &input);
     input.add_private_key(key.data(), key.size());
     input.set_coin_type(coin);
     input.set_hash_type(Bitcoin::hashTypeForCoin(coin));
@@ -56,5 +58,19 @@ std::string Signer::signJSON(TWCoinType coin, const std::string& json, const Dat
     google::protobuf::util::JsonPrintOptions options;
     options.always_print_primitive_fields = true;
     google::protobuf::util::MessageToJsonString(output.transaction(), &result, options);
-    return output.transaction_id() + "#" + result;
+
+    auto& tx = output.transaction();
+    json utxos = json::array();
+    for (int i = 0; i < tx.inputs().size(); i++) {
+        utxos.push_back(json{
+            {"hash", tx.inputs(i).previousoutpoint().transactionid()},
+            {"index", tx.inputs(i).previousoutpoint().index()}
+        });
+    };
+    json extendTx = {
+        {"tx", result},
+        {"utxos", utxos},
+        {"owner", input.change_address()}
+    };
+    return output.transaction_id() + "#" + extendTx.dump();
 }
