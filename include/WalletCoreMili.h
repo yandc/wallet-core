@@ -379,6 +379,11 @@ chaindata_setOptimalURL 设置最优节点
 */
 extern const char* chaindata_setOptimalURL(const char* chain);
 
+/*
+chaindata_getBlockHeader 获取块信息(trx/solana链)
+*/
+extern const char* chaindata_getBlockHeader(const char* chain);
+
 #ifdef __cplusplus
 }
 #endif

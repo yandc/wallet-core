@@ -360,6 +360,11 @@ public class WalletCore
      */
     public native String chaindata_setOptimalURL(String chain);
 
+    /*
+     * chaindata_getBlockHeader 获取块信息(trx/solana链)
+     */
+    public native String chaindata_getBlockHeader(String chain);
+
     public static void main(String[] args) {
         System.loadLibrary("wallet_core.android.arm64.a"); //载入本地库
         WalletCore wc = new WalletCore();

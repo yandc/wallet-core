@@ -68,7 +68,7 @@ bool Json2RawTx(json& jsonInput, casper_types::Deploy& deploy, Address& account)
     );
 	srand((unsigned) time(NULL));
     if(jsonInput.contains("correlation_id")) {
-        correlation_id.value = jsonInput["timestamp"].get<uint64_t>();
+        correlation_id.value = jsonInput["correlation_id"].get<uint64_t>();
     } else {
         correlation_id.value = (uint64_t)(rand() % 1000000 + 1);
     }
@@ -89,7 +89,7 @@ bool Json2RawTx(json& jsonInput, casper_types::Deploy& deploy, Address& account)
     if(jsonInput.contains("timestamp")) {
         timestamp = jsonInput["timestamp"].get<uint64_t>();
     } else {
-        timestamp = duration_cast<seconds>(system_clock::now().time_since_epoch()).count();
+        timestamp = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
     }
     //uint64_t timestamp = 1670173440055;
     casper_types::DeployHeader header{
