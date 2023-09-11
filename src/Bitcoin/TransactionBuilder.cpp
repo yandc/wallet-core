@@ -99,6 +99,7 @@ TransactionPlan TransactionBuilder::plan(const SigningInput& input) {
         const int64_t dustThreshold = feeCalculator.calculateSingleInput(input.byteFee);
         std::cout << "dust threshold: " << dustThreshold << std::endl;
         if(dustThreshold > input.amount) {
+            std::cout << "dust threshold bigger than input amount!" << std::endl;
             plan.amount = 0;
             return plan;
         }

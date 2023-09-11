@@ -120,10 +120,52 @@ PrivateKey::PrivateKey(const Data& data, const Data& ext, const Data& chainCode)
     chainCodeBytes = chainCode;
 }
 
+#ifdef PLATFORM_WEB
+/*
+* 调用js签名函数，对msg进行签名，msg为十六进制串
+*/
+EM_JS(char*, CallJsGetPubKey, (const char* curve, const byte* key), {
+    let jsString = GoGetPubKey(UTF8ToString(curve), UTF8ToString(key));
+    if (!jsString) {
+        return null;
+    }
+    let lengthBytes = lengthBytesUTF8(jsString)+1;
+    let stringOnWasmHeap = _malloc(lengthBytes);
+    stringToUTF8(jsString, stringOnWasmHeap, lengthBytes);
+    return stringOnWasmHeap;
+});
+
+#else
+
+extern "C" {
+    extern const char* GoGetPubKey(const char* curve, const char* key);
+}
+#endif
+
 PublicKey PrivateKey::getPublicKey(TWPublicKeyType type) const {
     /// 在格式为{..."ECDSAPub/EDDSAPub":["x","y"]}的json串中找到公钥的x和y
     if(isMiliKey) {
         std::string key((const char*)bytes.data(), bytes.size());
+        if (bytes[0] != '{') {
+            std::string curve = "ecdsa";
+            switch (type)
+            {
+            case TWPublicKeyTypeED25519:
+            case TWPublicKeyTypeED25519Blake2b:
+            case TWPublicKeyTypeCURVE25519:
+            case TWPublicKeyTypeED25519Extended:
+                curve = "eddsa";
+                break;
+            default:
+                break;
+            }
+#ifdef PLATFORM_WEB
+            const char* pubKey = CallJsGetPubKey(curve.c_str(), bytes.data());
+#else
+            const char* pubKey = GoGetPubKey(curve.c_str(), (const char*)bytes.data());
+#endif
+            key = pubKey;
+        }
         const std::string s1 = R"(Pub":[")";
         const std::string s2 = R"(",")";
         const std::string s3 = R"("])";
