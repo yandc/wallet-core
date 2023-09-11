@@ -78,7 +78,7 @@ std::vector<TypeWithAmount> InputSelector<TypeWithAmount>::select(int64_t target
 
     // Get all possible utxo selections up to a maximum size, sort by total amount, increasing
     std::vector<TypeWithAmount> sorted = inputs;
-    std::sort(sorted.begin(), sorted.end(),
+    std::stable_sort(sorted.begin(), sorted.end(),
         [](const TypeWithAmount& lhs, const TypeWithAmount& rhs) {
             return lhs.amount < rhs.amount;
         });
@@ -123,7 +123,7 @@ std::vector<TypeWithAmount> InputSelector<TypeWithAmount>::select(int64_t target
                 }),
             slices.end());
         if (!slices.empty()) {
-            std::sort(slices.begin(), slices.end(),
+            std::stable_sort(slices.begin(), slices.end(),
                 [distFrom2x](const std::vector<TypeWithAmount>& lhs, const std::vector<TypeWithAmount>& rhs) {
                     return distFrom2x(sum(lhs)) < distFrom2x(sum(rhs));
                 });

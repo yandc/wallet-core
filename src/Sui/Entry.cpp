@@ -60,7 +60,7 @@ bool Json2RawTx(json& jtx, sui_types::TransactionDataV1& rawTx, uint64_t& realAm
             sortObjs.push_back(SORT_ITEM(i, 0));
         }
     }
-    sort(sortObjs.begin(), sortObjs.end(), [](SORT_ITEM x, SORT_ITEM y){ return x.second > y.second; });
+    stable_sort(sortObjs.begin(), sortObjs.end(), [](SORT_ITEM x, SORT_ITEM y){ return x.second > y.second; });
 
     json action = jtx["action"].get<json>();
     sui_types::TransactionKind trans;

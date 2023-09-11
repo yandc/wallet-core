@@ -310,12 +310,12 @@ uint64_t TransactionPlan::calculateFee() {
 }
 
 void TransactionPlan::sortAccordingToCapacity() {
-    std::sort(m_availableCells.begin(), m_availableCells.end(),
+    std::stable_sort(m_availableCells.begin(), m_availableCells.end(),
               [](const Cell& lhs, const Cell& rhs) { return lhs.capacity < rhs.capacity; });
 }
 
 void TransactionPlan::sortAccordingToTypeAndData(const Script& type) {
-    std::sort(
+    std::stable_sort(
         m_availableCells.begin(), m_availableCells.end(), [&](const Cell& lhs, const Cell& rhs) {
             uint256_t lhsAmount = (lhs.type == type) ? Serialization::decodeUint256(lhs.data) : 0;
             uint256_t rhsAmount = (rhs.type == type) ? Serialization::decodeUint256(rhs.data) : 0;
