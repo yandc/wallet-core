@@ -233,6 +233,14 @@ JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_chaindata_1se
 
 /*
  * Class:     com_openblock_wallet_jni_WalletCore
+ * Method:    chaindata_sendDappRawTransaction
+ * Signature: (Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+ */
+JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_chaindata_1sendDappRawTransaction
+  (JNIEnv *, jobject, jstring, jstring);
+
+/*
+ * Class:     com_openblock_wallet_jni_WalletCore
  * Method:    chaindata_getTransaction
  * Signature: (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
  */

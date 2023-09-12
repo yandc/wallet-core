@@ -263,6 +263,14 @@ rawTx：交易数据
 extern const char* chaindata_sendRawTransaction(const char* chain, const char* rawTx);
 
 /*
+chaindata_sendDappRawTransaction发送交易
+chain：链名称
+rawTx：交易数据
+返回：交易hash
+*/
+extern const char* chaindata_sendDappRawTransaction(const char* chain, const char* rawTx);
+
+/*
 chaindata_getTransaction获取交易信息
 chain：链名称
 address：当前用户的address

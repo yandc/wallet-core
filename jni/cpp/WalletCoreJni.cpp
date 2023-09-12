@@ -35,6 +35,7 @@ extern "C" {
   extern const char* chaindata_getEIP1559TxParams(const char* chain, const char* fromAddress);
   extern const char* chaindata_getTokenType(const char* chain, const char* tokenAddress);
   extern const char* chaindata_sendRawTransaction(const char* chain, const char* rawTx);
+  extern const char* chaindata_sendDappRawTransaction(const char* chain, const char* rawTx);
   extern const char* chaindata_getTransaction(const char* chain, const char* address, const char* txHashs);
   extern const char* chaindata_allBalance(const char* chain, const char* address);
   extern const char* chaindata_getGasEstimate(const char* chain, const char* params);
@@ -465,6 +466,19 @@ JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_chaindata_1se
   const char* arg1 = env->GetStringUTFChars(arg1Jstr, NULL);
   const char* arg2 = env->GetStringUTFChars(arg2Jstr, NULL);
   const char* goRet = chaindata_sendRawTransaction(arg1, arg2);
+  env->ReleaseStringUTFChars(arg1Jstr, arg1);
+  env->ReleaseStringUTFChars(arg2Jstr, arg2);
+  jstring ret = env->NewStringUTF(goRet);
+  free((void*)goRet);
+  return ret;
+}
+
+JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_chaindata_1sendDappRawTransaction
+  (JNIEnv *env, jobject jthis, jstring arg1Jstr, jstring arg2Jstr)
+{
+  const char* arg1 = env->GetStringUTFChars(arg1Jstr, NULL);
+  const char* arg2 = env->GetStringUTFChars(arg2Jstr, NULL);
+  const char* goRet = chaindata_sendDappRawTransaction(arg1, arg2);
   env->ReleaseStringUTFChars(arg1Jstr, arg1);
   env->ReleaseStringUTFChars(arg2Jstr, arg2);
   jstring ret = env->NewStringUTF(goRet);
