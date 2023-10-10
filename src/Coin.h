@@ -29,7 +29,7 @@ namespace TW {
 std::vector<TWCoinType> getCoinTypes();
 
 /// Validates an address for a particular coin.
-bool validateAddress(TWCoinType coin, const std::string& address);
+bool validateAddress(TWCoinType coin, const std::string& address, const char* hrp=nullptr);
 
 /// Validates and normalizes an address for a particular coin.
 std::string normalizeAddress(TWCoinType coin, const std::string& address);
@@ -56,10 +56,10 @@ DerivationPath derivationPath(TWCoinType coin);
 enum TWPublicKeyType publicKeyType(TWCoinType coin);
 
 /// Derives the address for a particular coin from the private key.
-std::string deriveAddress(TWCoinType coin, const PrivateKey& privateKey);
+std::string deriveAddress(TWCoinType coin, const PrivateKey& privateKey, const char* hrp=nullptr);
 
 /// Derives the address for a particular coin from the public key.
-std::string deriveAddress(TWCoinType coin, const PublicKey& publicKey);
+std::string deriveAddress(TWCoinType coin, const PublicKey& publicKey, const char* hrp=nullptr);
 
 /// Hasher for deriving the public key hash.
 Hash::Hasher publicKeyHasher(TWCoinType coin);

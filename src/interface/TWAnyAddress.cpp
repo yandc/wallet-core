@@ -44,21 +44,21 @@ struct TWAnyAddress* _Nonnull TWAnyAddressCreateWithPublicKey(
     return new TWAnyAddress{TWStringCreateWithUTF8Bytes(address.c_str()), coin};
 }
 
-const char*_Nonnull CppAddressCreateWithPKey(const char *_Nonnull pkey, enum TWCoinType coin) {
+const char*_Nonnull CppAddressCreateWithPKey(const char *_Nonnull pkey, enum TWCoinType coin, const char * hrp) {
     static char addr[512];
     TWPrivateKey pKey{TW::PrivateKey(TW::parse_hex(pkey))};
 
-    const std::string& a = TW::deriveAddress(coin, pKey.impl);
+    const std::string& a = TW::deriveAddress(coin, pKey.impl, hrp);
     memcpy(addr, a.c_str(), a.size());
     addr[a.size()] = 0;
     return addr;
 }
 
-const char*_Nonnull CppAddressCreateWithMiliKey(const char *_Nonnull key, enum TWCoinType coin) {
+const char*_Nonnull CppAddressCreateWithMiliKey(const char *_Nonnull key, enum TWCoinType coin, const char * hrp) {
     static char addr[512];
     TWPrivateKey miliKey{TW::PrivateKey(key)};
 
-    const std::string& a = TW::deriveAddress(coin, miliKey.impl);
+    const std::string& a = TW::deriveAddress(coin, miliKey.impl, hrp);
     memcpy(addr, a.c_str(), a.size());
     addr[a.size()] = 0;
     return addr;
@@ -89,8 +89,8 @@ const char*_Nonnull CppPublicKeyWithPKey(const char *_Nonnull key, enum TWCoinTy
     return pubkey;
 }
 
-bool CppAddressIsValid(const char *_Nonnull address, enum TWCoinType coin) {
-    return TW::validateAddress(coin, address);
+bool CppAddressIsValid(const char *_Nonnull address, enum TWCoinType coin, const char * hrp) {
+    return TW::validateAddress(coin, address, hrp);
 }
 
 void TWAnyAddressDelete(struct TWAnyAddress* _Nonnull address) {

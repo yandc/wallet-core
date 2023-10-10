@@ -217,10 +217,10 @@ std::vector<std::pair<std::string, TWCoinType>> addressPrefixCoin = {
     {"ronin:", TWCoinTypeRonin},
 };
 
-bool TW::validateAddress(TWCoinType coin, const std::string& string) {
+bool TW::validateAddress(TWCoinType coin, const std::string& string, const char* hrp) {
     auto p2pkh = TW::p2pkhPrefix(coin);
     auto p2sh = TW::p2shPrefix(coin);
-    const auto* hrp = stringForHRP(TW::hrp(coin));
+    if (hrp == nullptr || strlen(hrp) == 0) hrp = stringForHRP(TW::hrp(coin));
 
     // dispatch
     for(auto& item: addressPrefixCoin) {
@@ -246,14 +246,14 @@ std::string TW::normalizeAddress(TWCoinType coin, const std::string& address) {
     return dispatcher->normalizeAddress(coin, address);
 }
 
-std::string TW::deriveAddress(TWCoinType coin, const PrivateKey& privateKey) {
+std::string TW::deriveAddress(TWCoinType coin, const PrivateKey& privateKey, const char* hrp) {
     auto keyType = TW::publicKeyType(coin);
-    return TW::deriveAddress(coin, privateKey.getPublicKey(keyType));
+    return TW::deriveAddress(coin, privateKey.getPublicKey(keyType), hrp);
 }
 
-std::string TW::deriveAddress(TWCoinType coin, const PublicKey& publicKey) {
+std::string TW::deriveAddress(TWCoinType coin, const PublicKey& publicKey, const char* hrp) {
     auto p2pkh = TW::p2pkhPrefix(coin);
-    const auto* hrp = stringForHRP(TW::hrp(coin));
+    if (hrp == nullptr || strlen(hrp) == 0) hrp = stringForHRP(TW::hrp(coin));
 
     // dispatch
     auto* dispatcher = coinDispatcher(coin);

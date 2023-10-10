@@ -37,11 +37,11 @@ struct TWAnyAddress* _Nonnull TWAnyAddressCreateWithPublicKey(struct TWPublicKey
 
 /// Creates an address from a private key.
 TW_EXPORT_STATIC_METHOD
-const char*_Nonnull CppAddressCreateWithPKey(const char *_Nonnull pkey, enum TWCoinType coin);
+const char*_Nonnull CppAddressCreateWithPKey(const char *_Nonnull pkey, enum TWCoinType coin, const char *_Nullable hrp=nullptr);
 
 /// Creates an address from a public key data x and y.
 TW_EXPORT_STATIC_METHOD
-const char *_Nonnull CppAddressCreateWithMiliKey(const char *_Nonnull key, enum TWCoinType coin);
+const char *_Nonnull CppAddressCreateWithMiliKey(const char *_Nonnull key, enum TWCoinType coin, const char *_Nullable hrp=nullptr);
 
 TW_EXPORT_STATIC_METHOD
 const char*_Nonnull CppPublicKeyWithMiliKey(const char *_Nonnull key, enum TWCoinType coin);
@@ -51,7 +51,7 @@ const char*_Nonnull CppPublicKeyWithPKey(const char *_Nonnull key, enum TWCoinTy
 
 /// Determines if the address is valid
 TW_EXPORT_STATIC_METHOD
-bool CppAddressIsValid(const char *_Nonnull address, enum TWCoinType coin);
+bool CppAddressIsValid(const char *_Nonnull address, enum TWCoinType coin, const char *_Nullable hrp=nullptr);
 
 TW_EXPORT_METHOD
 void TWAnyAddressDelete(struct TWAnyAddress* _Nonnull address);

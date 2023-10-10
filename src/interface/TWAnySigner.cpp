@@ -105,7 +105,7 @@ TWString *_Nonnull CppJsonTransaction(const char *_Nonnull session, const char *
                 digests.push_back(hex(digest));
             }
             txJson["result"] = digests;
-        } else if (mode == SignMili23) {
+        } else if (mode == SignMili23 || mode == PreImage) {
             size_t pos = result.find("#");
             if (pos != std::string::npos) {
                 txJson["txid"] = result.substr(0, pos);
