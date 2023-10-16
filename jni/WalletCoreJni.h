@@ -36,8 +36,16 @@ JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_DeriveMili23
  * Method:    GetAddress
  * Signature: (Ljava/lang/String;I)Ljava/lang/String;
  */
-JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_GetAddress
+JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_GetAddress__Ljava_lang_String_2I
   (JNIEnv *, jobject, jstring, jint);
+
+/*
+ * Class:     com_openblock_wallet_jni_WalletCore
+ * Method:    GetAddress
+ * Signature: (Ljava/lang/String;ILjava/lang/String;)Ljava/lang/String;
+ */
+JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_GetAddress__Ljava_lang_String_2ILjava_lang_String_2
+  (JNIEnv *, jobject, jstring, jint, jstring);
 
 /*
  * Class:     com_openblock_wallet_jni_WalletCore
@@ -52,8 +60,16 @@ JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_GetPublicKey
  * Method:    VerifyAddress
  * Signature: (Ljava/lang/String;I)Z
  */
-JNIEXPORT jboolean JNICALL Java_com_openblock_wallet_jni_WalletCore_VerifyAddress
+JNIEXPORT jboolean JNICALL Java_com_openblock_wallet_jni_WalletCore_VerifyAddress__Ljava_lang_String_2I
   (JNIEnv *, jobject, jstring, jint);
+
+/*
+ * Class:     com_openblock_wallet_jni_WalletCore
+ * Method:    VerifyAddress
+ * Signature: (Ljava/lang/String;ILjava/lang/String;)Z
+ */
+JNIEXPORT jboolean JNICALL Java_com_openblock_wallet_jni_WalletCore_VerifyAddress__Ljava_lang_String_2ILjava_lang_String_2
+  (JNIEnv *, jobject, jstring, jint, jstring);
 
 /*
  * Class:     com_openblock_wallet_jni_WalletCore

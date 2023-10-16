@@ -134,11 +134,21 @@ JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_OfflineSignMi
   return ret;
 }
 
-JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_GetAddress(JNIEnv *env, jobject jthis, jstring keyJstr, jint coinId)
+JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_GetAddress__Ljava_lang_String_2I(JNIEnv *env, jobject jthis, jstring keyJstr, jint coinId)
 {
   const char* key = env->GetStringUTFChars(keyJstr, NULL);
   const char* cppRet = CppAddressCreateWithMiliKey(key, (TWCoinType)coinId);
   env->ReleaseStringUTFChars(keyJstr, key);
+  return env->NewStringUTF(cppRet);
+}
+
+JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_GetAddress__Ljava_lang_String_2ILjava_lang_String_2(JNIEnv *env, jobject jthis, jstring keyJstr, jint coinId, jstring hrpJstr)
+{
+  const char* key = env->GetStringUTFChars(keyJstr, NULL);
+  const char* hrp = env->GetStringUTFChars(hrpJstr, NULL);
+  const char* cppRet = CppAddressCreateWithMiliKey(key, (TWCoinType)coinId, hrp);
+  env->ReleaseStringUTFChars(keyJstr, key);
+  env->ReleaseStringUTFChars(hrpJstr, hrp);
   return env->NewStringUTF(cppRet);
 }
 
@@ -150,11 +160,21 @@ JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_GetPublicKey(
   return env->NewStringUTF(cppRet);
 }
 
-JNIEXPORT jboolean JNICALL Java_com_openblock_wallet_jni_WalletCore_VerifyAddress(JNIEnv *env, jobject jthis, jstring addressJstr, jint coinId)
+JNIEXPORT jboolean JNICALL Java_com_openblock_wallet_jni_WalletCore_VerifyAddress__Ljava_lang_String_2I(JNIEnv *env, jobject jthis, jstring addressJstr, jint coinId)
 {
   const char* address = env->GetStringUTFChars(addressJstr, NULL);
   bool ret = CppAddressIsValid(address, (TWCoinType)coinId);
   env->ReleaseStringUTFChars(addressJstr, address);
+  return ret;
+}
+
+JNIEXPORT jboolean JNICALL Java_com_openblock_wallet_jni_WalletCore_VerifyAddress__Ljava_lang_String_2ILjava_lang_String_2(JNIEnv *env, jobject jthis, jstring addressJstr, jint coinId, jstring hrpJstr)
+{
+  const char* address = env->GetStringUTFChars(addressJstr, NULL);
+  const char* hrp = env->GetStringUTFChars(hrpJstr, NULL);
+  bool ret = CppAddressIsValid(address, (TWCoinType)coinId, hrp);
+  env->ReleaseStringUTFChars(addressJstr, address);
+  env->ReleaseStringUTFChars(hrpJstr, hrp);
   return ret;
 }
 

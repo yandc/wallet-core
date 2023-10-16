@@ -129,7 +129,7 @@ extern const char* GoLandResponse(const char* aesKey, const char* enResp);
 * @coinId: 链配置中的coinId
 * 返回：地址
 */
-extern const char* CppAddressCreateWithMiliKey(const char * key, int coinId);
+extern const char* CppAddressCreateWithMiliKey(const char * key, int coinId, const char* hrp=nullptr);
 
 /*
 * 获取公钥
@@ -142,7 +142,7 @@ extern const char* CppPublicKeyWithMiliKey(const char * key, int coinId);
 /*
 * 地址校验
 */
-extern bool CppAddressIsValid(const char* address, int coinId);
+extern bool CppAddressIsValid(const char* address, int coinId, const char* hrp=nullptr);
 
 /*
 * 对任意消息签名

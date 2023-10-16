@@ -49,6 +49,7 @@ public class WalletCore
     * 返回：地址
     */
     public native String GetAddress(String key, int coinId);
+    public native String GetAddress(String key, int coinId, String hrp);
 
     /*
     * 获取公钥
@@ -62,6 +63,7 @@ public class WalletCore
     * 地址校验
     */
     public native boolean VerifyAddress(String address, int coinId);
+    public native boolean VerifyAddress(String address, int coinId, String hrp);
 
     /*
     * 解析Evm合约数据

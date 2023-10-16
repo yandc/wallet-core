@@ -32,6 +32,10 @@ TWString *_Nonnull CppJsonTransactionPrivateKey(const char *_Nonnull json, const
     Data keyData = TW::parse_hex(key);
     std::string jsonTxInput = json;
     auto result = TW::anySignJSON(coin, jsonTxInput, keyData);
+    size_t pos = result.find("#");
+    if (pos != std::string::npos) {
+        result = result.substr(pos+1);
+    }
     return TWStringCreateWithUTF8Bytes(result.c_str());
 }
 
