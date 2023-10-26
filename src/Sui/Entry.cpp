@@ -32,7 +32,15 @@ bool Entry::validateAddress(TWCoinType coin, const string& address, TW::byte, TW
     return Address::isValid(address);
 }
 
-string Entry::deriveAddress(TWCoinType coin, const PublicKey& publicKey, TW::byte, const char*) const {
+string Entry::deriveAddress(TWCoinType coin, const PublicKey& publicKey, TW::byte, const char* hrp) const {
+    if (hrp != nullptr && strlen(hrp) > 0) {
+        string addr = hrp;
+        if (addr == "BFC") {
+            string rawAddr = Address(publicKey).string().substr(2);
+            string checkSum = hex(Hash::sha256(rawAddr));
+            return addr + rawAddr + checkSum.substr(0, 4);
+        }
+    }
     return Address(publicKey).string();
 }
 

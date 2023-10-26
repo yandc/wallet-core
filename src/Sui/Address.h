@@ -31,16 +31,33 @@ class Address {
         if(pos2 == std::string::npos) return false;
         return Address::isValid(address.substr(0, pos1));
       }
-      if (address[0] != '0' || address[1] != 'x') {
+
+      std::string rawAddr = address;
+      if (address.find("BFC") == 0) {
+        rawAddr = address.substr(3, 64);
+        std::string checkSum = hex(Hash::sha256(rawAddr));
+        if (address.substr(67, 4) != checkSum.substr(0, 4)) {
+            return false;
+        }
+
+      } else if (address[0] != '0' || address[1] != 'x') {
           return false;
       }
-      const auto data = parse_hex(address, true);
+
+      const auto data = parse_hex(rawAddr, true);
       return Address::isValid(data);
     }
 
-    /// Initializes a Kusama address with a string representation.
-    Address(const std::string& string) {
-      Data data = parse_hex(string, true);
+    Address(const std::string& address) {
+      std::string rawAddr = address;
+      if (address.find("BFC") == 0) {
+        rawAddr = address.substr(3, 64);
+        std::string checkSum = hex(Hash::sha256(rawAddr));
+        if (address.substr(67, 4) != checkSum.substr(0, 4)) {
+            return;
+        }
+      }
+      Data data = parse_hex(rawAddr, true);
       TW::pad_left(data, size);
       if (!isValid(data)) {
           throw std::invalid_argument("Invalid address data");
