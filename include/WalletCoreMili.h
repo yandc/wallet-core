@@ -129,7 +129,7 @@ extern const char* GoLandResponse(const char* aesKey, const char* enResp);
 * @coinId: 链配置中的coinId
 * 返回：地址
 */
-extern const char* CppAddressCreateWithMiliKey(const char * key, int coinId, const char* hrp=nullptr);
+extern const char* CppAddressCreateWithMiliKey(const char * key, int coinId, const char* hrp);
 
 /*
 * 获取公钥
@@ -142,7 +142,7 @@ extern const char* CppPublicKeyWithMiliKey(const char * key, int coinId);
 /*
 * 地址校验
 */
-extern bool CppAddressIsValid(const char* address, int coinId, const char* hrp=nullptr);
+extern bool CppAddressIsValid(const char* address, int coinId, const char* hrp);
 
 /*
 * 对任意消息签名
@@ -159,6 +159,14 @@ extern TWString* CppSignMili23(const char* session, const char* key, const char*
 * 返回：十六进制交易，结构：{"status":true/false, "result":"", "error":""}
 */
 extern TWString* CppJsonTransactionMili23(const char* session, const char* key, const char* preSign, int coinId, const char* input);
+
+/*
+* 获取预交易preRawTx
+* @offset: 子钱包偏移或者空串
+* @input: 交易输入参数，json结构
+* 返回：未签名的十六进制交易，结构：{"status":true/false, "result":"", "error":""}
+*/
+extern TWString* CppJsonPreRawTx(const char* offset, const char* key, int coinId, const char* input);
 
 /*
 * UTXO plan

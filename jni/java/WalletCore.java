@@ -79,6 +79,14 @@ public class WalletCore
     public native String JsonTransactionMili23(String session, String key, String preSign, int coinId, String input);
 
     /*
+    * 获取预交易preRawTx
+    * @offset:
+    * @input: 交易输入参数，json结构
+    * 返回：十六进制交易
+    */
+    public native String JsonPreRawTx(String offset, String key, int coinId, String input);
+
+    /*
     * 对任意消息签名
     * @session: 拼接格式：sessionId-salt[-offset](offset可选)
     * @msg: 签名消息，任意字符串

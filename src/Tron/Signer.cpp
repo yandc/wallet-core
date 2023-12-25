@@ -565,12 +565,13 @@ Proto::SigningOutput Signer::sign(const Proto::SigningInput& input) {
     output.set_ref_block_hash(internal.raw_data().ref_block_hash());
 
     const auto serialized = internal.raw_data().SerializeAsString();
-    const auto hash = Hash::sha256(Data(serialized.begin(), serialized.end()));
+    const auto rawData = Data(serialized.begin(), serialized.end());
+    const auto hash = Hash::sha256(rawData);
 
     const auto key = PrivateKey(Data(input.private_key().begin(), input.private_key().end()));
     const auto signature = key.sign(hash, TWCurveSECP256k1);
 
-    const auto json = transactionJSON(internal, hash, signature).dump();
+    const auto json = transactionJSON(internal, hash, signature, rawData).dump();
 
     output.set_id(hash.data(), hash.size());
     output.set_signature(signature.data(), signature.size());

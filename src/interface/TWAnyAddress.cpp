@@ -89,6 +89,14 @@ const char*_Nonnull CppPublicKeyWithPKey(const char *_Nonnull key, enum TWCoinTy
     return pubkey;
 }
 
+const char*_Nonnull CppWalletCoreVersion() {
+    #ifndef WALLET_CORE_VERSION
+    return "0";
+    #else
+    return WALLET_CORE_VERSION;
+    #endif
+}
+
 bool CppAddressIsValid(const char *_Nonnull address, enum TWCoinType coin, const char * hrp) {
     return TW::validateAddress(coin, address, hrp);
 }

@@ -41,6 +41,8 @@ extern TWString *_Nonnull CppJsonTransactionMili23(const char *_Nonnull session,
 
 extern TWString *_Nonnull CppJsonTransaction(const char *_Nonnull session, const char *_Nonnull key, const char *_Nonnull preSign, enum TWCoinType coin, const char *_Nonnull input, enum SignMode mode = SignMili23);
 
+extern TWString *_Nonnull CppJsonPreRawTx(const char *_Nonnull offset, const char *_Nonnull key, enum TWCoinType coin, const char *_Nonnull input);
+
 /// Plan a transaction (for UTXO chains).
 extern TWString *_Nonnull CppUtxoPlan(enum TWCoinType coin, const char *_Nonnull input);
 

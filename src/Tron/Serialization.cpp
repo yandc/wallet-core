@@ -298,11 +298,12 @@ json raw_dataJSON(const protocol::Transaction::raw& raw) {
     return raw_dataJSON;
 }
 
-json transactionJSON(const protocol::Transaction& transaction, const TW::Data& txID, const TW::Data& signature) {
+json transactionJSON(const protocol::Transaction& transaction, const TW::Data& txID, const TW::Data& signature, const TW::Data& rawData) {
     json transactionJSON;
     transactionJSON["raw_data"] = raw_dataJSON(transaction.raw_data());
     transactionJSON["txID"] = hex(txID);
     transactionJSON["signature"] = json::array({hex(signature)});
+    transactionJSON["raw_data_hex"] = hex(rawData);
 
     return transactionJSON;
 }

@@ -5,7 +5,7 @@ if [ "$OS" = "ios" ]; then
     mkdir -p build/ar_merge
     cd build/ar_merge
     rm -rf ./*
-    $AR x ../../../gg20/tss-mili/build/go_mili.$OS.$ARCH.a
+    $AR x ../../../tss-mili/build/go_mili.$OS.$ARCH.a
     cd ../..
     exec $AR -r "$@" ./build/ar_merge/*.o
 
@@ -21,7 +21,7 @@ elif [ "$OS" = "android" ]; then
     elif [ "$ARCH" = "x86_64" ]; then
         CLANG=$NDK_BIN/x86_64-linux-android21-clang
     fi
-    cp ../gg20/tss-mili/build/go_mili.$OS.$ARCH.so ./build/lib/libgo_mili.so
+    cp ../tss-mili/build/go_mili.$OS.$ARCH.so ./build/lib/libgo_mili.so
     exec $CLANG -v -shared -o "$@"
 
 elif [ "$OS" = "web" ]; then

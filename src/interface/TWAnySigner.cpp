@@ -130,6 +130,15 @@ TWString *_Nonnull CppJsonTransaction(const char *_Nonnull session, const char *
     return TWStringCreateWithRawBytes((const uint8_t*)result.c_str(), result.size());
 }
 
+TWString *_Nonnull CppJsonPreRawTx(const char *_Nonnull offset, const char *_Nonnull key, enum TWCoinType coin, const char *_Nonnull input) {
+    std::string session = "";
+    if (offset != nullptr && strlen(offset) > 0) {
+        session += "--";
+        session += offset;
+    }
+    return CppJsonTransaction(session.c_str(), key, "", coin, input, PreImage);
+}
+
 TWString *_Nonnull CppUtxoPlan(enum TWCoinType coin, const char *_Nonnull input) {
     std::string result = TW::anyCoinPlanJson(coin, input);
     return TWStringCreateWithRawBytes((const uint8_t*)result.c_str(), result.size());

@@ -1,6 +1,6 @@
 OS=web ARCH=wasm make -f Makefile_pb
 OS=web ARCH=wasm make -f Makefile_trezor
-OS=web ARCH=wasm make
+VERSION=$version OS=web ARCH=wasm make
 
 OS=ios ARCH=arm64 make -f Makefile_pb
 OS=ios ARCH=arm64 make -f Makefile_trezor

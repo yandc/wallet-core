@@ -204,6 +204,19 @@ JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_JsonTransacti
   return ret;
 }
 
+JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_JsonPreRawTx(JNIEnv *env, jobject jthis, jstring offsetJstr, jstring keyJstr, jint coinId, jstring inputJstr)
+{
+  const char* offset = env->GetStringUTFChars(offsetJstr, NULL);
+  const char* key = env->GetStringUTFChars(keyJstr, NULL);
+  const char* input = env->GetStringUTFChars(inputJstr, NULL);
+  auto cppRet = (const std::string*)CppJsonPreRawTx(offset, key, (TWCoinType)coinId, input);
+  env->ReleaseStringUTFChars(offsetJstr, offset);
+  env->ReleaseStringUTFChars(keyJstr, key);
+  env->ReleaseStringUTFChars(inputJstr, input);
+  jstring ret = env->NewStringUTF(cppRet->c_str());
+  delete cppRet;
+  return ret;
+}
 JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_SignMili23(JNIEnv *env, jobject jthis, jstring sessionJstr, jstring keyJstr, jstring preSignJstr, jint coinId, jstring msgJstr)
 {
   const char* session = env->GetStringUTFChars(sessionJstr, NULL);

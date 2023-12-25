@@ -89,6 +89,14 @@ JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_JsonTransacti
 
 /*
  * Class:     com_openblock_wallet_jni_WalletCore
+ * Method:    JsonPreRawTx
+ * Signature: (Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;)Ljava/lang/String;
+ */
+JNIEXPORT jstring JNICALL Java_com_openblock_wallet_jni_WalletCore_JsonPreRawTx
+  (JNIEnv *, jobject, jstring, jstring, jint, jstring);
+
+/*
+ * Class:     com_openblock_wallet_jni_WalletCore
  * Method:    SignMili23
  * Signature: (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;)Ljava/lang/String;
  */
