@@ -75,6 +75,7 @@ std::string Signer::signJSON(const std::string& json, const Data& key) {
     google::protobuf::util::JsonStringToMessage(json, &input);
     input.set_private_key(key.data(), key.size());
     input.set_signing_mode(Proto::Protobuf);
+    input.set_mode(Proto::SYNC);
     auto output = Signer::sign(input);
     return output.serialized();
 }
