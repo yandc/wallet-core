@@ -401,6 +401,7 @@ Data PrivateKey::sign(const Data& digest, TWCurve curve) const {
     if (!success) {
         return {};
     }
+    std::cout << "sign digest: " << hex(digest) << ", signature: " << hex(result) << std::endl;
     return result;
 }
 

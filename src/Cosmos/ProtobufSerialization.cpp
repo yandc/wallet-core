@@ -323,9 +323,10 @@ std::string buildAuthInfo(const Proto::SigningInput& input) {
             if (authInfo.ParseFromString(input.messages(0).sign_direct_message().auth_info_bytes())) {
                 auto fee = authInfo.mutable_fee();
                 fee->set_gas_limit(input.fee().gas());
-                if (fee->amount_size() > 0 && fee->amount(0).denom() == input.fee().amounts(0).denom()) {
+                if (fee->amount_size() > 0) {
                     auto amount = fee->mutable_amount(0);
                     amount->set_amount(input.fee().amounts(0).amount());
+                    amount->set_denom(input.fee().amounts(0).denom());
                 }
             }
             return authInfo.SerializeAsString();

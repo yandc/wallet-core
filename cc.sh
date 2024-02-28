@@ -35,4 +35,8 @@ elif [ "$OS" = "web" ]; then
     fi
 elif [ "$OS" = "linux" ]; then
     exec clang-12 "$@"
+elif [ "$OS" == "macos" ]; then
+    CLANG=`xcrun --sdk macosx --find clang`
+    SDK_PATH=`xcrun --sdk macosx --show-sdk-path`
+    exec $CLANG -arch $ARCH -isysroot $SDK_PATH -D_LIBCPP_DISABLE_AVAILABILITY "$@"
 fi

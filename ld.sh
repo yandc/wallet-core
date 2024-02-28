@@ -28,4 +28,7 @@ elif [ "$OS" = "web" ]; then
     exec emcc -o "$@"
 elif [ "$OS" = "linux" ]; then
     exec clang-12 -v -shared -o "$@"
+elif [ "$OS" == "macos" ]; then
+    CLANG=`xcrun --sdk macosx --find clang`
+    exec $CLANG -v -shared -o "$@"
 fi

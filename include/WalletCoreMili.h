@@ -87,6 +87,13 @@ extern const char* GoDecryptShareKey(const char* userId, const char* accountId, 
 extern const char* GoEncryptShareKey(const char* userId, const char* accountId, const char* deKey);
 
 /*
+* 加密明文私钥并格式化
+* @key: 明文分片
+* @salt: 加密盐
+*/
+extern const char* GoEncryptMiliKey(const char* key, const char* salt);
+
+/*
 * 设置请求环境变量(json)
 * @params: {"server":"", "gw_server":"", "token":"", "secret":"", "cert":"", "cert_sn":"", "log_path":""}
 */
