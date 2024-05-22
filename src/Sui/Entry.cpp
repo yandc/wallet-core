@@ -115,7 +115,7 @@ bool Json2RawTx(json& jtx, sui_types::TransactionDataV1& rawTx, uint64_t& realAm
         }
         if(realAmount < suiAmount) {//余额不足
             cout << "insufficient balance" << endl;
-            return false;
+            throw MiliException{"insufficient balance"};
         }
         realAmount = txAmount;
 
@@ -233,7 +233,7 @@ bool Json2RawTx(json& jtx, sui_types::TransactionDataV1& rawTx, uint64_t& realAm
             }
             if(realAmount < txAmount) {//余额不足
                 cout << "insufficient balance" << endl;
-                return false;
+                throw MiliException{"insufficient balance"};
             }
             realAmount = txAmount;
         }
