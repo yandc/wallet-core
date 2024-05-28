@@ -135,12 +135,39 @@ EM_JS(char*, CallJsGetPubKey, (const char* curve, const byte* key), {
     return stringOnWasmHeap;
 });
 
+EM_JS(char*, CallGoGenericRpc, (const char* method, const char* params), {
+    let jsString = GoGenericRpc(UTF8ToString(method), UTF8ToString(params));
+    if (!jsString) {
+        return null;
+    }
+    let lengthBytes = lengthBytesUTF8(jsString)+1;
+    let stringOnWasmHeap = _malloc(lengthBytes);
+    stringToUTF8(jsString, stringOnWasmHeap, lengthBytes);
+    return stringOnWasmHeap;
+});
+
 #else
 
 extern "C" {
     extern const char* GoGetPubKey(const char* curve, const char* key);
+    extern const char* GoGenericRpc(const char* method, const char* params);
 }
 #endif
+
+std::string CallGolangRpc(const char* method, const char* params) {
+    #ifdef PLATFORM_WEB
+    const char* res = CallGoGenericRpc(method, params);
+    #else
+    const char* res = GoGenericRpc(method, params);
+    #endif
+    json r = json::parse(res);
+    bool status = r["status"].get<bool>();
+    if(status == false) {
+        throw MiliException{r["error"].get<std::string>()};
+    }
+    free((void*)res);
+    return r["result"].get<std::string>();
+}
 
 PublicKey PrivateKey::getPublicKey(TWPublicKeyType type) const {
     /// 在格式为{..."ECDSAPub/EDDSAPub":["x","y"]}的json串中找到公钥的x和y
