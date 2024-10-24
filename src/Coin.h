@@ -19,6 +19,7 @@
 #include <TrustWalletCore/TWCurve.h>
 #include <TrustWalletCore/TWHDVersion.h>
 #include <TrustWalletCore/TWPurpose.h>
+#include <TrustWalletCore/TWAnySigner.h>
 
 #include <string>
 #include <vector>
@@ -84,6 +85,7 @@ void anyCoinSign(TWCoinType coinType, const Data& dataIn, Data& dataOut);
 
 uint32_t slip44Id(TWCoinType coin);
 
+std::string handleSignJSON(TWCoinType coinType, const std::string& txInput, const Data& key, enum SignMode mode = SignMili23);
 std::string anySignJSON(TWCoinType coinType, const std::string& json, const Data& key);
 const char* anySignMessage(TWCoinType coinType, const std::string& msg, const Data& key);
 

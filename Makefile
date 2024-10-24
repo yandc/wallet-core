@@ -56,7 +56,7 @@ ALL_OBJECTS += $(addsuffix .o,$(addprefix build/trezor-crypto/$(OS)/$(ARCH)/,$(b
 
 ifeq ($(OS),web)
 	TARGET ?= $(BIN_PATH)/MiliWalletCore.js
-	LDFLAGS = -fexceptions -s LLD_REPORT_UNDEFINED -s EXPORTED_FUNCTIONS='["_CppJsonPreRawTx", "_CppWalletCoreVersion", "_CppUtxoPlan", "_CppPublicKeyWithMiliKey", "_CppPublicKeyWithPKey", "_CppAddressCreateWithMiliKey", "_CppAddressIsValid", "_CppDecodeEvmCall", "_CppSignMili23", "_CppJsonTransactionMili23", "_CppJsonTransaction", "_TWStringSize", "_TWStringUTF8Bytes", "_TWStringDelete", "_TWStringCreateWithUTF8Bytes", "_TWAnySignerSignJSON", "_TWDataCreateWithHexString", "_CppAddressCreateWithPKey"]' -s EXPORTED_RUNTIME_METHODS='["ccall","cwrap"]'
+	LDFLAGS = -fexceptions -s LLD_REPORT_UNDEFINED -s EXPORTED_FUNCTIONS='["_CppCreateHDWallet", "_CppDeriveAddressFromHDWallet", "_CppJsonTransactionHDWallet", "_CppJsonPreRawTx", "_CppWalletCoreVersion", "_CppUtxoPlan", "_CppPublicKeyWithMiliKey", "_CppPublicKeyWithPKey", "_CppAddressCreateWithMiliKey", "_CppAddressIsValid", "_CppDecodeEvmCall", "_CppSignMili23", "_CppJsonTransactionMili23", "_CppJsonTransaction", "_TWStringSize", "_TWStringUTF8Bytes", "_TWStringDelete", "_TWStringCreateWithUTF8Bytes", "_TWAnySignerSignJSON", "_TWDataCreateWithHexString", "_CppAddressCreateWithPKey"]' -s EXPORTED_RUNTIME_METHODS='["ccall","cwrap"]'
 
 else ifeq ($(OS),ios)
 	TARGET ?= $(BIN_PATH)/wallet_core.$(OS).$(ARCH).a

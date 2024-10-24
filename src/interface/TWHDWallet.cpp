@@ -5,10 +5,13 @@
 // file LICENSE at the root of the source code distribution tree.
 
 #include <TrustWalletCore/TWHDWallet.h>
+#include <TrustWalletCore/MiliException.h>
 
 #include "../Coin.h"
 #include "../HDWallet.h"
 #include "../Mnemonic.h"
+#include "../HexCoding.h"
+#include "../Hash.h"
 
 using namespace TW;
 
@@ -60,6 +63,59 @@ TWString *_Nonnull TWHDWalletMnemonic(struct TWHDWallet *_Nonnull wallet){
 
 TWData *_Nonnull TWHDWalletEntropy(struct TWHDWallet *_Nonnull wallet) {
     return TWDataCreateWithBytes(wallet->impl.getEntropy().data(), wallet->impl.getEntropy().size());
+}
+
+const char *_Nonnull CppCreateHDWallet(int strength, const char *_Nonnull passphrase) {
+    static char wallet[1024];
+    HDWallet w = HDWallet(strength, passphrase);
+    std::string a = hex(Hash::sha256(w.getMnemonic()));
+    a += ",";
+    a += hex(w.getEntropy());
+    memcpy(wallet, a.c_str(), a.size());
+    wallet[a.size()] = 0;
+    return wallet;
+}
+
+const char *_Nonnull CppDeriveAddressFromHDWallet(const char *_Nonnull wallet, const char *_Nonnull passphrase, enum TWCoinType coin, int index) {
+    static char addr[512];
+    std::string parts(wallet);
+    size_t pos = parts.find(",");
+    if (pos == std::string::npos) {
+        return addr;
+    }
+
+    addr[0] = 0;
+    auto w = HDWallet(parse_hex(parts.substr(pos+1)), passphrase);
+    if (hex(Hash::sha256(w.getMnemonic())) != parts.substr(0, pos)) {
+        return addr;
+    }
+
+    auto derivationPath = TW::derivationPath(coin);
+    derivationPath.setAddress(index);
+    PrivateKey privateKey = w.getKey(coin, derivationPath);
+    std::string address = deriveAddress(coin, privateKey);
+    memcpy(addr, address.c_str(), address.size());
+    addr[address.size()] = 0;
+    return addr;
+}
+
+TWString *_Nonnull CppJsonTransactionHDWallet(const char *_Nonnull txInput, const char *_Nonnull wallet, const char *_Nonnull passphrase, enum TWCoinType coin, int index) {
+    std::string result;
+    std::string parts(wallet);
+    size_t pos = parts.find(",");
+    if (pos == std::string::npos) {
+        return TWStringCreateWithUTF8Bytes(result.c_str());
+    }
+    auto w = HDWallet(parse_hex(parts.substr(pos+1)), passphrase);
+    if (hex(Hash::sha256(w.getMnemonic())) != parts.substr(0, pos)) {
+        return TWStringCreateWithUTF8Bytes(result.c_str());
+    }
+    auto derivationPath = TW::derivationPath(coin);
+    derivationPath.setAddress(index);
+    PrivateKey privateKey = w.getKey(coin, derivationPath);
+
+    result = handleSignJSON(coin, txInput, privateKey.bytes);
+    return TWStringCreateWithUTF8Bytes(result.c_str());
 }
 
 struct TWPrivateKey *_Nonnull TWHDWalletGetMasterKey(struct TWHDWallet *_Nonnull wallet, TWCurve curve) {

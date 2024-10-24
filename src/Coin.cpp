@@ -62,6 +62,9 @@
 #include "Kaspa/Entry.h"
 #include "Ton/Entry.h"
 // end_of_coin_includes_marker_do_not_modify
+#include <TrustWalletCore/MiliException.h>
+#include <nlohmann/json.hpp>
+using json = nlohmann::json;
 
 using namespace TW;
 using namespace std;
@@ -268,6 +271,44 @@ void TW::anyCoinSign(TWCoinType coinType, const Data& dataIn, Data& dataOut) {
     auto* dispatcher = coinDispatcher(coinType);
     assert(dispatcher != nullptr);
     dispatcher->sign(coinType, dataIn, dataOut);
+}
+
+std::string TW::handleSignJSON(TWCoinType coinType, const std::string& txInput, const Data& key, enum SignMode mode) {
+    json txJson;
+    txJson["txid"] = "";
+    txJson["result"] = "";
+    txJson["status"] = false;
+    txJson["error"] = "";
+
+    bool needSign = true;
+    if (mode == SignDigest || mode == PreImage) needSign = false;
+    SignGate::GetInstance().Lock(needSign);
+    try {
+        std::string result = TW::anySignJSON(coinType, txInput, key);
+        if (mode == SignDigest) {
+            json digests;
+            for(auto digest: SignGate::GetInstance().GetDigests()) {
+                digests.push_back(hex(digest));
+            }
+            txJson["result"] = digests;
+        } else if (mode == SignMili23 || mode == PreImage) {
+            size_t pos = result.find("#");
+            if (pos != std::string::npos) {
+                txJson["txid"] = result.substr(0, pos);
+                txJson["result"] = result.substr(pos+1);
+                txJson["status"] = true;
+            } else {
+                txJson["error"] = "loss of txid";
+            }
+        }
+    } catch (MiliException& e) {
+        txJson["error"] = e.what();
+
+    } catch (std::invalid_argument& e) {
+        txJson["error"] = e.what();
+    }
+    SignGate::GetInstance().Unlock();
+    return txJson.dump();
 }
 
 std::string TW::anySignJSON(TWCoinType coinType, const std::string& json, const Data& key) {

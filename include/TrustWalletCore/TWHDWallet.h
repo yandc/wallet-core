@@ -59,6 +59,15 @@ TWString *_Nonnull TWHDWalletMnemonic(struct TWHDWallet *_Nonnull wallet);
 TW_EXPORT_PROPERTY
 TWData *_Nonnull TWHDWalletEntropy(struct TWHDWallet *_Nonnull wallet);
 
+TW_EXPORT_PROPERTY
+const char *_Nonnull CppCreateHDWallet(int strength, const char *_Nonnull passphrase);
+
+TW_EXPORT_PROPERTY
+const char *_Nonnull CppDeriveAddressFromHDWallet(const char *_Nonnull wallet, const char *_Nonnull passphrase, enum TWCoinType coin, int index=0);
+
+TW_EXPORT_PROPERTY
+TWString *_Nonnull CppJsonTransactionHDWallet(const char *_Nonnull json, const char *_Nonnull wallet, const char *_Nonnull passphrase, enum TWCoinType coin, int index=0);
+
 /// Returns master key.  Returned object needs to be deleted.
 TW_EXPORT_METHOD
 struct TWPrivateKey *_Nonnull TWHDWalletGetMasterKey(struct TWHDWallet *_Nonnull wallet, enum TWCurve curve);
