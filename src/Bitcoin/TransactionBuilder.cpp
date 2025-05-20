@@ -80,7 +80,7 @@ int64_t estimateSegwitFee(const FeeCalculator& feeCalculator, const TransactionP
 
 int extraOutputCount(const SigningInput& input) {
     int count = int(input.outputOpReturn.size() > 0);
-    return count;
+    return count + int(input.outputs.size());
 }
 
 TransactionPlan TransactionBuilder::plan(const SigningInput& input) {
@@ -90,7 +90,7 @@ TransactionPlan TransactionBuilder::plan(const SigningInput& input) {
     }
 
     bool maxAmount = input.useMaxAmount;
-    if (input.amount == 0 && !maxAmount) {
+    if (input.amount == 0 && input.outputsAmount == 0 && !maxAmount) {
         plan.error = Common::Proto::Error_zero_amount_requested;
     } else if (input.utxos.empty()) {
         plan.error = Common::Proto::Error_missing_input_utxos;
@@ -98,7 +98,7 @@ TransactionPlan TransactionBuilder::plan(const SigningInput& input) {
         const auto& feeCalculator = getFeeCalculator(static_cast<TWCoinType>(input.coinType));
         const int64_t dustThreshold = feeCalculator.calculateSingleInput(input.byteFee);
         std::cout << "dust threshold: " << dustThreshold << std::endl;
-        if(dustThreshold > input.amount) {
+        if(dustThreshold > input.amount + input.outputsAmount) {
             std::cout << "dust threshold bigger than input amount!" << std::endl;
             plan.amount = 0;
             return plan;
@@ -107,26 +107,24 @@ TransactionPlan TransactionBuilder::plan(const SigningInput& input) {
         auto inputSum = InputSelector<UTXO>::sum(input.utxos);
 
         // select UTXOs
-        plan.amount = input.amount;
+        Amount totalAmount = input.amount + input.outputsAmount;
 
         // if amount requested is the same or more than available amount, it cannot be satisifed, but
         // treat this case as MaxAmount, and send maximum available (which will be less)
-        if (!maxAmount && input.amount >= inputSum) {
+        if (!maxAmount && totalAmount >= inputSum) {
             maxAmount = true;
         }
 
         auto extraOutputs = extraOutputCount(input);
-        auto output_size = 1;
+        auto output_size = int(input.toAddress.size() > 0) + extraOutputs;
         UTXOs selectedInputs;
         if (!maxAmount) {
-            output_size = 1 + extraOutputs; // output + change
             if (input.utxos.size() <= SimpleModeLimit && input.utxos.size() <= MaxUtxosHardLimit) {
-                selectedInputs = inputSelector.select(plan.amount, input.byteFee, output_size);
+                selectedInputs = inputSelector.select(totalAmount, input.byteFee, output_size);
             } else {
-                selectedInputs = inputSelector.selectSimple(plan.amount, input.byteFee, output_size);
+                selectedInputs = inputSelector.selectSimple(totalAmount, input.byteFee, output_size);
             }
         } else {
-            output_size = 1 + extraOutputs; // output, no change
             selectedInputs = inputSelector.selectMaxAmount(input.byteFee);
         }
         if (selectedInputs.size() <= MaxUtxosHardLimit) {
@@ -148,16 +146,13 @@ TransactionPlan TransactionBuilder::plan(const SigningInput& input) {
             // Compute fee.
             // must preliminary set change so that there is a second output
             if (!maxAmount) {
-                assert(input.amount <= plan.availableAmount);
+                assert(totalAmount <= plan.availableAmount);
                 plan.amount = input.amount;
-                plan.change = plan.availableAmount - plan.amount;
                 plan.fee = estimateSegwitFee(feeCalculator, plan, output_size + 1, input);
-                if (plan.availableAmount - plan.amount - plan.fee < dustThreshold) {//no change
+                plan.change = plan.availableAmount - totalAmount - plan.fee;
+                if (plan.change < dustThreshold) {//no change
                     plan.change = 0;
-                    plan.fee = estimateSegwitFee(feeCalculator, plan, output_size, input);
-                    if (plan.amount + plan.fee > plan.availableAmount) {
-                        plan.fee = plan.availableAmount - plan.amount;
-                    }
+                    plan.fee = plan.availableAmount - totalAmount;
                 }
             } else {
                 plan.amount = plan.availableAmount;
@@ -180,13 +175,13 @@ TransactionPlan TransactionBuilder::plan(const SigningInput& input) {
             assert(plan.amount >= 0 && plan.amount <= plan.availableAmount);
 
             // compute change
-            plan.change = plan.availableAmount - plan.amount - plan.fee;
+            //plan.change = plan.availableAmount - plan.amount - plan.fee;
         }
     }
     assert(plan.change >= 0 && plan.change <= plan.availableAmount);
     assert(!maxAmount || plan.change == 0); // change is 0 in max amount case
 
-    assert(plan.amount + plan.change + plan.fee == plan.availableAmount);
+    assert(plan.amount + input.outputsAmount + plan.change + plan.fee == plan.availableAmount);
 
     return plan;
 }

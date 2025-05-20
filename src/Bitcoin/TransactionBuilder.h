@@ -25,17 +25,24 @@ public:
 
     /// Builds a transaction with the selected input UTXOs, and one main output and an optional change output.
     template <typename Transaction>
-    static Transaction build(const TransactionPlan& plan, const std::string& toAddress,
-                             const std::string& changeAddress, enum TWCoinType coin, uint32_t lockTime) {
+    static Transaction build(const TransactionPlan& plan, const SigningInput& input) {
         Transaction tx;
-        tx.lockTime = lockTime;
+        tx.lockTime = input.lockTime;
 
-        auto outputTo = prepareOutputWithScript(toAddress, plan.amount, coin);
-        if (!outputTo.has_value()) { return {}; }
-        tx.outputs.push_back(outputTo.value());
+        if (input.toAddress.size() > 0) {
+            auto outputTo = prepareOutputWithScript(input.toAddress, plan.amount, input.coinType);
+            if (!outputTo.has_value()) { return {}; }
+            tx.outputs.push_back(outputTo.value());
+        }
+
+        for (auto& o: input.outputs) {
+            auto output = prepareOutputWithScript(o.first, o.second, input.coinType);
+            if (!output.has_value()) { return {}; }
+            tx.outputs.push_back(output.value());
+        }
 
         if (plan.change > 0) {
-            auto outputChange = prepareOutputWithScript(changeAddress, plan.change, coin);
+            auto outputChange = prepareOutputWithScript(input.changeAddress, plan.change, input.coinType);
             if (!outputChange.has_value()) { return {}; }
             tx.outputs.push_back(outputChange.value());
         }
@@ -48,7 +55,15 @@ public:
         // Optional OP_RETURN output
         if (plan.outputOpReturn.size() > 0) {
             auto lockingScriptOpReturn = Script::buildOpReturnScript(plan.outputOpReturn);
-            tx.outputs.push_back(TransactionOutput(0, lockingScriptOpReturn));
+            auto emplace_at = tx.outputs.end();
+            if (input.outputOpReturnIndex >= 0) {
+                emplace_at = tx.outputs.begin();
+                std::advance(emplace_at, input.outputOpReturnIndex);
+            }
+            if (emplace_at > tx.outputs.end()) {
+                emplace_at = tx.outputs.end();
+            }
+            tx.outputs.emplace(emplace_at, 0, lockingScriptOpReturn);
         }
 
         return tx;

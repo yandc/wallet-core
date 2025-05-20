@@ -30,5 +30,11 @@ SigningInput::SigningInput(const Proto::SigningInput& input) {
         plan = TransactionPlan(input.plan());
     }
     outputOpReturn = data(input.output_op_return());
+    outputOpReturnIndex = input.output_op_return_index();
+    outputsAmount = 0;
+    for (auto& output: input.outputs()) {
+        outputsAmount += output.amount();
+        outputs.push_back(std::make_pair(output.to_address(), output.amount()));
+    }
     lockTime = input.lock_time();
 }

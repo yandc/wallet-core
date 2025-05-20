@@ -879,7 +879,7 @@ inline ::PROTOBUF_NAMESPACE_ID::uint32 Transaction::serializetype() const {
   return _internal_serializetype();
 }
 inline void Transaction::_internal_set_serializetype(::PROTOBUF_NAMESPACE_ID::uint32 value) {
-  
+
   serializetype_ = value;
 }
 inline void Transaction::set_serializetype(::PROTOBUF_NAMESPACE_ID::uint32 value) {
@@ -899,7 +899,7 @@ inline ::PROTOBUF_NAMESPACE_ID::uint32 Transaction::version() const {
   return _internal_version();
 }
 inline void Transaction::_internal_set_version(::PROTOBUF_NAMESPACE_ID::uint32 value) {
-  
+
   version_ = value;
 }
 inline void Transaction::set_version(::PROTOBUF_NAMESPACE_ID::uint32 value) {
@@ -997,7 +997,7 @@ inline ::PROTOBUF_NAMESPACE_ID::uint32 Transaction::locktime() const {
   return _internal_locktime();
 }
 inline void Transaction::_internal_set_locktime(::PROTOBUF_NAMESPACE_ID::uint32 value) {
-  
+
   locktime_ = value;
 }
 inline void Transaction::set_locktime(::PROTOBUF_NAMESPACE_ID::uint32 value) {
@@ -1017,7 +1017,7 @@ inline ::PROTOBUF_NAMESPACE_ID::uint32 Transaction::expiry() const {
   return _internal_expiry();
 }
 inline void Transaction::_internal_set_expiry(::PROTOBUF_NAMESPACE_ID::uint32 value) {
-  
+
   expiry_ = value;
 }
 inline void Transaction::set_expiry(::PROTOBUF_NAMESPACE_ID::uint32 value) {
@@ -1052,14 +1052,14 @@ inline void TransactionInput::unsafe_arena_set_allocated_previousoutput(
   }
   previousoutput_ = previousoutput;
   if (previousoutput) {
-    
+
   } else {
-    
+
   }
   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:TW.Decred.Proto.TransactionInput.previousOutput)
 }
 inline ::TW::Bitcoin::Proto::OutPoint* TransactionInput::release_previousoutput() {
-  
+
   ::TW::Bitcoin::Proto::OutPoint* temp = previousoutput_;
   previousoutput_ = nullptr;
   if (GetArena() != nullptr) {
@@ -1069,13 +1069,13 @@ inline ::TW::Bitcoin::Proto::OutPoint* TransactionInput::release_previousoutput(
 }
 inline ::TW::Bitcoin::Proto::OutPoint* TransactionInput::unsafe_arena_release_previousoutput() {
   // @@protoc_insertion_point(field_release:TW.Decred.Proto.TransactionInput.previousOutput)
-  
+
   ::TW::Bitcoin::Proto::OutPoint* temp = previousoutput_;
   previousoutput_ = nullptr;
   return temp;
 }
 inline ::TW::Bitcoin::Proto::OutPoint* TransactionInput::_internal_mutable_previousoutput() {
-  
+
   if (previousoutput_ == nullptr) {
     auto* p = CreateMaybeMessage<::TW::Bitcoin::Proto::OutPoint>(GetArena());
     previousoutput_ = p;
@@ -1098,9 +1098,9 @@ inline void TransactionInput::set_allocated_previousoutput(::TW::Bitcoin::Proto:
       previousoutput = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
           message_arena, previousoutput, submessage_arena);
     }
-    
+
   } else {
-    
+
   }
   previousoutput_ = previousoutput;
   // @@protoc_insertion_point(field_set_allocated:TW.Decred.Proto.TransactionInput.previousOutput)
@@ -1118,7 +1118,7 @@ inline ::PROTOBUF_NAMESPACE_ID::uint32 TransactionInput::sequence() const {
   return _internal_sequence();
 }
 inline void TransactionInput::_internal_set_sequence(::PROTOBUF_NAMESPACE_ID::uint32 value) {
-  
+
   sequence_ = value;
 }
 inline void TransactionInput::set_sequence(::PROTOBUF_NAMESPACE_ID::uint32 value) {
@@ -1138,7 +1138,7 @@ inline ::PROTOBUF_NAMESPACE_ID::int64 TransactionInput::valuein() const {
   return _internal_valuein();
 }
 inline void TransactionInput::_internal_set_valuein(::PROTOBUF_NAMESPACE_ID::int64 value) {
-  
+
   valuein_ = value;
 }
 inline void TransactionInput::set_valuein(::PROTOBUF_NAMESPACE_ID::int64 value) {
@@ -1158,7 +1158,7 @@ inline ::PROTOBUF_NAMESPACE_ID::uint32 TransactionInput::blockheight() const {
   return _internal_blockheight();
 }
 inline void TransactionInput::_internal_set_blockheight(::PROTOBUF_NAMESPACE_ID::uint32 value) {
-  
+
   blockheight_ = value;
 }
 inline void TransactionInput::set_blockheight(::PROTOBUF_NAMESPACE_ID::uint32 value) {
@@ -1178,7 +1178,7 @@ inline ::PROTOBUF_NAMESPACE_ID::uint32 TransactionInput::blockindex() const {
   return _internal_blockindex();
 }
 inline void TransactionInput::_internal_set_blockindex(::PROTOBUF_NAMESPACE_ID::uint32 value) {
-  
+
   blockindex_ = value;
 }
 inline void TransactionInput::set_blockindex(::PROTOBUF_NAMESPACE_ID::uint32 value) {
@@ -1206,30 +1206,30 @@ inline const std::string& TransactionInput::_internal_script() const {
   return script_.Get();
 }
 inline void TransactionInput::_internal_set_script(const std::string& value) {
-  
+
   script_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArena());
 }
 inline void TransactionInput::set_script(std::string&& value) {
-  
+
   script_.Set(
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::move(value), GetArena());
   // @@protoc_insertion_point(field_set_rvalue:TW.Decred.Proto.TransactionInput.script)
 }
 inline void TransactionInput::set_script(const char* value) {
   GOOGLE_DCHECK(value != nullptr);
-  
+
   script_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::string(value), GetArena());
   // @@protoc_insertion_point(field_set_char:TW.Decred.Proto.TransactionInput.script)
 }
 inline void TransactionInput::set_script(const void* value,
     size_t size) {
-  
+
   script_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::string(
       reinterpret_cast<const char*>(value), size), GetArena());
   // @@protoc_insertion_point(field_set_pointer:TW.Decred.Proto.TransactionInput.script)
 }
 inline std::string* TransactionInput::_internal_mutable_script() {
-  
+
   return script_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArena());
 }
 inline std::string* TransactionInput::release_script() {
@@ -1238,9 +1238,9 @@ inline std::string* TransactionInput::release_script() {
 }
 inline void TransactionInput::set_allocated_script(std::string* script) {
   if (script != nullptr) {
-    
+
   } else {
-    
+
   }
   script_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), script,
       GetArena());
@@ -1263,7 +1263,7 @@ inline ::PROTOBUF_NAMESPACE_ID::int64 TransactionOutput::value() const {
   return _internal_value();
 }
 inline void TransactionOutput::_internal_set_value(::PROTOBUF_NAMESPACE_ID::int64 value) {
-  
+
   value_ = value;
 }
 inline void TransactionOutput::set_value(::PROTOBUF_NAMESPACE_ID::int64 value) {
@@ -1283,7 +1283,7 @@ inline ::PROTOBUF_NAMESPACE_ID::uint32 TransactionOutput::version() const {
   return _internal_version();
 }
 inline void TransactionOutput::_internal_set_version(::PROTOBUF_NAMESPACE_ID::uint32 value) {
-  
+
   version_ = value;
 }
 inline void TransactionOutput::set_version(::PROTOBUF_NAMESPACE_ID::uint32 value) {
@@ -1311,30 +1311,30 @@ inline const std::string& TransactionOutput::_internal_script() const {
   return script_.Get();
 }
 inline void TransactionOutput::_internal_set_script(const std::string& value) {
-  
+
   script_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArena());
 }
 inline void TransactionOutput::set_script(std::string&& value) {
-  
+
   script_.Set(
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::move(value), GetArena());
   // @@protoc_insertion_point(field_set_rvalue:TW.Decred.Proto.TransactionOutput.script)
 }
 inline void TransactionOutput::set_script(const char* value) {
   GOOGLE_DCHECK(value != nullptr);
-  
+
   script_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::string(value), GetArena());
   // @@protoc_insertion_point(field_set_char:TW.Decred.Proto.TransactionOutput.script)
 }
 inline void TransactionOutput::set_script(const void* value,
     size_t size) {
-  
+
   script_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::string(
       reinterpret_cast<const char*>(value), size), GetArena());
   // @@protoc_insertion_point(field_set_pointer:TW.Decred.Proto.TransactionOutput.script)
 }
 inline std::string* TransactionOutput::_internal_mutable_script() {
-  
+
   return script_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArena());
 }
 inline std::string* TransactionOutput::release_script() {
@@ -1343,9 +1343,9 @@ inline std::string* TransactionOutput::release_script() {
 }
 inline void TransactionOutput::set_allocated_script(std::string* script) {
   if (script != nullptr) {
-    
+
   } else {
-    
+
   }
   script_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), script,
       GetArena());
@@ -1385,14 +1385,14 @@ inline void SigningOutput::unsafe_arena_set_allocated_transaction(
   }
   transaction_ = transaction;
   if (transaction) {
-    
+
   } else {
-    
+
   }
   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:TW.Decred.Proto.SigningOutput.transaction)
 }
 inline ::TW::Decred::Proto::Transaction* SigningOutput::release_transaction() {
-  
+
   ::TW::Decred::Proto::Transaction* temp = transaction_;
   transaction_ = nullptr;
   if (GetArena() != nullptr) {
@@ -1402,13 +1402,13 @@ inline ::TW::Decred::Proto::Transaction* SigningOutput::release_transaction() {
 }
 inline ::TW::Decred::Proto::Transaction* SigningOutput::unsafe_arena_release_transaction() {
   // @@protoc_insertion_point(field_release:TW.Decred.Proto.SigningOutput.transaction)
-  
+
   ::TW::Decred::Proto::Transaction* temp = transaction_;
   transaction_ = nullptr;
   return temp;
 }
 inline ::TW::Decred::Proto::Transaction* SigningOutput::_internal_mutable_transaction() {
-  
+
   if (transaction_ == nullptr) {
     auto* p = CreateMaybeMessage<::TW::Decred::Proto::Transaction>(GetArena());
     transaction_ = p;
@@ -1431,9 +1431,9 @@ inline void SigningOutput::set_allocated_transaction(::TW::Decred::Proto::Transa
       transaction = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
           message_arena, transaction, submessage_arena);
     }
-    
+
   } else {
-    
+
   }
   transaction_ = transaction;
   // @@protoc_insertion_point(field_set_allocated:TW.Decred.Proto.SigningOutput.transaction)
@@ -1459,30 +1459,30 @@ inline const std::string& SigningOutput::_internal_encoded() const {
   return encoded_.Get();
 }
 inline void SigningOutput::_internal_set_encoded(const std::string& value) {
-  
+
   encoded_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArena());
 }
 inline void SigningOutput::set_encoded(std::string&& value) {
-  
+
   encoded_.Set(
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::move(value), GetArena());
   // @@protoc_insertion_point(field_set_rvalue:TW.Decred.Proto.SigningOutput.encoded)
 }
 inline void SigningOutput::set_encoded(const char* value) {
   GOOGLE_DCHECK(value != nullptr);
-  
+
   encoded_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::string(value), GetArena());
   // @@protoc_insertion_point(field_set_char:TW.Decred.Proto.SigningOutput.encoded)
 }
 inline void SigningOutput::set_encoded(const void* value,
     size_t size) {
-  
+
   encoded_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::string(
       reinterpret_cast<const char*>(value), size), GetArena());
   // @@protoc_insertion_point(field_set_pointer:TW.Decred.Proto.SigningOutput.encoded)
 }
 inline std::string* SigningOutput::_internal_mutable_encoded() {
-  
+
   return encoded_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArena());
 }
 inline std::string* SigningOutput::release_encoded() {
@@ -1491,9 +1491,9 @@ inline std::string* SigningOutput::release_encoded() {
 }
 inline void SigningOutput::set_allocated_encoded(std::string* encoded) {
   if (encoded != nullptr) {
-    
+
   } else {
-    
+
   }
   encoded_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), encoded,
       GetArena());
@@ -1520,30 +1520,30 @@ inline const std::string& SigningOutput::_internal_transaction_id() const {
   return transaction_id_.Get();
 }
 inline void SigningOutput::_internal_set_transaction_id(const std::string& value) {
-  
+
   transaction_id_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArena());
 }
 inline void SigningOutput::set_transaction_id(std::string&& value) {
-  
+
   transaction_id_.Set(
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::move(value), GetArena());
   // @@protoc_insertion_point(field_set_rvalue:TW.Decred.Proto.SigningOutput.transaction_id)
 }
 inline void SigningOutput::set_transaction_id(const char* value) {
   GOOGLE_DCHECK(value != nullptr);
-  
+
   transaction_id_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::string(value), GetArena());
   // @@protoc_insertion_point(field_set_char:TW.Decred.Proto.SigningOutput.transaction_id)
 }
 inline void SigningOutput::set_transaction_id(const char* value,
     size_t size) {
-  
+
   transaction_id_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::string(
       reinterpret_cast<const char*>(value), size), GetArena());
   // @@protoc_insertion_point(field_set_pointer:TW.Decred.Proto.SigningOutput.transaction_id)
 }
 inline std::string* SigningOutput::_internal_mutable_transaction_id() {
-  
+
   return transaction_id_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArena());
 }
 inline std::string* SigningOutput::release_transaction_id() {
@@ -1552,9 +1552,9 @@ inline std::string* SigningOutput::release_transaction_id() {
 }
 inline void SigningOutput::set_allocated_transaction_id(std::string* transaction_id) {
   if (transaction_id != nullptr) {
-    
+
   } else {
-    
+
   }
   transaction_id_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), transaction_id,
       GetArena());
@@ -1573,7 +1573,7 @@ inline ::TW::Common::Proto::SigningError SigningOutput::error() const {
   return _internal_error();
 }
 inline void SigningOutput::_internal_set_error(::TW::Common::Proto::SigningError value) {
-  
+
   error_ = value;
 }
 inline void SigningOutput::set_error(::TW::Common::Proto::SigningError value) {

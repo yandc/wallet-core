@@ -15,6 +15,7 @@
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
 extern PROTOBUF_INTERNAL_EXPORT_Bitcoin_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_OutPoint_Bitcoin_2eproto;
+extern PROTOBUF_INTERNAL_EXPORT_Bitcoin_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_Output_Bitcoin_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_Bitcoin_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_SigningInput_ScriptsEntry_DoNotUse_Bitcoin_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_Bitcoin_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<2> scc_info_Transaction_Bitcoin_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_Bitcoin_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_TransactionInput_Bitcoin_2eproto;
@@ -44,6 +45,10 @@ class UnspentTransactionDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<UnspentTransaction> _instance;
 } _UnspentTransaction_default_instance_;
+class OutputDefaultTypeInternal {
+ public:
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<Output> _instance;
+} _Output_default_instance_;
 class SigningInput_ScriptsEntry_DoNotUseDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<SigningInput_ScriptsEntry_DoNotUse> _instance;
@@ -76,6 +81,19 @@ static void InitDefaultsscc_info_OutPoint_Bitcoin_2eproto() {
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_OutPoint_Bitcoin_2eproto =
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_OutPoint_Bitcoin_2eproto}, {}};
 
+static void InitDefaultsscc_info_Output_Bitcoin_2eproto() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::TW::Bitcoin::Proto::_Output_default_instance_;
+    new (ptr) ::TW::Bitcoin::Proto::Output();
+    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
+  }
+}
+
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_Output_Bitcoin_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_Output_Bitcoin_2eproto}, {}};
+
 static void InitDefaultsscc_info_SigningInput_Bitcoin_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
@@ -86,11 +104,12 @@ static void InitDefaultsscc_info_SigningInput_Bitcoin_2eproto() {
   }
 }
 
-::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<3> scc_info_SigningInput_Bitcoin_2eproto =
-    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 3, 0, InitDefaultsscc_info_SigningInput_Bitcoin_2eproto}, {
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<4> scc_info_SigningInput_Bitcoin_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 4, 0, InitDefaultsscc_info_SigningInput_Bitcoin_2eproto}, {
       &scc_info_SigningInput_ScriptsEntry_DoNotUse_Bitcoin_2eproto.base,
       &scc_info_UnspentTransaction_Bitcoin_2eproto.base,
-      &scc_info_TransactionPlan_Bitcoin_2eproto.base,}};
+      &scc_info_TransactionPlan_Bitcoin_2eproto.base,
+      &scc_info_Output_Bitcoin_2eproto.base,}};
 
 static void InitDefaultsscc_info_SigningInput_ScriptsEntry_DoNotUse_Bitcoin_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -188,7 +207,7 @@ static void InitDefaultsscc_info_UnspentTransaction_Bitcoin_2eproto() {
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 1, 0, InitDefaultsscc_info_UnspentTransaction_Bitcoin_2eproto}, {
       &scc_info_OutPoint_Bitcoin_2eproto.base,}};
 
-static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_Bitcoin_2eproto[9];
+static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_Bitcoin_2eproto[10];
 static constexpr ::PROTOBUF_NAMESPACE_ID::EnumDescriptor const** file_level_enum_descriptors_Bitcoin_2eproto = nullptr;
 static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_Bitcoin_2eproto = nullptr;
 
@@ -233,6 +252,13 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_Bitcoin_2eproto::offsets[] PRO
   PROTOBUF_FIELD_OFFSET(::TW::Bitcoin::Proto::UnspentTransaction, out_point_),
   PROTOBUF_FIELD_OFFSET(::TW::Bitcoin::Proto::UnspentTransaction, script_),
   PROTOBUF_FIELD_OFFSET(::TW::Bitcoin::Proto::UnspentTransaction, amount_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::TW::Bitcoin::Proto::Output, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::TW::Bitcoin::Proto::Output, to_address_),
+  PROTOBUF_FIELD_OFFSET(::TW::Bitcoin::Proto::Output, amount_),
   PROTOBUF_FIELD_OFFSET(::TW::Bitcoin::Proto::SigningInput_ScriptsEntry_DoNotUse, _has_bits_),
   PROTOBUF_FIELD_OFFSET(::TW::Bitcoin::Proto::SigningInput_ScriptsEntry_DoNotUse, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -260,6 +286,8 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_Bitcoin_2eproto::offsets[] PRO
   PROTOBUF_FIELD_OFFSET(::TW::Bitcoin::Proto::SigningInput, plan_),
   PROTOBUF_FIELD_OFFSET(::TW::Bitcoin::Proto::SigningInput, lock_time_),
   PROTOBUF_FIELD_OFFSET(::TW::Bitcoin::Proto::SigningInput, output_op_return_),
+  PROTOBUF_FIELD_OFFSET(::TW::Bitcoin::Proto::SigningInput, output_op_return_index_),
+  PROTOBUF_FIELD_OFFSET(::TW::Bitcoin::Proto::SigningInput, outputs_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::TW::Bitcoin::Proto::TransactionPlan, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -289,10 +317,11 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOB
   { 17, -1, sizeof(::TW::Bitcoin::Proto::OutPoint)},
   { 25, -1, sizeof(::TW::Bitcoin::Proto::TransactionOutput)},
   { 32, -1, sizeof(::TW::Bitcoin::Proto::UnspentTransaction)},
-  { 40, 47, sizeof(::TW::Bitcoin::Proto::SigningInput_ScriptsEntry_DoNotUse)},
-  { 49, -1, sizeof(::TW::Bitcoin::Proto::SigningInput)},
-  { 67, -1, sizeof(::TW::Bitcoin::Proto::TransactionPlan)},
-  { 80, -1, sizeof(::TW::Bitcoin::Proto::SigningOutput)},
+  { 40, -1, sizeof(::TW::Bitcoin::Proto::Output)},
+  { 47, 54, sizeof(::TW::Bitcoin::Proto::SigningInput_ScriptsEntry_DoNotUse)},
+  { 56, -1, sizeof(::TW::Bitcoin::Proto::SigningInput)},
+  { 76, -1, sizeof(::TW::Bitcoin::Proto::TransactionPlan)},
+  { 89, -1, sizeof(::TW::Bitcoin::Proto::SigningOutput)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -301,6 +330,7 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::TW::Bitcoin::Proto::_OutPoint_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::TW::Bitcoin::Proto::_TransactionOutput_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::TW::Bitcoin::Proto::_UnspentTransaction_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::TW::Bitcoin::Proto::_Output_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::TW::Bitcoin::Proto::_SigningInput_ScriptsEntry_DoNotUse_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::TW::Bitcoin::Proto::_SigningInput_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::TW::Bitcoin::Proto::_TransactionPlan_default_instance_),
@@ -321,34 +351,38 @@ const char descriptor_table_protodef_Bitcoin_2eproto[] PROTOBUF_SECTION_VARIABLE
   "\001 \001(\003\022\016\n\006script\030\002 \001(\014\"c\n\022UnspentTransact"
   "ion\022-\n\tout_point\030\001 \001(\0132\032.TW.Bitcoin.Prot"
   "o.OutPoint\022\016\n\006script\030\002 \001(\014\022\016\n\006amount\030\003 \001"
-  "(\003\"\257\003\n\014SigningInput\022\021\n\thash_type\030\001 \001(\r\022\016"
-  "\n\006amount\030\002 \001(\003\022\020\n\010byte_fee\030\003 \001(\003\022\022\n\nto_a"
-  "ddress\030\004 \001(\t\022\026\n\016change_address\030\005 \001(\t\022\023\n\013"
-  "private_key\030\006 \003(\014\022<\n\007scripts\030\007 \003(\0132+.TW."
-  "Bitcoin.Proto.SigningInput.ScriptsEntry\022"
-  "2\n\004utxo\030\010 \003(\0132$.TW.Bitcoin.Proto.Unspent"
-  "Transaction\022\026\n\016use_max_amount\030\t \001(\010\022\021\n\tc"
-  "oin_type\030\n \001(\r\022/\n\004plan\030\013 \001(\0132!.TW.Bitcoi"
-  "n.Proto.TransactionPlan\022\021\n\tlock_time\030\014 \001"
-  "(\r\022\030\n\020output_op_return\030\r \001(\014\032.\n\014ScriptsE"
-  "ntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\014:\0028\001\"\350\001\n"
-  "\017TransactionPlan\022\016\n\006amount\030\001 \001(\003\022\030\n\020avai"
-  "lable_amount\030\002 \001(\003\022\013\n\003fee\030\003 \001(\003\022\016\n\006chang"
-  "e\030\004 \001(\003\0223\n\005utxos\030\005 \003(\0132$.TW.Bitcoin.Prot"
-  "o.UnspentTransaction\022\021\n\tbranch_id\030\006 \001(\014\022"
-  ",\n\005error\030\007 \001(\0162\035.TW.Common.Proto.Signing"
-  "Error\022\030\n\020output_op_return\030\010 \001(\014\"\232\001\n\rSign"
-  "ingOutput\0222\n\013transaction\030\001 \001(\0132\035.TW.Bitc"
-  "oin.Proto.Transaction\022\017\n\007encoded\030\002 \001(\014\022\026"
-  "\n\016transaction_id\030\003 \001(\t\022,\n\005error\030\004 \001(\0162\035."
-  "TW.Common.Proto.SigningErrorB\027\n\025wallet.c"
-  "ore.jni.protob\006proto3"
+  "(\003\",\n\006Output\022\022\n\nto_address\030\001 \001(\t\022\016\n\006amou"
+  "nt\030\002 \001(\003\"\372\003\n\014SigningInput\022\021\n\thash_type\030\001"
+  " \001(\r\022\016\n\006amount\030\002 \001(\003\022\020\n\010byte_fee\030\003 \001(\003\022\022"
+  "\n\nto_address\030\004 \001(\t\022\026\n\016change_address\030\005 \001"
+  "(\t\022\023\n\013private_key\030\006 \003(\014\022<\n\007scripts\030\007 \003(\013"
+  "2+.TW.Bitcoin.Proto.SigningInput.Scripts"
+  "Entry\0222\n\004utxo\030\010 \003(\0132$.TW.Bitcoin.Proto.U"
+  "nspentTransaction\022\026\n\016use_max_amount\030\t \001("
+  "\010\022\021\n\tcoin_type\030\n \001(\r\022/\n\004plan\030\013 \001(\0132!.TW."
+  "Bitcoin.Proto.TransactionPlan\022\021\n\tlock_ti"
+  "me\030\014 \001(\r\022\030\n\020output_op_return\030\r \001(\014\022\036\n\026ou"
+  "tput_op_return_index\030\016 \001(\005\022)\n\007outputs\030\017 "
+  "\003(\0132\030.TW.Bitcoin.Proto.Output\032.\n\014Scripts"
+  "Entry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\014:\0028\001\"\350\001"
+  "\n\017TransactionPlan\022\016\n\006amount\030\001 \001(\003\022\030\n\020ava"
+  "ilable_amount\030\002 \001(\003\022\013\n\003fee\030\003 \001(\003\022\016\n\006chan"
+  "ge\030\004 \001(\003\0223\n\005utxos\030\005 \003(\0132$.TW.Bitcoin.Pro"
+  "to.UnspentTransaction\022\021\n\tbranch_id\030\006 \001(\014"
+  "\022,\n\005error\030\007 \001(\0162\035.TW.Common.Proto.Signin"
+  "gError\022\030\n\020output_op_return\030\010 \001(\014\"\232\001\n\rSig"
+  "ningOutput\0222\n\013transaction\030\001 \001(\0132\035.TW.Bit"
+  "coin.Proto.Transaction\022\017\n\007encoded\030\002 \001(\014\022"
+  "\026\n\016transaction_id\030\003 \001(\t\022,\n\005error\030\004 \001(\0162\035"
+  ".TW.Common.Proto.SigningErrorB\027\n\025wallet."
+  "core.jni.protob\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_Bitcoin_2eproto_deps[1] = {
   &::descriptor_table_Common_2eproto,
 };
-static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_Bitcoin_2eproto_sccs[9] = {
+static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_Bitcoin_2eproto_sccs[10] = {
   &scc_info_OutPoint_Bitcoin_2eproto.base,
+  &scc_info_Output_Bitcoin_2eproto.base,
   &scc_info_SigningInput_Bitcoin_2eproto.base,
   &scc_info_SigningInput_ScriptsEntry_DoNotUse_Bitcoin_2eproto.base,
   &scc_info_SigningOutput_Bitcoin_2eproto.base,
@@ -360,10 +394,10 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_Bit
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_Bitcoin_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_Bitcoin_2eproto = {
-  false, false, descriptor_table_protodef_Bitcoin_2eproto, "Bitcoin.proto", 1381,
-  &descriptor_table_Bitcoin_2eproto_once, descriptor_table_Bitcoin_2eproto_sccs, descriptor_table_Bitcoin_2eproto_deps, 9, 1,
+  false, false, descriptor_table_protodef_Bitcoin_2eproto, "Bitcoin.proto", 1502,
+  &descriptor_table_Bitcoin_2eproto_once, descriptor_table_Bitcoin_2eproto_sccs, descriptor_table_Bitcoin_2eproto_deps, 10, 1,
   schemas, file_default_instances, TableStruct_Bitcoin_2eproto::offsets,
-  file_level_metadata_Bitcoin_2eproto, 9, file_level_enum_descriptors_Bitcoin_2eproto, file_level_service_descriptors_Bitcoin_2eproto,
+  file_level_metadata_Bitcoin_2eproto, 10, file_level_enum_descriptors_Bitcoin_2eproto, file_level_service_descriptors_Bitcoin_2eproto,
 };
 
 // Force running AddDescriptors() at dynamic initialization time.
@@ -1711,6 +1745,239 @@ void UnspentTransaction::InternalSwap(UnspentTransaction* other) {
 
 // ===================================================================
 
+class Output::_Internal {
+ public:
+};
+
+Output::Output(::PROTOBUF_NAMESPACE_ID::Arena* arena)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
+  SharedCtor();
+  RegisterArenaDtor(arena);
+  // @@protoc_insertion_point(arena_constructor:TW.Bitcoin.Proto.Output)
+}
+Output::Output(const Output& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  to_address_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (!from._internal_to_address().empty()) {
+    to_address_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_to_address(), 
+      GetArena());
+  }
+  amount_ = from.amount_;
+  // @@protoc_insertion_point(copy_constructor:TW.Bitcoin.Proto.Output)
+}
+
+void Output::SharedCtor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_Output_Bitcoin_2eproto.base);
+  to_address_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  amount_ = PROTOBUF_LONGLONG(0);
+}
+
+Output::~Output() {
+  // @@protoc_insertion_point(destructor:TW.Bitcoin.Proto.Output)
+  SharedDtor();
+  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+void Output::SharedDtor() {
+  GOOGLE_DCHECK(GetArena() == nullptr);
+  to_address_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+
+void Output::ArenaDtor(void* object) {
+  Output* _this = reinterpret_cast< Output* >(object);
+  (void)_this;
+}
+void Output::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
+}
+void Output::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const Output& Output::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_Output_Bitcoin_2eproto.base);
+  return *internal_default_instance();
+}
+
+
+void Output::Clear() {
+// @@protoc_insertion_point(message_clear_start:TW.Bitcoin.Proto.Output)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  to_address_.ClearToEmpty();
+  amount_ = PROTOBUF_LONGLONG(0);
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* Output::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    CHK_(ptr);
+    switch (tag >> 3) {
+      // string to_address = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
+          auto str = _internal_mutable_to_address();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "TW.Bitcoin.Proto.Output.to_address"));
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // int64 amount = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
+          amount_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      default: {
+      handle_unusual:
+        if ((tag & 7) == 4 || tag == 0) {
+          ctx->SetLastTag(tag);
+          goto success;
+        }
+        ptr = UnknownFieldParse(tag,
+            _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+            ptr, ctx);
+        CHK_(ptr != nullptr);
+        continue;
+      }
+    }  // switch
+  }  // while
+success:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto success;
+#undef CHK_
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* Output::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:TW.Bitcoin.Proto.Output)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // string to_address = 1;
+  if (this->to_address().size() > 0) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_to_address().data(), static_cast<int>(this->_internal_to_address().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "TW.Bitcoin.Proto.Output.to_address");
+    target = stream->WriteStringMaybeAliased(
+        1, this->_internal_to_address(), target);
+  }
+
+  // int64 amount = 2;
+  if (this->amount() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt64ToArray(2, this->_internal_amount(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:TW.Bitcoin.Proto.Output)
+  return target;
+}
+
+size_t Output::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:TW.Bitcoin.Proto.Output)
+  size_t total_size = 0;
+
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // string to_address = 1;
+  if (this->to_address().size() > 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_to_address());
+  }
+
+  // int64 amount = 2;
+  if (this->amount() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int64Size(
+        this->_internal_amount());
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
+        _internal_metadata_, total_size, &_cached_size_);
+  }
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void Output::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:TW.Bitcoin.Proto.Output)
+  GOOGLE_DCHECK_NE(&from, this);
+  const Output* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<Output>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:TW.Bitcoin.Proto.Output)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:TW.Bitcoin.Proto.Output)
+    MergeFrom(*source);
+  }
+}
+
+void Output::MergeFrom(const Output& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:TW.Bitcoin.Proto.Output)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from.to_address().size() > 0) {
+    _internal_set_to_address(from._internal_to_address());
+  }
+  if (from.amount() != 0) {
+    _internal_set_amount(from._internal_amount());
+  }
+}
+
+void Output::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:TW.Bitcoin.Proto.Output)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void Output::CopyFrom(const Output& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:TW.Bitcoin.Proto.Output)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool Output::IsInitialized() const {
+  return true;
+}
+
+void Output::InternalSwap(Output* other) {
+  using std::swap;
+  _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
+  to_address_.Swap(&other->to_address_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  swap(amount_, other->amount_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata Output::GetMetadata() const {
+  return GetMetadataStatic();
+}
+
+
+// ===================================================================
+
 SigningInput_ScriptsEntry_DoNotUse::SigningInput_ScriptsEntry_DoNotUse() {}
 SigningInput_ScriptsEntry_DoNotUse::SigningInput_ScriptsEntry_DoNotUse(::PROTOBUF_NAMESPACE_ID::Arena* arena)
     : SuperType(arena) {}
@@ -1741,7 +2008,8 @@ SigningInput::SigningInput(::PROTOBUF_NAMESPACE_ID::Arena* arena)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena),
   private_key_(arena),
   scripts_(arena),
-  utxo_(arena) {
+  utxo_(arena),
+  outputs_(arena) {
   SharedCtor();
   RegisterArenaDtor(arena);
   // @@protoc_insertion_point(arena_constructor:TW.Bitcoin.Proto.SigningInput)
@@ -1749,7 +2017,8 @@ SigningInput::SigningInput(::PROTOBUF_NAMESPACE_ID::Arena* arena)
 SigningInput::SigningInput(const SigningInput& from)
   : ::PROTOBUF_NAMESPACE_ID::Message(),
       private_key_(from.private_key_),
-      utxo_(from.utxo_) {
+      utxo_(from.utxo_),
+      outputs_(from.outputs_) {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   scripts_.MergeFrom(from.scripts_);
   to_address_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
@@ -1773,8 +2042,8 @@ SigningInput::SigningInput(const SigningInput& from)
     plan_ = nullptr;
   }
   ::memcpy(&amount_, &from.amount_,
-    static_cast<size_t>(reinterpret_cast<char*>(&lock_time_) -
-    reinterpret_cast<char*>(&amount_)) + sizeof(lock_time_));
+    static_cast<size_t>(reinterpret_cast<char*>(&output_op_return_index_) -
+    reinterpret_cast<char*>(&amount_)) + sizeof(output_op_return_index_));
   // @@protoc_insertion_point(copy_constructor:TW.Bitcoin.Proto.SigningInput)
 }
 
@@ -1785,8 +2054,8 @@ void SigningInput::SharedCtor() {
   output_op_return_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   ::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
       reinterpret_cast<char*>(&plan_) - reinterpret_cast<char*>(this)),
-      0, static_cast<size_t>(reinterpret_cast<char*>(&lock_time_) -
-      reinterpret_cast<char*>(&plan_)) + sizeof(lock_time_));
+      0, static_cast<size_t>(reinterpret_cast<char*>(&output_op_return_index_) -
+      reinterpret_cast<char*>(&plan_)) + sizeof(output_op_return_index_));
 }
 
 SigningInput::~SigningInput() {
@@ -1827,6 +2096,7 @@ void SigningInput::Clear() {
   private_key_.Clear();
   scripts_.Clear();
   utxo_.Clear();
+  outputs_.Clear();
   to_address_.ClearToEmpty();
   change_address_.ClearToEmpty();
   output_op_return_.ClearToEmpty();
@@ -1835,8 +2105,8 @@ void SigningInput::Clear() {
   }
   plan_ = nullptr;
   ::memset(&amount_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&lock_time_) -
-      reinterpret_cast<char*>(&amount_)) + sizeof(lock_time_));
+      reinterpret_cast<char*>(&output_op_return_index_) -
+      reinterpret_cast<char*>(&amount_)) + sizeof(output_op_return_index_));
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -1957,6 +2227,25 @@ const char* SigningInput::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_I
           auto str = _internal_mutable_output_op_return();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // int32 output_op_return_index = 14;
+      case 14:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 112)) {
+          output_op_return_index_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // repeated .TW.Bitcoin.Proto.Output outputs = 15;
+      case 15:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 122)) {
+          ptr -= 1;
+          do {
+            ptr += 1;
+            ptr = ctx->ParseMessage(_internal_add_outputs(), ptr);
+            CHK_(ptr);
+            if (!ctx->DataAvailable(ptr)) break;
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<122>(ptr));
         } else goto handle_unusual;
         continue;
       default: {
@@ -2112,6 +2401,20 @@ failure:
         13, this->_internal_output_op_return(), target);
   }
 
+  // int32 output_op_return_index = 14;
+  if (this->output_op_return_index() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(14, this->_internal_output_op_return_index(), target);
+  }
+
+  // repeated .TW.Bitcoin.Proto.Output outputs = 15;
+  for (unsigned int i = 0,
+      n = static_cast<unsigned int>(this->_internal_outputs_size()); i < n; i++) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(15, this->_internal_outputs(i), target, stream);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -2148,6 +2451,13 @@ size_t SigningInput::ByteSizeLong() const {
   // repeated .TW.Bitcoin.Proto.UnspentTransaction utxo = 8;
   total_size += 1UL * this->_internal_utxo_size();
   for (const auto& msg : this->utxo_) {
+    total_size +=
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
+  }
+
+  // repeated .TW.Bitcoin.Proto.Output outputs = 15;
+  total_size += 1UL * this->_internal_outputs_size();
+  for (const auto& msg : this->outputs_) {
     total_size +=
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
   }
@@ -2220,6 +2530,13 @@ size_t SigningInput::ByteSizeLong() const {
         this->_internal_lock_time());
   }
 
+  // int32 output_op_return_index = 14;
+  if (this->output_op_return_index() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+        this->_internal_output_op_return_index());
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
         _internal_metadata_, total_size, &_cached_size_);
@@ -2254,6 +2571,7 @@ void SigningInput::MergeFrom(const SigningInput& from) {
   private_key_.MergeFrom(from.private_key_);
   scripts_.MergeFrom(from.scripts_);
   utxo_.MergeFrom(from.utxo_);
+  outputs_.MergeFrom(from.outputs_);
   if (from.to_address().size() > 0) {
     _internal_set_to_address(from._internal_to_address());
   }
@@ -2284,6 +2602,9 @@ void SigningInput::MergeFrom(const SigningInput& from) {
   if (from.lock_time() != 0) {
     _internal_set_lock_time(from._internal_lock_time());
   }
+  if (from.output_op_return_index() != 0) {
+    _internal_set_output_op_return_index(from._internal_output_op_return_index());
+  }
 }
 
 void SigningInput::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
@@ -2310,12 +2631,13 @@ void SigningInput::InternalSwap(SigningInput* other) {
   private_key_.InternalSwap(&other->private_key_);
   scripts_.Swap(&other->scripts_);
   utxo_.InternalSwap(&other->utxo_);
+  outputs_.InternalSwap(&other->outputs_);
   to_address_.Swap(&other->to_address_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
   change_address_.Swap(&other->change_address_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
   output_op_return_.Swap(&other->output_op_return_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(SigningInput, lock_time_)
-      + sizeof(SigningInput::lock_time_)
+      PROTOBUF_FIELD_OFFSET(SigningInput, output_op_return_index_)
+      + sizeof(SigningInput::output_op_return_index_)
       - PROTOBUF_FIELD_OFFSET(SigningInput, plan_)>(
           reinterpret_cast<char*>(&plan_),
           reinterpret_cast<char*>(&other->plan_));
@@ -3058,6 +3380,9 @@ template<> PROTOBUF_NOINLINE ::TW::Bitcoin::Proto::TransactionOutput* Arena::Cre
 }
 template<> PROTOBUF_NOINLINE ::TW::Bitcoin::Proto::UnspentTransaction* Arena::CreateMaybeMessage< ::TW::Bitcoin::Proto::UnspentTransaction >(Arena* arena) {
   return Arena::CreateMessageInternal< ::TW::Bitcoin::Proto::UnspentTransaction >(arena);
+}
+template<> PROTOBUF_NOINLINE ::TW::Bitcoin::Proto::Output* Arena::CreateMaybeMessage< ::TW::Bitcoin::Proto::Output >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::TW::Bitcoin::Proto::Output >(arena);
 }
 template<> PROTOBUF_NOINLINE ::TW::Bitcoin::Proto::SigningInput_ScriptsEntry_DoNotUse* Arena::CreateMaybeMessage< ::TW::Bitcoin::Proto::SigningInput_ScriptsEntry_DoNotUse >(Arena* arena) {
   return Arena::CreateMessageInternal< ::TW::Bitcoin::Proto::SigningInput_ScriptsEntry_DoNotUse >(arena);

@@ -25,7 +25,7 @@ public:
     // Hash type to use when signing
     enum TWBitcoinSigHashType hashType = TWBitcoinSigHashTypeAll;
 
-    // Amount to send.  Transaction created will have this amount in its output, 
+    // Amount to send.  Transaction created will have this amount in its output,
     // except when use_max_amount is set, in that case this amount is not relevant, maximum possible amount will be used (max avail less fee).
     // If amount is equal or more than the available amount, also max amount will be used.
     Amount amount = 0;
@@ -58,6 +58,10 @@ public:
     std::optional<TransactionPlan> plan;
 
     Data outputOpReturn;
+    int32_t outputOpReturnIndex;
+    // transfer to multi address
+    std::vector<std::pair<std::string, int64_t>> outputs;
+    Amount outputsAmount = 0;
 
     uint32_t lockTime = 0;
 

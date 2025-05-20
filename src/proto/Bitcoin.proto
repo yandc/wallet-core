@@ -64,12 +64,21 @@ message UnspentTransaction {
     int64 amount = 3;
 }
 
+// Pair of destination address and amount, used for extra outputs
+message Output {
+    // Destination address
+    string to_address = 1;
+
+    // Amount to be paid to this output
+    int64 amount = 2;
+}
+
 // Input data necessary to create a signed transaction.
 message SigningInput {
     // Hash type to use when signing.
     uint32 hash_type = 1;
 
-    // Amount to send.  Transaction created will have this amount in its output, 
+    // Amount to send.  Transaction created will have this amount in its output,
     // except when use_max_amount is set, in that case this amount is not relevant, maximum possible amount will be used (max avail less fee).
     // If amount is equal or more than the available amount, also max amount will be used.
     int64 amount = 2;
@@ -110,6 +119,9 @@ message SigningInput {
 
     // Optional zero-amount, OP_RETURN output
     bytes output_op_return = 13;
+    int32 output_op_return_index = 14;
+
+    repeated Output outputs = 15;
 }
 
 // Describes a preliminary transaction plan.
