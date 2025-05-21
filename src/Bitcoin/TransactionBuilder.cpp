@@ -148,6 +148,7 @@ TransactionPlan TransactionBuilder::plan(const SigningInput& input) {
             if (!maxAmount) {
                 assert(totalAmount <= plan.availableAmount);
                 plan.amount = input.amount;
+                plan.change = plan.availableAmount - totalAmount;
                 plan.fee = estimateSegwitFee(feeCalculator, plan, output_size + 1, input);
                 plan.change = plan.availableAmount - totalAmount - plan.fee;
                 if (plan.change < dustThreshold) {//no change
