@@ -291,6 +291,7 @@ std::string TW::handleSignJSON(TWCoinType coinType, const std::string& txInput, 
                 digests.push_back(hex(digest));
             }
             txJson["result"] = digests;
+            txJson["status"] = true;
         } else if (mode == SignMili23 || mode == PreImage) {
             size_t pos = result.find("#");
             if (pos != std::string::npos) {

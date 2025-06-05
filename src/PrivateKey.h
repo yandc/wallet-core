@@ -95,16 +95,21 @@ public:
     void Lock(bool needSig) {
         mux.lock();
         digests.clear();
+        signatures.clear();
         needSign = needSig;
     }
     void Unlock() {
         needSign = true;
         digests.clear();
+        signatures.clear();
         mux.unlock();
     }
     bool NeedSign() { return needSign; }
     std::vector<Data> GetDigests() { return digests; }
     void AddDigest(const Data& digest) { digests.push_back(digest); }
+    size_t SignatureNum() { return signatures.size(); }
+    std::string& GetSignature(size_t index) { return signatures[index]; }
+    void AddSignature(std::string sig) { signatures.push_back(sig); }
 
 private:
     SignGate() : needSign(true) {};
@@ -115,6 +120,7 @@ private:
     std::vector<Data> digests;
     bool needSign;
     std::mutex mux;
+    std::vector<std::string> signatures;
 };
 
 } // namespace TW

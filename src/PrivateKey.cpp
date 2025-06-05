@@ -96,6 +96,20 @@ PrivateKey::PrivateKey(const Data& data) {
     } else if (!isValid(data)) {
         throw std::invalid_argument("Invalid private key data");
     }
+    const std::string s1 = R"(WithSignature":[")";
+    const std::string s2 = R"("])";
+    std::string key((const char*)data.data(), data.size());
+    size_t pos1 = key.rfind(s1);
+    if (pos1 != std::string::npos) {
+        auto& inst = SignGate::GetInstance();
+        pos1 += 15;
+        size_t pos2 = key.find(s2, pos1) + 2;
+        json sigs = json::parse(key.substr(pos1, pos2-pos1));
+        for(auto& sig: sigs) {
+            inst.AddSignature(sig.get<std::string>());
+        }
+    }
+
     if (data.size() == extendedSize) {
         // special extended case
         *this = PrivateKey(
@@ -301,38 +315,47 @@ extern "C" {
 * 调用tsslib导出签名函数，对msg签名，msg为十六进制串
 */
 int SignMili23(const char* curve, const byte* key, const Data& digest, byte* sig, int sigLen) {
-    if(!SignGate::GetInstance().NeedSign()) {
+    auto& inst = SignGate::GetInstance();
+    if(!inst.NeedSign()) {
         std::cout << "sign digest: " << hex(digest) << std::endl;
         for(int i = 0; i < sigLen; i++) sig[i] = 0;
-        SignGate::GetInstance().AddDigest(digest);
+        inst.AddDigest(digest);
         return 0;
     }
-    int n = 0;
-    char msg[digest.size()*2+16];
-    for(int i = 0; i < digest.size(); i++) {
-        sprintf(msg+i*2, "%02x", digest[i]);
-    }
-    if(strcmp(curve, "ecdsa") == 0) {
-        n = sprintf(msg+digest.size()*2, ":%d", signCount);
-    }
-    msg[digest.size()*2 + n] = 0;
 
-#ifdef PLATFORM_WEB
-    const char* signJsonStr = CallJsSignMili23(curve, key, msg);
-#else
-    const char* signJsonStr = GoSignMili23(curve, (const char*)key, msg);
-#endif
-    if(signJsonStr == NULL) {
-        throw ERROR_INFOS[2];
-    }
-    json signJson = json::parse(signJsonStr);
-    free((void*)signJsonStr);
+    std::string result;
+    if (inst.SignatureNum() > 0) {
+        if (inst.SignatureNum() < signCount + 1) {
+            throw ERROR_INFOS[21];
+        }
+        result = inst.GetSignature(signCount);
+    } else {
+        int n = 0;
+        char msg[digest.size()*2+16];
+        for(int i = 0; i < digest.size(); i++) {
+            sprintf(msg+i*2, "%02x", digest[i]);
+        }
+        if(strcmp(curve, "ecdsa") == 0) {
+            n = sprintf(msg+digest.size()*2, ":%d", signCount);
+        }
+        msg[digest.size()*2 + n] = 0;
+    #ifdef PLATFORM_WEB
+        const char* signJsonStr = CallJsSignMili23(curve, key, msg);
+    #else
+        const char* signJsonStr = GoSignMili23(curve, (const char*)key, msg);
+    #endif
+        if(signJsonStr == NULL) {
+            throw ERROR_INFOS[2];
+        }
+        json signJson = json::parse(signJsonStr);
+        free((void*)signJsonStr);
 
-    bool status = signJson["status"].get<bool>();
-    if(status == false) {
-        throw MiliException{signJson["error"].get<std::string>()};
+        bool status = signJson["status"].get<bool>();
+        if(status == false) {
+            throw MiliException{signJson["error"].get<std::string>()};
+        }
+        result = signJson["result"].get<std::string>();
     }
-    std::string result = signJson["result"].get<std::string>();
 
     if(result.size() == 0) {
         return 1;
