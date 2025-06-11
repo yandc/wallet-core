@@ -4163,6 +4163,7 @@ class Transaction PROTOBUF_FINAL :
   // accessors -------------------------------------------------------
 
   enum : int {
+    kMemoFieldNumber = 5,
     kBlockHeaderFieldNumber = 3,
     kTimestampFieldNumber = 1,
     kExpirationFieldNumber = 2,
@@ -4187,6 +4188,22 @@ class Transaction PROTOBUF_FINAL :
     kTransferTrc1155ContractFieldNumber = 27,
     kApproveTrc721ContractFieldNumber = 28,
   };
+  // bytes memo = 5;
+  void clear_memo();
+  const std::string& memo() const;
+  void set_memo(const std::string& value);
+  void set_memo(std::string&& value);
+  void set_memo(const char* value);
+  void set_memo(const void* value, size_t size);
+  std::string* mutable_memo();
+  std::string* release_memo();
+  void set_allocated_memo(std::string* memo);
+  private:
+  const std::string& _internal_memo() const;
+  void _internal_set_memo(const std::string& value);
+  std::string* _internal_mutable_memo();
+  public:
+
   // .TW.Tron.Proto.BlockHeader block_header = 3;
   bool has_block_header() const;
   private:
@@ -4605,6 +4622,7 @@ class Transaction PROTOBUF_FINAL :
   template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr memo_;
   ::TW::Tron::Proto::BlockHeader* block_header_;
   ::PROTOBUF_NAMESPACE_ID::int64 timestamp_;
   ::PROTOBUF_NAMESPACE_ID::int64 expiration_;
@@ -9075,6 +9093,67 @@ inline void Transaction::_internal_set_fee_limit(::PROTOBUF_NAMESPACE_ID::int64 
 inline void Transaction::set_fee_limit(::PROTOBUF_NAMESPACE_ID::int64 value) {
   _internal_set_fee_limit(value);
   // @@protoc_insertion_point(field_set:TW.Tron.Proto.Transaction.fee_limit)
+}
+
+// bytes memo = 5;
+inline void Transaction::clear_memo() {
+  memo_.ClearToEmpty();
+}
+inline const std::string& Transaction::memo() const {
+  // @@protoc_insertion_point(field_get:TW.Tron.Proto.Transaction.memo)
+  return _internal_memo();
+}
+inline void Transaction::set_memo(const std::string& value) {
+  _internal_set_memo(value);
+  // @@protoc_insertion_point(field_set:TW.Tron.Proto.Transaction.memo)
+}
+inline std::string* Transaction::mutable_memo() {
+  // @@protoc_insertion_point(field_mutable:TW.Tron.Proto.Transaction.memo)
+  return _internal_mutable_memo();
+}
+inline const std::string& Transaction::_internal_memo() const {
+  return memo_.Get();
+}
+inline void Transaction::_internal_set_memo(const std::string& value) {
+  
+  memo_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArena());
+}
+inline void Transaction::set_memo(std::string&& value) {
+  
+  memo_.Set(
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::move(value), GetArena());
+  // @@protoc_insertion_point(field_set_rvalue:TW.Tron.Proto.Transaction.memo)
+}
+inline void Transaction::set_memo(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  memo_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::string(value), GetArena());
+  // @@protoc_insertion_point(field_set_char:TW.Tron.Proto.Transaction.memo)
+}
+inline void Transaction::set_memo(const void* value,
+    size_t size) {
+  
+  memo_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::string(
+      reinterpret_cast<const char*>(value), size), GetArena());
+  // @@protoc_insertion_point(field_set_pointer:TW.Tron.Proto.Transaction.memo)
+}
+inline std::string* Transaction::_internal_mutable_memo() {
+  
+  return memo_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArena());
+}
+inline std::string* Transaction::release_memo() {
+  // @@protoc_insertion_point(field_release:TW.Tron.Proto.Transaction.memo)
+  return memo_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline void Transaction::set_allocated_memo(std::string* memo) {
+  if (memo != nullptr) {
+    
+  } else {
+    
+  }
+  memo_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), memo,
+      GetArena());
+  // @@protoc_insertion_point(field_set_allocated:TW.Tron.Proto.Transaction.memo)
 }
 
 // .TW.Tron.Proto.TransferContract transfer = 10;

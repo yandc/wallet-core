@@ -555,7 +555,9 @@ Proto::SigningOutput Signer::sign(const Proto::SigningInput& input) {
     const uint64_t expiration = input.transaction().expiration() == 0
                                     ? timestamp + 10 * 60 * 60 * 1000 // 10 hours
                                     : input.transaction().expiration();
-
+    if (!input.transaction().memo().empty()) {
+        internal.mutable_raw_data()->set_data(input.transaction().memo());
+    }
     internal.mutable_raw_data()->set_timestamp(timestamp);
     internal.mutable_raw_data()->set_expiration(expiration);
     internal.mutable_raw_data()->set_fee_limit(input.transaction().fee_limit());

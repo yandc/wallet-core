@@ -551,6 +551,7 @@ class Transaction_raw PROTOBUF_FINAL :
     kContractFieldNumber = 11,
     kRefBlockBytesFieldNumber = 1,
     kRefBlockHashFieldNumber = 4,
+    kDataFieldNumber = 10,
     kRefBlockNumFieldNumber = 3,
     kExpirationFieldNumber = 8,
     kTimestampFieldNumber = 14,
@@ -606,6 +607,22 @@ class Transaction_raw PROTOBUF_FINAL :
   std::string* _internal_mutable_ref_block_hash();
   public:
 
+  // bytes data = 10;
+  void clear_data();
+  const std::string& data() const;
+  void set_data(const std::string& value);
+  void set_data(std::string&& value);
+  void set_data(const char* value);
+  void set_data(const void* value, size_t size);
+  std::string* mutable_data();
+  std::string* release_data();
+  void set_allocated_data(std::string* data);
+  private:
+  const std::string& _internal_data() const;
+  void _internal_set_data(const std::string& value);
+  std::string* _internal_mutable_data();
+  public:
+
   // int64 ref_block_num = 3;
   void clear_ref_block_num();
   ::PROTOBUF_NAMESPACE_ID::int64 ref_block_num() const;
@@ -652,6 +669,7 @@ class Transaction_raw PROTOBUF_FINAL :
   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::protocol::Transaction_Contract > contract_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr ref_block_bytes_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr ref_block_hash_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr data_;
   ::PROTOBUF_NAMESPACE_ID::int64 ref_block_num_;
   ::PROTOBUF_NAMESPACE_ID::int64 expiration_;
   ::PROTOBUF_NAMESPACE_ID::int64 timestamp_;
@@ -4125,6 +4143,67 @@ inline void Transaction_raw::_internal_set_expiration(::PROTOBUF_NAMESPACE_ID::i
 inline void Transaction_raw::set_expiration(::PROTOBUF_NAMESPACE_ID::int64 value) {
   _internal_set_expiration(value);
   // @@protoc_insertion_point(field_set:protocol.Transaction.raw.expiration)
+}
+
+// bytes data = 10;
+inline void Transaction_raw::clear_data() {
+  data_.ClearToEmpty();
+}
+inline const std::string& Transaction_raw::data() const {
+  // @@protoc_insertion_point(field_get:protocol.Transaction.raw.data)
+  return _internal_data();
+}
+inline void Transaction_raw::set_data(const std::string& value) {
+  _internal_set_data(value);
+  // @@protoc_insertion_point(field_set:protocol.Transaction.raw.data)
+}
+inline std::string* Transaction_raw::mutable_data() {
+  // @@protoc_insertion_point(field_mutable:protocol.Transaction.raw.data)
+  return _internal_mutable_data();
+}
+inline const std::string& Transaction_raw::_internal_data() const {
+  return data_.Get();
+}
+inline void Transaction_raw::_internal_set_data(const std::string& value) {
+  
+  data_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArena());
+}
+inline void Transaction_raw::set_data(std::string&& value) {
+  
+  data_.Set(
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::move(value), GetArena());
+  // @@protoc_insertion_point(field_set_rvalue:protocol.Transaction.raw.data)
+}
+inline void Transaction_raw::set_data(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  data_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::string(value), GetArena());
+  // @@protoc_insertion_point(field_set_char:protocol.Transaction.raw.data)
+}
+inline void Transaction_raw::set_data(const void* value,
+    size_t size) {
+  
+  data_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::string(
+      reinterpret_cast<const char*>(value), size), GetArena());
+  // @@protoc_insertion_point(field_set_pointer:protocol.Transaction.raw.data)
+}
+inline std::string* Transaction_raw::_internal_mutable_data() {
+  
+  return data_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArena());
+}
+inline std::string* Transaction_raw::release_data() {
+  // @@protoc_insertion_point(field_release:protocol.Transaction.raw.data)
+  return data_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline void Transaction_raw::set_allocated_data(std::string* data) {
+  if (data != nullptr) {
+    
+  } else {
+    
+  }
+  data_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), data,
+      GetArena());
+  // @@protoc_insertion_point(field_set_allocated:protocol.Transaction.raw.data)
 }
 
 // repeated .protocol.Transaction.Contract contract = 11;

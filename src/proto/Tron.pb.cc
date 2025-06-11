@@ -667,6 +667,7 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_Tron_2eproto::offsets[] PROTOB
   PROTOBUF_FIELD_OFFSET(::TW::Tron::Proto::Transaction, expiration_),
   PROTOBUF_FIELD_OFFSET(::TW::Tron::Proto::Transaction, block_header_),
   PROTOBUF_FIELD_OFFSET(::TW::Tron::Proto::Transaction, fee_limit_),
+  PROTOBUF_FIELD_OFFSET(::TW::Tron::Proto::Transaction, memo_),
   ::PROTOBUF_NAMESPACE_ID::internal::kInvalidFieldOffsetTag,
   ::PROTOBUF_NAMESPACE_ID::internal::kInvalidFieldOffsetTag,
   ::PROTOBUF_NAMESPACE_ID::internal::kInvalidFieldOffsetTag,
@@ -729,8 +730,8 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOB
   { 159, -1, sizeof(::TW::Tron::Proto::TriggerSmartContract)},
   { 170, -1, sizeof(::TW::Tron::Proto::BlockHeader)},
   { 181, -1, sizeof(::TW::Tron::Proto::Transaction)},
-  { 210, -1, sizeof(::TW::Tron::Proto::SigningInput)},
-  { 218, -1, sizeof(::TW::Tron::Proto::SigningOutput)},
+  { 211, -1, sizeof(::TW::Tron::Proto::SigningInput)},
+  { 219, -1, sizeof(::TW::Tron::Proto::SigningOutput)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -815,49 +816,50 @@ const char descriptor_table_protodef_Tron_2eproto[] PROTOBUF_SECTION_VARIABLE(pr
   "d\030\006 \001(\003\"\205\001\n\013BlockHeader\022\021\n\ttimestamp\030\001 \001"
   "(\003\022\024\n\014tx_trie_root\030\002 \001(\014\022\023\n\013parent_hash\030"
   "\003 \001(\014\022\016\n\006number\030\007 \001(\003\022\027\n\017witness_address"
-  "\030\t \001(\014\022\017\n\007version\030\n \001(\005\"\245\013\n\013Transaction\022"
+  "\030\t \001(\014\022\017\n\007version\030\n \001(\005\"\263\013\n\013Transaction\022"
   "\021\n\ttimestamp\030\001 \001(\003\022\022\n\nexpiration\030\002 \001(\003\0220"
   "\n\014block_header\030\003 \001(\0132\032.TW.Tron.Proto.Blo"
-  "ckHeader\022\021\n\tfee_limit\030\004 \001(\003\0223\n\010transfer\030"
-  "\n \001(\0132\037.TW.Tron.Proto.TransferContractH\000"
-  "\022>\n\016transfer_asset\030\013 \001(\0132$.TW.Tron.Proto"
-  ".TransferAssetContractH\000\022>\n\016freeze_balan"
-  "ce\030\014 \001(\0132$.TW.Tron.Proto.FreezeBalanceCo"
-  "ntractH\000\022B\n\020unfreeze_balance\030\r \001(\0132&.TW."
-  "Tron.Proto.UnfreezeBalanceContractH\000\022>\n\016"
-  "unfreeze_asset\030\016 \001(\0132$.TW.Tron.Proto.Unf"
-  "reezeAssetContractH\000\022B\n\020withdraw_balance"
-  "\030\017 \001(\0132&.TW.Tron.Proto.WithdrawBalanceCo"
-  "ntractH\000\0226\n\nvote_asset\030\020 \001(\0132 .TW.Tron.P"
-  "roto.VoteAssetContractH\000\022:\n\014vote_witness"
-  "\030\021 \001(\0132\".TW.Tron.Proto.VoteWitnessContra"
-  "ctH\000\022E\n\026trigger_smart_contract\030\022 \001(\0132#.T"
-  "W.Tron.Proto.TriggerSmartContractH\000\022G\n\027t"
-  "ransfer_trc20_contract\030\023 \001(\0132$.TW.Tron.P"
-  "roto.TransferTRC20ContractH\000\022E\n\026approve_"
-  "trc20_contract\030\024 \001(\0132#.TW.Tron.Proto.App"
-  "roveTRC20ContractH\000\022C\n\021freeze_balance_v2"
-  "\030\025 \001(\0132&.TW.Tron.Proto.FreezeBalanceV2Co"
-  "ntractH\000\022G\n\023unfreeze_balance_v2\030\026 \001(\0132(."
-  "TW.Tron.Proto.UnfreezeBalanceV2ContractH"
-  "\000\022Q\n\030withdraw_expire_unfreeze\030\027 \001(\0132-.TW"
-  ".Tron.Proto.WithdrawExpireUnfreezeContra"
-  "ctH\000\022D\n\021delegate_resource\030\030 \001(\0132\'.TW.Tro"
-  "n.Proto.DelegateResourceContractH\000\022H\n\023un"
-  "delegate_resource\030\031 \001(\0132).TW.Tron.Proto."
-  "UnDelegateResourceContractH\000\022I\n\030transfer"
-  "_trc721_contract\030\032 \001(\0132%.TW.Tron.Proto.T"
-  "ransferTRC721ContractH\000\022K\n\031transfer_trc1"
-  "155_contract\030\033 \001(\0132&.TW.Tron.Proto.Trans"
-  "ferTRC1155ContractH\000\022G\n\027approve_trc721_c"
-  "ontract\030\034 \001(\0132$.TW.Tron.Proto.ApproveTRC"
-  "721ContractH\000B\020\n\016contract_oneof\"b\n\014Signi"
-  "ngInput\022/\n\013transaction\030\001 \001(\0132\032.TW.Tron.P"
-  "roto.Transaction\022\023\n\013private_key\030\002 \001(\014\022\014\n"
-  "\004txId\030\003 \001(\t\"m\n\rSigningOutput\022\n\n\002id\030\001 \001(\014"
-  "\022\021\n\tsignature\030\002 \001(\014\022\027\n\017ref_block_bytes\030\003"
-  " \001(\014\022\026\n\016ref_block_hash\030\004 \001(\014\022\014\n\004json\030\005 \001"
-  "(\tB\027\n\025wallet.core.jni.protob\006proto3"
+  "ckHeader\022\021\n\tfee_limit\030\004 \001(\003\022\014\n\004memo\030\005 \001("
+  "\014\0223\n\010transfer\030\n \001(\0132\037.TW.Tron.Proto.Tran"
+  "sferContractH\000\022>\n\016transfer_asset\030\013 \001(\0132$"
+  ".TW.Tron.Proto.TransferAssetContractH\000\022>"
+  "\n\016freeze_balance\030\014 \001(\0132$.TW.Tron.Proto.F"
+  "reezeBalanceContractH\000\022B\n\020unfreeze_balan"
+  "ce\030\r \001(\0132&.TW.Tron.Proto.UnfreezeBalance"
+  "ContractH\000\022>\n\016unfreeze_asset\030\016 \001(\0132$.TW."
+  "Tron.Proto.UnfreezeAssetContractH\000\022B\n\020wi"
+  "thdraw_balance\030\017 \001(\0132&.TW.Tron.Proto.Wit"
+  "hdrawBalanceContractH\000\0226\n\nvote_asset\030\020 \001"
+  "(\0132 .TW.Tron.Proto.VoteAssetContractH\000\022:"
+  "\n\014vote_witness\030\021 \001(\0132\".TW.Tron.Proto.Vot"
+  "eWitnessContractH\000\022E\n\026trigger_smart_cont"
+  "ract\030\022 \001(\0132#.TW.Tron.Proto.TriggerSmartC"
+  "ontractH\000\022G\n\027transfer_trc20_contract\030\023 \001"
+  "(\0132$.TW.Tron.Proto.TransferTRC20Contract"
+  "H\000\022E\n\026approve_trc20_contract\030\024 \001(\0132#.TW."
+  "Tron.Proto.ApproveTRC20ContractH\000\022C\n\021fre"
+  "eze_balance_v2\030\025 \001(\0132&.TW.Tron.Proto.Fre"
+  "ezeBalanceV2ContractH\000\022G\n\023unfreeze_balan"
+  "ce_v2\030\026 \001(\0132(.TW.Tron.Proto.UnfreezeBala"
+  "nceV2ContractH\000\022Q\n\030withdraw_expire_unfre"
+  "eze\030\027 \001(\0132-.TW.Tron.Proto.WithdrawExpire"
+  "UnfreezeContractH\000\022D\n\021delegate_resource\030"
+  "\030 \001(\0132\'.TW.Tron.Proto.DelegateResourceCo"
+  "ntractH\000\022H\n\023undelegate_resource\030\031 \001(\0132)."
+  "TW.Tron.Proto.UnDelegateResourceContract"
+  "H\000\022I\n\030transfer_trc721_contract\030\032 \001(\0132%.T"
+  "W.Tron.Proto.TransferTRC721ContractH\000\022K\n"
+  "\031transfer_trc1155_contract\030\033 \001(\0132&.TW.Tr"
+  "on.Proto.TransferTRC1155ContractH\000\022G\n\027ap"
+  "prove_trc721_contract\030\034 \001(\0132$.TW.Tron.Pr"
+  "oto.ApproveTRC721ContractH\000B\020\n\016contract_"
+  "oneof\"b\n\014SigningInput\022/\n\013transaction\030\001 \001"
+  "(\0132\032.TW.Tron.Proto.Transaction\022\023\n\013privat"
+  "e_key\030\002 \001(\014\022\014\n\004txId\030\003 \001(\t\"m\n\rSigningOutp"
+  "ut\022\n\n\002id\030\001 \001(\014\022\021\n\tsignature\030\002 \001(\014\022\027\n\017ref"
+  "_block_bytes\030\003 \001(\014\022\026\n\016ref_block_hash\030\004 \001"
+  "(\014\022\014\n\004json\030\005 \001(\tB\027\n\025wallet.core.jni.prot"
+  "ob\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_Tron_2eproto_deps[1] = {
 };
@@ -889,7 +891,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_Tro
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_Tron_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_Tron_2eproto = {
-  false, false, descriptor_table_protodef_Tron_2eproto, "Tron.proto", 3875,
+  false, false, descriptor_table_protodef_Tron_2eproto, "Tron.proto", 3889,
   &descriptor_table_Tron_2eproto_once, descriptor_table_Tron_2eproto_sccs, descriptor_table_Tron_2eproto_deps, 24, 0,
   schemas, file_default_instances, TableStruct_Tron_2eproto::offsets,
   file_level_metadata_Tron_2eproto, 24, file_level_enum_descriptors_Tron_2eproto, file_level_service_descriptors_Tron_2eproto,
@@ -7464,6 +7466,11 @@ Transaction::Transaction(::PROTOBUF_NAMESPACE_ID::Arena* arena)
 Transaction::Transaction(const Transaction& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  memo_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (!from._internal_memo().empty()) {
+    memo_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_memo(), 
+      GetArena());
+  }
   if (from._internal_has_block_header()) {
     block_header_ = new ::TW::Tron::Proto::BlockHeader(*from.block_header_);
   } else {
@@ -7559,6 +7566,7 @@ Transaction::Transaction(const Transaction& from)
 
 void Transaction::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_Transaction_Tron_2eproto.base);
+  memo_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   ::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
       reinterpret_cast<char*>(&block_header_) - reinterpret_cast<char*>(this)),
       0, static_cast<size_t>(reinterpret_cast<char*>(&fee_limit_) -
@@ -7574,6 +7582,7 @@ Transaction::~Transaction() {
 
 void Transaction::SharedDtor() {
   GOOGLE_DCHECK(GetArena() == nullptr);
+  memo_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   if (this != internal_default_instance()) delete block_header_;
   if (has_contract_oneof()) {
     clear_contract_oneof();
@@ -7726,6 +7735,7 @@ void Transaction::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
+  memo_.ClearToEmpty();
   if (GetArena() == nullptr && block_header_ != nullptr) {
     delete block_header_;
   }
@@ -7769,6 +7779,14 @@ const char* Transaction::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID
       case 4:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 32)) {
           fee_limit_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // bytes memo = 5;
+      case 5:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 42)) {
+          auto str = _internal_mutable_memo();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -7959,6 +7977,12 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt64ToArray(4, this->_internal_fee_limit(), target);
   }
 
+  // bytes memo = 5;
+  if (this->memo().size() > 0) {
+    target = stream->WriteBytesMaybeAliased(
+        5, this->_internal_memo(), target);
+  }
+
   // .TW.Tron.Proto.TransferContract transfer = 10;
   if (_internal_has_transfer()) {
     target = stream->EnsureSpace(target);
@@ -8126,6 +8150,13 @@ size_t Transaction::ByteSizeLong() const {
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
+
+  // bytes memo = 5;
+  if (this->memo().size() > 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
+        this->_internal_memo());
+  }
 
   // .TW.Tron.Proto.BlockHeader block_header = 3;
   if (this->has_block_header()) {
@@ -8324,6 +8355,9 @@ void Transaction::MergeFrom(const Transaction& from) {
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
+  if (from.memo().size() > 0) {
+    _internal_set_memo(from._internal_memo());
+  }
   if (from.has_block_header()) {
     _internal_mutable_block_header()->::TW::Tron::Proto::BlockHeader::MergeFrom(from._internal_block_header());
   }
@@ -8440,6 +8474,7 @@ bool Transaction::IsInitialized() const {
 void Transaction::InternalSwap(Transaction* other) {
   using std::swap;
   _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
+  memo_.Swap(&other->memo_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
       PROTOBUF_FIELD_OFFSET(Transaction, fee_limit_)
       + sizeof(Transaction::fee_limit_)

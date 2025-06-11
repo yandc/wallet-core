@@ -33,6 +33,8 @@ message Transaction {
         int64 ref_block_num = 3;
         bytes ref_block_hash = 4;
         int64 expiration = 8;
+        // transaction memo
+        bytes data = 10;
         //only support size = 1,  repeated list here for extension
         repeated Contract contract = 11;
         int64 timestamp = 14;

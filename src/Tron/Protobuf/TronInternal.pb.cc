@@ -388,6 +388,7 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_TronInternal_2eproto::offsets[
   PROTOBUF_FIELD_OFFSET(::protocol::Transaction_raw, ref_block_num_),
   PROTOBUF_FIELD_OFFSET(::protocol::Transaction_raw, ref_block_hash_),
   PROTOBUF_FIELD_OFFSET(::protocol::Transaction_raw, expiration_),
+  PROTOBUF_FIELD_OFFSET(::protocol::Transaction_raw, data_),
   PROTOBUF_FIELD_OFFSET(::protocol::Transaction_raw, contract_),
   PROTOBUF_FIELD_OFFSET(::protocol::Transaction_raw, timestamp_),
   PROTOBUF_FIELD_OFFSET(::protocol::Transaction_raw, fee_limit_),
@@ -543,24 +544,24 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_TronInternal_2eproto::offsets[
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::protocol::Transaction_Contract)},
   { 8, -1, sizeof(::protocol::Transaction_raw)},
-  { 20, -1, sizeof(::protocol::Transaction)},
-  { 26, -1, sizeof(::protocol::BlockHeader_raw)},
-  { 38, -1, sizeof(::protocol::BlockHeader)},
-  { 45, -1, sizeof(::protocol::TransferContract)},
-  { 53, -1, sizeof(::protocol::TransferAssetContract)},
-  { 62, -1, sizeof(::protocol::FreezeBalanceContract)},
-  { 72, -1, sizeof(::protocol::FreezeBalanceV2Contract)},
-  { 80, -1, sizeof(::protocol::UnfreezeBalanceContract)},
-  { 88, -1, sizeof(::protocol::UnfreezeBalanceV2Contract)},
-  { 96, -1, sizeof(::protocol::WithdrawExpireUnfreezeContract)},
-  { 102, -1, sizeof(::protocol::DelegateResourceContract)},
-  { 112, -1, sizeof(::protocol::UnDelegateResourceContract)},
-  { 121, -1, sizeof(::protocol::UnfreezeAssetContract)},
-  { 127, -1, sizeof(::protocol::VoteAssetContract)},
-  { 136, -1, sizeof(::protocol::VoteWitnessContract_Vote)},
-  { 143, -1, sizeof(::protocol::VoteWitnessContract)},
-  { 151, -1, sizeof(::protocol::WithdrawBalanceContract)},
-  { 157, -1, sizeof(::protocol::TriggerSmartContract)},
+  { 21, -1, sizeof(::protocol::Transaction)},
+  { 27, -1, sizeof(::protocol::BlockHeader_raw)},
+  { 39, -1, sizeof(::protocol::BlockHeader)},
+  { 46, -1, sizeof(::protocol::TransferContract)},
+  { 54, -1, sizeof(::protocol::TransferAssetContract)},
+  { 63, -1, sizeof(::protocol::FreezeBalanceContract)},
+  { 73, -1, sizeof(::protocol::FreezeBalanceV2Contract)},
+  { 81, -1, sizeof(::protocol::UnfreezeBalanceContract)},
+  { 89, -1, sizeof(::protocol::UnfreezeBalanceV2Contract)},
+  { 97, -1, sizeof(::protocol::WithdrawExpireUnfreezeContract)},
+  { 103, -1, sizeof(::protocol::DelegateResourceContract)},
+  { 113, -1, sizeof(::protocol::UnDelegateResourceContract)},
+  { 122, -1, sizeof(::protocol::UnfreezeAssetContract)},
+  { 128, -1, sizeof(::protocol::VoteAssetContract)},
+  { 137, -1, sizeof(::protocol::VoteWitnessContract_Vote)},
+  { 144, -1, sizeof(::protocol::VoteWitnessContract)},
+  { 152, -1, sizeof(::protocol::WithdrawBalanceContract)},
+  { 158, -1, sizeof(::protocol::TriggerSmartContract)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -588,7 +589,7 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
 
 const char descriptor_table_protodef_TronInternal_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n\022TronInternal.proto\022\010protocol\032\031google/p"
-  "rotobuf/any.proto\"\256\006\n\013Transaction\022+\n\010raw"
+  "rotobuf/any.proto\"\274\006\n\013Transaction\022+\n\010raw"
   "_data\030\001 \001(\0132\031.protocol.Transaction.raw\032\265"
   "\004\n\010Contract\0229\n\004type\030\001 \001(\0162+.protocol.Tra"
   "nsaction.Contract.ContractType\022\'\n\tparame"
@@ -604,58 +605,58 @@ const char descriptor_table_protodef_TronInternal_2eproto[] PROTOBUF_SECTION_VAR
   "\031UnfreezeBalanceV2Contract\0207\022\"\n\036Withdraw"
   "ExpireUnfreezeContract\0208\022\034\n\030DelegateReso"
   "urceContract\0209\022\036\n\032UnDelegateResourceCont"
-  "ract\020:\032\271\001\n\003raw\022\027\n\017ref_block_bytes\030\001 \001(\014\022"
+  "ract\020:\032\307\001\n\003raw\022\027\n\017ref_block_bytes\030\001 \001(\014\022"
   "\025\n\rref_block_num\030\003 \001(\003\022\026\n\016ref_block_hash"
-  "\030\004 \001(\014\022\022\n\nexpiration\030\010 \001(\003\0220\n\010contract\030\013"
-  " \003(\0132\036.protocol.Transaction.Contract\022\021\n\t"
-  "timestamp\030\016 \001(\003\022\021\n\tfee_limit\030\022 \001(\003\"\351\001\n\013B"
-  "lockHeader\022+\n\010raw_data\030\001 \001(\0132\031.protocol."
-  "BlockHeader.raw\022\031\n\021witness_signature\030\002 \001"
-  "(\014\032\221\001\n\003raw\022\021\n\ttimestamp\030\001 \001(\003\022\024\n\014tx_trie"
-  "_root\030\002 \001(\014\022\023\n\013parent_hash\030\003 \001(\014\022\016\n\006numb"
-  "er\030\007 \001(\003\022\022\n\nwitness_id\030\010 \001(\003\022\027\n\017witness_"
-  "address\030\t \001(\014\022\017\n\007version\030\n \001(\005\"M\n\020Transf"
-  "erContract\022\025\n\rowner_address\030\001 \001(\014\022\022\n\nto_"
-  "address\030\002 \001(\014\022\016\n\006amount\030\003 \001(\003\"f\n\025Transfe"
-  "rAssetContract\022\022\n\nasset_name\030\001 \001(\014\022\025\n\row"
-  "ner_address\030\002 \001(\014\022\022\n\nto_address\030\003 \001(\014\022\016\n"
-  "\006amount\030\004 \001(\003\"\243\001\n\025FreezeBalanceContract\022"
-  "\025\n\rowner_address\030\001 \001(\014\022\026\n\016frozen_balance"
-  "\030\002 \001(\003\022\027\n\017frozen_duration\030\003 \001(\003\022(\n\010resou"
-  "rce\030\n \001(\0162\026.protocol.ResourceCode\022\030\n\020rec"
-  "eiver_address\030\017 \001(\014\"r\n\027FreezeBalanceV2Co"
-  "ntract\022\025\n\rowner_address\030\001 \001(\014\022\026\n\016frozen_"
-  "balance\030\002 \001(\003\022(\n\010resource\030\003 \001(\0162\026.protoc"
-  "ol.ResourceCode\"t\n\027UnfreezeBalanceContra"
-  "ct\022\025\n\rowner_address\030\001 \001(\014\022(\n\010resource\030\n "
-  "\001(\0162\026.protocol.ResourceCode\022\030\n\020receiver_"
-  "address\030\017 \001(\014\"v\n\031UnfreezeBalanceV2Contra"
-  "ct\022\025\n\rowner_address\030\001 \001(\014\022\030\n\020unfreeze_ba"
-  "lance\030\002 \001(\003\022(\n\010resource\030\003 \001(\0162\026.protocol"
-  ".ResourceCode\"7\n\036WithdrawExpireUnfreezeC"
-  "ontract\022\025\n\rowner_address\030\001 \001(\014\"\224\001\n\030Deleg"
-  "ateResourceContract\022\025\n\rowner_address\030\001 \001"
-  "(\014\022(\n\010resource\030\002 \001(\0162\026.protocol.Resource"
-  "Code\022\017\n\007balance\030\003 \001(\003\022\030\n\020receiver_addres"
-  "s\030\004 \001(\014\022\014\n\004lock\030\005 \001(\010\"\210\001\n\032UnDelegateReso"
-  "urceContract\022\025\n\rowner_address\030\001 \001(\014\022(\n\010r"
-  "esource\030\002 \001(\0162\026.protocol.ResourceCode\022\017\n"
-  "\007balance\030\003 \001(\003\022\030\n\020receiver_address\030\004 \001(\014"
-  "\".\n\025UnfreezeAssetContract\022\025\n\rowner_addre"
-  "ss\030\001 \001(\014\"`\n\021VoteAssetContract\022\025\n\rowner_a"
-  "ddress\030\001 \001(\014\022\024\n\014vote_address\030\002 \003(\014\022\017\n\007su"
-  "pport\030\003 \001(\010\022\r\n\005count\030\005 \001(\005\"\242\001\n\023VoteWitne"
-  "ssContract\022\025\n\rowner_address\030\001 \001(\014\0221\n\005vot"
-  "es\030\002 \003(\0132\".protocol.VoteWitnessContract."
-  "Vote\022\017\n\007support\030\003 \001(\010\0320\n\004Vote\022\024\n\014vote_ad"
-  "dress\030\001 \001(\014\022\022\n\nvote_count\030\002 \001(\003\"0\n\027Withd"
-  "rawBalanceContract\022\025\n\rowner_address\030\001 \001("
-  "\014\"\225\001\n\024TriggerSmartContract\022\025\n\rowner_addr"
-  "ess\030\001 \001(\014\022\030\n\020contract_address\030\002 \001(\014\022\022\n\nc"
-  "all_value\030\003 \001(\003\022\014\n\004data\030\004 \001(\014\022\030\n\020call_to"
-  "ken_value\030\005 \001(\003\022\020\n\010token_id\030\006 \001(\003*)\n\014Res"
-  "ourceCode\022\r\n\tBANDWIDTH\020\000\022\n\n\006ENERGY\020\001b\006pr"
-  "oto3"
+  "\030\004 \001(\014\022\022\n\nexpiration\030\010 \001(\003\022\014\n\004data\030\n \001(\014"
+  "\0220\n\010contract\030\013 \003(\0132\036.protocol.Transactio"
+  "n.Contract\022\021\n\ttimestamp\030\016 \001(\003\022\021\n\tfee_lim"
+  "it\030\022 \001(\003\"\351\001\n\013BlockHeader\022+\n\010raw_data\030\001 \001"
+  "(\0132\031.protocol.BlockHeader.raw\022\031\n\021witness"
+  "_signature\030\002 \001(\014\032\221\001\n\003raw\022\021\n\ttimestamp\030\001 "
+  "\001(\003\022\024\n\014tx_trie_root\030\002 \001(\014\022\023\n\013parent_hash"
+  "\030\003 \001(\014\022\016\n\006number\030\007 \001(\003\022\022\n\nwitness_id\030\010 \001"
+  "(\003\022\027\n\017witness_address\030\t \001(\014\022\017\n\007version\030\n"
+  " \001(\005\"M\n\020TransferContract\022\025\n\rowner_addres"
+  "s\030\001 \001(\014\022\022\n\nto_address\030\002 \001(\014\022\016\n\006amount\030\003 "
+  "\001(\003\"f\n\025TransferAssetContract\022\022\n\nasset_na"
+  "me\030\001 \001(\014\022\025\n\rowner_address\030\002 \001(\014\022\022\n\nto_ad"
+  "dress\030\003 \001(\014\022\016\n\006amount\030\004 \001(\003\"\243\001\n\025FreezeBa"
+  "lanceContract\022\025\n\rowner_address\030\001 \001(\014\022\026\n\016"
+  "frozen_balance\030\002 \001(\003\022\027\n\017frozen_duration\030"
+  "\003 \001(\003\022(\n\010resource\030\n \001(\0162\026.protocol.Resou"
+  "rceCode\022\030\n\020receiver_address\030\017 \001(\014\"r\n\027Fre"
+  "ezeBalanceV2Contract\022\025\n\rowner_address\030\001 "
+  "\001(\014\022\026\n\016frozen_balance\030\002 \001(\003\022(\n\010resource\030"
+  "\003 \001(\0162\026.protocol.ResourceCode\"t\n\027Unfreez"
+  "eBalanceContract\022\025\n\rowner_address\030\001 \001(\014\022"
+  "(\n\010resource\030\n \001(\0162\026.protocol.ResourceCod"
+  "e\022\030\n\020receiver_address\030\017 \001(\014\"v\n\031UnfreezeB"
+  "alanceV2Contract\022\025\n\rowner_address\030\001 \001(\014\022"
+  "\030\n\020unfreeze_balance\030\002 \001(\003\022(\n\010resource\030\003 "
+  "\001(\0162\026.protocol.ResourceCode\"7\n\036WithdrawE"
+  "xpireUnfreezeContract\022\025\n\rowner_address\030\001"
+  " \001(\014\"\224\001\n\030DelegateResourceContract\022\025\n\rown"
+  "er_address\030\001 \001(\014\022(\n\010resource\030\002 \001(\0162\026.pro"
+  "tocol.ResourceCode\022\017\n\007balance\030\003 \001(\003\022\030\n\020r"
+  "eceiver_address\030\004 \001(\014\022\014\n\004lock\030\005 \001(\010\"\210\001\n\032"
+  "UnDelegateResourceContract\022\025\n\rowner_addr"
+  "ess\030\001 \001(\014\022(\n\010resource\030\002 \001(\0162\026.protocol.R"
+  "esourceCode\022\017\n\007balance\030\003 \001(\003\022\030\n\020receiver"
+  "_address\030\004 \001(\014\".\n\025UnfreezeAssetContract\022"
+  "\025\n\rowner_address\030\001 \001(\014\"`\n\021VoteAssetContr"
+  "act\022\025\n\rowner_address\030\001 \001(\014\022\024\n\014vote_addre"
+  "ss\030\002 \003(\014\022\017\n\007support\030\003 \001(\010\022\r\n\005count\030\005 \001(\005"
+  "\"\242\001\n\023VoteWitnessContract\022\025\n\rowner_addres"
+  "s\030\001 \001(\014\0221\n\005votes\030\002 \003(\0132\".protocol.VoteWi"
+  "tnessContract.Vote\022\017\n\007support\030\003 \001(\010\0320\n\004V"
+  "ote\022\024\n\014vote_address\030\001 \001(\014\022\022\n\nvote_count\030"
+  "\002 \001(\003\"0\n\027WithdrawBalanceContract\022\025\n\rowne"
+  "r_address\030\001 \001(\014\"\225\001\n\024TriggerSmartContract"
+  "\022\025\n\rowner_address\030\001 \001(\014\022\030\n\020contract_addr"
+  "ess\030\002 \001(\014\022\022\n\ncall_value\030\003 \001(\003\022\014\n\004data\030\004 "
+  "\001(\014\022\030\n\020call_token_value\030\005 \001(\003\022\020\n\010token_i"
+  "d\030\006 \001(\003*)\n\014ResourceCode\022\r\n\tBANDWIDTH\020\000\022\n"
+  "\n\006ENERGY\020\001b\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_TronInternal_2eproto_deps[1] = {
   &::descriptor_table_google_2fprotobuf_2fany_2eproto,
@@ -684,7 +685,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_Tro
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_TronInternal_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_TronInternal_2eproto = {
-  false, false, descriptor_table_protodef_TronInternal_2eproto, "TronInternal.proto", 2724,
+  false, false, descriptor_table_protodef_TronInternal_2eproto, "TronInternal.proto", 2738,
   &descriptor_table_TronInternal_2eproto_once, descriptor_table_TronInternal_2eproto_sccs, descriptor_table_TronInternal_2eproto_deps, 20, 1,
   schemas, file_default_instances, TableStruct_TronInternal_2eproto::offsets,
   file_level_metadata_TronInternal_2eproto, 20, file_level_enum_descriptors_TronInternal_2eproto, file_level_service_descriptors_TronInternal_2eproto,
@@ -1065,6 +1066,11 @@ Transaction_raw::Transaction_raw(const Transaction_raw& from)
     ref_block_hash_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_ref_block_hash(), 
       GetArena());
   }
+  data_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (!from._internal_data().empty()) {
+    data_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_data(), 
+      GetArena());
+  }
   ::memcpy(&ref_block_num_, &from.ref_block_num_,
     static_cast<size_t>(reinterpret_cast<char*>(&fee_limit_) -
     reinterpret_cast<char*>(&ref_block_num_)) + sizeof(fee_limit_));
@@ -1075,6 +1081,7 @@ void Transaction_raw::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_Transaction_raw_TronInternal_2eproto.base);
   ref_block_bytes_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   ref_block_hash_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  data_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   ::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
       reinterpret_cast<char*>(&ref_block_num_) - reinterpret_cast<char*>(this)),
       0, static_cast<size_t>(reinterpret_cast<char*>(&fee_limit_) -
@@ -1091,6 +1098,7 @@ void Transaction_raw::SharedDtor() {
   GOOGLE_DCHECK(GetArena() == nullptr);
   ref_block_bytes_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   ref_block_hash_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  data_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
 
 void Transaction_raw::ArenaDtor(void* object) {
@@ -1117,6 +1125,7 @@ void Transaction_raw::Clear() {
   contract_.Clear();
   ref_block_bytes_.ClearToEmpty();
   ref_block_hash_.ClearToEmpty();
+  data_.ClearToEmpty();
   ::memset(&ref_block_num_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&fee_limit_) -
       reinterpret_cast<char*>(&ref_block_num_)) + sizeof(fee_limit_));
@@ -1157,6 +1166,14 @@ const char* Transaction_raw::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPAC
       case 8:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 64)) {
           expiration_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // bytes data = 10;
+      case 10:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 82)) {
+          auto str = _internal_mutable_data();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -1238,6 +1255,12 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt64ToArray(8, this->_internal_expiration(), target);
   }
 
+  // bytes data = 10;
+  if (this->data().size() > 0) {
+    target = stream->WriteBytesMaybeAliased(
+        10, this->_internal_data(), target);
+  }
+
   // repeated .protocol.Transaction.Contract contract = 11;
   for (unsigned int i = 0,
       n = static_cast<unsigned int>(this->_internal_contract_size()); i < n; i++) {
@@ -1293,6 +1316,13 @@ size_t Transaction_raw::ByteSizeLong() const {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
         this->_internal_ref_block_hash());
+  }
+
+  // bytes data = 10;
+  if (this->data().size() > 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
+        this->_internal_data());
   }
 
   // int64 ref_block_num = 3;
@@ -1361,6 +1391,9 @@ void Transaction_raw::MergeFrom(const Transaction_raw& from) {
   if (from.ref_block_hash().size() > 0) {
     _internal_set_ref_block_hash(from._internal_ref_block_hash());
   }
+  if (from.data().size() > 0) {
+    _internal_set_data(from._internal_data());
+  }
   if (from.ref_block_num() != 0) {
     _internal_set_ref_block_num(from._internal_ref_block_num());
   }
@@ -1399,6 +1432,7 @@ void Transaction_raw::InternalSwap(Transaction_raw* other) {
   contract_.InternalSwap(&other->contract_);
   ref_block_bytes_.Swap(&other->ref_block_bytes_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
   ref_block_hash_.Swap(&other->ref_block_hash_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  data_.Swap(&other->data_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
       PROTOBUF_FIELD_OFFSET(Transaction_raw, fee_limit_)
       + sizeof(Transaction_raw::fee_limit_)

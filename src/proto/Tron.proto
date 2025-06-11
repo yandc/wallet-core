@@ -265,6 +265,9 @@ message Transaction {
     // Transaction fee limit
     int64 fee_limit = 4;
 
+    // Transaction memo.
+    bytes memo = 5;
+
     // Contract.
     oneof contract_oneof {
         TransferContract transfer = 10;
