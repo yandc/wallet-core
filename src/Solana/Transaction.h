@@ -276,12 +276,13 @@ class Message {
     std::vector<Address> readOnlyAccounts;
     std::vector<CompiledInstruction> compiledInstructions;
     std::vector<AddressLookupTable> addressLookups;
+    std::string feePayer;
 
     Message() : recentBlockhash(NULL_ID_ADDRESS) {};
 
-    Message(Hash recentBlockhash, const std::vector<Instruction>& instructions)
+    Message(Hash recentBlockhash, const std::vector<Instruction>& instructions, const std::string feePayer = "")
         : recentBlockhash(recentBlockhash)
-        , instructions(instructions) {
+        , instructions(instructions), feePayer(feePayer) {
             compileAccounts();
     }
 
@@ -435,7 +436,7 @@ class Message {
     // see transfer_checked() solana-program-library/token/program/src/instruction.rs
     static Message createTokenTransfer(const Address& signer, const Address& tokenMintAddress,
         const Address& senderTokenAddress, const Address& recipientTokenAddress, uint64_t amount, uint8_t decimals, Hash recentBlockhash,
-        std::string memo = "", std::vector<Address> references = {}
+        std::string memo = "", std::vector<Address> references = {}, std::string feePayer = ""
     ) {
         std::vector<Instruction> instructions;
         if (memo.length() > 0) {
@@ -450,20 +451,20 @@ class Message {
         };
         appendReferences(accountMetas, references);
         instructions.push_back(Instruction::createTokenTransfer(accountMetas, amount, decimals));
-        return Message(recentBlockhash, instructions);
+        return Message(recentBlockhash, instructions, feePayer);
     }
 
     // This constructor creates a createAndTransferToken message, combining createAccount and transfer.
     static Message createTokenCreateAndTransfer(const Address& signer, const Address& recipientMainAddress, const Address& tokenMintAddress,
         const Address& recipientTokenAddress, const Address& senderTokenAddress, uint64_t amount, uint8_t decimals, Hash recentBlockhash,
-        std::string memo = "", std::vector<Address> references = {}
+        std::string memo = "", std::vector<Address> references = {}, std::string feePayer = ""
     ) {
         const auto sysvarRentId = Address(SYSVAR_RENT_ID_ADDRESS);
         const auto systemProgramId = Address(SYSTEM_PROGRAM_ID_ADDRESS);
         const auto tokenProgramId = Address(TOKEN_PROGRAM_ID_ADDRESS);
         std::vector<Instruction> instructions;
         instructions.push_back(Instruction::createTokenCreateAccount(std::vector<AccountMeta>{
-            AccountMeta(signer, true, false), // fundingAddress,
+            AccountMeta(feePayer.size() > 0 ? Address(feePayer) : signer, true, false), // fundingAddress,
             AccountMeta(recipientTokenAddress, false, false),
             AccountMeta(recipientMainAddress, false, true),
             AccountMeta(tokenMintAddress, false, true),
@@ -483,7 +484,7 @@ class Message {
         };
         appendReferences(accountMetas, references);
         instructions.push_back(Instruction::createTokenTransfer(accountMetas, amount, decimals));
-        return Message(recentBlockhash, instructions);
+        return Message(recentBlockhash, instructions, feePayer);
     }
 };
 

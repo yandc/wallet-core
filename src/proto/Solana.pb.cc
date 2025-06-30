@@ -492,6 +492,8 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_Solana_2eproto::offsets[] PROT
   PROTOBUF_FIELD_OFFSET(::TW::Solana::Proto::SigningInput, compiled_instructions_),
   PROTOBUF_FIELD_OFFSET(::TW::Solana::Proto::SigningInput, instructions_),
   PROTOBUF_FIELD_OFFSET(::TW::Solana::Proto::SigningInput, address_table_lookups_),
+  PROTOBUF_FIELD_OFFSET(::TW::Solana::Proto::SigningInput, fee_payer_private_key_),
+  PROTOBUF_FIELD_OFFSET(::TW::Solana::Proto::SigningInput, fee_payer_),
   PROTOBUF_FIELD_OFFSET(::TW::Solana::Proto::SigningInput, transaction_type_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::TW::Solana::Proto::SigningOutput, _internal_metadata_),
@@ -517,7 +519,7 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOB
   { 109, -1, sizeof(::TW::Solana::Proto::CompiledInstruction)},
   { 117, -1, sizeof(::TW::Solana::Proto::AddressTableLookups)},
   { 125, -1, sizeof(::TW::Solana::Proto::SigningInput)},
-  { 149, -1, sizeof(::TW::Solana::Proto::SigningOutput)},
+  { 151, -1, sizeof(::TW::Solana::Proto::SigningOutput)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -578,7 +580,7 @@ const char descriptor_table_protodef_Solana_2eproto[] PROTOBUF_SECTION_VARIABLE(
   "key_indexes\030\002 \003(\r\022\014\n\004data\030\003 \001(\014\"^\n\023Addre"
   "ssTableLookups\022\023\n\013account_key\030\001 \001(\t\022\030\n\020w"
   "ritable_indexes\030\002 \003(\r\022\030\n\020readonly_indexe"
-  "s\030\003 \003(\r\"\232\010\n\014SigningInput\022\023\n\013private_key\030"
+  "s\030\003 \003(\r\"\314\010\n\014SigningInput\022\023\n\013private_key\030"
   "\001 \001(\014\022\030\n\020recent_blockhash\030\002 \001(\t\0229\n\024trans"
   "fer_transaction\030\003 \001(\0132\031.TW.Solana.Proto."
   "TransferH\000\022D\n\032delegate_stake_transaction"
@@ -604,9 +606,10 @@ const char descriptor_table_protodef_Solana_2eproto[] PROTOBUF_SECTION_VARIABLE(
   "2\n\014instructions\030\021 \003(\0132\034.TW.Solana.Proto."
   "Instruction\022C\n\025address_table_lookups\030\022 \003"
   "(\0132$.TW.Solana.Proto.AddressTableLookups"
-  "B\022\n\020transaction_type\" \n\rSigningOutput\022\017\n"
-  "\007encoded\030\001 \001(\tB\027\n\025wallet.core.jni.protob"
-  "\006proto3"
+  "\022\035\n\025fee_payer_private_key\030\023 \001(\014\022\021\n\tfee_p"
+  "ayer\030\024 \001(\tB\022\n\020transaction_type\" \n\rSignin"
+  "gOutput\022\017\n\007encoded\030\001 \001(\tB\027\n\025wallet.core."
+  "jni.protob\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_Solana_2eproto_deps[1] = {
 };
@@ -631,7 +634,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_Sol
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_Solana_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_Solana_2eproto = {
-  false, false, descriptor_table_protodef_Solana_2eproto, "Solana.proto", 2607,
+  false, false, descriptor_table_protodef_Solana_2eproto, "Solana.proto", 2657,
   &descriptor_table_Solana_2eproto_once, descriptor_table_Solana_2eproto_sccs, descriptor_table_Solana_2eproto_deps, 17, 0,
   schemas, file_default_instances, TableStruct_Solana_2eproto::offsets,
   file_level_metadata_Solana_2eproto, 17, file_level_enum_descriptors_Solana_2eproto, file_level_service_descriptors_Solana_2eproto,
@@ -5137,6 +5140,16 @@ SigningInput::SigningInput(const SigningInput& from)
     to_address_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_to_address(), 
       GetArena());
   }
+  fee_payer_private_key_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (!from._internal_fee_payer_private_key().empty()) {
+    fee_payer_private_key_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_fee_payer_private_key(), 
+      GetArena());
+  }
+  fee_payer_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (!from._internal_fee_payer().empty()) {
+    fee_payer_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_fee_payer(), 
+      GetArena());
+  }
   if (from._internal_has_header()) {
     header_ = new ::TW::Solana::Proto::MessageHeader(*from.header_);
   } else {
@@ -5193,6 +5206,8 @@ void SigningInput::SharedCtor() {
   recent_blockhash_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   from_address_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   to_address_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  fee_payer_private_key_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  fee_payer_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   header_ = nullptr;
   clear_has_transaction_type();
 }
@@ -5209,6 +5224,8 @@ void SigningInput::SharedDtor() {
   recent_blockhash_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   from_address_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   to_address_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  fee_payer_private_key_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  fee_payer_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   if (this != internal_default_instance()) delete header_;
   if (has_transaction_type()) {
     clear_transaction_type();
@@ -5309,6 +5326,8 @@ void SigningInput::Clear() {
   recent_blockhash_.ClearToEmpty();
   from_address_.ClearToEmpty();
   to_address_.ClearToEmpty();
+  fee_payer_private_key_.ClearToEmpty();
+  fee_payer_.ClearToEmpty();
   if (GetArena() == nullptr && header_ != nullptr) {
     delete header_;
   }
@@ -5477,6 +5496,23 @@ const char* SigningInput::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_I
             CHK_(ptr);
             if (!ctx->DataAvailable(ptr)) break;
           } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<146>(ptr));
+        } else goto handle_unusual;
+        continue;
+      // bytes fee_payer_private_key = 19;
+      case 19:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 154)) {
+          auto str = _internal_mutable_fee_payer_private_key();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // string fee_payer = 20;
+      case 20:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 162)) {
+          auto str = _internal_mutable_fee_payer();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "TW.Solana.Proto.SigningInput.fee_payer"));
+          CHK_(ptr);
         } else goto handle_unusual;
         continue;
       default: {
@@ -5657,6 +5693,22 @@ failure:
       InternalWriteMessage(18, this->_internal_address_table_lookups(i), target, stream);
   }
 
+  // bytes fee_payer_private_key = 19;
+  if (this->fee_payer_private_key().size() > 0) {
+    target = stream->WriteBytesMaybeAliased(
+        19, this->_internal_fee_payer_private_key(), target);
+  }
+
+  // string fee_payer = 20;
+  if (this->fee_payer().size() > 0) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_fee_payer().data(), static_cast<int>(this->_internal_fee_payer().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "TW.Solana.Proto.SigningInput.fee_payer");
+    target = stream->WriteStringMaybeAliased(
+        20, this->_internal_fee_payer(), target);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -5728,6 +5780,20 @@ size_t SigningInput::ByteSizeLong() const {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
         this->_internal_to_address());
+  }
+
+  // bytes fee_payer_private_key = 19;
+  if (this->fee_payer_private_key().size() > 0) {
+    total_size += 2 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
+        this->_internal_fee_payer_private_key());
+  }
+
+  // string fee_payer = 20;
+  if (this->fee_payer().size() > 0) {
+    total_size += 2 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_fee_payer());
   }
 
   // .TW.Solana.Proto.MessageHeader header = 14;
@@ -5852,6 +5918,12 @@ void SigningInput::MergeFrom(const SigningInput& from) {
   if (from.to_address().size() > 0) {
     _internal_set_to_address(from._internal_to_address());
   }
+  if (from.fee_payer_private_key().size() > 0) {
+    _internal_set_fee_payer_private_key(from._internal_fee_payer_private_key());
+  }
+  if (from.fee_payer().size() > 0) {
+    _internal_set_fee_payer(from._internal_fee_payer());
+  }
   if (from.has_header()) {
     _internal_mutable_header()->::TW::Solana::Proto::MessageHeader::MergeFrom(from._internal_header());
   }
@@ -5927,6 +5999,8 @@ void SigningInput::InternalSwap(SigningInput* other) {
   recent_blockhash_.Swap(&other->recent_blockhash_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
   from_address_.Swap(&other->from_address_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
   to_address_.Swap(&other->to_address_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  fee_payer_private_key_.Swap(&other->fee_payer_private_key_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  fee_payer_.Swap(&other->fee_payer_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
   swap(header_, other->header_);
   swap(transaction_type_, other->transaction_type_);
   swap(_oneof_case_[0], other->_oneof_case_[0]);

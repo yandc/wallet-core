@@ -54,6 +54,9 @@ void Message::addAccountKeys(const Address& account) {
 }
 
 void Message::compileAccounts() {
+    if (feePayer.size() > 0) {
+        addAccount(AccountMeta(Address(feePayer), true, false));
+    }
     for (auto& instr: instructions) {
         for (auto& address: instr.accounts) {
             addAccount(address);

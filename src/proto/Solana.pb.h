@@ -3002,6 +3002,8 @@ class SigningInput PROTOBUF_FINAL :
     kRecentBlockhashFieldNumber = 2,
     kFromAddressFieldNumber = 12,
     kToAddressFieldNumber = 13,
+    kFeePayerPrivateKeyFieldNumber = 19,
+    kFeePayerFieldNumber = 20,
     kHeaderFieldNumber = 14,
     kTransferTransactionFieldNumber = 3,
     kDelegateStakeTransactionFieldNumber = 4,
@@ -3153,6 +3155,38 @@ class SigningInput PROTOBUF_FINAL :
   const std::string& _internal_to_address() const;
   void _internal_set_to_address(const std::string& value);
   std::string* _internal_mutable_to_address();
+  public:
+
+  // bytes fee_payer_private_key = 19;
+  void clear_fee_payer_private_key();
+  const std::string& fee_payer_private_key() const;
+  void set_fee_payer_private_key(const std::string& value);
+  void set_fee_payer_private_key(std::string&& value);
+  void set_fee_payer_private_key(const char* value);
+  void set_fee_payer_private_key(const void* value, size_t size);
+  std::string* mutable_fee_payer_private_key();
+  std::string* release_fee_payer_private_key();
+  void set_allocated_fee_payer_private_key(std::string* fee_payer_private_key);
+  private:
+  const std::string& _internal_fee_payer_private_key() const;
+  void _internal_set_fee_payer_private_key(const std::string& value);
+  std::string* _internal_mutable_fee_payer_private_key();
+  public:
+
+  // string fee_payer = 20;
+  void clear_fee_payer();
+  const std::string& fee_payer() const;
+  void set_fee_payer(const std::string& value);
+  void set_fee_payer(std::string&& value);
+  void set_fee_payer(const char* value);
+  void set_fee_payer(const char* value, size_t size);
+  std::string* mutable_fee_payer();
+  std::string* release_fee_payer();
+  void set_allocated_fee_payer(std::string* fee_payer);
+  private:
+  const std::string& _internal_fee_payer() const;
+  void _internal_set_fee_payer(const std::string& value);
+  std::string* _internal_mutable_fee_payer();
   public:
 
   // .TW.Solana.Proto.MessageHeader header = 14;
@@ -3364,6 +3398,8 @@ class SigningInput PROTOBUF_FINAL :
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr recent_blockhash_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr from_address_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr to_address_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr fee_payer_private_key_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr fee_payer_;
   ::TW::Solana::Proto::MessageHeader* header_;
   union TransactionTypeUnion {
     TransactionTypeUnion() {}
@@ -7211,6 +7247,128 @@ inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::TW::Solana::Proto::Add
 SigningInput::address_table_lookups() const {
   // @@protoc_insertion_point(field_list:TW.Solana.Proto.SigningInput.address_table_lookups)
   return address_table_lookups_;
+}
+
+// bytes fee_payer_private_key = 19;
+inline void SigningInput::clear_fee_payer_private_key() {
+  fee_payer_private_key_.ClearToEmpty();
+}
+inline const std::string& SigningInput::fee_payer_private_key() const {
+  // @@protoc_insertion_point(field_get:TW.Solana.Proto.SigningInput.fee_payer_private_key)
+  return _internal_fee_payer_private_key();
+}
+inline void SigningInput::set_fee_payer_private_key(const std::string& value) {
+  _internal_set_fee_payer_private_key(value);
+  // @@protoc_insertion_point(field_set:TW.Solana.Proto.SigningInput.fee_payer_private_key)
+}
+inline std::string* SigningInput::mutable_fee_payer_private_key() {
+  // @@protoc_insertion_point(field_mutable:TW.Solana.Proto.SigningInput.fee_payer_private_key)
+  return _internal_mutable_fee_payer_private_key();
+}
+inline const std::string& SigningInput::_internal_fee_payer_private_key() const {
+  return fee_payer_private_key_.Get();
+}
+inline void SigningInput::_internal_set_fee_payer_private_key(const std::string& value) {
+  
+  fee_payer_private_key_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArena());
+}
+inline void SigningInput::set_fee_payer_private_key(std::string&& value) {
+  
+  fee_payer_private_key_.Set(
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::move(value), GetArena());
+  // @@protoc_insertion_point(field_set_rvalue:TW.Solana.Proto.SigningInput.fee_payer_private_key)
+}
+inline void SigningInput::set_fee_payer_private_key(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  fee_payer_private_key_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::string(value), GetArena());
+  // @@protoc_insertion_point(field_set_char:TW.Solana.Proto.SigningInput.fee_payer_private_key)
+}
+inline void SigningInput::set_fee_payer_private_key(const void* value,
+    size_t size) {
+  
+  fee_payer_private_key_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::string(
+      reinterpret_cast<const char*>(value), size), GetArena());
+  // @@protoc_insertion_point(field_set_pointer:TW.Solana.Proto.SigningInput.fee_payer_private_key)
+}
+inline std::string* SigningInput::_internal_mutable_fee_payer_private_key() {
+  
+  return fee_payer_private_key_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArena());
+}
+inline std::string* SigningInput::release_fee_payer_private_key() {
+  // @@protoc_insertion_point(field_release:TW.Solana.Proto.SigningInput.fee_payer_private_key)
+  return fee_payer_private_key_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline void SigningInput::set_allocated_fee_payer_private_key(std::string* fee_payer_private_key) {
+  if (fee_payer_private_key != nullptr) {
+    
+  } else {
+    
+  }
+  fee_payer_private_key_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), fee_payer_private_key,
+      GetArena());
+  // @@protoc_insertion_point(field_set_allocated:TW.Solana.Proto.SigningInput.fee_payer_private_key)
+}
+
+// string fee_payer = 20;
+inline void SigningInput::clear_fee_payer() {
+  fee_payer_.ClearToEmpty();
+}
+inline const std::string& SigningInput::fee_payer() const {
+  // @@protoc_insertion_point(field_get:TW.Solana.Proto.SigningInput.fee_payer)
+  return _internal_fee_payer();
+}
+inline void SigningInput::set_fee_payer(const std::string& value) {
+  _internal_set_fee_payer(value);
+  // @@protoc_insertion_point(field_set:TW.Solana.Proto.SigningInput.fee_payer)
+}
+inline std::string* SigningInput::mutable_fee_payer() {
+  // @@protoc_insertion_point(field_mutable:TW.Solana.Proto.SigningInput.fee_payer)
+  return _internal_mutable_fee_payer();
+}
+inline const std::string& SigningInput::_internal_fee_payer() const {
+  return fee_payer_.Get();
+}
+inline void SigningInput::_internal_set_fee_payer(const std::string& value) {
+  
+  fee_payer_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArena());
+}
+inline void SigningInput::set_fee_payer(std::string&& value) {
+  
+  fee_payer_.Set(
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::move(value), GetArena());
+  // @@protoc_insertion_point(field_set_rvalue:TW.Solana.Proto.SigningInput.fee_payer)
+}
+inline void SigningInput::set_fee_payer(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  fee_payer_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::string(value), GetArena());
+  // @@protoc_insertion_point(field_set_char:TW.Solana.Proto.SigningInput.fee_payer)
+}
+inline void SigningInput::set_fee_payer(const char* value,
+    size_t size) {
+  
+  fee_payer_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::string(
+      reinterpret_cast<const char*>(value), size), GetArena());
+  // @@protoc_insertion_point(field_set_pointer:TW.Solana.Proto.SigningInput.fee_payer)
+}
+inline std::string* SigningInput::_internal_mutable_fee_payer() {
+  
+  return fee_payer_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArena());
+}
+inline std::string* SigningInput::release_fee_payer() {
+  // @@protoc_insertion_point(field_release:TW.Solana.Proto.SigningInput.fee_payer)
+  return fee_payer_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline void SigningInput::set_allocated_fee_payer(std::string* fee_payer) {
+  if (fee_payer != nullptr) {
+    
+  } else {
+    
+  }
+  fee_payer_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), fee_payer,
+      GetArena());
+  // @@protoc_insertion_point(field_set_allocated:TW.Solana.Proto.SigningInput.fee_payer)
 }
 
 inline bool SigningInput::has_transaction_type() const {

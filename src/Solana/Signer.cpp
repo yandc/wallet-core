@@ -47,6 +47,11 @@ Proto::SigningOutput Signer::sign(const Proto::SigningInput& input) {
     std::string stakePubkey;
     std::vector<PrivateKey> signerKeys;
 
+    if (Address::isValid(input.fee_payer())) {
+        auto feePayerKey = PrivateKey(input.fee_payer_private_key());
+        signerKeys.push_back(feePayerKey);
+    }
+
     if(input.compiled_instructions_size() > 0) {
         message.recentBlockhash = Solana::Hash(input.recent_blockhash());
         message.header.numRequiredSignatures = (uint8_t)input.header().num_required_signatures();
@@ -209,7 +214,7 @@ Proto::SigningOutput Signer::sign(const Proto::SigningInput& input) {
                     auto decimals = static_cast<uint8_t>(protoMessage.decimals());
                     const auto memo = protoMessage.memo();
                     message = Message::createTokenTransfer(userAddress, tokenMintAddress, senderTokenAddress, recipientTokenAddress, amount, decimals, blockhash,
-                        memo, convertReferences(protoMessage.references()));
+                        memo, convertReferences(protoMessage.references()), input.fee_payer());
                     signerKeys.push_back(key);
                 }
                 break;
@@ -226,7 +231,7 @@ Proto::SigningOutput Signer::sign(const Proto::SigningInput& input) {
                     auto decimals = static_cast<uint8_t>(protoMessage.decimals());
                     const auto memo = protoMessage.memo();
                     message = Message::createTokenCreateAndTransfer(userAddress, recipientMainAddress, tokenMintAddress, recipientTokenAddress, senderTokenAddress, amount, decimals, blockhash,
-                        memo, convertReferences(protoMessage.references()));
+                        memo, convertReferences(protoMessage.references()), input.fee_payer());
                     signerKeys.push_back(key);
                 }
                 break;

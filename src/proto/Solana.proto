@@ -134,6 +134,9 @@ message SigningInput {
     repeated CompiledInstruction compiled_instructions = 16; //v0 dapp call
     repeated Instruction instructions = 17; //legacy dapp call
     repeated AddressTableLookups address_table_lookups = 18; //v0 + address table
+    // Optional external fee payer. support: TokenTransfer, CreateAndTransferToken
+    bytes fee_payer_private_key = 19;
+    string fee_payer = 20;
 }
 
 // Transaction signing output.
